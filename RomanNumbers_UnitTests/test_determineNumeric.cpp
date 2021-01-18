@@ -1,9 +1,9 @@
 #include "gmock/gmock.h"
-#include "determineNumeric.h"
+#include "../RomanNumbers/determineNumeric.h"
 
 using namespace testing;
 
-class FakeValidor
+class FakeDetermineNumeric
 {
 public:
 	MOCK_METHOD(void, onInt, (int));
@@ -17,7 +17,7 @@ public:
 	{
 		DetermineNumericSystem(str, [this](const int nr) {fake.onInt(nr); }, [this](const std::string& text) {fake.onString(text); });
 	}
-	testing::StrictMock<FakeValidor> fake;
+	testing::StrictMock<FakeDetermineNumeric> fake;
 };
 TEST_F(TestDetermineNumericSystem, DetermineNumericSystem_onInt)
 {

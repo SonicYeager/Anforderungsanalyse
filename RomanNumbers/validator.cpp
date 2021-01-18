@@ -13,14 +13,22 @@ void ValidateRoman(const std::string& numberString, std::function<void(const std
 {
 	std::vector<char> romanDigits = { 'I', 'V', 'X', 'L', 'C', 'D', 'M' };
 	bool errorFound = false;
+	bool digitFound = false;
+
 	for (const auto& nbr : numberString)
+	{
+		digitFound = false;
 		for (const auto& digit : romanDigits)
-			if (nbr != digit)
-			{
-				errorFound = true;
-				onError("Invalid roman digit found in \"" + numberString + "\"");
-				break;
-			}
-	if (!errorFound)
+		{
+			if (nbr == digit)
+				digitFound = true;
+		}
+		if (!digitFound)
+			errorFound = true;
+	}
+
+	if (errorFound)
+		onError("Invalid roman digit found in \"" + numberString + "\"");
+	else
 		onValidRoman(numberString);
 }
