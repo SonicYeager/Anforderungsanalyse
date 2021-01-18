@@ -139,9 +139,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="console.cpp" />
+    <ClCompile Include="converter.cpp" />
+    <ClCompile Include="determineNumeric.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="validator.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="console.h" />
     <ClInclude Include="converter.h" />
     <ClInclude Include="determineNumeric.h" />
     <ClInclude Include="validator.h" />

@@ -10,6 +10,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RomanNumbers_UnitTests", "..\RomanNumbers_UnitTests\RomanNumbers_UnitTests.vcxproj", "{65CE18AA-1419-409E-A739-DA8E451737EB}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\TestFramework\GoogleMock\TestFramework.vcxitems*{65ce18aa-1419-409e-a739-da8e451737eb}*SharedItemsImports = 4
+		..\TestFramework\GoogleMock\TestFramework.vcxitems*{aac85e24-c2bd-4a83-9dd9-48c57441c065}*SharedItemsImports = 9
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
