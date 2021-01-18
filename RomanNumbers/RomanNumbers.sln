@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFramework", "..\TestFra
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RomanNumbers_UnitTests", "..\RomanNumbers_UnitTests\RomanNumbers_UnitTests.vcxproj", "{65CE18AA-1419-409E-A739-DA8E451737EB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RomanNumConverter", "..\RomanNumConverter\RomanNumConverter.vcxproj", "{08757B2A-0DBF-4AB7-8685-59A79BD2A84E}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\TestFramework\GoogleMock\TestFramework.vcxitems*{65ce18aa-1419-409e-a739-da8e451737eb}*SharedItemsImports = 4
@@ -37,6 +39,14 @@ Global
 		{65CE18AA-1419-409E-A739-DA8E451737EB}.Release|x64.Build.0 = Release|x64
 		{65CE18AA-1419-409E-A739-DA8E451737EB}.Release|x86.ActiveCfg = Release|Win32
 		{65CE18AA-1419-409E-A739-DA8E451737EB}.Release|x86.Build.0 = Release|Win32
+		{08757B2A-0DBF-4AB7-8685-59A79BD2A84E}.Debug|x64.ActiveCfg = Debug|x64
+		{08757B2A-0DBF-4AB7-8685-59A79BD2A84E}.Debug|x64.Build.0 = Debug|x64
+		{08757B2A-0DBF-4AB7-8685-59A79BD2A84E}.Debug|x86.ActiveCfg = Debug|Win32
+		{08757B2A-0DBF-4AB7-8685-59A79BD2A84E}.Debug|x86.Build.0 = Debug|Win32
+		{08757B2A-0DBF-4AB7-8685-59A79BD2A84E}.Release|x64.ActiveCfg = Release|x64
+		{08757B2A-0DBF-4AB7-8685-59A79BD2A84E}.Release|x64.Build.0 = Release|x64
+		{08757B2A-0DBF-4AB7-8685-59A79BD2A84E}.Release|x86.ActiveCfg = Release|Win32
+		{08757B2A-0DBF-4AB7-8685-59A79BD2A84E}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

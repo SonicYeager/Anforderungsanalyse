@@ -181,7 +181,7 @@ std::vector<std::string> MapDecimalToRoman(std::vector<int> decimals)
 std::string FuseRoman(std::vector<std::string> chars)
 {
     std::string sum{};
-    for (auto cha : chars)
+    for (auto& cha : chars)
     {
         sum += cha;
     }
