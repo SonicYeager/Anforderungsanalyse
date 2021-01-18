@@ -9,9 +9,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFramework", "..\TestFra
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RomanNumbers_UnitTests", "..\RomanNumbers_UnitTests\RomanNumbers_UnitTests.vcxproj", "{65CE18AA-1419-409E-A739-DA8E451737EB}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RomanNumbers_IntegrationTests", "..\RomanNumbers_IntegrationTests\RomanNumbers_IntegrationTests.vcxproj", "{69C5BDDE-0D50-4F10-A62B-0BC0E848E8FE}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\TestFramework\GoogleMock\TestFramework.vcxitems*{65ce18aa-1419-409e-a739-da8e451737eb}*SharedItemsImports = 4
+		..\TestFramework\GoogleMock\TestFramework.vcxitems*{69c5bdde-0d50-4f10-a62b-0bc0e848e8fe}*SharedItemsImports = 4
 		..\TestFramework\GoogleMock\TestFramework.vcxitems*{aac85e24-c2bd-4a83-9dd9-48c57441c065}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +48,16 @@ Global
 		{65CE18AA-1419-409E-A739-DA8E451737EB}.Release|x64.ActiveCfg = Release|x64
 		{65CE18AA-1419-409E-A739-DA8E451737EB}.Release|x64.Build.0 = Release|x64
 		{65CE18AA-1419-409E-A739-DA8E451737EB}.Release|x86.ActiveCfg = Release|Win32
+		{69C5BDDE-0D50-4F10-A62B-0BC0E848E8FE}.Debug|x64.ActiveCfg = Debug|x64
+		{69C5BDDE-0D50-4F10-A62B-0BC0E848E8FE}.Debug|x64.Build.0 = Debug|x64
+		{69C5BDDE-0D50-4F10-A62B-0BC0E848E8FE}.Debug|x86.ActiveCfg = Debug|Win32
+		{69C5BDDE-0D50-4F10-A62B-0BC0E848E8FE}.Lib|x64.ActiveCfg = Debug|x64
+		{69C5BDDE-0D50-4F10-A62B-0BC0E848E8FE}.Lib|x64.Build.0 = Debug|x64
+		{69C5BDDE-0D50-4F10-A62B-0BC0E848E8FE}.Lib|x86.ActiveCfg = Debug|Win32
+		{69C5BDDE-0D50-4F10-A62B-0BC0E848E8FE}.Lib|x86.Build.0 = Debug|Win32
+		{69C5BDDE-0D50-4F10-A62B-0BC0E848E8FE}.Release|x64.ActiveCfg = Release|x64
+		{69C5BDDE-0D50-4F10-A62B-0BC0E848E8FE}.Release|x64.Build.0 = Release|x64
+		{69C5BDDE-0D50-4F10-A62B-0BC0E848E8FE}.Release|x86.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
