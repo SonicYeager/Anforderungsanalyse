@@ -1,8 +1,14 @@
 #include "console.h"
+#include <stdio.h>
+#include <iostream>
 
-void PrintResult(const std::string&)
+void PrintResult(const std::string& res)
 {
-
+	std::cout << res;
 }
 
-void PrintError(const std::string&);
+void PrintError(const std::string& msg)
+{
+	std::string red{"\x1B[31m"};
+	printf("%s%s\n", red.c_str(), msg.c_str()); //alternative with windows.h (dont really like both)
+}
