@@ -1,8 +1,6 @@
 #include "gmock/gmock.h"
 #include "../RomanNumbers/validator.h"
 
-using namespace testing;
-
 class FakeValidor
 {
 public:
@@ -11,7 +9,7 @@ public:
 	MOCK_METHOD(void, onError, (std::string));
 };
 
-class TestValidator : public Test
+class TestValidator : public testing::Test
 {
 public:
 	void ValidateArabicUT(int nr)
