@@ -27,8 +27,6 @@ int RomanToDecimal(const std::string& rom)
     return SumDecimal(applyed);
 }
 
-
-
 std::vector<char> DecomposeRoman(std::string rom)
 {
     std::vector<char> decomposedRoman{};
