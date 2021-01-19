@@ -1,9 +1,8 @@
-#include "console.h"
+#include "controller.h"
 #include <iostream>
 
 int main(int argc, char* argv[])
 {
-	PrintError("Ich bin ein Huso");
-	PrintResult("Und Dumm!!");
+	Convert(argv[1]);
 	std::cin;
 }
