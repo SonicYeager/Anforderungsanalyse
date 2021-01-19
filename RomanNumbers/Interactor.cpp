@@ -19,12 +19,10 @@ void ConvertNumber(const std::string& args, std::function<void(const std::string
 	};
 	auto onValidAra = [onArabConverted, onErr](int num) {ValidateArabic(num, onArabConverted, onErr); };
 	auto onValidRom = [onRomConverted, onErr](const std::string& num) {ValidateRoman(num, onRomConverted, onErr); };
-
+	DetermineNumericSystem(args, onValidAra, onValidRom);
 }
 void HandleArgs(const std::vector<std::string>& args, std::function<void(const std::string&)> onRes, std::function<void(const std::string&)> onErr)
 {
-
-
 	auto onTextFound = [onRes,onErr](const std::string& text)
 	{
 		ConvertNumber(text, onRes, onErr);
@@ -35,11 +33,9 @@ void HandleArgs(const std::vector<std::string>& args, std::function<void(const s
 		StreamFileData(path, onTextFound);
 	};
 
-	auto onText = [onTextFound, onErr](const std::string& text)
+	auto onText = [onRes, onErr](const std::string& text)
 	{
-		ConvertNumber(text, onTextFound, onErr);
+		ConvertNumber(text, onRes, onErr);
 	};
-
-	/*DetermineNumericSystem(args, onValidAra, onValidRom);*/
 	ReadCMD(args, onFile, onText);
 }
