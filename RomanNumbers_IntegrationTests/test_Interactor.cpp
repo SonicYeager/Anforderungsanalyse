@@ -40,10 +40,20 @@ TEST(TestInteractor, HandleArgs_convertroman15212_ExpectCallErrMsg)
 	HandleArgs({ "15212" }, std::bind(&FakeConsole::PrintResult, &fcon, std::placeholders::_1), std::bind(&FakeConsole::PrintError, &fcon, std::placeholders::_1));
 }
 
-TEST(TestInteractor, HandleArgs_fnumberstxt_ExpectCall42)
+TEST(TestInteractor, HandleArgs_fnumberstxt_ExpectCall42MMXV)
 {
 	::testing::StrictMock<FakeConsole> fcon{};
 	EXPECT_CALL(fcon, PrintResult("42"));
+	EXPECT_CALL(fcon, PrintResult("MMXV"));
 
-	HandleArgs({ "-f", "numbers.txt" }, std::bind(&FakeConsole::PrintResult, &fcon, std::placeholders::_1), std::bind(&FakeConsole::PrintError, &fcon, std::placeholders::_1));
+	HandleArgs({ "-f", "numbersRes.txt" }, std::bind(&FakeConsole::PrintResult, &fcon, std::placeholders::_1), std::bind(&FakeConsole::PrintError, &fcon, std::placeholders::_1));
+}
+
+TEST(TestInteractor, HandleArgs_fnumberstxt_ExpectCallTwoErrMsg)
+{
+	::testing::StrictMock<FakeConsole> fcon{};
+	EXPECT_CALL(fcon, PrintError("Invalid roman digit found in \"XLTII\""));
+	EXPECT_CALL(fcon, PrintError("Invalid arabic number 15212; must be in range 1..3000"));
+
+	HandleArgs({ "-f", "numbersErr.txt" }, std::bind(&FakeConsole::PrintResult, &fcon, std::placeholders::_1), std::bind(&FakeConsole::PrintError, &fcon, std::placeholders::_1));
 }

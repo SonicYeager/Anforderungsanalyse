@@ -11,4 +11,12 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="numbersErr.txt">
+      <Filter>Quelldateien</Filter>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="numbersRes.txt">
+      <Filter>Quelldateien</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
 </Project>
