@@ -41,5 +41,5 @@ void HandleArgs(const std::vector<std::string>& args, std::function<void(const s
 	};
 
 	/*DetermineNumericSystem(args, onValidAra, onValidRom);*/
-	ReadCMD(args);
+	ReadCMD(args, onFile, onText);
 }

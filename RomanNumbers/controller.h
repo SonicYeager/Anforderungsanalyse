@@ -1,4 +1,5 @@
 #pragma once
 #include <string>
+#include <vector>
 
-void Convert(const std::string& args);
+void Convert(const std::vector<std::string>& args);

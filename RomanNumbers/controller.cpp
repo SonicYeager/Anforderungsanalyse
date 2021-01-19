@@ -2,7 +2,7 @@
 #include "Interactor.h"
 #include "console.h"
 
-void Convert(const std::string& args)
+void Convert(const std::vector<std::string>& args)
 {
 	auto onRes = [](const std::string& res) { PrintResult(res); };
 	auto onErr = [](const std::string& err) { PrintError(err); };
