@@ -16,5 +16,8 @@
     <ClCompile Include="test_determineNumeric.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="test_cmdReader.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

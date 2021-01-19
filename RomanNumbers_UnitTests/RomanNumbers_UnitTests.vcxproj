@@ -144,6 +144,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="test_cmdReader.cpp" />
     <ClCompile Include="test_determineNumeric.cpp" />
     <ClCompile Include="test_converter.cpp" />
     <ClCompile Include="test_validator.cpp" />

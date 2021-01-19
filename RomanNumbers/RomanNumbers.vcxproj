@@ -213,6 +213,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="cmdReader.cpp" />
     <ClCompile Include="console.cpp" />
     <ClCompile Include="controller.cpp" />
     <ClCompile Include="converter.cpp" />
@@ -224,6 +225,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\RomanNumConverter\RomanConvert.h" />
+    <ClInclude Include="cmdReader.h" />
     <ClInclude Include="console.h" />
     <ClInclude Include="controller.h" />
     <ClInclude Include="converter.h" />
