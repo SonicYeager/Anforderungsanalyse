@@ -39,6 +39,9 @@
     <ClCompile Include="controller.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="fileReader.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="determineNumeric.h">
@@ -60,6 +63,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="controller.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="fileReader.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
