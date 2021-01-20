@@ -15,8 +15,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\App.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TimerSwitch.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\App.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Interactor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TimerSwitch.h" />
   </ItemGroup>
 </Project>

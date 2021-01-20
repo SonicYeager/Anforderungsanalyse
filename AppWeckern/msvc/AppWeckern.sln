@@ -7,20 +7,37 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppWeckern", "AppWeckern.vc
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppWeckern_Shared", "AppWeckern_Shared.vcxitems", "{B5F2F047-4CEA-4755-9734-FCF599042D4E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFramework", "..\TestFramework\GoogleMock\TestFramework.vcxitems", "{AAC85E24-C2BD-4A83-9DD9-48C57441C065}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppWeckern_UnitTests", "..\AppWeckern_UnitTests\AppWeckern_UnitTests.vcxproj", "{A8A52107-ADEE-4477-8C16-6AA252A07E74}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		AppWeckern_Shared.vcxitems*{25dbfc04-71ed-43f4-96f5-74b52760e1de}*SharedItemsImports = 4
+		..\TestFramework\GoogleMock\TestFramework.vcxitems*{aac85e24-c2bd-4a83-9dd9-48c57441c065}*SharedItemsImports = 9
 		AppWeckern_Shared.vcxitems*{b5f2f047-4cea-4755-9734-fcf599042d4e}*SharedItemsImports = 9
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Debug|x64.ActiveCfg = Debug|Win32
 		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Debug|x86.ActiveCfg = Release|Win32
 		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Debug|x86.Build.0 = Release|Win32
+		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Release|x64.ActiveCfg = Release|Win32
 		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Release|x86.ActiveCfg = Release|Win32
 		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Release|x86.Build.0 = Release|Win32
+		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Debug|x64.ActiveCfg = Debug|x64
+		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Debug|x64.Build.0 = Debug|x64
+		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Debug|x86.ActiveCfg = Debug|Win32
+		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Debug|x86.Build.0 = Debug|Win32
+		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Release|x64.ActiveCfg = Release|x64
+		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Release|x64.Build.0 = Release|x64
+		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Release|x86.ActiveCfg = Release|Win32
+		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
