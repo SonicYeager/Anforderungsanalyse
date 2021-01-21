@@ -1,14 +1,14 @@
 #pragma once
 #include "Interactor.h"
+#include "UI.h"
 
 class App
 {
 public:
-	App(/*UI and INTER*/);
-
+	explicit App(UI&, Interactor&);
 	void Run();
 
 private:
-	//AppWeckernDlg* dlg{};
-	//Interactor* inter;
+	UI& p_ui;
+	Interactor& p_inter;
 };

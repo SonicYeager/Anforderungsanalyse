@@ -1,14 +1,16 @@
 #include "App.h"
 
-App::App()
+App::App(UI& ui, Interactor& inter)
+	: p_ui(ui)
+	, p_inter(inter)
 {
 	// TODO: Hier Code zur Integration einfügen
-	//auto presentTime = inter.InitApp();
-	//this->dlg->SetPresentTime(presentTime);
+	p_ui.Init();
 }
 
 void App::Run()
 {
 	//App starten
-	//dlg->DoModal();  not here
+	auto presentTime = p_inter.InitApp();
+	this->p_ui.SetPresentTime(presentTime);
 }

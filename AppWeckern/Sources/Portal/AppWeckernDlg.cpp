@@ -10,13 +10,17 @@ BOOL AppWeckernDlg::OnInitDialog()
 {
 	auto ret = __super::OnInitDialog();
 	//DO INIT HERE (ITEMS)
-	SetPresentTime("Works");
 	return ret;
 }
 
-void AppWeckernDlg::SetPresentTime(const std::string& presentTime) //should be part of interface
+void AppWeckernDlg::SetPresentTime(const std::string& presentTime)
 {
 	SetDlgItemTextA(presentTime_lbl, presentTime.c_str());
+}
+
+void AppWeckernDlg::Init()
+{
+	DoModal();
 }
 
 BEGIN_MESSAGE_MAP(AppWeckernDlg, CDialogEx)
