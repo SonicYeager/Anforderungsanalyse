@@ -5,6 +5,7 @@
 AppWeckernDlg::AppWeckernDlg()
 	: CDialogEx(IDD_APPWECKERN_DIALOG, nullptr)
 {
+
 }
 
 BEGIN_MESSAGE_MAP(AppWeckernDlg, CDialogEx)
