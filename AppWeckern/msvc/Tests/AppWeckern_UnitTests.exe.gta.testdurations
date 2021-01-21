@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GtaTestDurations xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Executable>H:\Repositories\Anforderungsanalyse\AppWeckern\msvc\Tests\AppWeckern_UnitTests.exe</Executable>
+  <TestDurations>
+    <TestDuration Test="TestFormatter.FormatTime_10am40min30sec_ReturnFormattedHHMMSS104020" Duration="1" />
+    <TestDuration Test="TestFormatter.FormatTime_00am02min59sec_ReturnFormattedHHMMSS000259" Duration="1" />
+    <TestDuration Test="TestFormatter.FormatTime_00am00min00sec_ReturnFormattedHHMMSS000000" Duration="1" />
+  </TestDurations>
+</GtaTestDurations>
