@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFramework", "..\TestFra
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppWeckern_UnitTests", "..\AppWeckern_UnitTests\AppWeckern_UnitTests.vcxproj", "{A8A52107-ADEE-4477-8C16-6AA252A07E74}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppWeckern_IntegrationTests", "..\AppWeckern_IntegrationTests\AppWeckern_IntegrationTests.vcxproj", "{20EAF72F-5C87-4242-A222-72E55B830B9C}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		AppWeckern_Shared.vcxitems*{25dbfc04-71ed-43f4-96f5-74b52760e1de}*SharedItemsImports = 4
@@ -45,6 +47,18 @@ Global
 		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Release|x64.ActiveCfg = Release|x64
 		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Release|x64.Build.0 = Release|x64
 		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Release|x86.ActiveCfg = Release|Win32
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Debug|x64.ActiveCfg = Debug|x64
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Debug|x64.Build.0 = Debug|x64
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Debug|x86.ActiveCfg = Debug|Win32
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Debug|x86.Build.0 = Debug|Win32
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Lib|x64.ActiveCfg = Debug|x64
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Lib|x64.Build.0 = Debug|x64
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Lib|x86.ActiveCfg = Debug|Win32
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Lib|x86.Build.0 = Debug|Win32
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Release|x64.ActiveCfg = Release|x64
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Release|x64.Build.0 = Release|x64
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Release|x86.ActiveCfg = Release|Win32
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

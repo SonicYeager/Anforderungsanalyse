@@ -15,12 +15,17 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\App.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Formatter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Interactor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TimeHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\App.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)FormatLogic.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Formatter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Interactor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TimeHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TimeRessource.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.h" />
   </ItemGroup>
 </Project>

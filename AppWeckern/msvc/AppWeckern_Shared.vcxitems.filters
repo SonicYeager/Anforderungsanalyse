@@ -1,24 +1,47 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Provider">
-      <UniqueIdentifier>{ab035ace-689f-4137-8189-f690caee05c3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core">
-      <UniqueIdentifier>{a2495ed1-0356-4fd8-ab72-f1262c7a7b43}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Data">
-      <UniqueIdentifier>{560a7851-e336-4eb5-8e69-2af646fb67c8}</UniqueIdentifier>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\App.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)TimeHandler.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Interactor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TimeHandler.cpp">
+      <Filter>Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Formatter.cpp">
+      <Filter>Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Interactor.cpp">
+      <Filter>Interactor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\App.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)Interactor.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)TimeHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TimeRessource.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)UI.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FormatLogic.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TimeHandler.h">
+      <Filter>Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Formatter.h">
+      <Filter>Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Interactor.h">
+      <Filter>Interactor</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Interfaces">
+      <UniqueIdentifier>{0a3ef6ee-3a70-4dae-b428-d5d6f54512a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Impl">
+      <UniqueIdentifier>{6bcfc1ce-38f2-4cb8-bba1-12ef7b5c3d40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interactor">
+      <UniqueIdentifier>{760df77e-5d13-459d-8b60-ab6c40c3a704}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>
