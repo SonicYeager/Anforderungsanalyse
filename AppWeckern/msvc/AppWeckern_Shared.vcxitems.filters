@@ -8,7 +8,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Formatter.cpp">
       <Filter>Impl</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Interactor.cpp">
+    <ClCompile Include="H:\Repositories\Anforderungsanalyse\AppWeckern\msvc\AlarmClockInteractor.cpp">
       <Filter>Interactor</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,8 +29,11 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)Formatter.h">
       <Filter>Impl</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Interactor.h">
+    <ClInclude Include="$(MSBuildThisFileDirectory)AlarmClockInteractor.h">
       <Filter>Interactor</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Interactor.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -16,11 +16,12 @@
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\App.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Formatter.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)Interactor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AlarmClockInteractor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TimeHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\App.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AlarmClockInteractor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)FormatLogic.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Formatter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Interactor.h" />
