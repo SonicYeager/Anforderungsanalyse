@@ -7,8 +7,8 @@
 class AlarmClockInteractor : public Interactor
 {
 public:
-	AlarmClockInteractor(TimeRessource*, FormatLogic*); //UI?? - No
-	std::string InitApp();
+	explicit AlarmClockInteractor(TimeRessource*, FormatLogic*);
+	std::string InitApp() override;
 
 private:
 	TimeRessource* p_tr;
