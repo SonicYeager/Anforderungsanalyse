@@ -2,8 +2,9 @@
 #include <string>
 #include "TimeRessource.h"
 #include "FormatLogic.h"
+#include "Interactor.h"
 
-class AlarmClockInteractor
+class AlarmClockInteractor : public Interactor
 {
 public:
 	AlarmClockInteractor(TimeRessource*, FormatLogic*); //UI?? - No
