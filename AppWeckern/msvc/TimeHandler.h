@@ -1,9 +1,10 @@
 #pragma once
 #include <chrono>
 #include <string>
+#include "TimeRessource.h"
 
-class TimeHandler
+class TimeHandler : public TimeRessource
 {
 public:
-	std::string GetPresentTime();
+	tm* GetPresentTime();
 };
