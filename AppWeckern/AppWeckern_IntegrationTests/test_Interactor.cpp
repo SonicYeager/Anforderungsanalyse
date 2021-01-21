@@ -7,13 +7,12 @@
 class FakeTimeHandler : public TimeRessource
 {
 public:
-	tm* GetPresentTime() override
+	tm GetPresentTime() override
 	{
-		time_t now = time(0);
-		auto time = localtime(&now);
-		time->tm_hour = 13;
-		time->tm_min = 0;
-		time->tm_sec = 0;
+		std::tm time{};
+		time.tm_hour = 13;
+		time.tm_min = 0;
+		time.tm_sec = 0;
 		return time;
 	}
 };

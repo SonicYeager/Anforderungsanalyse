@@ -9,6 +9,6 @@ public:
 	void Run();
 
 private:
-	UI& p_ui;
-	Interactor& p_inter;
+	UI& ui;
+	Interactor& inter;
 };

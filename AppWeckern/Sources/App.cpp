@@ -1,16 +1,20 @@
 #include "App.h"
 
-App::App(UI& ui, Interactor& inter)
-	: p_ui(ui)
-	, p_inter(inter)
+App::App(UI& otherUi, Interactor& otherInter)
+	: ui(otherUi)
+	, inter(otherInter)
 {
 	// TODO: Hier Code zur Integration einfügen
-	p_ui.Init();
+	auto oninit = [this]() 
+	{
+		auto presentTime = inter.InitApp();
+		ui.SetPresentTime(presentTime);
+	};
+	ui.onInit = oninit;
 }
 
 void App::Run()
 {
 	//App starten
-	auto presentTime = p_inter.InitApp();
-	this->p_ui.SetPresentTime(presentTime);
+	ui.Init();
 }

@@ -6,5 +6,5 @@
 class TimeHandler : public TimeRessource
 {
 public:
-	tm* GetPresentTime();
+	tm GetPresentTime() override;
 };

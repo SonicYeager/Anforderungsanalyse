@@ -1,6 +1,8 @@
 #include "Program.h"
 #include "AppWeckernDlg.h"
 #include "Resource.h"
+#include <future>
+#include <thread>
 
 AppWeckernDlg::AppWeckernDlg()
 	: CDialogEx(IDD_APPWECKERN_DIALOG, nullptr)
@@ -10,6 +12,7 @@ BOOL AppWeckernDlg::OnInitDialog()
 {
 	auto ret = __super::OnInitDialog();
 	//DO INIT HERE (ITEMS)
+	onInit();
 	return ret;
 }
 

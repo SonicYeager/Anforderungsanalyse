@@ -14,7 +14,6 @@ BOOL AppWeckernApp::InitInstance()
 {
 	CWinApp::InitInstance();
 	// TODO: Hier Code zur Konstruktion einfügen, die Integration in App machen
-
 	TimeHandler th{};
 	Formatter f{};
 	AlarmClockInteractor inter{&th, &f};
