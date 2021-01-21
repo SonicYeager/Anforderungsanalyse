@@ -1,11 +1,15 @@
 #pragma once
+#include "AppWeckernDlg.h"
+#include "Interactor.h"
 
 class App
 {
 public:
-	App();
+	App(AppWeckernDlg&);
 
 	void Run();
 
 private:
+	AppWeckernDlg* dlg{};
+	Interactor inter{};
 };

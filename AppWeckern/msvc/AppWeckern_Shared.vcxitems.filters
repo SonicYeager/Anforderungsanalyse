@@ -8,7 +8,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Formatter.cpp">
       <Filter>Impl</Filter>
     </ClCompile>
-    <ClCompile Include="H:\Repositories\Anforderungsanalyse\AppWeckern\msvc\AlarmClockInteractor.cpp">
+    <ClCompile Include="$(MSBuildThisFileDirectory)AlarmClockInteractor.cpp">
       <Filter>Interactor</Filter>
     </ClCompile>
   </ItemGroup>

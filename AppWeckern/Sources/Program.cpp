@@ -1,5 +1,7 @@
 #include "Program.h"
 #include "App.h"
+#include "AppWeckernDlg.h"
+#include "Interactor.h"
 
 AppWeckernApp theApp;
 
@@ -11,7 +13,9 @@ BOOL AppWeckernApp::InitInstance()
 	CWinApp::InitInstance();
 	// TODO: Hier Code zur Konstruktion einfügen, die Integration in App machen
 
-	App app;
+	AppWeckernDlg dlg{};
+	Interactor inter{};
+	App app{dlg, inter};
 	app.Run();
 	return FALSE;
 }

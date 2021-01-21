@@ -7,7 +7,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test_TimerSwitch.cpp">
+    <ClCompile Include="test_Formatter.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
