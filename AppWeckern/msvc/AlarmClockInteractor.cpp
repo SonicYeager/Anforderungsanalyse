@@ -1,8 +1,13 @@
 #include "Interactor.h"
-#include "TimeHandler.h"
+#include "AlarmClockInteractor.h"
 
-std::string Interactor::InitApp()
+AlarmClockInteractor::AlarmClockInteractor(TimeRessource* tr, FormatLogic* fl)
+	: p_tr(tr)
+	, p_fl(fl)
+{}
+
+std::string AlarmClockInteractor::InitApp()
 {
-	TimeHandler th{};
-	return th.GetPresentTime();
+	auto tm = p_tr->GetPresentTime();
+	return p_fl->FormatTime(tm);
 }

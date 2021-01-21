@@ -4,5 +4,5 @@
 class Interactor
 {
 public:
-	virtual std::string InitApp(/*show dlg and set time event*/) = 0;
+	virtual std::string InitApp() = 0;
 };
