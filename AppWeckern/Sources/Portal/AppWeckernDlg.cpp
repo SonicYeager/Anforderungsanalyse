@@ -13,7 +13,14 @@ BOOL AppWeckernDlg::OnInitDialog()
 	auto ret = __super::OnInitDialog();
 	//DO INIT HERE (ITEMS)
 	onInit();
+	onStartTimer();
 	return ret;
+}
+
+void AppWeckernDlg::OnCancel()
+{
+	onStopTimer();
+	__super::OnCancel();
 }
 
 void AppWeckernDlg::SetPresentTime(const std::string& presentTime)

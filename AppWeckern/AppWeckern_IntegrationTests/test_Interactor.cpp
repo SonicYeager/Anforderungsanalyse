@@ -3,6 +3,7 @@
 #include "TimeRessource.h"
 #include "Formatter.h"
 #include "TimeHandler.h"
+#include "UI.h"
 
 class FakeTimeHandler : public TimeRessource
 {
@@ -17,19 +18,27 @@ public:
 	}
 	void StartTimer() override
 	{
-
+		for(size_t i{}; i < 5; ++i)
+		{
+			auto time = GetPresentTime();
+			onPresentTime(time);
+		}
 	}
-	void StopTimer() override
-	{
-
-	}
+	MOCK_METHOD(void, StopTimer, (), (override));
 };
 
-class FakeUI
+class FakeUI : public UI
 {
 public:
-	MOCK_METHOD(void, OnUpdate, (const std::string&));
-	MOCK_METHOD(bool, OnIsActive, ());
+	void Init() override
+	{
+		onStartTimer();
+	}
+	MOCK_METHOD(void, SetPresentTime, (const std::string&), (override));
+	~FakeUI()
+	{
+		onStopTimer();
+	}
 };
 
 TEST(TestAlarmClockInteractor, InitApp_1pmflat_Return13colon00colon00)
@@ -49,21 +58,11 @@ TEST(TestAlarmClockInteractor, UpdatePresentTime_1pmflat_CallOnUpdate13colon00co
 	Formatter f{};
 	AlarmClockInteractor aci{&fth, &f};
 	::testing::NiceMock<FakeUI> ui{};
-	EXPECT_CALL(ui, OnUpdate("13:00:00"));
-	EXPECT_CALL(ui, OnIsActive()).WillOnce(::testing::Return(true)).WillOnce(::testing::Return(false));
+	::testing::InSequence seq{};
+	ui.onStartTimer = [&aci]() { aci.StartTimer(); };
+	ui.onStopTimer = [&aci]() { aci.StopTimer(); };
+	aci.onUpdatePresentTime = [&ui](const std::string& str) { ui.SetPresentTime(str); };
+	ui.Init();
 
-	aci.UpdatePresentTime();
-}
-
-TEST(TestAlarmClockInteractor, UpdatePresentTime_SingleOnUpdateCall_CallOnIsActiveCalledTwice)
-{
-	FakeTimeHandler fth{};
-	Formatter f{};
-	AlarmClockInteractor aci{&fth, &f};
-	::testing::InSequence seq;
-	::testing::NiceMock<FakeUI> ui{};
-	EXPECT_CALL(ui, OnIsActive()).WillOnce(::testing::Return(true));
-	EXPECT_CALL(ui, OnIsActive()).WillOnce(::testing::Return(false));
-
-	aci.UpdatePresentTime();
+	EXPECT_CALL(ui, SetPresentTime("13:00:00")).Times(::testing::AtLeast(1));
 }

@@ -8,8 +8,9 @@ class AlarmClockInteractor : public Interactor
 {
 public:
 	explicit AlarmClockInteractor(TimeRessource*, FormatLogic*);
+	void StartTimer() override;
+	void StopTimer() override;
 	std::string InitApp() override;
-	void UpdatePresentTime(tm) override;
 
 private:
 	TimeRessource* p_tr;

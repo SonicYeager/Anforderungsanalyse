@@ -28,7 +28,7 @@ void TimeHandler::StartTimer()
 	};
 
 	timerRunning = true;
-	auto thread = std::thread(this, presentTime);
+	auto thread = std::thread(presentTime);
 	thread.detach();
 }
 

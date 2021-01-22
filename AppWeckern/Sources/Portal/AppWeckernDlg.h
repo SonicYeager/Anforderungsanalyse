@@ -14,6 +14,7 @@ public:
 
 protected:
 	BOOL OnInitDialog() override;
+	void OnCancel() override;
 
 #ifdef AFX_DESIGN_TIME
 	enum
