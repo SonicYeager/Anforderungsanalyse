@@ -4,5 +4,7 @@
   <TestDurations>
     <TestDuration Test="TestAlarmClockInteractor.InitApp_1pmflat_Return13colon00colon00" Duration="1" />
     <TestDuration Test="TestAlarmClockInteractor.testy" Duration="1" />
+    <TestDuration Test="TestAlarmClockInteractor.UpdatePresentTime_1pmflat_CallOnUpdate13colon00colon00" Duration="1" />
+    <TestDuration Test="TestAlarmClockInteractor.UpdatePresentTime_SingleOnUpdateCall_CallOnIsActiveCalledTwice" Duration="1" />
   </TestDurations>
 </GtaTestDurations>
