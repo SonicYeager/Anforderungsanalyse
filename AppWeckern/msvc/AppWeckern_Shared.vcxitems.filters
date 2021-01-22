@@ -11,6 +11,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)AlarmClockInteractor.cpp">
       <Filter>Interactor</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)TimeOperations.cpp">
+      <Filter>Impl</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\App.h" />
@@ -33,6 +36,15 @@
       <Filter>Interactor</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)Interactor.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TimeLogic.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)TimeOperations.h">
+      <Filter>Impl</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)SharedDataTypes.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>

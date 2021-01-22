@@ -18,6 +18,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Formatter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AlarmClockInteractor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TimeHandler.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)TimeOperations.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\App.h" />
@@ -25,7 +26,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)FormatLogic.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Formatter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Interactor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SharedDataTypes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TimeHandler.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TimeLogic.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)TimeOperations.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TimeRessource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.h" />
   </ItemGroup>

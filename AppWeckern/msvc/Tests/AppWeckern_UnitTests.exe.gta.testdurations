@@ -5,5 +5,10 @@
     <TestDuration Test="TestFormatter.FormatTime_10am40min30sec_ReturnFormattedHHMMSS104020" Duration="1" />
     <TestDuration Test="TestFormatter.FormatTime_00am02min59sec_ReturnFormattedHHMMSS000259" Duration="1" />
     <TestDuration Test="TestFormatter.FormatTime_00am00min00sec_ReturnFormattedHHMMSS000000" Duration="1" />
+    <TestDuration Test="TestTimeOperations.DetermineAlarm_ALARMTYPEIsAlarmClock_CallOnAlarmClock" Duration="1" />
+    <TestDuration Test="TestTimeOperations.DetermineAlarm_ALARMTYPEIsAlarmTimer_CallOnAlarmTimer" Duration="1" />
+    <TestDuration Test="TestTimeOperations.CalculateTimer_13pmFlatActualTime15pmWakeTime_Return2hTimer" Duration="1" />
+    <TestDuration Test="TestTimeOperations.CalculateTimer_13pmFlatActualTime8amWakeTimeNextDay_Return19hTimer" Duration="1" />
+    <TestDuration Test="TestTimeOperations.CalculateTimer_13pm15min30secActualTime14am30min00secWakeTimeNextDay_Return1h14min30secTimer" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

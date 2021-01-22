@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <functional>
+#include "SharedDataTypes.h"
 
 class UI
 {
@@ -12,4 +13,5 @@ public:
 	std::function<void()> onInit;
 	std::function<void()> onStartTimer;
 	std::function<void()> onStopTimer;
+	std::function<void(ALARMTYPE, tm)> onStartAlarm;
 };

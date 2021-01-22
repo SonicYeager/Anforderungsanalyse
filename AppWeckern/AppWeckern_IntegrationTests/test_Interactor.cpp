@@ -25,6 +25,7 @@ public:
 		}
 	}
 	MOCK_METHOD(void, StopTimer, (), (override));
+	MOCK_METHOD(void, StartAlarmTimer,(),(override));
 };
 
 class FakeUI : public UI
