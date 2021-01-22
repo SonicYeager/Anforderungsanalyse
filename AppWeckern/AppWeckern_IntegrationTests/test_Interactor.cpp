@@ -62,7 +62,7 @@ TEST(TestAlarmClockInteractor, UpdatePresentTime_1pmflat_CallOnUpdate13colon00co
 	ui.onStartTimer = [&aci]() { aci.StartTimer(); };
 	ui.onStopTimer = [&aci]() { aci.StopTimer(); };
 	aci.onUpdatePresentTime = [&ui](const std::string& str) { ui.SetPresentTime(str); };
-	ui.Init();
-
 	EXPECT_CALL(ui, SetPresentTime("13:00:00")).Times(::testing::AtLeast(1));
+
+	ui.Init();
 }
