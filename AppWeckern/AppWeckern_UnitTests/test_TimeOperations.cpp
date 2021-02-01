@@ -1,11 +1,22 @@
 #include "gmock/gmock.h"
 #include "TimeOperations.h"
+#include <ostream>
 
 struct FakeCallee
 {
 	MOCK_METHOD(void, OnAlarmClock, ());
 	MOCK_METHOD(void, OnAlarmTimer, ());
 };
+
+bool operator==(const tm& left, const tm& right)
+{
+	return left.tm_hour == right.tm_hour && left.tm_min == right.tm_min && left.tm_sec == right.tm_sec;
+}
+
+std::ostream& operator<<(std::ostream& os, const tm& time)
+{
+	return os << std::to_string(time.tm_hour) << ":" <<std::to_string(time.tm_min) << ":" << std::to_string(time.tm_sec);
+}
 
 TEST(TestTimeOperations, DetermineAlarm_ALARMTYPEIsAlarmClock_CallOnAlarmClock)
 {
@@ -73,5 +84,5 @@ TEST(TestTimeOperations, CalculateTimer_13pm15min30secActualTime14am30min00secWa
 
 	auto actual = to.CalculateTimer(actualTime, wakeTime);
 
-	EXPECT_EQ(actual.tm_hour, expected.tm_hour);
+	EXPECT_EQ(actual, expected);
 }
