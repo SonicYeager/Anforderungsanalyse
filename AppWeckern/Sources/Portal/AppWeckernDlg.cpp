@@ -11,6 +11,9 @@ AppWeckernDlg::AppWeckernDlg()
 BOOL AppWeckernDlg::OnInitDialog()
 {
 	auto ret = __super::OnInitDialog();
+	CheckDlgButton(weckzeit_rbtn, BST_CHECKED);
+	SetDlgItemTextA(weckzeit_tbx, "0:00");
+	SetDlgItemTextA(wakeUpTime_tbx, "0:00");
 	//DO INIT HERE (ITEMS)
 	onInit();
 	onStartTimer();
