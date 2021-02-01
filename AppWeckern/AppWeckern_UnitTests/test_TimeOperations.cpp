@@ -42,14 +42,20 @@ TEST(TestTimeOperations, CalculateTimer_13pmFlatActualTime15pmWakeTime_Return2hT
 	TimeOperations to{};
 	tm actualTime{};
 	actualTime.tm_hour = 13;
+	actualTime.tm_min = 0;
+	actualTime.tm_sec = 0;
 	tm wakeTime{};
 	wakeTime.tm_hour = 15;
+	wakeTime.tm_min = 0;
+	wakeTime.tm_sec = 0;
 	tm expected{};
 	expected.tm_hour = 2;
+	expected.tm_min = 0;
+	expected.tm_sec = 0;
 
 	auto actual = to.CalculateTimer(actualTime, wakeTime);
 
-	EXPECT_EQ(actual.tm_hour, expected.tm_hour);
+	EXPECT_EQ(actual, expected);
 }
 
 TEST(TestTimeOperations, CalculateTimer_13pmFlatActualTime8amWakeTimeNextDay_Return19hTimer)
@@ -57,14 +63,20 @@ TEST(TestTimeOperations, CalculateTimer_13pmFlatActualTime8amWakeTimeNextDay_Ret
 	TimeOperations to{};
 	tm actualTime{};
 	actualTime.tm_hour = 13;
+	actualTime.tm_min = 0;
+	actualTime.tm_sec = 0;
 	tm wakeTime{};
 	wakeTime.tm_hour = 8;
+	wakeTime.tm_min = 0;
+	wakeTime.tm_sec = 0;
 	tm expected{};
 	expected.tm_hour = 19;
+	expected.tm_min = 0;
+	expected.tm_sec = 0;
 
 	auto actual = to.CalculateTimer(actualTime, wakeTime);
 
-	EXPECT_EQ(actual.tm_hour, expected.tm_hour);
+	EXPECT_EQ(actual, expected);
 }
 
 TEST(TestTimeOperations, CalculateTimer_13pm15min30secActualTime14am30min00secWakeTimeNextDay_Return1h14min30secTimer)
@@ -77,6 +89,7 @@ TEST(TestTimeOperations, CalculateTimer_13pm15min30secActualTime14am30min00secWa
 	tm wakeTime{};
 	wakeTime.tm_hour = 14;
 	wakeTime.tm_min = 30;
+	wakeTime.tm_sec = 00;
 	tm expected{};
 	expected.tm_hour = 1;
 	expected.tm_min = 14;

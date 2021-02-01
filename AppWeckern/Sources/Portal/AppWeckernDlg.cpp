@@ -16,14 +16,14 @@ BOOL AppWeckernDlg::OnInitDialog()
 	SetDlgItemTextA(wakeUpTime_tbx, "0:00");
 	//DO INIT HERE (ITEMS)
 	onInit();
-	onStartTimer();
+	onUIReady();
 	return ret;
 }
 
-void AppWeckernDlg::OnCancel()
+void AppWeckernDlg::OnDestroy()
 {
-	onStopTimer();
-	__super::OnCancel();
+	onUIShutdown();
+	__super::OnDestroy();
 }
 
 void AppWeckernDlg::SetPresentTime(const std::string& presentTime)
@@ -37,6 +37,7 @@ void AppWeckernDlg::Init()
 }
 
 BEGIN_MESSAGE_MAP(AppWeckernDlg, CDialogEx)
+ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 //eventually Helpfull methods

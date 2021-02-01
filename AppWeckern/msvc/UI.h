@@ -11,7 +11,7 @@ public:
 	virtual ~UI() = default;
 
 	std::function<void()> onInit;
-	std::function<void()> onStartTimer;
-	std::function<void()> onStopTimer;
+	std::function<void()> onUIReady;
+	std::function<void()> onUIShutdown;
 	std::function<void(ALARMTYPE, tm)> onStartAlarm;
 };

@@ -11,8 +11,8 @@ App::App(UI& otherUi, Interactor& otherInter)
 		ui.SetPresentTime(presentTime);
 	};
 	ui.onInit = oninit;
-	ui.onStartTimer = [this]() { inter.StartTimer(); };
-	ui.onStopTimer = [this]() { inter.StopTimer(); };
+	ui.onUIReady = [this]() { inter.StartTimer(); };
+	ui.onUIShutdown = [this]() { inter.StopTimer(); };
 	inter.onUpdatePresentTime = [this](const std::string& str) { ui.SetPresentTime(str); };
 }
 
