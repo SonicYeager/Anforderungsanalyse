@@ -34,3 +34,8 @@ void TimeHandler::StopTimer()
 {
 	timerRunning = false;
 }
+
+TimeHandler::~TimeHandler()
+{
+	timeThread.join();
+}
