@@ -10,5 +10,6 @@
     <TestDuration Test="TestTimeOperations.CalculateTimer_13pmFlatActualTime15pmWakeTime_Return2hTimer" Duration="1" />
     <TestDuration Test="TestTimeOperations.CalculateTimer_13pmFlatActualTime8amWakeTimeNextDay_Return19hTimer" Duration="1" />
     <TestDuration Test="TestTimeOperations.CalculateTimer_13pm15min30secActualTime14am30min00secWakeTimeNextDay_Return1h14min30secTimer" Duration="1" />
+    <TestDuration Test="TestTimeOperations.CalculateTimer_CornerCase_ReturnNotAnyMinusH" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

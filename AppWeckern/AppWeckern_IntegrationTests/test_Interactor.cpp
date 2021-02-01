@@ -33,12 +33,12 @@ class FakeUI : public UI
 public:
 	void Init() override
 	{
-		onStartTimer();
+		onUIReady();
 	}
 	MOCK_METHOD(void, SetPresentTime, (const std::string&), (override));
 	~FakeUI()
 	{
-		onStopTimer();
+		onUIShutdown();
 	}
 };
 
@@ -60,8 +60,8 @@ TEST(TestAlarmClockInteractor, UpdatePresentTime_1pmflat_CallOnUpdate13colon00co
 	AlarmClockInteractor aci{&fth, &f};
 	::testing::NiceMock<FakeUI> ui{};
 	::testing::InSequence seq{};
-	ui.onStartTimer = [&aci]() { aci.StartTimer(); };
-	ui.onStopTimer = [&aci]() { aci.StopTimer(); };
+	ui.onUIReady = [&aci]() { aci.StartTimer(); };
+	ui.onUIShutdown = [&aci]() { aci.StopTimer(); };
 	aci.onUpdatePresentTime = [&ui](const std::string& str) { ui.SetPresentTime(str); };
 	EXPECT_CALL(ui, SetPresentTime("13:00:00")).Times(::testing::AtLeast(1));
 

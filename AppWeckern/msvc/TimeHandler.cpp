@@ -27,7 +27,7 @@ void TimeHandler::StartTimer()
 	};
 
 	timerRunning = true;
-	timeThread = std::thread(this, presentTime);
+	timeThread = std::thread(presentTime);
 }
 
 void TimeHandler::StopTimer()
