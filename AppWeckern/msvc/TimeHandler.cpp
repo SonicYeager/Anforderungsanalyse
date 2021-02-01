@@ -1,6 +1,5 @@
 #include "TimeHandler.h"
 #include <ctime>
-#include <thread>
 #include <chrono>
 
 using namespace std::chrono_literals;
@@ -28,8 +27,7 @@ void TimeHandler::StartTimer()
 	};
 
 	timerRunning = true;
-	auto thread = std::thread(presentTime);
-	thread.detach();
+	timeThread = std::thread(this, presentTime);
 }
 
 void TimeHandler::StopTimer()

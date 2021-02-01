@@ -13,6 +13,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppWeckern_UnitTests", "..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppWeckern_IntegrationTests", "..\AppWeckern_IntegrationTests\AppWeckern_IntegrationTests.vcxproj", "{20EAF72F-5C87-4242-A222-72E55B830B9C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{079B8F07-983D-436B-92CB-F9062C2244F2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{3E4CD2D8-032A-49F4-9AC4-4C940B2A26F0}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		AppWeckern_Shared.vcxitems*{20eaf72f-5c87-4242-a222-72e55b830b9c}*SharedItemsImports = 4
@@ -26,6 +30,8 @@ Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
+		Lib|x64 = Lib|x64
+		Lib|x86 = Lib|x86
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 		Tests|x64 = Tests|x64
@@ -36,6 +42,9 @@ Global
 		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Debug|x64.Build.0 = Debug|Win32
 		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Debug|x86.ActiveCfg = Debug|Win32
 		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Debug|x86.Build.0 = Debug|Win32
+		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Lib|x64.ActiveCfg = Lib|Win32
+		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Lib|x86.ActiveCfg = Lib|Win32
+		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Lib|x86.Build.0 = Lib|Win32
 		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Release|x64.ActiveCfg = Release|Win32
 		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Release|x64.Build.0 = Release|Win32
 		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Release|x86.ActiveCfg = Release|Win32
@@ -44,6 +53,10 @@ Global
 		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Tests|x86.ActiveCfg = Tests|Win32
 		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Debug|x64.ActiveCfg = Debug|Win32
 		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Debug|x86.ActiveCfg = Debug|Win32
+		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Lib|x64.ActiveCfg = Lib|x64
+		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Lib|x64.Build.0 = Lib|x64
+		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Lib|x86.ActiveCfg = Lib|Win32
+		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Lib|x86.Build.0 = Lib|Win32
 		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Release|x64.ActiveCfg = Release|Win32
 		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Release|x86.ActiveCfg = Release|Win32
 		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Tests|x64.ActiveCfg = Tests|x64
@@ -52,6 +65,10 @@ Global
 		{A8A52107-ADEE-4477-8C16-6AA252A07E74}.Tests|x86.Build.0 = Tests|Win32
 		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Debug|x64.ActiveCfg = Debug|Win32
 		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Debug|x86.ActiveCfg = Debug|Win32
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Lib|x64.ActiveCfg = Debug|x64
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Lib|x64.Build.0 = Debug|x64
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Lib|x86.ActiveCfg = Tests|Win32
+		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Lib|x86.Build.0 = Tests|Win32
 		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Release|x64.ActiveCfg = Release|Win32
 		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Release|x86.ActiveCfg = Release|Win32
 		{20EAF72F-5C87-4242-A222-72E55B830B9C}.Tests|x64.ActiveCfg = Tests|x64
@@ -61,6 +78,13 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{25DBFC04-71ED-43F4-96F5-74B52760E1DE} = {3E4CD2D8-032A-49F4-9AC4-4C940B2A26F0}
+		{B5F2F047-4CEA-4755-9734-FCF599042D4E} = {3E4CD2D8-032A-49F4-9AC4-4C940B2A26F0}
+		{AAC85E24-C2BD-4A83-9DD9-48C57441C065} = {079B8F07-983D-436B-92CB-F9062C2244F2}
+		{A8A52107-ADEE-4477-8C16-6AA252A07E74} = {079B8F07-983D-436B-92CB-F9062C2244F2}
+		{20EAF72F-5C87-4242-A222-72E55B830B9C} = {079B8F07-983D-436B-92CB-F9062C2244F2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FA7397B5-E16E-415D-84C8-61B07D25957A}
