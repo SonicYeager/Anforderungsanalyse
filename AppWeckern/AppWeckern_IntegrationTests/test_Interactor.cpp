@@ -4,6 +4,7 @@
 #include "Formatter.h"
 #include "TimeHandler.h"
 #include "UI.h"
+#include "TimeOperations.h"
 
 class FakeTimeHandler : public TimeRessource
 {
@@ -46,7 +47,8 @@ TEST(TestAlarmClockInteractor, InitApp_1pmflat_Return13colon00colon00)
 {
 	FakeTimeHandler fth{};
 	Formatter f{};
-	AlarmClockInteractor aci{&fth, &f};
+	TimeOperations tr{};
+	AlarmClockInteractor aci{&tr, &fth, &f};
 
 	auto actual = aci.InitApp();
 
@@ -57,7 +59,8 @@ TEST(TestAlarmClockInteractor, UpdatePresentTime_1pmflat_CallOnUpdate13colon00co
 {
 	FakeTimeHandler fth{};
 	Formatter f{};
-	AlarmClockInteractor aci{&fth, &f};
+	TimeOperations tr{};
+	AlarmClockInteractor aci{&tr, &fth, &f};
 	::testing::NiceMock<FakeUI> ui{};
 	::testing::InSequence seq{};
 	ui.onUIReady = [&aci]() { aci.StartTimer(); };
@@ -66,4 +69,36 @@ TEST(TestAlarmClockInteractor, UpdatePresentTime_1pmflat_CallOnUpdate13colon00co
 	EXPECT_CALL(ui, SetPresentTime("13:00:00")).Times(::testing::AtLeast(1));
 
 	ui.Init();
+}
+
+TEST(TestAlarmClockInteractor, StartRemainingTimer_1pmflatAlarmClockFor3pm_Return02colon00colon00)
+{
+	FakeTimeHandler fth{};
+	Formatter f{};
+	TimeOperations tr{};
+	AlarmClockInteractor aci{&tr, &fth, &f};
+	tm wakeTime{};
+	wakeTime.tm_hour = 15;
+	wakeTime.tm_min = 0;
+	wakeTime.tm_sec = 0;
+
+	auto actual = aci.StartRemainingTimer(ALARMTYPE::ALARMCLOCK, wakeTime);
+
+	EXPECT_EQ(actual, "02:00:00");
+}
+
+TEST(TestAlarmClockInteractor, StartRemainingTimer_1pmflatAlarmTimerIn3h_Return03colon00colon00)
+{
+	FakeTimeHandler fth{};
+	Formatter f{};
+	TimeOperations tr{};
+	AlarmClockInteractor aci{&tr, &fth, &f};
+	tm wakeTimer{};
+	wakeTimer.tm_hour = 3;
+	wakeTimer.tm_min = 0;
+	wakeTimer.tm_sec = 0;
+
+	auto actual = aci.StartRemainingTimer(ALARMTYPE::ALARMTIMER, wakeTimer);
+
+	EXPECT_EQ(actual, "03:00:00");
 }
