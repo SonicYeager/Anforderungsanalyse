@@ -11,6 +11,7 @@ AlarmClockInteractor::AlarmClockInteractor(TimeLogic* tl, TimeRessource* tr, Con
 	{
 		auto formatted = p_fl->TimeToString(t);
 		onUpdatePresentTime(formatted);
+		//remaining time (bool controlled)
 	};
 	p_tr->onPresentTime = onUpdate;
 }
@@ -25,19 +26,24 @@ void AlarmClockInteractor::StopTimer()
 	p_tr->StopTimer();
 }
 
-std::string AlarmClockInteractor::StartRemainingTimer(ALARMTYPE type, const tm& wakeTime)
+std::string AlarmClockInteractor::StartRemainingTimer(ALARMTYPE type, const std::string& wakeTime)
 {
-	std::string result;
-	auto onAlarmClock = [this, wakeTime, &result]()
+	std::string result{};
+	tm res{};
+	auto converted = p_fl->StringToTime(wakeTime);
+	auto onAlarmClock = [this, converted, &res]()
 	{
 		auto time = p_tr->GetPresentTime();
-		auto res = p_tl->CalculateTimer(time, wakeTime);
-		result = p_fl->TimeToString(res);
+		res = p_tl->CalculateTimer(time, converted);
 	};
 
-	auto onAlarmTimer = [this, wakeTime, &result]() { result = p_fl->TimeToString(wakeTime); };
+	auto onAlarmTimer = [this, converted, &res]() 
+	{
+		res = converted; 
+	};
 
 	p_tl->DetermineAlarm(type, onAlarmClock, onAlarmTimer);
+	result = p_fl->TimeToString(res);
 	return result;
 }
 

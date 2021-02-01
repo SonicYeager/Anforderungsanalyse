@@ -11,5 +11,18 @@
     <TestDuration Test="TestTimeOperations.CalculateTimer_13pmFlatActualTime8amWakeTimeNextDay_Return19hTimer" Duration="1" />
     <TestDuration Test="TestTimeOperations.CalculateTimer_13pm15min30secActualTime14am30min00secWakeTimeNextDay_Return1h14min30secTimer" Duration="1" />
     <TestDuration Test="TestTimeOperations.CalculateTimer_CornerCase_ReturnNotAnyMinusH" Duration="1" />
+    <TestDuration Test="TestConverter.TimeToString_10am40min30sec_ReturnConvertedHHMMSS104020" Duration="1" />
+    <TestDuration Test="TestConverter.TimeToString_00am02min59sec_ReturnConvertedHHMMSS000259" Duration="1" />
+    <TestDuration Test="TestConverter.TimeToString_00am00min00sec_ReturnConvertedHHMMSS000000" Duration="1" />
+    <TestDuration Test="TestConverter.StringToTime_HHMMSS1040_ReturnConverted10am40min00sec" Duration="1" />
+    <TestDuration Test="TestConverter.StringToTime_HHMMSS000200_ReturnConverted00am02min00sec" Duration="1" />
+    <TestDuration Test="TestConverter.StringToTime_HHMMSS000000_ReturnConverted00am00min00sec" Duration="1" />
+    <TestDuration Test="TestConverter.StringToTime_HMM730_ReturnConverted7am30min00sec" Duration="1" />
+    <TestDuration Test="TestTimeOperations.CalculateTimer_13pmFlatActualTime15pmWakeTime_Return2h" Duration="1" />
+    <TestDuration Test="TestTimeOperations.CalculateTimer_13pmFlatActualTime8amWakeTimeNextDay_Return19h" Duration="1" />
+    <TestDuration Test="TestTimeOperations.CalculateTimer_13pm15min30secActualTime14am30min00secWakeTimeNextDay_Return1h14min30sec" Duration="1" />
+    <TestDuration Test="TestTimeOperations.CalculateTimer_14pm58min00secActualTime17am00min00secWakeUpTime_Return2h2min0sec" Duration="1" />
+    <TestDuration Test="TestTimeOperations.CalculateTimer_13pm15min30secActualTime14am30min00secWakeTime_Return1h14min30sec" Duration="1" />
+    <TestDuration Test="TestTimeOperations.CalculateTimer_15pm00min00secActualTime7am30min00secWakeTimeNextDay_Return16h30min00sec" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

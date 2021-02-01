@@ -33,23 +33,17 @@ void AppWeckernDlg::StartAlarmTimer()
 	GetDlgItem(remainingTimeIdentifier_lbl)->ShowWindow(SW_SHOW);
 	GetDlgItem(stop_btn)->ShowWindow(SW_SHOW);
 	GetDlgItem(start_btn)->ShowWindow(SW_HIDE);
-	tm time{};
-	time.tm_hour = 12;
-	time.tm_min = 55;
-	time.tm_sec = 34;
+	CString str{};
 	if(IsDlgButtonChecked(weckzeit_rbtn))
 	{
-		CString str{};
 		GetDlgItemTextA(weckzeit_tbx, str);
-		onStartAlarm(ALARMTYPE::ALARMCLOCK, time);
+		onStartAlarm(ALARMTYPE::ALARMCLOCK, std::string(str));
 	}
 	else
 	{
-		CString str{};
-		GetDlgItemTextA(weckzeit_tbx, str);
-		onStartAlarm(ALARMTYPE::ALARMTIMER, time);
+		GetDlgItemTextA(wakeUpTime_tbx, str);
+		onStartAlarm(ALARMTYPE::ALARMTIMER, std::string(str));
 	}
-
 }
 
 void AppWeckernDlg::SetPresentTime(const std::string& presentTime)

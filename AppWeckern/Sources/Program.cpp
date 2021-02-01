@@ -3,7 +3,7 @@
 #include "AppWeckernDlg.h"
 #include "AlarmClockInteractor.h"
 #include "TimeHandler.h"
-#include "Formatter.h"
+#include "Converter.h"
 #include "TimeOperations.h"
 
 AppWeckernApp theApp;
@@ -16,7 +16,7 @@ BOOL AppWeckernApp::InitInstance()
 	CWinApp::InitInstance();
 	// TODO: Hier Code zur Konstruktion einfügen, die Integration in App machen
 	TimeHandler th{};
-	Formatter f{};
+	Converter f{};
 	TimeOperations to{};
 	AlarmClockInteractor inter{&to, &th, &f};
 	AppWeckernDlg dlg{};

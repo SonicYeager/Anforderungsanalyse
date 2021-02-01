@@ -9,7 +9,13 @@ std::string Converter::TimeToString(std::tm ltm)
 	return presentTime;
 }
 
-std::tm Converter::StringToTime(const std::string&)
+std::tm Converter::StringToTime(const std::string& time)
 {
-	return std::tm();
+	auto hpart = time.substr(0, time.find(":"));
+	auto mpart = time.substr(time.find(":")+1);
+	tm result{};
+	result.tm_hour = std::stoi(hpart);
+	result.tm_min = std::stoi(mpart);
+	result.tm_sec = 00;
+	return result;
 }

@@ -1,7 +1,7 @@
 #include "gmock/gmock.h"
 #include "AlarmClockInteractor.h"
 #include "TimeRessource.h"
-#include "Formatter.h"
+#include "Converter.h"
 #include "TimeHandler.h"
 #include "UI.h"
 #include "TimeOperations.h"
@@ -26,7 +26,7 @@ public:
 		}
 	}
 	MOCK_METHOD(void, StopTimer, (), (override));
-	MOCK_METHOD(void, StartAlarmTimer,(),(override));
+	//MOCK_METHOD(void, StartAlarmTimer,(),(override));
 };
 
 class FakeUI : public UI
@@ -37,6 +37,7 @@ public:
 		onUIReady();
 	}
 	MOCK_METHOD(void, SetPresentTime, (const std::string&), (override));
+	MOCK_METHOD(void, SetRemainingTime, (const std::string&), (override));
 	~FakeUI()
 	{
 		onUIShutdown();
@@ -46,7 +47,7 @@ public:
 TEST(TestAlarmClockInteractor, InitApp_1pmflat_Return13colon00colon00)
 {
 	FakeTimeHandler fth{};
-	Formatter f{};
+	Converter f{};
 	TimeOperations tr{};
 	AlarmClockInteractor aci{&tr, &fth, &f};
 
@@ -58,7 +59,7 @@ TEST(TestAlarmClockInteractor, InitApp_1pmflat_Return13colon00colon00)
 TEST(TestAlarmClockInteractor, UpdatePresentTime_1pmflat_CallOnUpdate13colon00colon00)
 {
 	FakeTimeHandler fth{};
-	Formatter f{};
+	Converter f{};
 	TimeOperations tr{};
 	AlarmClockInteractor aci{&tr, &fth, &f};
 	::testing::NiceMock<FakeUI> ui{};
@@ -74,13 +75,10 @@ TEST(TestAlarmClockInteractor, UpdatePresentTime_1pmflat_CallOnUpdate13colon00co
 TEST(TestAlarmClockInteractor, StartRemainingTimer_1pmflatAlarmClockFor3pm_Return02colon00colon00)
 {
 	FakeTimeHandler fth{};
-	Formatter f{};
+	Converter f{};
 	TimeOperations tr{};
 	AlarmClockInteractor aci{&tr, &fth, &f};
-	tm wakeTime{};
-	wakeTime.tm_hour = 15;
-	wakeTime.tm_min = 0;
-	wakeTime.tm_sec = 0;
+	std::string wakeTime{"15:00"};
 
 	auto actual = aci.StartRemainingTimer(ALARMTYPE::ALARMCLOCK, wakeTime);
 
@@ -90,13 +88,10 @@ TEST(TestAlarmClockInteractor, StartRemainingTimer_1pmflatAlarmClockFor3pm_Retur
 TEST(TestAlarmClockInteractor, StartRemainingTimer_1pmflatAlarmTimerIn3h_Return03colon00colon00)
 {
 	FakeTimeHandler fth{};
-	Formatter f{};
+	Converter f{};
 	TimeOperations tr{};
 	AlarmClockInteractor aci{&tr, &fth, &f};
-	tm wakeTimer{};
-	wakeTimer.tm_hour = 3;
-	wakeTimer.tm_min = 0;
-	wakeTimer.tm_sec = 0;
+	std::string wakeTimer{"3:00"};
 
 	auto actual = aci.StartRemainingTimer(ALARMTYPE::ALARMTIMER, wakeTimer);
 

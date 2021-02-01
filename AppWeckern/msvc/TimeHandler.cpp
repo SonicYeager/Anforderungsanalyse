@@ -21,8 +21,11 @@ void TimeHandler::StartTimer()
 		while(timerRunning)
 		{
 			std::this_thread::sleep_for(1000ms);
-			auto time = GetPresentTime();
-			onPresentTime(time);
+			if(timerRunning)
+			{
+				auto time = GetPresentTime();
+				onPresentTime(time);
+			}
 		}
 	};
 

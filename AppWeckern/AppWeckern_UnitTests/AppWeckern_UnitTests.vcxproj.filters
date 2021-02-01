@@ -7,10 +7,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test_Formatter.cpp">
+    <ClCompile Include="test_TimeOperations.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="test_TimeOperations.cpp">
+    <ClCompile Include="test_Converter.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

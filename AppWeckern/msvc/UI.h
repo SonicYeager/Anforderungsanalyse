@@ -14,5 +14,5 @@ public:
 	std::function<void()> onInit;
 	std::function<void()> onUIReady;
 	std::function<void()> onUIShutdown;
-	std::function<void(ALARMTYPE, tm)> onStartAlarm;
+	std::function<void(ALARMTYPE, const std::string&)> onStartAlarm;
 };

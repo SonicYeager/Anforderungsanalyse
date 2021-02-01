@@ -11,7 +11,7 @@ App::App(UI& otherUi, Interactor& otherInter)
 		ui.SetPresentTime(presentTime);
 	};
 
-	auto onStartAlarm = [this](ALARMTYPE type, tm wakeTime)
+	auto onStartAlarm = [this](ALARMTYPE type, const std::string& wakeTime)
 	{
 		auto remainingTime = inter.StartRemainingTimer(type, wakeTime);
 		ui.SetRemainingTime(remainingTime);

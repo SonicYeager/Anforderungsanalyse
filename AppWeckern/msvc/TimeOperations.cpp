@@ -27,12 +27,12 @@ tm operator-(const tm& left, const tm& right)
 	res.tm_sec = left.tm_sec - right.tm_sec;
 	if(res.tm_sec < 0)
 	{
-		res.tm_sec *= -1;
+		res.tm_sec += 60;
 		--res.tm_min;
 	}
 	if(res.tm_min < 0)
 	{
-		res.tm_min *= -1;
+		res.tm_min += 60;
 		--res.tm_hour;
 	}
 	return res;
@@ -44,6 +44,16 @@ tm operator+(const tm& left, const tm& right)
 	res.tm_hour = left.tm_hour + right.tm_hour;
 	res.tm_min = left.tm_min + right.tm_min;
 	res.tm_sec = left.tm_sec + right.tm_sec;
+	if(res.tm_sec > 60)
+	{
+		res.tm_sec -= 60;
+		++res.tm_min;
+	}
+	if(res.tm_min > 60)
+	{
+		res.tm_min -= 60;
+		++res.tm_hour;
+	}
 	return res;
 }
 
