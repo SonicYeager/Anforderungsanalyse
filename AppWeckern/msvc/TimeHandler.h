@@ -10,6 +10,7 @@ public:
 	tm GetPresentTime() override;
 	void StartTimer() override;
 	void StopTimer() override;
+	//virtual void StartAlarmTimer() = 0;
 
 private:
 	bool timerRunning{};

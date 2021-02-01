@@ -10,11 +10,15 @@ class AppWeckernDlg : public CDialogEx, public UI
 public:
 	AppWeckernDlg();
 	void SetPresentTime(const std::string&) override;
+	void SetRemainingTime(const std::string&) override;
 	void Init() override;
 
 protected:
 	BOOL OnInitDialog() override;
 	void OnDestroy();
+
+private:
+	void StartAlarmTimer();
 
 #ifdef AFX_DESIGN_TIME
 	enum

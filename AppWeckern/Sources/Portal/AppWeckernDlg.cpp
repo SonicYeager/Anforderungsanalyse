@@ -1,4 +1,5 @@
 #include "Program.h"
+#include "winuser.h"
 #include "AppWeckernDlg.h"
 #include "Resource.h"
 #include <future>
@@ -26,9 +27,39 @@ void AppWeckernDlg::OnDestroy()
 	__super::OnDestroy();
 }
 
+void AppWeckernDlg::StartAlarmTimer()
+{
+	GetDlgItem(remainingTime_lbl)->ShowWindow(SW_SHOW);
+	GetDlgItem(remainingTimeIdentifier_lbl)->ShowWindow(SW_SHOW);
+	GetDlgItem(stop_btn)->ShowWindow(SW_SHOW);
+	GetDlgItem(start_btn)->ShowWindow(SW_HIDE);
+	tm time{};
+	time.tm_hour = 12;
+	time.tm_min = 55;
+	time.tm_sec = 34;
+	if(IsDlgButtonChecked(weckzeit_rbtn))
+	{
+		CString str{};
+		GetDlgItemTextA(weckzeit_tbx, str);
+		onStartAlarm(ALARMTYPE::ALARMCLOCK, time);
+	}
+	else
+	{
+		CString str{};
+		GetDlgItemTextA(weckzeit_tbx, str);
+		onStartAlarm(ALARMTYPE::ALARMTIMER, time);
+	}
+
+}
+
 void AppWeckernDlg::SetPresentTime(const std::string& presentTime)
 {
 	SetDlgItemTextA(presentTime_lbl, presentTime.c_str());
+}
+
+void AppWeckernDlg::SetRemainingTime(const std::string& presentTime)
+{
+	SetDlgItemTextA(remainingTime_lbl, presentTime.c_str());
 }
 
 void AppWeckernDlg::Init()
@@ -38,6 +69,7 @@ void AppWeckernDlg::Init()
 
 BEGIN_MESSAGE_MAP(AppWeckernDlg, CDialogEx)
 ON_WM_DESTROY()
+ON_BN_CLICKED(start_btn, StartAlarmTimer)
 END_MESSAGE_MAP()
 
 //eventually Helpfull methods

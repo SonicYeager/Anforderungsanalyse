@@ -10,9 +10,17 @@ App::App(UI& otherUi, Interactor& otherInter)
 		auto presentTime = inter.InitApp();
 		ui.SetPresentTime(presentTime);
 	};
+
+	auto onStartAlarm = [this](ALARMTYPE type, tm wakeTime)
+	{
+		auto remainingTime = inter.StartRemainingTimer(type, wakeTime);
+		ui.SetRemainingTime(remainingTime);
+	};
+
 	ui.onInit = oninit;
 	ui.onUIReady = [this]() { inter.StartTimer(); };
 	ui.onUIShutdown = [this]() { inter.StopTimer(); };
+	ui.onStartAlarm = onStartAlarm;
 	inter.onUpdatePresentTime = [this](const std::string& str) { ui.SetPresentTime(str); };
 }
 
