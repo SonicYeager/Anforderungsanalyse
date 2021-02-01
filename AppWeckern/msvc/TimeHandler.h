@@ -10,7 +10,6 @@ public:
 	tm GetPresentTime() override;
 	void StartTimer() override;
 	void StopTimer() override;
-	~TimeHandler();
 
 private:
 	bool timerRunning{};
