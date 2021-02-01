@@ -35,7 +35,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test_Formatter.cpp" />
+    <ClCompile Include="test_Converter.cpp" />
     <ClCompile Include="test_TimeOperations.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

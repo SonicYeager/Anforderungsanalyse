@@ -2,14 +2,14 @@
 #include "AlarmClockInteractor.h"
 #include <thread>
 
-AlarmClockInteractor::AlarmClockInteractor(TimeLogic* tl, TimeRessource* tr, FormatLogic* fl)
+AlarmClockInteractor::AlarmClockInteractor(TimeLogic* tl, TimeRessource* tr, ConverterLogic* fl)
 	: p_tr(tr)
 	, p_fl(fl)
 	, p_tl(tl)
 {
 	auto onUpdate = [this](tm t) 
 	{
-		auto formatted = p_fl->FormatTime(t);
+		auto formatted = p_fl->TimeToString(t);
 		onUpdatePresentTime(formatted);
 	};
 	p_tr->onPresentTime = onUpdate;
@@ -32,10 +32,10 @@ std::string AlarmClockInteractor::StartRemainingTimer(ALARMTYPE type, const tm& 
 	{
 		auto time = p_tr->GetPresentTime();
 		auto res = p_tl->CalculateTimer(time, wakeTime);
-		result = p_fl->FormatTime(res);
+		result = p_fl->TimeToString(res);
 	};
 
-	auto onAlarmTimer = [this, wakeTime, &result]() { result = p_fl->FormatTime(wakeTime); };
+	auto onAlarmTimer = [this, wakeTime, &result]() { result = p_fl->TimeToString(wakeTime); };
 
 	p_tl->DetermineAlarm(type, onAlarmClock, onAlarmTimer);
 	return result;
@@ -44,5 +44,5 @@ std::string AlarmClockInteractor::StartRemainingTimer(ALARMTYPE type, const tm& 
 std::string AlarmClockInteractor::InitApp()
 {
 	auto tm = p_tr->GetPresentTime();
-	return p_fl->FormatTime(tm);
+	return p_fl->TimeToString(tm);
 }

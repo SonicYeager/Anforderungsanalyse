@@ -5,13 +5,13 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TimeHandler.cpp">
       <Filter>Impl</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)Formatter.cpp">
-      <Filter>Impl</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)AlarmClockInteractor.cpp">
       <Filter>Interactor</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)TimeOperations.cpp">
+      <Filter>Impl</Filter>
+    </ClCompile>
+    <ClCompile Include="H:\Repositories\Anforderungsanalyse\AppWeckern\msvc\Converter.cpp">
       <Filter>Impl</Filter>
     </ClCompile>
   </ItemGroup>
@@ -23,13 +23,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)UI.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)FormatLogic.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)TimeHandler.h">
-      <Filter>Impl</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)Formatter.h">
       <Filter>Impl</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)AlarmClockInteractor.h">
@@ -46,6 +40,12 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedDataTypes.h">
       <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="H:\Repositories\Anforderungsanalyse\AppWeckern\msvc\ConverterLogic.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="H:\Repositories\Anforderungsanalyse\AppWeckern\msvc\Converter.h">
+      <Filter>Impl</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
