@@ -25,7 +25,7 @@ AlarmClockInteractor::AlarmClockInteractor(TimeLogic* tl, TimeRessource* tr, Con
 		{
 			auto wakeUpTime = p_tl->SumTime(p_tr->timerStartTime, waket);
 			auto calcRemaining = p_tl->CalculateTimer(t, wakeUpTime);
-			res = calcRemaining; //has to be calculated
+			res = calcRemaining; 
 		};
 
 		p_tl->DetermineAlarm(p_tr->aType, onAlarmClock, onAlarmTimer);
@@ -65,7 +65,7 @@ std::string AlarmClockInteractor::StartRemainingTimer(ALARMTYPE type, const std:
 
 	p_tl->DetermineAlarm(type, onAlarmClock, onAlarmTimer);
 	result = p_fl->TimeToString(res);
-	p_tr->StartAlarmTimer(type, res);
+	p_tr->StartAlarmTimer(type, converted);
 	return result;
 }
 
