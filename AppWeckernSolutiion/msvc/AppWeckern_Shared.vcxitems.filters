@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Provider">
+      <UniqueIdentifier>{ab035ace-689f-4137-8189-f690caee05c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{a2495ed1-0356-4fd8-ab72-f1262c7a7b43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{560a7851-e336-4eb5-8e69-2af646fb67c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contracts">
+      <UniqueIdentifier>{8d24d4bd-2414-4533-a721-d92ea03b3c4f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\App.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\Data\TimesConversion.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\Core\Watchdog.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\Provider\ClockImpl.cpp">
+      <Filter>Provider</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\Provider\SoundPlayerImpl.cpp">
+      <Filter>Provider</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\Interactor.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\App.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Contracts\Clock.h">
+      <Filter>Contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Contracts\Event.h">
+      <Filter>Contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Contracts\SoundPlayer.h">
+      <Filter>Contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Contracts\Times.h">
+      <Filter>Contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Contracts\UI.h">
+      <Filter>Contracts</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Data\TimesConversion.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Core\Watchdog.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Provider\ClockImpl.h">
+      <Filter>Provider</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Provider\SoundPlayerImpl.h">
+      <Filter>Provider</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Interactor.h" />
+  </ItemGroup>
+</Project>

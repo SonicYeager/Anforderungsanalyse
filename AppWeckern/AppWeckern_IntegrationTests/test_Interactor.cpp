@@ -37,6 +37,7 @@ public:
 	MOCK_METHOD(void, StopAlarmTimer, (), (override));
 	MOCK_METHOD(void, StartAlarmSound, (), (override));
 	MOCK_METHOD(void, StopAlarmSound, (), (override));
+
 };
 
 class FakeUI : public UI
@@ -146,4 +147,30 @@ TEST(TestAlarmClockInteractor, StartRemainingTimer_StopAlarmTimerIsCalled_Called
 
 	auto actual = aci.StartRemainingTimer(ALARMTYPE::ALARMTIMER, wakeTimer);
 	aci.StopRemainingTimer();
+}
+
+TEST(TestAlarmClockInteractor, UpdateRemainingTimer_SetRemainingTimeIsCalled_CalledAtLeastOnce)
+{
+	::testing::NiceMock<FakeTimeHandler> fth{};
+	Converter f{};
+	TimeOperations tr{};
+	AudioPlayer ap{};
+	AlarmClockInteractor aci{&tr, &fth, &ap, &f};
+	::testing::NiceMock<FakeUI> ui{};
+	::testing::InSequence seq{};
+	ui.onUIReady = [&aci]() { aci.StartTimer(); };
+	ui.onUIShutdown = [&aci]() { aci.StopTimer(); };
+	aci.onUpdateRemainingTime = [&ui](const std::string& str) { ui.SetRemainingTime(str); };
+	aci.onUpdatePresentTime = [&ui](const std::string& str) { ui.SetPresentTime(str); };
+	std::string wakeTimer{"3:00"};
+	tm wakeTimertm{};
+	wakeTimertm.tm_hour = 3;
+	wakeTimertm.tm_min = 0;
+	wakeTimertm.tm_sec = 0;
+	EXPECT_CALL(ui, SetRemainingTime("03:00:00")).Times(::testing::AtLeast(1));
+
+	ui.Init();
+	auto presentTime = fth.GetPresentTime();
+	fth.onRemainingTime(presentTime, wakeTimertm);
+	//auto actual = aci.StartRemainingTimer(ALARMTYPE::ALARMTIMER, wakeTimer);
 }

@@ -10,5 +10,7 @@
     <TestDuration Test="TestAlarmClockInteractor.StartRemainingTimer_1pmflatAlarmTimerIn3h_Return03colon00colon00" Duration="1" />
     <TestDuration Test="TestAlarmClockInteractor.StartRemainingTimer_StartAlarmTimerIsCalled_CalledOnceWith3h" Duration="1" />
     <TestDuration Test="TestAlarmClockInteractor.StartRemainingTimer_StopAlarmTimerIsCalled_CalledOnce" Duration="1" />
+    <TestDuration Test="TestAlarmClockInteractor.UpdateRemainingTimer_StopAlarmTimerIsCalled_CalledOnce" Duration="7" />
+    <TestDuration Test="TestAlarmClockInteractor.UpdateRemainingTimer_SetRemainingTimeIsCalled_CalledAtLeastOnce" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

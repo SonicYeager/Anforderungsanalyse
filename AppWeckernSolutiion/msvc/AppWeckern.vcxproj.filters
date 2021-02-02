@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Portal">
+      <UniqueIdentifier>{a689e8e6-172c-4eb5-8c2d-26f95ae396f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Portal\Resource">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{d04c2820-76b9-4f5c-92c7-61cf34e9ce69}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Sources\Program.h" />
+    <ClInclude Include="..\Sources\Portal\Resource\Resource.h">
+      <Filter>Portal\Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Sources\Portal\AppWeckernDlg.h">
+      <Filter>Portal</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Sources\Program.cpp" />
+    <ClCompile Include="..\Sources\Portal\AppWeckernDlg.cpp">
+      <Filter>Portal</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\Sources\Portal\Resource\AppWeckern.rc">
+      <Filter>Portal\Resource</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\Data\weckton.wav">
+      <Filter>Data</Filter>
+    </CopyFileToFolders>
+  </ItemGroup>
+</Project>

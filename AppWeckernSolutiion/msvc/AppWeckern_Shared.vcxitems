@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{b5f2f047-4cea-4755-9734-fcf599042d4e}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\App.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\Core\Watchdog.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\Data\TimesConversion.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\Interactor.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\Provider\ClockImpl.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\Provider\SoundPlayerImpl.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\App.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Contracts\Clock.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Contracts\Event.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Contracts\SoundPlayer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Contracts\Times.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Contracts\UI.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Core\Watchdog.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Data\TimesConversion.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Interactor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Provider\ClockImpl.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\Provider\SoundPlayerImpl.h" />
+  </ItemGroup>
+</Project>

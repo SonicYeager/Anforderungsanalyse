@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30406.217
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppWeckern", "AppWeckern.vcxproj", "{25DBFC04-71ED-43F4-96F5-74B52760E1DE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppWeckern_IntegrationTests", "AppWeckern_IntegrationTests.vcxproj", "{CCA19221-8CE2-4D15-B608-B6EE6832FB52}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppWeckern_UnitTests", "AppWeckern_UnitTests.vcxproj", "{EEDBA451-F6F1-4561-BF60-29D42F47B6FC}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AppWeckern_Shared", "AppWeckern_Shared.vcxitems", "{B5F2F047-4CEA-4755-9734-FCF599042D4E}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFramework", "..\..\..\..\..\GoogleMock\TestFramework.vcxitems", "{AAC85E24-C2BD-4A83-9DD9-48C57441C065}"
+EndProject
+Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		AppWeckern_Shared.vcxitems*{25dbfc04-71ed-43f4-96f5-74b52760e1de}*SharedItemsImports = 4
+		..\..\..\..\..\GoogleMock\TestFramework.vcxitems*{aac85e24-c2bd-4a83-9dd9-48c57441c065}*SharedItemsImports = 9
+		AppWeckern_Shared.vcxitems*{b5f2f047-4cea-4755-9734-fcf599042d4e}*SharedItemsImports = 9
+		AppWeckern_Shared.vcxitems*{cca19221-8ce2-4d15-b608-b6ee6832fb52}*SharedItemsImports = 4
+		..\..\..\..\..\GoogleMock\TestFramework.vcxitems*{cca19221-8ce2-4d15-b608-b6ee6832fb52}*SharedItemsImports = 4
+		AppWeckern_Shared.vcxitems*{eedba451-f6f1-4561-bf60-29d42f47b6fc}*SharedItemsImports = 4
+		..\..\..\..\..\GoogleMock\TestFramework.vcxitems*{eedba451-f6f1-4561-bf60-29d42f47b6fc}*SharedItemsImports = 4
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Debug|x86.ActiveCfg = Debug|Win32
+		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Debug|x86.Build.0 = Debug|Win32
+		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Release|x86.ActiveCfg = Release|Win32
+		{25DBFC04-71ED-43F4-96F5-74B52760E1DE}.Release|x86.Build.0 = Release|Win32
+		{CCA19221-8CE2-4D15-B608-B6EE6832FB52}.Debug|x86.ActiveCfg = Debug|Win32
+		{CCA19221-8CE2-4D15-B608-B6EE6832FB52}.Debug|x86.Build.0 = Debug|Win32
+		{CCA19221-8CE2-4D15-B608-B6EE6832FB52}.Release|x86.ActiveCfg = Release|Win32
+		{CCA19221-8CE2-4D15-B608-B6EE6832FB52}.Release|x86.Build.0 = Release|Win32
+		{EEDBA451-F6F1-4561-BF60-29D42F47B6FC}.Debug|x86.ActiveCfg = Debug|Win32
+		{EEDBA451-F6F1-4561-BF60-29D42F47B6FC}.Debug|x86.Build.0 = Debug|Win32
+		{EEDBA451-F6F1-4561-BF60-29D42F47B6FC}.Release|x86.ActiveCfg = Release|Win32
+		{EEDBA451-F6F1-4561-BF60-29D42F47B6FC}.Release|x86.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {FA7397B5-E16E-415D-84C8-61B07D25957A}
+	EndGlobalSection
+EndGlobal

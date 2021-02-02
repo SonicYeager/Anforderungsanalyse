@@ -14,7 +14,7 @@ AlarmClockInteractor::AlarmClockInteractor(TimeLogic* tl, TimeRessource* tr, Med
 		onUpdatePresentTime(formatted);
 	};
 
-	auto onUpdateRemaining = [this](tm t, tm waket) 
+	auto onUpdateRemaining = [this](tm t, tm waket) //parameter entfernen 
 	{
 		tm res{};
 		auto onAlarmClock = [this, waket, &res, t]() 
