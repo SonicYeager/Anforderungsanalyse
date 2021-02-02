@@ -6,6 +6,7 @@
 #include "UI.h"
 #include "TimeOperations.h"
 #include "SharedDataTypes.h"
+#include "AudioPlayer.h"
 
 inline bool operator==(const tm& left, const tm& right)
 {
@@ -34,6 +35,8 @@ public:
 	MOCK_METHOD(void, StopTimer, (), (override));
 	MOCK_METHOD(void, StartAlarmTimer, (ALARMTYPE, tm), (override));
 	MOCK_METHOD(void, StopAlarmTimer, (), (override));
+	MOCK_METHOD(void, StartAlarmSound, (), (override));
+	MOCK_METHOD(void, StopAlarmSound, (), (override));
 };
 
 class FakeUI : public UI
@@ -56,7 +59,8 @@ TEST(TestAlarmClockInteractor, InitApp_1pmflat_Return13colon00colon00)
 	FakeTimeHandler fth{};
 	Converter f{};
 	TimeOperations tr{};
-	AlarmClockInteractor aci{&tr, &fth, &f};
+	AudioPlayer ap{};
+	AlarmClockInteractor aci{&tr, &fth, &ap, &f};
 
 	auto actual = aci.InitApp();
 
@@ -68,7 +72,8 @@ TEST(TestAlarmClockInteractor, UpdatePresentTime_1pmflat_CallOnUpdate13colon00co
 	FakeTimeHandler fth{};
 	Converter f{};
 	TimeOperations tr{};
-	AlarmClockInteractor aci{&tr, &fth, &f};
+	AudioPlayer ap{};
+	AlarmClockInteractor aci{&tr, &fth, &ap, &f};
 	::testing::NiceMock<FakeUI> ui{};
 	::testing::InSequence seq{};
 	ui.onUIReady = [&aci]() { aci.StartTimer(); };
@@ -84,7 +89,8 @@ TEST(TestAlarmClockInteractor, StartRemainingTimer_1pmflatAlarmClockFor3pm_Retur
 	FakeTimeHandler fth{};
 	Converter f{};
 	TimeOperations tr{};
-	AlarmClockInteractor aci{&tr, &fth, &f};
+	AudioPlayer ap{};
+	AlarmClockInteractor aci{&tr, &fth, &ap, &f};
 	std::string wakeTime{"15:00"};
 
 	auto actual = aci.StartRemainingTimer(ALARMTYPE::ALARMCLOCK, wakeTime);
@@ -97,7 +103,8 @@ TEST(TestAlarmClockInteractor, StartRemainingTimer_1pmflatAlarmTimerIn3h_Return0
 	FakeTimeHandler fth{};
 	Converter f{};
 	TimeOperations tr{};
-	AlarmClockInteractor aci{&tr, &fth, &f};
+	AudioPlayer ap{};
+	AlarmClockInteractor aci{&tr, &fth, &ap, &f};
 	std::string wakeTimer{"3:00"};
 
 	auto actual = aci.StartRemainingTimer(ALARMTYPE::ALARMTIMER, wakeTimer);
@@ -110,7 +117,8 @@ TEST(TestAlarmClockInteractor, StartRemainingTimer_StartAlarmTimerIsCalled_Calle
 	::testing::NiceMock<FakeTimeHandler> fth{};
 	Converter f{};
 	TimeOperations tr{};
-	AlarmClockInteractor aci{&tr, &fth, &f};
+	AudioPlayer ap{};
+	AlarmClockInteractor aci{&tr, &fth, &ap, &f};
 	std::string wakeTimer{"3:00"};
 	tm wakeTimertm{};
 	wakeTimertm.tm_hour = 3;
@@ -126,7 +134,8 @@ TEST(TestAlarmClockInteractor, StartRemainingTimer_StopAlarmTimerIsCalled_Called
 	::testing::NiceMock<FakeTimeHandler> fth{};
 	Converter f{};
 	TimeOperations tr{};
-	AlarmClockInteractor aci{&tr, &fth, &f};
+	AudioPlayer ap{};
+	AlarmClockInteractor aci{&tr, &fth, &ap, &f};
 	std::string wakeTimer{"3:00"};
 	tm wakeTimertm{};
 	wakeTimertm.tm_hour = 3;

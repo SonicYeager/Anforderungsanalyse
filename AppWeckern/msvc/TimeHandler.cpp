@@ -26,6 +26,8 @@ void TimeHandler::StartTimer()
 				onPresentTime(time);
 			if(remainingTimer && timerRunning)
 				onRemainingTime(time, wakeTime);
+			if(alarmRunning && timerRunning)
+				onAlarm();
 		}
 	};
 
@@ -50,4 +52,14 @@ void TimeHandler::StartAlarmTimer(ALARMTYPE type, tm wakeTime)
 void TimeHandler::StopAlarmTimer()
 {
 	remainingTimer = false;
+}
+
+void TimeHandler::StartAlarmSound()
+{
+	alarmRunning = true;
+}
+
+void TimeHandler::StopAlarmSound()
+{
+	alarmRunning = false;
 }

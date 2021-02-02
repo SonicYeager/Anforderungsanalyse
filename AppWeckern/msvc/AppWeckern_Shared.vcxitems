@@ -15,6 +15,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Sources\App.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioPlayer.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Converter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)AlarmClockInteractor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)TimeHandler.cpp" />
@@ -23,9 +24,11 @@
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\App.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)AlarmClockInteractor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioPlayer.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)ConverterLogic.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Converter.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Interactor.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MediaRessource.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedDataTypes.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TimeHandler.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TimeLogic.h" />

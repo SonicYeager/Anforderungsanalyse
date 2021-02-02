@@ -5,6 +5,7 @@
 #include "TimeHandler.h"
 #include "Converter.h"
 #include "TimeOperations.h"
+#include "AudioPlayer.h"
 
 AppWeckernApp theApp;
 
@@ -18,7 +19,8 @@ BOOL AppWeckernApp::InitInstance()
 	TimeHandler th{};
 	Converter f{};
 	TimeOperations to{};
-	AlarmClockInteractor inter{&to, &th, &f};
+	AudioPlayer ap{};
+	AlarmClockInteractor inter{&to, &th, &ap, &f};
 	AppWeckernDlg dlg{};
 	App app = App(dlg, inter);
 	app.Run();

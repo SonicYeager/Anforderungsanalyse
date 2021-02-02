@@ -162,3 +162,87 @@ TEST(TestTimeOperations, SumTime_10pm30min30secActualTime2am30min00secWakeUpTime
 
 	EXPECT_EQ(actual, expected);
 }
+
+TEST(TestTimeOperations, SumTime_1_Return1)
+{
+	TimeOperations to{};
+	tm actualTime{};
+	actualTime.tm_hour = 10;
+	actualTime.tm_min = 30;
+	actualTime.tm_sec = 30;
+	tm wakeTime{};
+	wakeTime.tm_hour = 10;
+	wakeTime.tm_min = 30;
+	wakeTime.tm_sec = 30;
+	tm expected{};
+	expected.tm_hour = 00;
+	expected.tm_min = 00;
+	expected.tm_sec = 00;
+
+	auto actual = to.CalculateTimer(actualTime, wakeTime);
+
+	EXPECT_EQ(actual, expected);
+}
+
+TEST(TestTimeOperations, SumTime_2_Return2)
+{
+	TimeOperations to{};
+	tm actualTime{};
+	actualTime.tm_hour = 10;
+	actualTime.tm_min = 00;
+	actualTime.tm_sec = 00;
+	tm wakeTime{};
+	wakeTime.tm_hour = 10;
+	wakeTime.tm_min = 01;
+	wakeTime.tm_sec = 00;
+	tm expected{};
+	expected.tm_hour = 00;
+	expected.tm_min = 01;
+	expected.tm_sec = 00;
+
+	auto actual = to.CalculateTimer(actualTime, wakeTime);
+
+	EXPECT_EQ(actual, expected);
+}
+
+TEST(TestTimeOperations, SumTime_3_Return3)
+{
+	TimeOperations to{};
+	tm actualTime{};
+	actualTime.tm_hour = 10;
+	actualTime.tm_min = 00;
+	actualTime.tm_sec = 00;
+	tm wakeTime{};
+	wakeTime.tm_hour = 10;
+	wakeTime.tm_min = 59;
+	wakeTime.tm_sec = 59;
+	tm expected{};
+	expected.tm_hour = 00;
+	expected.tm_min = 59;
+	expected.tm_sec = 59;
+
+	auto actual = to.CalculateTimer(actualTime, wakeTime);
+
+	EXPECT_EQ(actual, expected);
+}
+
+TEST(TestTimeOperations, SumTime_4_Return4)
+{
+	TimeOperations to{};
+	tm actualTime{};
+	actualTime.tm_hour = 10;
+	actualTime.tm_min = 00;
+	actualTime.tm_sec = 00;
+	tm wakeTime{};
+	wakeTime.tm_hour = 11;
+	wakeTime.tm_min = 00;
+	wakeTime.tm_sec = 00;
+	tm expected{};
+	expected.tm_hour = 01;
+	expected.tm_min = 00;
+	expected.tm_sec = 00;
+
+	auto actual = to.CalculateTimer(actualTime, wakeTime);
+
+	EXPECT_EQ(actual, expected);
+}

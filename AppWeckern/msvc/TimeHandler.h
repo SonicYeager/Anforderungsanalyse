@@ -12,8 +12,11 @@ public:
 	void StopTimer() override;
 	void StartAlarmTimer(ALARMTYPE, tm) override;
 	void StopAlarmTimer() override;
+	void StartAlarmSound() override;
+	void StopAlarmSound() override;
 
 private:
 	bool timerRunning{};
+	bool alarmRunning{};
 	std::thread timeThread;
 };

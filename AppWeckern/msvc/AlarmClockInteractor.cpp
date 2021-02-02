@@ -2,10 +2,11 @@
 #include "AlarmClockInteractor.h"
 #include <thread>
 
-AlarmClockInteractor::AlarmClockInteractor(TimeLogic* tl, TimeRessource* tr, ConverterLogic* fl)
+AlarmClockInteractor::AlarmClockInteractor(TimeLogic* tl, TimeRessource* tr, MediaRessource* mr, ConverterLogic* fl)
 	: p_tr(tr)
 	, p_fl(fl)
 	, p_tl(tl)
+	, p_mr(mr)
 {
 	auto onUpdateTime = [this](tm t) 
 	{
@@ -18,7 +19,7 @@ AlarmClockInteractor::AlarmClockInteractor(TimeLogic* tl, TimeRessource* tr, Con
 		tm res{};
 		auto onAlarmClock = [this, waket, &res, t]() 
 		{
-			res = p_tl->CalculateTimer(t, waket); //no idea
+			res = p_tl->CalculateTimer(t, waket);
 		};
 
 		auto onAlarmTimer = [this, waket, &res, t]() 
@@ -31,8 +32,13 @@ AlarmClockInteractor::AlarmClockInteractor(TimeLogic* tl, TimeRessource* tr, Con
 		p_tl->DetermineAlarm(p_tr->aType, onAlarmClock, onAlarmTimer);
 		auto result = p_fl->TimeToString(res);
 		onUpdateRemainingTime(result);
+		if(res.tm_hour == 0 && res.tm_min == 0 && res.tm_sec == 0)
+		{
+			p_tr->StartAlarmSound();
+		}
 	};
 
+	p_tr->onAlarm = [this](){ p_mr->PlayAudioFile("weckton.wav");};
 	p_tr->onPresentTime = onUpdateTime;
 	p_tr->onRemainingTime = onUpdateRemaining;
 }
@@ -72,6 +78,7 @@ std::string AlarmClockInteractor::StartRemainingTimer(ALARMTYPE type, const std:
 void AlarmClockInteractor::StopRemainingTimer()
 {
 	p_tr->StopAlarmTimer();
+	p_tr->StopAlarmSound();
 }
 
 std::string AlarmClockInteractor::InitApp()

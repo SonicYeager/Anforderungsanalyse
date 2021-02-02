@@ -29,6 +29,8 @@ void AppWeckernDlg::OnDestroy()
 
 void AppWeckernDlg::StartAlarmTimer()
 {
+	GetDlgItem(weckzeit_tbx)->EnableWindow(false);
+	GetDlgItem(wakeUpTime_tbx)->EnableWindow(false);
 	GetDlgItem(remainingTime_lbl)->ShowWindow(SW_SHOW);
 	GetDlgItem(remainingTimeIdentifier_lbl)->ShowWindow(SW_SHOW);
 	GetDlgItem(stop_btn)->ShowWindow(SW_SHOW);
@@ -48,6 +50,8 @@ void AppWeckernDlg::StartAlarmTimer()
 
 void AppWeckernDlg::StopAlarmTimer()
 {
+	GetDlgItem(weckzeit_tbx)->EnableWindow(true);
+	GetDlgItem(wakeUpTime_tbx)->EnableWindow(true);
 	GetDlgItem(remainingTime_lbl)->ShowWindow(SW_HIDE);
 	GetDlgItem(remainingTimeIdentifier_lbl)->ShowWindow(SW_HIDE);
 	GetDlgItem(stop_btn)->ShowWindow(SW_HIDE);

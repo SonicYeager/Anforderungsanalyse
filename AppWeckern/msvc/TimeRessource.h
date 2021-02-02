@@ -11,6 +11,8 @@ public:
 	virtual void StopTimer() = 0;
 	virtual void StartAlarmTimer(ALARMTYPE, tm) = 0;
 	virtual void StopAlarmTimer() = 0;
+	virtual void StartAlarmSound() = 0;
+	virtual void StopAlarmSound() = 0;
 	virtual ~TimeRessource() = default;
 
 	ALARMTYPE aType;
@@ -19,4 +21,5 @@ public:
 	bool remainingTimer = false;
 	std::function<void(tm)> onPresentTime;
 	std::function<void(tm, tm)> onRemainingTime;
+	std::function<void()> onAlarm;
 };

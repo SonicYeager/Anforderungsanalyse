@@ -19,6 +19,15 @@ bool operator<(const tm& left, const tm& right)
 	return false;
 }
 
+bool operator<=(const tm& left, const tm& right)
+{
+	if(left < right)
+		return true;
+	if(left.tm_hour == right.tm_hour && left.tm_min == right.tm_min && left.tm_sec == right.tm_sec)
+		return true;
+	return false;
+}
+
 tm operator-(const tm& left, const tm& right)
 {
 	tm res{};
@@ -44,12 +53,12 @@ tm operator+(const tm& left, const tm& right)
 	res.tm_hour = left.tm_hour + right.tm_hour;
 	res.tm_min = left.tm_min + right.tm_min;
 	res.tm_sec = left.tm_sec + right.tm_sec;
-	if(res.tm_sec > 60)
+	if(res.tm_sec > 59)
 	{
 		res.tm_sec -= 60;
 		++res.tm_min;
 	}
-	if(res.tm_min > 60)
+	if(res.tm_min > 59)
 	{
 		res.tm_min -= 60;
 		++res.tm_hour;
@@ -65,7 +74,7 @@ tm operator+(const tm& left, const tm& right)
 tm TimeOperations::CalculateTimer(tm actualTime, tm wakeTime)
 {
 	tm result = actualTime;
-	if(actualTime < wakeTime)
+	if(actualTime <= wakeTime)
 	{
 		result = wakeTime - actualTime;
 	}

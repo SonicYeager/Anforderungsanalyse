@@ -12,6 +12,7 @@
       <Filter>Impl</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)Converter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AudioPlayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\App.h" />
@@ -41,6 +42,12 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)ConverterLogic.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Converter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)MediaRessource.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AudioPlayer.h">
+      <Filter>Impl</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">

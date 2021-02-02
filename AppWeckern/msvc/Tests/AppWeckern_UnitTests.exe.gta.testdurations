@@ -25,5 +25,9 @@
     <TestDuration Test="TestTimeOperations.CalculateTimer_13pm15min30secActualTime14am30min00secWakeTime_Return1h14min30sec" Duration="1" />
     <TestDuration Test="TestTimeOperations.CalculateTimer_15pm00min00secActualTime7am30min00secWakeTimeNextDay_Return16h30min00sec" Duration="1" />
     <TestDuration Test="TestTimeOperations.SumTime_10pm30min30secActualTime2am30min00secWakeUpTime_Return13h00min30sec" Duration="1" />
+    <TestDuration Test="TestTimeOperations.SumTime_1_Return1" Duration="1" />
+    <TestDuration Test="TestTimeOperations.SumTime_2_Return2" Duration="1" />
+    <TestDuration Test="TestTimeOperations.SumTime_3_Return3" Duration="1" />
+    <TestDuration Test="TestTimeOperations.SumTime_4_Return4" Duration="1" />
   </TestDurations>
 </GtaTestDurations>
