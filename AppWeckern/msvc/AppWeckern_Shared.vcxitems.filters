@@ -11,9 +11,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)TimeOperations.cpp">
       <Filter>Impl</Filter>
     </ClCompile>
-    <ClCompile Include="H:\Repositories\Anforderungsanalyse\AppWeckern\msvc\Converter.cpp">
-      <Filter>Impl</Filter>
-    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)Converter.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Sources\App.h" />
@@ -41,12 +39,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)SharedDataTypes.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="H:\Repositories\Anforderungsanalyse\AppWeckern\msvc\ConverterLogic.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="H:\Repositories\Anforderungsanalyse\AppWeckern\msvc\Converter.h">
-      <Filter>Impl</Filter>
-    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)ConverterLogic.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Converter.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">

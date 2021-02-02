@@ -21,11 +21,11 @@ void TimeHandler::StartTimer()
 		while(timerRunning)
 		{
 			std::this_thread::sleep_for(1000ms);
+			auto time = GetPresentTime();
 			if(timerRunning)
-			{
-				auto time = GetPresentTime();
 				onPresentTime(time);
-			}
+			if(remainingTimer && timerRunning)
+				onRemainingTime(time, wakeTime);
 		}
 	};
 
@@ -37,4 +37,16 @@ void TimeHandler::StopTimer()
 {
 	timerRunning = false;
 	timeThread.join();
+}
+
+void TimeHandler::StartAlarmTimer(ALARMTYPE type, tm wakeTime)
+{
+	aType = type;
+	this->wakeTime = wakeTime;
+	remainingTimer = true;
+}
+
+void TimeHandler::StopAlarmTimer()
+{
+	remainingTimer = false;
 }

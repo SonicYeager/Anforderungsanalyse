@@ -19,6 +19,7 @@ protected:
 
 private:
 	void StartAlarmTimer();
+	void StopAlarmTimer();
 
 #ifdef AFX_DESIGN_TIME
 	enum

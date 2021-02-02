@@ -17,11 +17,15 @@ App::App(UI& otherUi, Interactor& otherInter)
 		ui.SetRemainingTime(remainingTime);
 	};
 
+	auto onStopAlarm = [this]() {inter.StopRemainingTimer();};
+
 	ui.onInit = oninit;
 	ui.onUIReady = [this]() { inter.StartTimer(); };
 	ui.onUIShutdown = [this]() { inter.StopTimer(); };
 	ui.onStartAlarm = onStartAlarm;
+	ui.onStopAlarm = onStopAlarm;
 	inter.onUpdatePresentTime = [this](const std::string& str) { ui.SetPresentTime(str); };
+	inter.onUpdateRemainingTime = [this](const std::string& str) { ui.SetRemainingTime(str); };
 }
 
 void App::Run()

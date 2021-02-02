@@ -8,5 +8,7 @@
     <TestDuration Test="TestAlarmClockInteractor.UpdatePresentTime_SingleOnUpdateCall_CallOnIsActiveCalledTwice" Duration="1" />
     <TestDuration Test="TestAlarmClockInteractor.StartRemainingTimer_1pmflatAlarmClockFor3pm_Return02colon00colon00" Duration="1" />
     <TestDuration Test="TestAlarmClockInteractor.StartRemainingTimer_1pmflatAlarmTimerIn3h_Return03colon00colon00" Duration="1" />
+    <TestDuration Test="TestAlarmClockInteractor.StartRemainingTimer_StartAlarmTimerIsCalled_CalledOnceWith3h" Duration="1" />
+    <TestDuration Test="TestAlarmClockInteractor.StartRemainingTimer_StopAlarmTimerIsCalled_CalledOnce" Duration="1" />
   </TestDurations>
 </GtaTestDurations>

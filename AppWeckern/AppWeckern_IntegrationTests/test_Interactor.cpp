@@ -5,6 +5,12 @@
 #include "TimeHandler.h"
 #include "UI.h"
 #include "TimeOperations.h"
+#include "SharedDataTypes.h"
+
+inline bool operator==(const tm& left, const tm& right)
+{
+	return left.tm_hour == right.tm_hour && left.tm_min == right.tm_min && left.tm_sec == right.tm_sec;
+}
 
 class FakeTimeHandler : public TimeRessource
 {
@@ -26,7 +32,8 @@ public:
 		}
 	}
 	MOCK_METHOD(void, StopTimer, (), (override));
-	//MOCK_METHOD(void, StartAlarmTimer,(),(override));
+	MOCK_METHOD(void, StartAlarmTimer, (tm), (override));
+	MOCK_METHOD(void, StopAlarmTimer, (), (override));
 };
 
 class FakeUI : public UI
@@ -96,4 +103,38 @@ TEST(TestAlarmClockInteractor, StartRemainingTimer_1pmflatAlarmTimerIn3h_Return0
 	auto actual = aci.StartRemainingTimer(ALARMTYPE::ALARMTIMER, wakeTimer);
 
 	EXPECT_EQ(actual, "03:00:00");
+}
+
+TEST(TestAlarmClockInteractor, StartRemainingTimer_StartAlarmTimerIsCalled_CalledOnceWith3h)
+{
+	::testing::NiceMock<FakeTimeHandler> fth{};
+	Converter f{};
+	TimeOperations tr{};
+	AlarmClockInteractor aci{&tr, &fth, &f};
+	std::string wakeTimer{"3:00"};
+	tm wakeTimertm{};
+	wakeTimertm.tm_hour = 3;
+	wakeTimertm.tm_min = 0;
+	wakeTimertm.tm_sec = 0;
+	EXPECT_CALL(fth, StartAlarmTimer(wakeTimertm)).Times(1);
+
+	auto actual = aci.StartRemainingTimer(ALARMTYPE::ALARMTIMER, wakeTimer);
+}
+
+TEST(TestAlarmClockInteractor, StartRemainingTimer_StopAlarmTimerIsCalled_CalledOnce)
+{
+	::testing::NiceMock<FakeTimeHandler> fth{};
+	Converter f{};
+	TimeOperations tr{};
+	AlarmClockInteractor aci{&tr, &fth, &f};
+	std::string wakeTimer{"3:00"};
+	tm wakeTimertm{};
+	wakeTimertm.tm_hour = 3;
+	wakeTimertm.tm_min = 0;
+	wakeTimertm.tm_sec = 0;
+	EXPECT_CALL(fth, StartAlarmTimer(wakeTimertm)).Times(1);
+	EXPECT_CALL(fth, StopAlarmTimer()).Times(1);
+
+	auto actual = aci.StartRemainingTimer(ALARMTYPE::ALARMTIMER, wakeTimer);
+	aci.StopRemainingTimer();
 }

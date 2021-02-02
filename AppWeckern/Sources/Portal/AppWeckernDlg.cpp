@@ -46,6 +46,15 @@ void AppWeckernDlg::StartAlarmTimer()
 	}
 }
 
+void AppWeckernDlg::StopAlarmTimer()
+{
+	GetDlgItem(remainingTime_lbl)->ShowWindow(SW_HIDE);
+	GetDlgItem(remainingTimeIdentifier_lbl)->ShowWindow(SW_HIDE);
+	GetDlgItem(stop_btn)->ShowWindow(SW_HIDE);
+	GetDlgItem(start_btn)->ShowWindow(SW_SHOW);
+	onStopAlarm();
+}
+
 void AppWeckernDlg::SetPresentTime(const std::string& presentTime)
 {
 	SetDlgItemTextA(presentTime_lbl, presentTime.c_str());
@@ -64,6 +73,7 @@ void AppWeckernDlg::Init()
 BEGIN_MESSAGE_MAP(AppWeckernDlg, CDialogEx)
 ON_WM_DESTROY()
 ON_BN_CLICKED(start_btn, StartAlarmTimer)
+ON_BN_CLICKED(stop_btn, StopAlarmTimer)
 END_MESSAGE_MAP()
 
 //eventually Helpfull methods

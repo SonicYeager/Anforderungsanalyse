@@ -11,7 +11,9 @@ public:
 	virtual void StartTimer() = 0;
 	virtual void StopTimer() = 0;
 	virtual std::string StartRemainingTimer(ALARMTYPE, const std::string&) = 0;
+	virtual void StopRemainingTimer() = 0;
 	virtual ~Interactor() = default;
 
 	std::function<void(const std::string&)> onUpdatePresentTime;
+	std::function<void(const std::string&)> onUpdateRemainingTime;
 };

@@ -12,6 +12,7 @@ public:
 	void StartTimer() override;
 	void StopTimer() override;
 	std::string StartRemainingTimer(ALARMTYPE, const std::string&) override;
+	void StopRemainingTimer() override;
 	std::string InitApp() override;
 
 private:
