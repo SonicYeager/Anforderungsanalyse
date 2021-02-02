@@ -54,6 +54,11 @@ tm operator+(const tm& left, const tm& right)
 		res.tm_min -= 60;
 		++res.tm_hour;
 	}
+	if(res.tm_min == 60 && res.tm_sec > 0)
+	{
+		res.tm_min -= 60;
+		++res.tm_hour;
+	}
 	return res;
 }
 
@@ -71,4 +76,10 @@ tm TimeOperations::CalculateTimer(tm actualTime, tm wakeTime)
 		result = (fullDay - actualTime) + wakeTime;
 	}
 	return result;
+}
+
+tm TimeOperations::SumTime(tm left, tm right)
+{
+	tm summed = left + right;
+	return summed;
 }

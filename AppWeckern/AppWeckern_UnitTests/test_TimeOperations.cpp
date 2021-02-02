@@ -141,3 +141,24 @@ TEST(TestTimeOperations, CalculateTimer_14pm58min00secActualTime17am00min00secWa
 
 	EXPECT_EQ(actual, expected);
 }
+
+TEST(TestTimeOperations, SumTime_10pm30min30secActualTime2am30min00secWakeUpTime_Return13h00min30sec)
+{
+	TimeOperations to{};
+	tm actualTime{};
+	actualTime.tm_hour = 10;
+	actualTime.tm_min = 30;
+	actualTime.tm_sec = 30;
+	tm wakeTime{};
+	wakeTime.tm_hour = 2;
+	wakeTime.tm_min = 30;
+	wakeTime.tm_sec = 00;
+	tm expected{};
+	expected.tm_hour = 13;
+	expected.tm_min = 00;
+	expected.tm_sec = 30;
+
+	auto actual = to.SumTime(actualTime, wakeTime);
+
+	EXPECT_EQ(actual, expected);
+}

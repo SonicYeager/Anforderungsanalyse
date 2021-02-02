@@ -14,8 +14,9 @@ public:
 	virtual ~TimeRessource() = default;
 
 	ALARMTYPE aType;
-	 tm wakeTime{};
-	 bool remainingTimer = false;
-	 std::function<void(tm)> onPresentTime;
-	 std::function<void(tm, tm)> onRemainingTime;
+	tm wakeTime{};
+	tm timerStartTime{};
+	bool remainingTimer = false;
+	std::function<void(tm)> onPresentTime;
+	std::function<void(tm, tm)> onRemainingTime;
 };

@@ -16,15 +16,16 @@ AlarmClockInteractor::AlarmClockInteractor(TimeLogic* tl, TimeRessource* tr, Con
 	auto onUpdateRemaining = [this](tm t, tm waket) 
 	{
 		tm res{};
-		auto onAlarmClock = [this, waket, &res]() 
+		auto onAlarmClock = [this, waket, &res, t]() 
 		{
-			auto time = p_tr->GetPresentTime();
-			res = p_tl->CalculateTimer(time, waket);
+			res = p_tl->CalculateTimer(t, waket); //no idea
 		};
 
-		auto onAlarmTimer = [this, waket, &res]() 
+		auto onAlarmTimer = [this, waket, &res, t]() 
 		{
-			res = waket;
+			auto wakeUpTime = p_tl->SumTime(p_tr->timerStartTime, waket);
+			auto calcRemaining = p_tl->CalculateTimer(t, wakeUpTime);
+			res = calcRemaining; //has to be calculated
 		};
 
 		p_tl->DetermineAlarm(p_tr->aType, onAlarmClock, onAlarmTimer);

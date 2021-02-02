@@ -32,7 +32,7 @@ public:
 		}
 	}
 	MOCK_METHOD(void, StopTimer, (), (override));
-	MOCK_METHOD(void, StartAlarmTimer, (tm), (override));
+	MOCK_METHOD(void, StartAlarmTimer, (ALARMTYPE, tm), (override));
 	MOCK_METHOD(void, StopAlarmTimer, (), (override));
 };
 
@@ -116,7 +116,7 @@ TEST(TestAlarmClockInteractor, StartRemainingTimer_StartAlarmTimerIsCalled_Calle
 	wakeTimertm.tm_hour = 3;
 	wakeTimertm.tm_min = 0;
 	wakeTimertm.tm_sec = 0;
-	EXPECT_CALL(fth, StartAlarmTimer(wakeTimertm)).Times(1);
+	EXPECT_CALL(fth, StartAlarmTimer(ALARMTYPE::ALARMTIMER, wakeTimertm)).Times(1);
 
 	auto actual = aci.StartRemainingTimer(ALARMTYPE::ALARMTIMER, wakeTimer);
 }
@@ -132,7 +132,7 @@ TEST(TestAlarmClockInteractor, StartRemainingTimer_StopAlarmTimerIsCalled_Called
 	wakeTimertm.tm_hour = 3;
 	wakeTimertm.tm_min = 0;
 	wakeTimertm.tm_sec = 0;
-	EXPECT_CALL(fth, StartAlarmTimer(wakeTimertm)).Times(1);
+	EXPECT_CALL(fth, StartAlarmTimer(ALARMTYPE::ALARMTIMER, wakeTimertm)).Times(1);
 	EXPECT_CALL(fth, StopAlarmTimer()).Times(1);
 
 	auto actual = aci.StartRemainingTimer(ALARMTYPE::ALARMTIMER, wakeTimer);

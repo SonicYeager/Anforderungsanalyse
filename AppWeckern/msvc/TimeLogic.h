@@ -8,5 +8,6 @@ class TimeLogic
 public:
 	virtual void DetermineAlarm(ALARMTYPE, std::function<void()>, std::function<void()>) = 0;
 	virtual tm CalculateTimer(tm, tm) = 0;
+	virtual tm SumTime(tm, tm) = 0;
 	virtual ~TimeLogic() = default;
 };

@@ -43,6 +43,7 @@ void TimeHandler::StartAlarmTimer(ALARMTYPE type, tm wakeTime)
 {
 	aType = type;
 	this->wakeTime = wakeTime;
+	timerStartTime = GetPresentTime();
 	remainingTimer = true;
 }
 
