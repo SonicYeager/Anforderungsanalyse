@@ -40,16 +40,10 @@
     <ClInclude Include="LetterGenerator.h">
       <Filter>Implementation</Filter>
     </ClInclude>
-    <ClInclude Include="GameStats.h">
-      <Filter>Data</Filter>
+    <ClInclude Include="UI.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="PlayerStats.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Letter.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Categories.h">
+    <ClInclude Include="DataTypes.h">
       <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>
