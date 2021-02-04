@@ -12,6 +12,7 @@ int main(int argc, char *argv[])
     QGuiApplication app(argc, argv);
     QmlAdapter qmlAdapter;
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("qmlAdapter",&qmlAdapter);
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
                      &app, [url](QObject *obj, const QUrl &objUrl) {

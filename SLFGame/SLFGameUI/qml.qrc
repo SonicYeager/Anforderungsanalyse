@@ -1,5 +1,11 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>GameScreen_Input.qml</file>
+        <file>Categories.qml</file>
+        <file>Category.qml</file>
+        <file>EntryBox.qml</file>
+        <file>TextBox.qml</file>
+        <file>InfoBox.qml</file>
     </qresource>
 </RCC>
