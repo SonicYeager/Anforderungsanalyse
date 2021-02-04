@@ -30,6 +30,8 @@ public:
     void setCategories(Categories categories);
     void setCategoryCount(int categoryCount);
 
+    void Init(const GameStats&, const PlayerStats&) override;
+
 public slots:
     QString getCategoryName(int idx);
 signals:
@@ -40,6 +42,7 @@ signals:
 private:
     QString _letter = "C";
     int _categoryCount = 3;
+    int _currentRound = 0;
     Categories _categories = {"Stadt", "Land", "Fluss"};
     Categories _categories2 = {"Stadt", "Land", "Fluss", "Name", "Tier", "Beruf"};
 };

@@ -45,6 +45,13 @@ void QmlAdapter::setCategoryCount(int categoryCount)
     emit categoryCountChanged();
 }
 
+void QmlAdapter::Init(const GameStats & gs, const PlayerStats & ps)
+{
+    _currentRound = gs.GetCurrentRound();
+    _letter = gs.GetCurrentLetter().letter;
+    //notify
+}
+
 QString QmlAdapter::getCategoryName(int idx)
 {
     return QString::fromUtf8(_categories[idx].c_str());

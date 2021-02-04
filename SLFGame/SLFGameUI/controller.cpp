@@ -12,4 +12,5 @@ void Controller::Run()
 {
     //init here
     auto stats = p_inter->PrepareNextRound(GameStats(), PlayerStats());
+    p_ui->Init(stats.first, stats.second);
 }

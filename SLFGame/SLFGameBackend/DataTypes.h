@@ -21,9 +21,9 @@ using Categories = std::vector<std::string>;
 
 struct PlayerStats
 {
-	int GetPoints();
-	std::vector<std::string> GetAnswers();
-	std::string GetAnswerAt(int);
+	int GetPoints()const;
+	std::vector<std::string> GetAnswers()const;
+	std::string GetAnswerAt(int)const;
 	void SetPoints(int);
 	void SetAnswers(const std::vector<std::string>&);
 
@@ -34,11 +34,11 @@ private:
 
 struct GameStats
 {
-	Categories GetCategories();
-	Letters GetUsedLetters();
-	Letter GetCurrentLetter();
-	int GetCurrentRound();
-	int GetMaxRound();
+	Categories GetCategories()const;
+	Letters GetUsedLetters()const;
+	Letter GetCurrentLetter()const;
+	int GetCurrentRound()const;
+	int GetMaxRound()const;
 	void SetUsedLetters(Letters);
 	void SetCurrentLetter(Letter);
 	void SetCurrentRound(int);
@@ -52,17 +52,17 @@ private:
 	//Timeout
 };
 
-inline int PlayerStats::GetPoints()
+inline int PlayerStats::GetPoints()	const
 {
 	return points;
 }
 
-inline std::vector<std::string> PlayerStats::GetAnswers()
+inline std::vector<std::string> PlayerStats::GetAnswers() const
 {
 	return answers;
 }
 
-inline std::string PlayerStats::GetAnswerAt(int i)
+inline std::string PlayerStats::GetAnswerAt(int i) const
 {
 	return answers[i];
 }
@@ -77,27 +77,27 @@ inline void PlayerStats::SetAnswers(const std::vector<std::string>& newAsnwers)
 	answers = newAsnwers;
 }
 
-inline Categories GameStats::GetCategories()
+inline Categories GameStats::GetCategories() const 
 {
 	return categories;
 }
 
-inline Letters GameStats::GetUsedLetters()
+inline Letters GameStats::GetUsedLetters() const
 {
 	return lettersUsed;
 }
 
-inline Letter GameStats::GetCurrentLetter()
+inline Letter GameStats::GetCurrentLetter()	const
 {
 	return currentLetter;
 }
 
-inline int GameStats::GetCurrentRound()
+inline int GameStats::GetCurrentRound()	const
 {
 	return currentRound;
 }
 
-inline int GameStats::GetMaxRound()
+inline int GameStats::GetMaxRound()	const
 {
 	return maxRounds;
 }
