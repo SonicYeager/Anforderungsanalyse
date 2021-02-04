@@ -65,3 +65,27 @@ TEST(TestGameStatsOperations, SetNewLetter_GameStatsCurrentLetterEmpty_GameStats
 	EXPECT_EQ(gs.GetCurrentLetter().letter, 'C');
 
 }
+
+TEST(TestGameStatsOperations, LetterIsAlreadyUsed_IsNotUsed_ReturnFalse)
+{
+
+	GameStatsOperations gso{};
+	GameStats gs{};
+
+	auto actual = gso.LetterIsAlreadyUsed(Letter{ 'C' }, Letters{ {Letter{ 'A' }, Letter{'B'}} });
+
+	EXPECT_FALSE(actual);
+
+}
+
+TEST(TestGameStatsOperations, LetterIsAlreadyUsed_IsUsed_ReturnTrue)
+{
+
+	GameStatsOperations gso{};
+	GameStats gs{};
+
+	auto actual = gso.LetterIsAlreadyUsed(Letter{ 'B' }, Letters{ {Letter{ 'A' }, Letter{'B'}} });
+
+	EXPECT_TRUE(actual);
+
+}

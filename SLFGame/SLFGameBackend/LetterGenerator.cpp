@@ -2,7 +2,7 @@
 #include <random>
 #include <map>
 
-Letter LetterGenerator::GenerateLetter(const Letters letters)	//could also use range of char (ascii-code)
+Letter LetterGenerator::GenerateLetter()	//could also use range of char (ascii-code)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());

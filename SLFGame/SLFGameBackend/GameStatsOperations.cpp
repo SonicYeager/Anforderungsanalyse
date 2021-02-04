@@ -1,4 +1,5 @@
 #include "GameStatsOperations.h"
+#include <algorithm>
 
 void GameStatsOperations::InkrementRound(GameStats& gameStats)
 {
@@ -19,4 +20,9 @@ void GameStatsOperations::AddPreviousLetter(GameStats& gameStats)
 void GameStatsOperations::SetNewLetter(Letter letter, GameStats& gameStats)
 {
 	gameStats.SetCurrentLetter(letter);
+}
+
+bool GameStatsOperations::LetterIsAlreadyUsed(Letter generated, Letters used)
+{
+	return std::find(std::begin(used.letters), std::end(used.letters), generated) != std::end(used.letters);
 }

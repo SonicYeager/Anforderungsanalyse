@@ -8,5 +8,6 @@ public:
 	void InkrementRound(GameStats&) override;
 	void AddPreviousLetter(GameStats&) override;
 	void SetNewLetter(Letter, GameStats&) override;
+	bool LetterIsAlreadyUsed(Letter, Letters) override;
 };
 

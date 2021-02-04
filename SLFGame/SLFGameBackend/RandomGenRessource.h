@@ -4,6 +4,6 @@
 class RandomGenRessource
 {
 public:
-	virtual Letter GenerateLetter(const Letters) = 0;
+	virtual Letter GenerateLetter() = 0;
 	virtual ~RandomGenRessource() = default; 
 };

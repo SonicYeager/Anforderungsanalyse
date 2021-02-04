@@ -5,6 +5,6 @@
 class LetterGenerator : public RandomGenRessource
 {
 public:
-	Letter GenerateLetter(const Letters) override;
+	Letter GenerateLetter() override;
 };
 

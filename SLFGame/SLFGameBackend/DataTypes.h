@@ -1,9 +1,14 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <functional>
+
+template<typename ... Args>
+using Event = std::function<void(Args...)>;
 
 struct Letter
 {
+	bool operator==(const Letter& other);
 	char letter{};
 };
 
@@ -113,4 +118,9 @@ inline void GameStats::SetCurrentLetter(Letter newLetter)
 inline void GameStats::SetCurrentRound(int newCurrentRound)
 {
 	currentRound = newCurrentRound;
+}
+
+inline bool Letter::operator==(const Letter& other)
+{
+	return letter == other.letter;
 }
