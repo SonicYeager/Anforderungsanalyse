@@ -6,10 +6,11 @@
 #include <vector>
 #include <string>
 #include <QAbstractListModel>
+#include "UI.h"
 
 using Categories = std::vector<std::string>;
 
-class QmlAdapter : public QObject
+class QmlAdapter : public QObject, public UI
 {
     Q_OBJECT
     Q_PROPERTY(QString letter           READ getLetter          WRITE setLetter        NOTIFY letterChanged)

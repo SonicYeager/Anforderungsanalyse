@@ -17,10 +17,7 @@ struct Letters
 	std::vector<Letter> letters{};
 };
 
-struct Categories
-{
-	std::vector<std::string> categories{};
-};
+using Categories = std::vector<std::string>;
 
 struct PlayerStats
 {

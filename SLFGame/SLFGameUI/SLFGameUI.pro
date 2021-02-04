@@ -1,6 +1,6 @@
 QT += quick
 
-CONFIG += c++11
+CONFIG += c++20
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -8,6 +8,7 @@ CONFIG += c++11
 
 SOURCES += \
         QmlAdapter.cpp \
+        controller.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -24,4 +25,12 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    QmlAdapter.h
+    QmlAdapter.h \
+    controller.h
+
+win32: LIBS += -L$$PWD/../SLFGameBackend/Debug/ -l SLFGameBackend
+
+INCLUDEPATH += $$PWD/../SLFGameBackend/
+DEPENDPATH += $$PWD/../SLFGameBackend/
+
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../SLFGameBackend/Debug/SLFGameBackend.lib
