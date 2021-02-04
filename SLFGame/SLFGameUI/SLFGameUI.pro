@@ -28,9 +28,10 @@ HEADERS += \
     QmlAdapter.h \
     controller.h
 
-win32: LIBS += -L$$PWD/../SLFGameBackend/Debug/ -l SLFGameBackend
+win32: LIBS += -L$$PWD/../SLFGameBackend/x64/Debug/ -lSLFGameBackend
 
-INCLUDEPATH += $$PWD/../SLFGameBackend/
-DEPENDPATH += $$PWD/../SLFGameBackend/
+INCLUDEPATH += $$PWD/../SLFGameBackend
+DEPENDPATH += $$PWD/../SLFGameBackend
 
-win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../SLFGameBackend/Debug/SLFGameBackend.lib
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/SLFGameBackend.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/libSLFGameBackend.a

@@ -19,7 +19,7 @@ CXXFLAGS      = -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStri
 INCPATH       = -I..\SLFGameUI -I. -I..\SLFGameBackend -IG:\Software\Qt\6.0.1\msvc2019_64\include -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtQuick -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtOpenGL -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtGui -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtQmlModels -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtQml -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtNetwork -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtCore -Irelease -I/include -IG:\Software\Qt\6.0.1\msvc2019_64\mkspecs\win32-msvc 
 LINKER        = link
 LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /OPT:REF /OPT:ICF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
-LIBS          = /LIBPATH:H:\Repositories\Anforderungsanalyse\SLFGame\SLFGameBackend\Debug .lib SLFGameBackend G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Quick.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6OpenGL.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Gui.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6QmlModels.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Qml.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Network.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Core.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPoint.lib shell32.lib  
+LIBS          = /LIBPATH:H:\Repositories\Anforderungsanalyse\SLFGame\SLFGameBackend\x64\Debug .lib SLFGameBackend G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Quick.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6OpenGL.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Gui.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6QmlModels.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Qml.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Network.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Core.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPoint.lib shell32.lib  
 QMAKE         = G:\Software\Qt\6.0.1\msvc2019_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -138,7 +138,7 @@ DESTDIR_TARGET = release\SLFGameUI.exe
 first: all
 all: Makefile.Release  release\SLFGameUI.exe
 
-release\SLFGameUI.exe: H:\Repositories\Anforderungsanalyse\SLFGame\SLFGameUI\..\SLFGameBackend\Debug\SLFGameBackend.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Quick.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6OpenGL.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Gui.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6QmlModels.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Qml.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Network.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Core.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPoint.lib $(OBJECTS) 
+release\SLFGameUI.exe: H:\Repositories\Anforderungsanalyse\SLFGame\SLFGameUI\..\SLFGameBackend\x64\Debug\SLFGameBackend.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Quick.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6OpenGL.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Gui.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6QmlModels.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Qml.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Network.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Core.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPoint.lib $(OBJECTS) 
 	$(LINKER) $(LFLAGS) /MANIFEST:embed /OUT:$(DESTDIR_TARGET) @<<
 release\QmlAdapter.obj release\controller.obj release\main.obj release\qrc_qml.obj release\moc_QmlAdapter.obj
 $(LIBS)

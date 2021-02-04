@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<RCC>
+    <qresource prefix="/">
+        <file alias="main.qml">../SLFGameUI/main.qml</file>
+        <file alias="GameScreen_Input.qml">../SLFGameUI/GameScreen_Input.qml</file>
+        <file alias="Categories.qml">../SLFGameUI/Categories.qml</file>
+        <file alias="Category.qml">../SLFGameUI/Category.qml</file>
+        <file alias="EntryBox.qml">../SLFGameUI/EntryBox.qml</file>
+        <file alias="TextBox.qml">../SLFGameUI/TextBox.qml</file>
+        <file alias="InfoBox.qml">../SLFGameUI/InfoBox.qml</file>
+    </qresource>
+</RCC>
