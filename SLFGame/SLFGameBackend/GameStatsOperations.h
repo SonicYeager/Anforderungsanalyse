@@ -9,5 +9,6 @@ public:
 	void AddPreviousLetter(GameStats&) override;
 	void SetNewLetter(Letter, GameStats&) override;
 	bool LetterIsAlreadyUsed(Letter, Letters) override;
+	std::pair<GameStats, PlayerStats> CreateStats(const std::string&) override;
 };
 

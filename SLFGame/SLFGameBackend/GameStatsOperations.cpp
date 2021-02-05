@@ -26,3 +26,13 @@ bool GameStatsOperations::LetterIsAlreadyUsed(Letter generated, Letters used)
 {
 	return std::find(std::begin(used.letters), std::end(used.letters), generated) != std::end(used.letters);
 }
+
+std::pair<GameStats, PlayerStats> GameStatsOperations::CreateStats(const std::string& code)
+{
+	GameStats gs{};
+	PlayerStats ps{};
+	gs.SetMaxRounds(5);
+	gs.SetCategories({ {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}} });
+	gs.SetLobbyCode(code);
+    return std::make_pair(gs, ps);
+}

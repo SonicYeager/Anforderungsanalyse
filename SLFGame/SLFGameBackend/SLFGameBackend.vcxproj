@@ -241,14 +241,17 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="GameInteractor.h" />
     <ClInclude Include="GameLogic.h" />
+    <ClInclude Include="GameNetwork.h" />
     <ClInclude Include="GameStatsOperations.h" />
     <ClInclude Include="Interactor.h" />
+    <ClInclude Include="NetworkSource.h" />
     <ClInclude Include="RandomGenerator.h" />
     <ClInclude Include="RandomGenRessource.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameInteractor.cpp" />
+    <ClCompile Include="GameNetwork.cpp" />
     <ClCompile Include="GameStatsOperations.cpp" />
     <ClCompile Include="RandomGenerator.cpp" />
   </ItemGroup>

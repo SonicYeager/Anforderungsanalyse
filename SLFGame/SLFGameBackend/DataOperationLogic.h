@@ -8,5 +8,6 @@ public:
 	virtual void AddPreviousLetter(GameStats&) = 0;
 	virtual void SetNewLetter(Letter, GameStats&) = 0;
 	virtual bool LetterIsAlreadyUsed(Letter, Letters) = 0;
+	virtual std::pair<GameStats, PlayerStats> CreateStats(const std::string&) = 0;
 	virtual ~DataOperationLogic() = default;
 };

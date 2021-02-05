@@ -89,3 +89,21 @@ TEST(TestGameStatsOperations, LetterIsAlreadyUsed_IsUsed_ReturnTrue)
 	EXPECT_TRUE(actual);
 
 }
+
+TEST(TestGameStatsOperations, CreateStats_LobbyCode0c346bv_ReturnConfiguredGameStatsAndPlayerStats)
+{
+
+	GameStatsOperations gso{};
+	GameStats gs{};
+
+	auto actual = gso.CreateStats("0c346bv");
+
+	GameStats expectedgs{};
+	PlayerStats expectedps{};
+	expectedgs.SetMaxRounds(5);
+	expectedgs.SetCategories({{{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}}});
+	expectedgs.SetLobbyCode("0c346bv");
+	EXPECT_EQ(actual.first, expectedgs);
+	EXPECT_EQ(actual.second, expectedps);
+
+}

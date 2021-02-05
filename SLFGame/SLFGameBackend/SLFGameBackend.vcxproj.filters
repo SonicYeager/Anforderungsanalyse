@@ -46,6 +46,12 @@
     <ClInclude Include="RandomGenerator.h">
       <Filter>Implementation</Filter>
     </ClInclude>
+    <ClInclude Include="NetworkSource.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="GameNetwork.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameInteractor.cpp">
@@ -57,6 +63,7 @@
     <ClCompile Include="RandomGenerator.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
+    <ClCompile Include="GameNetwork.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\ressources\categories.txt" />
