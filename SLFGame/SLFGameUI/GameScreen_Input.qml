@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
 
 Window{
-    id: mainWindow
+    id: gameScreen_window
     width: Screen.width
     height: Screen.height
     visible: true
@@ -30,19 +30,6 @@ Window{
                     Layout.preferredWidth: parent.width
                     opacity:0
                 }
-
-                //Category{
-                //    categoryName: "Stadt"
-                //    categoryEntry: ""
-                //}
-                //Category{
-                //    categoryName: "Land"
-                //    categoryEntry: ""
-                //}
-                //Category{
-                //    categoryName: "Fluss"
-                //    categoryEntry: ""
-                //}
                 Categories{
                     id:categories
                     Layout.preferredWidth: parent.width
@@ -89,7 +76,7 @@ Window{
                             Layout.preferredWidth: parent.width * 1/2
                             Layout.preferredHeight: parent.height
                             descriptionText: "Zeit verbleibend"
-                            outputText: "unendlich"
+                            outputText: qmlAdapter.timeLeft
                             color: overviewContainer.color
                         }
                     }
@@ -105,14 +92,14 @@ Window{
                             Layout.preferredWidth: parent.width * 1/2
                             Layout.preferredHeight: parent.height
                             descriptionText: "Runde"
-                            outputText: "1 / 5"
+                            outputText: qmlAdapter.currentRound + " / " + qmlAdapter.maxRounds
                             color: overviewContainer.color
                         }
                         InfoBox{
                             Layout.preferredWidth: parent.width * 1/2
                             Layout.preferredHeight: parent.height
                             descriptionText: "Punktzahl"
-                            outputText: "0"
+                            outputText: qmlAdapter.points
                             color: overviewContainer.color
                         }
                     }
