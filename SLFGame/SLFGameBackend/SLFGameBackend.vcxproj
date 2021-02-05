@@ -186,6 +186,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>D:\3_Coding\1_C++\_Libraries\FileHandler\FileHandler;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -204,6 +205,7 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>D:\3_Coding\1_C++\_Libraries\FileHandler\FileHandler;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -249,6 +251,11 @@
     <ClCompile Include="GameInteractor.cpp" />
     <ClCompile Include="GameStatsOperations.cpp" />
     <ClCompile Include="LetterGenerator.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\_Libraries\FileHandler\FileHandler\FileHandler.vcxproj">
+      <Project>{017314c3-4b82-4d1a-b23c-3ab8cd9d5a96}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

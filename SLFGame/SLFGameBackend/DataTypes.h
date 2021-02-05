@@ -41,6 +41,7 @@ struct GameStats
 	int GetMaxRound()const;
 	void SetUsedLetters(Letters);
 	void SetCurrentLetter(Letter);
+	void SetCategories(Categories);
 	void SetCurrentRound(int);
 
 private:
@@ -90,6 +91,11 @@ inline Letters GameStats::GetUsedLetters() const
 inline Letter GameStats::GetCurrentLetter()	const
 {
 	return currentLetter;
+}
+
+inline void GameStats::SetCategories(Categories cats)
+{
+	categories = cats;
 }
 
 inline int GameStats::GetCurrentRound()	const

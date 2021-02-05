@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFramework", "..\TestFra
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SLFGameBackend_Tests", "..\SLFGameBackend_Tests\SLFGameBackend_Tests.vcxproj", "{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileHandler", "..\..\..\..\_Libraries\FileHandler\FileHandler\FileHandler.vcxproj", "{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\TestFramework\GoogleMock\TestFramework.vcxitems*{aac85e24-c2bd-4a83-9dd9-48c57441c065}*SharedItemsImports = 9
@@ -46,6 +48,18 @@ Global
 		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Tests|x64.Build.0 = Tests|x64
 		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Tests|x86.ActiveCfg = Tests|Win32
 		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Tests|x86.Build.0 = Tests|Win32
+		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Debug|x64.ActiveCfg = Debug|x64
+		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Debug|x64.Build.0 = Debug|x64
+		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Debug|x86.ActiveCfg = Debug|Win32
+		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Debug|x86.Build.0 = Debug|Win32
+		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Release|x64.ActiveCfg = Release|x64
+		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Release|x64.Build.0 = Release|x64
+		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Release|x86.ActiveCfg = Release|Win32
+		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Release|x86.Build.0 = Release|Win32
+		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Tests|x64.ActiveCfg = Debug|x64
+		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Tests|x64.Build.0 = Debug|x64
+		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Tests|x86.ActiveCfg = Debug|Win32
+		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Tests|x86.Build.0 = Debug|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
