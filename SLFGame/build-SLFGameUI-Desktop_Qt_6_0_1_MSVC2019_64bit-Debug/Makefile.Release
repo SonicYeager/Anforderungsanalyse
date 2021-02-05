@@ -518,7 +518,7 @@ release\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include
 		..\SLFGameBackend\DataOperationLogic.h \
 		..\SLFGameBackend\RandomGenRessource.h \
 		..\SLFGameBackend\GameStatsOperations.h \
-		..\SLFGameBackend\LetterGenerator.h
+		..\SLFGameBackend\RandomGenerator.h
 
 release\qrc_qml.obj: release\qrc_qml.cpp 
 

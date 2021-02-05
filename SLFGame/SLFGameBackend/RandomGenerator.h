@@ -2,7 +2,7 @@
 #include "framework.h"
 #include "RandomGenRessource.h"
 
-class LetterGenerator : public RandomGenRessource
+class RandomGenerator : public RandomGenRessource
 {
 public:
 	Letter GenerateLetter() override;

@@ -5,7 +5,7 @@
 #include "controller.h"
 #include "GameInteractor.h"
 #include "GameStatsOperations.h"
-#include "LetterGenerator.h"
+#include "RandomGenerator.h"
 
 int main(int argc, char *argv[])
 {
@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 
     QmlAdapter qmlAdapter;
     GameStatsOperations gso{};
-    LetterGenerator lg{};
+    RandomGenerator lg{};
     GameInteractor gi{&lg, &gso};
     Controller controller{&qmlAdapter, &gi};
     controller.Run();

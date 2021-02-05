@@ -1,8 +1,8 @@
-#include "LetterGenerator.h"
+#include "RandomGenerator.h"
 #include <random>
 #include <map>
 
-Letter LetterGenerator::GenerateLetter()	//could also use range of char (ascii-code)
+Letter RandomGenerator::GenerateLetter()	//could also use range of char (ascii-code)
 {
 	std::random_device rd;
 	std::mt19937 gen(rd());

@@ -519,7 +519,7 @@ debug\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include\Q
 		..\SLFGameBackend\DataOperationLogic.h \
 		..\SLFGameBackend\RandomGenRessource.h \
 		..\SLFGameBackend\GameStatsOperations.h \
-		..\SLFGameBackend\LetterGenerator.h
+		..\SLFGameBackend\RandomGenerator.h
 
 debug\qrc_qml.obj: debug\qrc_qml.cpp 
 

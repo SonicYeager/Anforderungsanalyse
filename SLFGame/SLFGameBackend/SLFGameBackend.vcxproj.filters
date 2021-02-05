@@ -37,14 +37,14 @@
     <ClInclude Include="GameStatsOperations.h">
       <Filter>Implementation</Filter>
     </ClInclude>
-    <ClInclude Include="LetterGenerator.h">
-      <Filter>Implementation</Filter>
-    </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="DataTypes.h">
       <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="RandomGenerator.h">
+      <Filter>Implementation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -54,7 +54,7 @@
     <ClCompile Include="GameStatsOperations.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="LetterGenerator.cpp">
+    <ClCompile Include="RandomGenerator.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
   </ItemGroup>
