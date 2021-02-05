@@ -196,16 +196,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SLFGameBackend\SLFGameBackend.vcxproj">
-      <Project>{07e9cd5e-f2e5-4e8c-8912-7b052475a634}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <ClCompile Include="test_GameInteractor.cpp" />
     <ClCompile Include="test_GameStatsOperations.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\ressources\categories.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\SLFGameBackendQt\slfgamebackendqt_global.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

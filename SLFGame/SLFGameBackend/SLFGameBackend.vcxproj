@@ -32,6 +32,7 @@
     <ProjectGuid>{07e9cd5e-f2e5-4e8c-8912-7b052475a634}</ProjectGuid>
     <RootNamespace>SLFGameBackend</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>SLFGameBackendVSTools</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -186,13 +187,20 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>D:\3_Coding\1_C++\Repos\Anforderungsanalyse\SLFGame\FileHandler\FileHandler;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>\QtCoreLib\msvc2019_64\include;..\FileHandler\FileHandler;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>
       </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>Qt6Cored.lib;Qt6Networkd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>QtCoreLib\msvc2019_64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Tests|x64'">
     <ClCompile>
@@ -205,13 +213,20 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
-      <AdditionalIncludeDirectories>D:\3_Coding\1_C++\Repos\Anforderungsanalyse\SLFGame\FileHandler\FileHandler;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\QtLib;..\FileHandler\FileHandler;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>
       </SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>QtLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>..\QtLib\x64\Debug\qmake;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -226,6 +241,8 @@
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <AdditionalIncludeDirectories>\QtCoreLib\msvc2019_64\include;..\FileHandler\FileHandler;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>
@@ -234,34 +251,20 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>Qt6Core.lib;Qt6Network.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>QtCoreLib\msvc2019_64\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="DataOperationLogic.h" />
-    <ClInclude Include="DataTypes.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="GameInteractor.h" />
-    <ClInclude Include="GameLogic.h" />
-    <ClInclude Include="GameNetwork.h" />
-    <ClInclude Include="GameStatsOperations.h" />
-    <ClInclude Include="Interactor.h" />
-    <ClInclude Include="NetworkSource.h" />
-    <ClInclude Include="RandomGenerator.h" />
-    <ClInclude Include="RandomGenRessource.h" />
-    <ClInclude Include="UI.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="GameInteractor.cpp" />
-    <ClCompile Include="GameNetwork.cpp" />
-    <ClCompile Include="GameStatsOperations.cpp" />
-    <ClCompile Include="RandomGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\FileHandler\FileHandler\FileHandler.vcxproj">
       <Project>{017314c3-4b82-4d1a-b23c-3ab8cd9d5a96}</Project>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="..\ressources\categories.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

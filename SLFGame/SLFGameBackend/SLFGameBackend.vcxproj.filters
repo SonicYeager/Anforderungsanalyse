@@ -5,67 +5,10 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Interfaces">
-      <UniqueIdentifier>{ad5e0f8b-176d-41cb-b18a-966942c11286}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Implementation">
-      <UniqueIdentifier>{f24b3a7b-8ce4-4ceb-92ed-a5e61faf2890}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Data">
-      <UniqueIdentifier>{24da0e2e-968d-44c1-985b-c53e8ff9dd78}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="Interactor.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="DataOperationLogic.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="RandomGenRessource.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="GameLogic.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="GameInteractor.h">
-      <Filter>Implementation</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStatsOperations.h">
-      <Filter>Implementation</Filter>
-    </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="DataTypes.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="RandomGenerator.h">
-      <Filter>Implementation</Filter>
-    </ClInclude>
-    <ClInclude Include="NetworkSource.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="GameNetwork.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="GameInteractor.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStatsOperations.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="RandomGenerator.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="GameNetwork.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <CopyFileToFolders Include="..\ressources\categories.txt" />
   </ItemGroup>
 </Project>

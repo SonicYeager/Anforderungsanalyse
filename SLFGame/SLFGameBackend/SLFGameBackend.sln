@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SLFGameBackend", "SLFGameBackend.vcxproj", "{07E9CD5E-F2E5-4E8C-8912-7B052475A634}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFramework", "..\TestFramework\GoogleMock\TestFramework.vcxitems", "{AAC85E24-C2BD-4A83-9DD9-48C57441C065}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SLFGameBackend_Tests", "..\SLFGameBackend_Tests\SLFGameBackend_Tests.vcxproj", "{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileHandler", "..\FileHandler\FileHandler\FileHandler.vcxproj", "{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SLFGameBackend", "..\SLFGameBackendQt\SLFGameBackendQt.vcxproj", "{0C096FA7-8645-4407-A1EE-3CC26741EB10}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -25,18 +25,6 @@ Global
 		Tests|x86 = Tests|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{07E9CD5E-F2E5-4E8C-8912-7B052475A634}.Debug|x64.ActiveCfg = Debug|x64
-		{07E9CD5E-F2E5-4E8C-8912-7B052475A634}.Debug|x64.Build.0 = Debug|x64
-		{07E9CD5E-F2E5-4E8C-8912-7B052475A634}.Debug|x86.ActiveCfg = Debug|Win32
-		{07E9CD5E-F2E5-4E8C-8912-7B052475A634}.Debug|x86.Build.0 = Debug|Win32
-		{07E9CD5E-F2E5-4E8C-8912-7B052475A634}.Release|x64.ActiveCfg = Release|x64
-		{07E9CD5E-F2E5-4E8C-8912-7B052475A634}.Release|x64.Build.0 = Release|x64
-		{07E9CD5E-F2E5-4E8C-8912-7B052475A634}.Release|x86.ActiveCfg = Release|Win32
-		{07E9CD5E-F2E5-4E8C-8912-7B052475A634}.Release|x86.Build.0 = Release|Win32
-		{07E9CD5E-F2E5-4E8C-8912-7B052475A634}.Tests|x64.ActiveCfg = Tests|x64
-		{07E9CD5E-F2E5-4E8C-8912-7B052475A634}.Tests|x64.Build.0 = Tests|x64
-		{07E9CD5E-F2E5-4E8C-8912-7B052475A634}.Tests|x86.ActiveCfg = Tests|Win32
-		{07E9CD5E-F2E5-4E8C-8912-7B052475A634}.Tests|x86.Build.0 = Tests|Win32
 		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Debug|x64.ActiveCfg = Debug|x64
 		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Debug|x64.Build.0 = Debug|x64
 		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Debug|x86.ActiveCfg = Debug|Win32
@@ -60,6 +48,16 @@ Global
 		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Tests|x64.Build.0 = Debug|x64
 		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Tests|x86.ActiveCfg = Debug|Win32
 		{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}.Tests|x86.Build.0 = Debug|Win32
+		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Debug|x64.ActiveCfg = Debug|x64
+		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Debug|x64.Build.0 = Debug|x64
+		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Debug|x86.ActiveCfg = Debug|x64
+		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Release|x64.ActiveCfg = Release|x64
+		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Release|x64.Build.0 = Release|x64
+		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Release|x86.ActiveCfg = Release|x64
+		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Tests|x64.ActiveCfg = Debug|x64
+		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Tests|x64.Build.0 = Debug|x64
+		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Tests|x86.ActiveCfg = Debug|x64
+		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Tests|x86.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

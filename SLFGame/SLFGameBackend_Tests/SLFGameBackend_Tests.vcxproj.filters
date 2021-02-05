@@ -5,6 +5,9 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{84420447-06a9-4259-a726-d9886b240cc9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test_GameStatsOperations.cpp">
@@ -16,5 +19,10 @@
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\ressources\categories.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\SLFGameBackendQt\slfgamebackendqt_global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
