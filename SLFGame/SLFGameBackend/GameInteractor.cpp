@@ -9,7 +9,7 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op) 
 std::pair<GameStats, PlayerStats> GameInteractor::PrepareNextRound(const GameStats& gs, const PlayerStats& ps)
 {
 	FileHandler fh;
-	fh.SetFolder("../ressources");
+	fh.SetFolder("../ressources/");
 	fh.LoadFile("categories.txt");
 	auto changedgs = gs;
 	changedgs.SetCategories(fh.ReturnAllLines());

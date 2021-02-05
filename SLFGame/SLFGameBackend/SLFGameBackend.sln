@@ -9,7 +9,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFramework", "..\TestFra
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SLFGameBackend_Tests", "..\SLFGameBackend_Tests\SLFGameBackend_Tests.vcxproj", "{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileHandler", "..\..\..\..\_Libraries\FileHandler\FileHandler\FileHandler.vcxproj", "{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FileHandler", "..\FileHandler\FileHandler\FileHandler.vcxproj", "{017314C3-4B82-4D1A-B23C-3AB8CD9D5A96}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution

@@ -11,6 +11,7 @@ void QmlAdapter::Init(const GameStats & gs, const PlayerStats & ps)
 {
     setCurrentRound(gs.GetCurrentRound());
     setLetter(QChar(gs.GetCurrentLetter().letter));
+    setCategories(gs.GetCategories());
 }
 
 
@@ -66,7 +67,9 @@ void QmlAdapter::setCategories(Categories categories)
     if (categories == _categories)
         return;
     _categories = categories;
+    _categoryCount = _categories.size();
     emit categoriesChanged();
+    emit categoryCountChanged();
 }
 
 void QmlAdapter::setCategoryCount(int categoryCount)

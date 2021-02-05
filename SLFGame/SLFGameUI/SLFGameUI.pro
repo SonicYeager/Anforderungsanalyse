@@ -35,3 +35,11 @@ DEPENDPATH += $$PWD/../SLFGameBackend
 
 win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/SLFGameBackend.lib
 else:win32-g++: PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/libSLFGameBackend.a
+
+win32: LIBS += -L$$PWD/../SLFGameBackend/x64/Debug/ -lFileHandler
+
+INCLUDEPATH += $$PWD/../FileHandler/FileHandler
+DEPENDPATH += $$PWD/../FileHandler/FileHandler
+
+win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/FileHandler.lib
+else:win32-g++: PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/libFileHandler.a

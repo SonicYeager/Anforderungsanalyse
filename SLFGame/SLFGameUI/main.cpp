@@ -13,8 +13,15 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
 
-    QGuiApplication app(argc, argv);
+
     QmlAdapter qmlAdapter;
+    GameStatsOperations gso{};
+    LetterGenerator lg{};
+    GameInteractor gi{&lg, &gso};
+    Controller controller{&qmlAdapter, &gi};
+    controller.Run();
+
+    QGuiApplication app(argc, argv);
     QQmlApplicationEngine engine;
     engine.rootContext()->setContextProperty("qmlAdapter", &qmlAdapter);
     const QUrl url(QStringLiteral("qrc:/main.qml"));
@@ -26,11 +33,5 @@ int main(int argc, char *argv[])
     },
     Qt::QueuedConnection);
     engine.load(url);
-
-    GameStatsOperations gso{};
-    LetterGenerator lg{};
-    GameInteractor gi{&lg, &gso};
-    Controller controller{&qmlAdapter, &gi};
-    controller.Run();
     return app.exec();
 }
