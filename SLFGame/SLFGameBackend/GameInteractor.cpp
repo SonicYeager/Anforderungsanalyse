@@ -1,5 +1,5 @@
 #include "GameInteractor.h"
-#include "FileHandler.h"
+#include "../FileHandler/FileHandler/FileHandler.h"
 
 GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op) :
 	mp_rand(gen), 
@@ -12,7 +12,8 @@ std::pair<GameStats, PlayerStats> GameInteractor::PrepareNextRound(const GameSta
 	fh.SetFolder("./");
 	fh.LoadFile("categories.txt");
 	auto changedgs = gs;
-	changedgs.SetCategories(fh.ReturnAllLines());
+        auto allLines = fh.ReturnAllLines();
+        changedgs.SetCategories(allLines);
 
 	mp_op->InkrementRound(changedgs);
 	mp_op->AddPreviousLetter(changedgs);
