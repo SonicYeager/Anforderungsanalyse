@@ -204,6 +204,9 @@
     <ClCompile Include="test_GameInteractor.cpp" />
     <ClCompile Include="test_GameStatsOperations.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\ressources\categories.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

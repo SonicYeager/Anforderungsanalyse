@@ -10,7 +10,7 @@ void FileHandler::LoadFile(const Filename& filename)
 	std::ifstream file;
 	file.open(_path + filename);
 	Line line;
-	while (!file.eof())
+	while (file)
 	{
 		std::getline(file, line);
 		_file.push_back(line);

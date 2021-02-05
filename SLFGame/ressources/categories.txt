@@ -1,5 +1,6 @@
 Stadt
-Land
 Fluss
 Name
 Beruf
+Obst
+Gemüse

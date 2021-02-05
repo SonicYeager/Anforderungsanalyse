@@ -58,4 +58,7 @@
       <Filter>Implementation</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\ressources\categories.txt" />
+  </ItemGroup>
 </Project>

@@ -14,4 +14,7 @@
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="..\ressources\categories.txt" />
+  </ItemGroup>
 </Project>
