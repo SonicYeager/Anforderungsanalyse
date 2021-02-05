@@ -1,0 +1,2 @@
+Autor=J.K.Rowling
+Buch=Faust
