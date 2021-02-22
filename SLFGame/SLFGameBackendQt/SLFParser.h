@@ -1,7 +1,7 @@
 #pragma once
 #include "../SLFGameBackend/DataTypes.h"
 
-class Parser
+class SLFParser
 {
 public:
 	Categories ParseCategories(const std::string&);

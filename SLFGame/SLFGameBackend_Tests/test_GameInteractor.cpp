@@ -4,7 +4,7 @@
 #include "../SLFGameBackend/RandomGenRessource.h"
 #include "../SLFGameBackend/GameStatsOperations.h"
 #include "../SLFGameBackend/NetworkSource.h"
-#include "../SLFGameBackendQt/Parser.h"
+#include "../SLFGameBackendQt/SLFParser.h"
 
 using namespace ::testing;
 
@@ -54,7 +54,7 @@ protected:
 	GameInteractor gi;
 	GameStats gs{};
 	PlayerStats ps{};
-	Parser p;
+	SLFParser p;
 };
 
 //TEST_F(TestGameInteractor, PrepareNextRound_EmptyGameStatsEmptyPlayerStats_Round1LetterC)

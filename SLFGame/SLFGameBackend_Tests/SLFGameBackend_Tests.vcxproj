@@ -204,7 +204,7 @@
   <ItemGroup>
     <ClCompile Include="test_GameInteractor.cpp" />
     <ClCompile Include="test_GameStatsOperations.cpp" />
-    <ClCompile Include="test_Parser.cpp" />
+    <ClCompile Include="test_SLFParser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\ressources\categories.txt" />

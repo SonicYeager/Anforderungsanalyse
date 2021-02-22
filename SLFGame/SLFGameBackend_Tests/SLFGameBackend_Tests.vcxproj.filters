@@ -16,7 +16,7 @@
     <ClCompile Include="test_GameInteractor.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="test_Parser.cpp">
+    <ClCompile Include="test_SLFParser.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

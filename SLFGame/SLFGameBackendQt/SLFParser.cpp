@@ -1,6 +1,6 @@
-#include "Parser.h"
+#include "SLFParser.h"
 
-Categories Parser::ParseCategories(const std::string& cats)
+Categories SLFParser::ParseCategories(const std::string& cats)
 {
 	std::string delimiter = ",";
 	Categories cat{};
@@ -16,7 +16,7 @@ Categories Parser::ParseCategories(const std::string& cats)
     return cat;
 }
 
-int Parser::ParseRoundCount(const std::string& string)
+int SLFParser::ParseRoundCount(const std::string& string)
 {
 	return std::stoi(string);
 }
