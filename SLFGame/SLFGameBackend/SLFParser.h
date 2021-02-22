@@ -1,5 +1,5 @@
 #pragma once
-#include "../SLFGameBackend/DataTypes.h"
+#include "DataTypes.h"
 
 class SLFParser
 {

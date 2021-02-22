@@ -78,7 +78,7 @@
     </ClCompile>
   </ItemDefinitionGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="QtSettings">
-    <QtInstall>msvc2019_64</QtInstall>
+    <QtInstall>Six</QtInstall>
     <QtModules>core;network</QtModules>
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
@@ -119,7 +119,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="SLFParser.cpp" />
+    <ClCompile Include="..\SLFGameBackend\SLFParser.cpp" />
     <ClInclude Include="..\SLFGameBackend\DataOperationLogic.h" />
     <ClInclude Include="..\SLFGameBackend\DataTypes.h" />
     <ClInclude Include="..\SLFGameBackend\GameInteractor.h" />
@@ -130,8 +130,8 @@
     <ClInclude Include="..\SLFGameBackend\NetworkSource.h" />
     <ClInclude Include="..\SLFGameBackend\RandomGenerator.h" />
     <ClInclude Include="..\SLFGameBackend\RandomGenRessource.h" />
+    <ClInclude Include="..\SLFGameBackend\SLFParser.h" />
     <ClInclude Include="..\SLFGameBackend\UI.h" />
-    <ClInclude Include="SLFParser.h" />
     <ClInclude Include="slfgamebackendqt_global.h" />
     <ClCompile Include="..\SLFGameBackend\GameInteractor.cpp" />
     <ClCompile Include="..\SLFGameBackend\GameNetwork.cpp" />

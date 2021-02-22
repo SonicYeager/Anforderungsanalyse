@@ -5,7 +5,7 @@
 #include "DataTypes.h"
 #include "RandomGenRessource.h"
 #include "NetworkSource.h"
-#include "../SLFGameBackendQt/SLFParser.h"
+#include "SLFParser.h"
 
 class GameInteractor : public Interactor
 {

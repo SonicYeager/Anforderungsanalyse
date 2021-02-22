@@ -56,7 +56,7 @@
     <ClInclude Include="..\SLFGameBackend\GameNetwork.h">
       <Filter>Implementation</Filter>
     </ClInclude>
-    <ClInclude Include="SLFParser.h">
+    <ClInclude Include="..\SLFGameBackend\SLFParser.h">
       <Filter>Implementation</Filter>
     </ClInclude>
   </ItemGroup>
@@ -73,8 +73,8 @@
     <ClCompile Include="..\SLFGameBackend\GameNetwork.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="SLFParser.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\SLFGameBackend\SLFParser.cpp">
+      <Filter>Implementation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
