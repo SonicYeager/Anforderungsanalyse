@@ -7,5 +7,5 @@ public:
 	virtual void Init(const GameStats&, const PlayerStats&) = 0;
 	virtual ~UI() = default;
 
-	Event<const std::string&, const std::string&, const std::string&> onPrepGame;
+	Event<const std::string&, const std::string&, const std::string&> onPrepareGame;
 };
