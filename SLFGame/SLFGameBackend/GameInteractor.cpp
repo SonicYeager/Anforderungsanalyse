@@ -9,15 +9,19 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 
 std::pair<GameStats, PlayerStats> GameInteractor::PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount)
 {
-	//mp_op->InkrementRound(changedgs);
-	//mp_op->AddPreviousLetter(changedgs);
-	//Letter generated;
-	//do 
-	//{
-	//	generated = mp_rand->GenerateLetter();
-	//} while (mp_op->LetterIsAlreadyUsed(generated, changedgs.GetUsedLetters()));
-	//mp_op->SetNewLetter(generated, changedgs);
-	//return std::make_pair(changedgs, ps);
+	GameStats gs;
+	PlayerStats ps;
+	//parse cats
+	//parse roundcounts
+	//parse roundTime
+	mp_op->InkrementRound(gs);
+	Letter generated;
+	do 
+	{
+		generated = mp_rand->GenerateLetter();
+	} while (mp_op->LetterIsAlreadyUsed(generated, gs.GetUsedLetters()));
+	mp_op->SetNewLetter(generated, gs);
+	return std::make_pair(gs, ps);
 }
 
 std::pair<GameStats, PlayerStats> GameInteractor::PrepareLobby(const std::string& lobbyCode)

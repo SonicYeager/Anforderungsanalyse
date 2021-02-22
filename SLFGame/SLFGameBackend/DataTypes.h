@@ -40,12 +40,14 @@ struct GameStats
 	int GetCurrentRound()const;
 	int GetMaxRound()const;
 	std::string GetLobbyCode() const;
+	std::string GetTimeout() const;
 	void SetLobbyCode(const std::string&);
 	void SetUsedLetters(Letters);
 	void SetCurrentLetter(Letter);
 	void SetCategories(Categories);
 	void SetCurrentRound(int);
 	void SetMaxRounds(int);
+	void SetTimeout(const std::string&);
 
 private:
 	Categories categories{};
@@ -54,7 +56,7 @@ private:
 	int currentRound{};
 	int maxRounds{};
 	std::string lobbyCode{};
-	//Timeout
+	std::string timeout{};
 };
 
 inline int PlayerStats::GetPoints()	const
@@ -140,6 +142,16 @@ inline void GameStats::SetCurrentRound(int newCurrentRound)
 inline void GameStats::SetMaxRounds(int num)
 {
 	maxRounds = num;
+}
+
+inline std::string GameStats::GetTimeout() const
+{
+	return timeout;
+}
+
+inline void GameStats::SetTimeout(const std::string& t)
+{
+	timeout = t;
 }
 
 inline bool Letter::operator==(const Letter& other)

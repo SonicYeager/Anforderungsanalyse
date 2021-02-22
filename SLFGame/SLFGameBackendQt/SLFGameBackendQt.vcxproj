@@ -119,6 +119,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Parser.cpp" />
     <ClInclude Include="..\SLFGameBackend\DataOperationLogic.h" />
     <ClInclude Include="..\SLFGameBackend\DataTypes.h" />
     <ClInclude Include="..\SLFGameBackend\GameInteractor.h" />
@@ -130,6 +131,7 @@
     <ClInclude Include="..\SLFGameBackend\RandomGenerator.h" />
     <ClInclude Include="..\SLFGameBackend\RandomGenRessource.h" />
     <ClInclude Include="..\SLFGameBackend\UI.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="slfgamebackendqt_global.h" />
     <ClCompile Include="..\SLFGameBackend\GameInteractor.cpp" />
     <ClCompile Include="..\SLFGameBackend\GameNetwork.cpp" />
