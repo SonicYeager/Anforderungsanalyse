@@ -77,7 +77,7 @@ signals:
     void lobbyCodeChanged();
 
 private:
-    QString _letter = "C";
+    QString _letter = "bad";
     QString _lobbyCode = "0000";
     QString _customCategories = "Stadt, Land, Fluss, Name, Tier, Beruf";
     int _categoryCount = 3;
