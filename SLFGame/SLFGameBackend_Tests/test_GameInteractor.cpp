@@ -3,6 +3,7 @@
 #include "../SLFGameBackend/GameInteractor.h"
 #include "../SLFGameBackend/RandomGenRessource.h"
 #include "../SLFGameBackend/GameStatsOperations.h"
+#include "../SLFGameBackend/NetworkSource.h"
 
 using namespace ::testing;
 
@@ -19,11 +20,22 @@ private:
 	int numCalls = 0;
 };
 
+class FakeNetworkSource : public NetworkSource
+{
+public:
+	std::string GenerateLobbyCode() override
+	{
+		return "CODE";
+	}
+private:
+	int numCalls = 0;
+};
+
 class TestGameInteractor : public Test
 {
 public:
 	TestGameInteractor() :
-		gi{&frlg, &gsop}
+		gi{&frlg, &gsop, &fns}
 	{}
 protected:
 	virtual void SetUp()
@@ -36,6 +48,7 @@ protected:
 	}
 
 	FakeRandomLetterGenerator frlg{};
+	FakeNetworkSource fns{};
 	GameStatsOperations gsop{};
 	GameInteractor gi;
 	GameStats gs{};
@@ -67,4 +80,20 @@ TEST_F(TestGameInteractor, PrepareNextRound_GameStatsCurrentLetterBPlayerStats_L
 	auto actual = gi.PrepareNextRound(gs, ps);
 
 	EXPECT_EQ(actual.first.GetUsedLetters().letters[0].letter, 'B');
+}
+
+TEST_F(TestGameInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerStats)
+{
+	auto actual = gi.PrepareLobby();
+
+	EXPECT_EQ(actual.second.GetAnswers().size(), 0);
+	EXPECT_EQ(actual.second.GetPoints(), 0);
+
+	Categories cat{ {"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"} };
+	EXPECT_EQ(actual.first.GetCategories(), cat);
+	EXPECT_EQ(actual.first.GetCurrentLetter(), Letter{});
+	EXPECT_EQ(actual.first.GetUsedLetters().letters.size(), 0);
+	EXPECT_EQ(actual.first.GetCurrentRound(), 0);
+	EXPECT_EQ(actual.first.GetMaxRound(), 5);
+	EXPECT_EQ(actual.first.GetLobbyCode(), "CODE");
 }

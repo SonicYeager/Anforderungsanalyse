@@ -146,3 +146,23 @@ inline bool Letter::operator==(const Letter& other)
 {
 	return letter == other.letter;
 }
+
+inline bool operator==(const Letter& left, const Letter& right)
+{
+	return left.letter == right.letter;
+}
+
+inline bool operator==(const GameStats& left, const GameStats& right)
+{
+	return left.GetCategories() == right.GetCategories() &&
+		left.GetCurrentLetter() == right.GetCurrentLetter() &&
+		left.GetCurrentRound() == right.GetCurrentRound() &&
+		left.GetLobbyCode() == right.GetLobbyCode() &&
+		left.GetMaxRound() == right.GetMaxRound() &&
+		left.GetUsedLetters().letters == right.GetUsedLetters().letters;
+}
+
+inline bool operator==(const PlayerStats& left, const PlayerStats& right)
+{
+	return left.GetAnswers() == right.GetAnswers() && left.GetPoints() == right.GetPoints();
+}

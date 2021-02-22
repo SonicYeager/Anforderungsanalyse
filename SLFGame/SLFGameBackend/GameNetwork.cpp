@@ -5,5 +5,5 @@ std::string GameNetwork::GenerateLobbyCode()
 {
 	QHostInfo info{};
 	auto addresses = info.addresses();
-    return std::string();
+    return addresses.at(0).toString().toStdString();
 }

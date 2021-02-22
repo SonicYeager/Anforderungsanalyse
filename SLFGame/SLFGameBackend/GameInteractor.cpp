@@ -1,15 +1,16 @@
 #include "GameInteractor.h"
 #include "../FileHandler/FileHandler/FileHandler.h"
 
-GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op) :
+GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, NetworkSource* n) :
 	mp_rand(gen), 
-	mp_op(op)
+	mp_op(op), 
+	mp_n(n)
 {}
 
 std::pair<GameStats, PlayerStats> GameInteractor::PrepareNextRound(const GameStats& gs, const PlayerStats& ps)
 {
 	FileHandler fh;
-	fh.SetFolder("../ressources/");
+	fh.SetFolder("");
 	fh.LoadFile("categories.txt");
 	auto changedgs = gs;
         auto allLines = fh.ReturnAllLines();
@@ -24,4 +25,10 @@ std::pair<GameStats, PlayerStats> GameInteractor::PrepareNextRound(const GameSta
 	} while (mp_op->LetterIsAlreadyUsed(generated, changedgs.GetUsedLetters()));
 	mp_op->SetNewLetter(generated, changedgs);
 	return std::make_pair(changedgs, ps);
+}
+
+std::pair<GameStats, PlayerStats> GameInteractor::PrepareLobby(const std::string& lobbyCode)
+{
+	auto code = mp_n->GenerateLobbyCode();
+	return mp_op->CreateStats(code);
 }
