@@ -65,7 +65,7 @@ int QmlAdapter::getCurrentRound()
     return _currentRound;
 }
 
-int QmlAdapter::getMaxRounds()
+QString QmlAdapter::getMaxRounds()
 {
     return _maxRounds;
 }
@@ -75,7 +75,7 @@ int QmlAdapter::getPoints()
     return _points;
 }
 
-int QmlAdapter::getTimeLeft()
+QString QmlAdapter::getTimeLeft()
 {
     return _timeLeft;
 }
@@ -158,7 +158,7 @@ void QmlAdapter::setCurrentRound(int currentRound)
     emit currentRoundChanged();
 }
 
-void QmlAdapter::setMaxRounds(int maxRounds)
+void QmlAdapter::setMaxRounds(QString maxRounds)
 {
     if (maxRounds == _maxRounds)
         return;
@@ -174,7 +174,7 @@ void QmlAdapter::setPoints(int points)
     emit pointsChanged();
 }
 
-void QmlAdapter::setTimeLeft(int timeLeft)
+void QmlAdapter::setTimeLeft(QString timeLeft)
 {
     if (timeLeft == _timeLeft)
         return;

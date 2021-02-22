@@ -30,6 +30,15 @@ Rectangle {
                 target: master
                 color: "green"
             }
+            PropertyChanges {
+                target: ma
+                onEntered: {
+                    master.color = "green" + "#002000"
+                }
+                onExited: {
+                    master.color = "green"
+                }
+            }
         },
         State {
             name: "redButton"
@@ -37,12 +46,30 @@ Rectangle {
                 target: master
                 color: "#a11806"
             }
+            PropertyChanges {
+                target: ma
+                onEntered: {
+                    master.color = "#bb1806"
+                }
+                onExited: {
+                    master.color = "#a11806"
+                }
+            }
         },
         State {
             name: "blueButton"
             PropertyChanges {
                 target: master
                 color: "#062e63"
+            }
+            PropertyChanges {
+                target: ma
+                onEntered: {
+                    master.color = "#062eaa"
+                }
+                onExited: {
+                    master.color = "#062e63"
+                }
             }
         }
     ]

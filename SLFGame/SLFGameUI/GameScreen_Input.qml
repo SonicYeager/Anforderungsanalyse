@@ -67,8 +67,8 @@ Rectangle{
                                     Layout.preferredWidth: parent.width * 1/2 -5
                                     Layout.preferredHeight: parent.height -5
                                     descriptionText: "Zeit"
-                                    outputText: (qmlAdapter.timeLeft === 0) ? "unendlich" : qmlAdapter.timeLeft
-                                    outputTextColor: (qmlAdapter.timeLeft >= 10) ? "black" : "black"
+                                    outputText: (qmlAdapter.timeLeft === "bis Stop") ? "bis Stop" : qmlAdapter.timeLeft
+                                    outputTextColor: (parseInt(qmlAdapter.timeLeft) >= 10 || qmlAdapter.timeLeft === "bis Stop") ? "black" : "red"
                                     color: Qt.rgba(0,0,0,0)
                                 }
                                 InfoBox{

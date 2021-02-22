@@ -19,9 +19,9 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(Categories categories    READ getCategories         WRITE setCategories         NOTIFY categoriesChanged)
     Q_PROPERTY(int categoryCount        READ getCategoryCount      WRITE setCategoryCount      NOTIFY categoryCountChanged)
     Q_PROPERTY(int currentRound         READ getCurrentRound       WRITE setCurrentRound       NOTIFY currentRoundChanged)
-    Q_PROPERTY(int maxRounds            READ getMaxRounds          WRITE setMaxRounds          NOTIFY maxRoundsChanged)
+    Q_PROPERTY(QString maxRounds        READ getMaxRounds          WRITE setMaxRounds          NOTIFY maxRoundsChanged)
     Q_PROPERTY(int points               READ getPoints             WRITE setPoints             NOTIFY pointsChanged)
-    Q_PROPERTY(int timeLeft             READ getTimeLeft           WRITE setTimeLeft           NOTIFY timeLeftChanged)
+    Q_PROPERTY(QString timeLeft             READ getTimeLeft           WRITE setTimeLeft           NOTIFY timeLeftChanged)
     Q_PROPERTY(bool customChecked       READ getCustomChecked      WRITE setCustomChecked      NOTIFY customCheckedChanged)
     Q_PROPERTY(bool lobbyScreenVisible  READ getLobbyScreenVisible WRITE setLobbyScreenVisible NOTIFY lobbyScreenVisibleChanged)
     Q_PROPERTY(bool entryScreenVisible  READ getEntryScreenVisible WRITE setEntryScreenVisible NOTIFY entryScreenVisibleChanged)
@@ -40,9 +40,9 @@ public:
     bool getEntryScreenVisible();
     int getCategoryCount();
     int getCurrentRound();
-    int getMaxRounds();
+    QString getMaxRounds();
     int getPoints();
-    int getTimeLeft();
+    QString getTimeLeft();
 
     void setLetter(QString letter);
     void setLobbyCode(QString lobbyCode);
@@ -53,9 +53,9 @@ public:
     void setEntryScreenVisible(bool visibility);
     void setCategoryCount(int categoryCount);
     void setCurrentRound(int currentRound);
-    void setMaxRounds(int maxRounds);
+    void setMaxRounds(QString maxRounds);
     void setPoints(int points);
-    void setTimeLeft(int timeLeft);
+    void setTimeLeft(QString timeLeft);
 
 public slots:
     QString getCategoryName(int idx);
@@ -81,9 +81,9 @@ private:
     QString _customCategories = "Stadt, Land, Fluss, Name, Tier, Beruf";
     int _categoryCount = 3;
     int _currentRound = 0;
-    int _maxRounds = 5;
+    QString _maxRounds = "5";
     int _points = 999;
-    int _timeLeft = 0;
+    QString _timeLeft = "bis Stop";
     bool _customChecked = false;
     bool _lobbyScreenVisible = true;
     bool _entryScreenVisible = false;
