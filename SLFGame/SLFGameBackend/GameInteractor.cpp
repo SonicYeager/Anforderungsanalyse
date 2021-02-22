@@ -17,7 +17,8 @@ std::pair<GameStats, PlayerStats> GameInteractor::PrepareGame(const std::string&
 	auto parsedRound = mp_p->ParseRoundCount(roundCount);
 	gs.SetCurrentRound(parsedRound);
 	gs.SetTimeout(roundTime);
-	mp_op->InkrementRound(gs);
+	gs.SetCurrentRound(0);
+	gs.SetMaxRounds(parsedRound);
 	Letter generated;
 	do 
 	{
