@@ -28,11 +28,12 @@ Rectangle{
                 EntryBox {
                     Layout.preferredWidth: 500
                     Layout.preferredHeight: 50
-                    text: "Stadt, Land, Fluss, Name, Tier, Beruf"
+                    text: qmlAdapter.customCategories
                     Layout.rightMargin: 10
                 }
                 CheckBox {
                     text: "<font color=\"white\">custom</font>"
+                    state: qmlAdapter.customChecked
                 }
                 Rectangle {
                     Layout.fillWidth: true

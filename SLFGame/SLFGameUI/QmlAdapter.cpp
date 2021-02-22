@@ -9,10 +9,12 @@ QmlAdapter::QmlAdapter(QObject *parent) :
 
 void QmlAdapter::Init(const GameStats & gs, const PlayerStats & ps)
 {
-    setCurrentRound(gs.GetCurrentRound());
-    setLetter(QChar(gs.GetCurrentLetter().letter));
-    setCategories(gs.GetCategories());
-    setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
+    _gs = gs;
+    _ps = ps;
+    //setCurrentRound(gs.GetCurrentRound());
+    //setLetter(QChar(gs.GetCurrentLetter().letter));
+    //setCategories(gs.GetCategories());
+    //setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
 }
 
 
@@ -28,9 +30,19 @@ QString QmlAdapter::getLobbyCode()
     return _lobbyCode;
 }
 
+QString QmlAdapter::getCustomCategories()
+{
+    return _customCategories;
+}
+
 Categories QmlAdapter::getCategories()
 {
     return _categories;
+}
+
+bool QmlAdapter::getCustomChecked()
+{
+    return _customChecked;
 }
 
 bool QmlAdapter::getLobbyScreenVisible()
@@ -86,6 +98,14 @@ void QmlAdapter::setLobbyCode(QString lobbyCode)
     emit lobbyCodeChanged();
 }
 
+void QmlAdapter::setCustomCategories(QString customCategories)
+{
+    if (customCategories == _customCategories)
+        return;
+    _customCategories = customCategories;
+    emit customCategoriesChanged();
+}
+
 void QmlAdapter::setCategories(Categories categories)
 {
     if (categories == _categories)
@@ -94,6 +114,14 @@ void QmlAdapter::setCategories(Categories categories)
     _categoryCount = _categories.size();
     emit categoriesChanged();
     emit categoryCountChanged();
+}
+
+void QmlAdapter::setCustomChecked(bool checked)
+{
+    if (checked == _customChecked)
+        return;
+    _customChecked = checked;
+    emit customCheckedChanged();
 }
 
 void QmlAdapter::setLobbyScreenVisible(bool visibility)
@@ -157,4 +185,9 @@ void QmlAdapter::setTimeLeft(int timeLeft)
 QString QmlAdapter::getCategoryName(int idx)
 {
     return QString::fromUtf8(_categories[idx].c_str());
+}
+
+void QmlAdapter::prepareGame()
+{
+    onPrepareGame(_customCategories, _timeLeft, _maxRounds);
 }

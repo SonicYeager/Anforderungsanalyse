@@ -100,6 +100,7 @@ Rectangle{
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
+                            qmlAdapter.prepareGame();
                             qmlAdapter.lobbyScreenVisible = false;
                             qmlAdapter.entryScreenVisible = true;
                         }
