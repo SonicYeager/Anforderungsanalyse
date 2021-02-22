@@ -6,18 +6,18 @@
 #include "GameInteractor.h"
 #include "GameStatsOperations.h"
 #include "RandomGenerator.h"
+#include "GameNetwork.h"
 
 int main(int argc, char *argv[])
 {
 #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
-
-
     QmlAdapter qmlAdapter;
+    GameNetwork gn;
     GameStatsOperations gso{};
     RandomGenerator lg{};
-    GameInteractor gi{&lg, &gso};
+    GameInteractor gi{&lg, &gso, &gn};
     Controller controller{&qmlAdapter, &gi};
     controller.Run();
 
