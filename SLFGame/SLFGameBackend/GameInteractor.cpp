@@ -18,6 +18,7 @@ std::pair<GameStats, PlayerStats> GameInteractor::PrepareGame(const std::string&
 	gs.SetCurrentRound(parsedRound);
 	gs.SetTimeout(roundTime);
 	gs.SetCurrentRound(0);
+	mp_op->InkrementRound(gs);
 	gs.SetMaxRounds(parsedRound);
 	Letter generated;
 	do 
