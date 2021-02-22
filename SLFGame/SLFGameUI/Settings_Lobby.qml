@@ -7,6 +7,8 @@ Rectangle{
     width: parent.width
     height: parent.height
     color: Qt.rgba(0,0,0,0)
+    property var roundTime : cb_roundTime.currentText
+    property var roundCount : cb_roundCount.currentText
     ColumnLayout{
         anchors.fill: parent
         spacing: 0
@@ -58,6 +60,7 @@ Rectangle{
                     Layout.rightMargin: 20
                 }
                 ComboBox{
+                    id: cb_roundTime
                     Layout.preferredWidth: 100
                     Layout.preferredHeight: 50
                     model: [ "bis Stop", "60", "80", "100", "120", "150", "180", "210" ]
@@ -80,6 +83,7 @@ Rectangle{
                     Layout.rightMargin: 20
                 }
                 ComboBox{
+                    id: cb_roundCount
                     Layout.preferredWidth: 100
                     Layout.preferredHeight: 50
                     model: [ "5","6","7","8","9","10" ]

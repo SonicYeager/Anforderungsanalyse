@@ -17,8 +17,8 @@ void QmlAdapter::Init(const GameStats & gs, const PlayerStats & ps)
     //setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
 }
 
-
 // ------------------------------------------ getter ------------------------------------------
+#define getterFunctions {
 
 QString QmlAdapter::getLetter()
 {
@@ -80,7 +80,9 @@ int QmlAdapter::getTimeLeft()
     return _timeLeft;
 }
 
+#define getterFunctionsEnd }
 // ------------------------------------------ setter ------------------------------------------
+#define setterFuntions {
 
 void QmlAdapter::setLetter(QString letter)
 {
@@ -180,8 +182,10 @@ void QmlAdapter::setTimeLeft(int timeLeft)
     emit timeLeftChanged();
 }
 
-
+#define slotFunctionsEnd }
 // ------------------------------------------ slots ------------------------------------------
+#define slotFunctions {
+
 QString QmlAdapter::getCategoryName(int idx)
 {
     return QString::fromUtf8(_categories[idx].c_str());
@@ -189,5 +193,7 @@ QString QmlAdapter::getCategoryName(int idx)
 
 void QmlAdapter::prepareGame()
 {
-    onPrepareGame(_customCategories, _timeLeft, _maxRounds);
+    //onPrepareGame(_customCategories, _timeLeft, _maxRounds);
 }
+
+#define slotFunctionsEnd }

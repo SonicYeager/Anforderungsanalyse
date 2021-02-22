@@ -29,6 +29,8 @@ class QmlAdapter : public QObject, public UI
 public:
     explicit QmlAdapter(QObject *parent = nullptr);
 
+    void Init(const GameStats&, const PlayerStats&) override;
+
     QString getLetter();
     QString getLobbyCode();
     QString getCustomCategories();
@@ -55,13 +57,6 @@ public:
     void setPoints(int points);
     void setTimeLeft(int timeLeft);
 
-    void Init(const GameStats&, const PlayerStats&) override;
-
-    QString getCustomCategories() const
-    {
-        return m_customCategories;
-    }
-
 public slots:
     QString getCategoryName(int idx);
     void prepareGame();
@@ -79,8 +74,6 @@ signals:
     void pointsChanged();
     void timeLeftChanged();
     void lobbyCodeChanged();
-
-    void customCategoriesChanged(QString customCategories);
 
 private:
     QString _letter = "C";
