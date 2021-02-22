@@ -2,6 +2,7 @@
 
 #include <QtCore/qglobal.h>
 #include <QtNetwork/qhostinfo.h>
+#include <QtNetwork/qnetworkinterface.h>
 
 //SLFGAMEBACKENDQT_EXPORT -> export 
 

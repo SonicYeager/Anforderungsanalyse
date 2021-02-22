@@ -11,11 +11,11 @@ Window{
     color: "#1c2b1e"
     GameScreen_Input{
         id:gameScreen_Input
-        visible: true
+        visible: false
     }
     GameScreen_Lobby{
         id:gameScreen_Lobby
-        visible: false
+        visible: true
     }
 }
 

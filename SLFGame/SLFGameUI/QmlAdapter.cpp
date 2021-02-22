@@ -12,7 +12,7 @@ void QmlAdapter::Init(const GameStats & gs, const PlayerStats & ps)
     setCurrentRound(gs.GetCurrentRound());
     setLetter(QChar(gs.GetCurrentLetter().letter));
     setCategories(gs.GetCategories());
-    setLobbyCode(QString(gs.GetLobbyCode().c_str()));
+    setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
 }
 
 

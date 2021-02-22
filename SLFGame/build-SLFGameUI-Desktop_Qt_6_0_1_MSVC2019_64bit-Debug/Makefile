@@ -212,6 +212,7 @@ Makefile: ..\SLFGameUI\SLFGameUI.pro G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\wi
 		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPoint.prl \
 		G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\build_pass.prf \
 		..\SLFGameUI\qml.qrc \
+		debug\qmake_qmake_immediate.qrc \
 		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Quickd.prl \
 		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6OpenGLd.prl \
 		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Guid.prl \
@@ -219,7 +220,8 @@ Makefile: ..\SLFGameUI\SLFGameUI.pro G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\wi
 		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Qmld.prl \
 		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Networkd.prl \
 		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Cored.prl \
-		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPointd.prl
+		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPointd.prl \
+		release\qmake_qmake_immediate.qrc
 	$(QMAKE) -o Makefile ..\SLFGameUI\SLFGameUI.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\spec_pre.prf:
 G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\common\windows-desktop.conf:
@@ -349,6 +351,7 @@ G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Core.prl:
 G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPoint.prl:
 G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\build_pass.prf:
 ..\SLFGameUI\qml.qrc:
+debug\qmake_qmake_immediate.qrc:
 G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Quickd.prl:
 G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6OpenGLd.prl:
 G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Guid.prl:
@@ -357,6 +360,7 @@ G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Qmld.prl:
 G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Networkd.prl:
 G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Cored.prl:
 G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPointd.prl:
+release\qmake_qmake_immediate.qrc:
 qmake: FORCE
 	@$(QMAKE) -o Makefile ..\SLFGameUI\SLFGameUI.pro -spec win32-msvc "CONFIG+=debug" "CONFIG+=qml_debug"
 
