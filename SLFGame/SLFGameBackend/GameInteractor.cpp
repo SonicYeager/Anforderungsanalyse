@@ -1,19 +1,22 @@
 #include "GameInteractor.h"
 #include "../FileHandler/FileHandler/FileHandler.h"
 
-GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, NetworkSource* n) :
+GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, NetworkSource* n, Parser* p) :
 	mp_rand(gen), 
 	mp_op(op), 
-	mp_n(n)
+	mp_n(n),
+	mp_p(p)
 {}
 
 std::pair<GameStats, PlayerStats> GameInteractor::PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount)
 {
 	GameStats gs;
 	PlayerStats ps;
-	//parse cats
-	//parse roundcounts
-	//parse roundTime
+	auto parsedCats = mp_p->ParseCategories(cats);
+	gs.SetCategories(parsedCats);
+	auto parsedRound = mp_p->ParseRoundCount(roundCount);
+	gs.SetCurrentRound(parsedRound);
+	gs.SetTimeout(roundTime);
 	mp_op->InkrementRound(gs);
 	Letter generated;
 	do 
