@@ -25,6 +25,7 @@ std::pair<GameStats, PlayerStats> GameInteractor::PrepareGame(const std::string&
 		generated = mp_rand->GenerateLetter();
 	} while (mp_op->LetterIsAlreadyUsed(generated, gs.GetUsedLetters()));
 	mp_op->SetNewLetter(generated, gs);
+	onPrepareNextRound(gs, ps);
 	return std::make_pair(gs, ps);
 }
 

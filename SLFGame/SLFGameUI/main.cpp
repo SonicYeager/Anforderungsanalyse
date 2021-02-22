@@ -7,7 +7,7 @@
 #include "GameStatsOperations.h"
 #include "RandomGenerator.h"
 #include "GameNetwork.h"
-#include "SLFParser.h
+#include "SLFParser.h"
 
 int main(int argc, char *argv[])
 {

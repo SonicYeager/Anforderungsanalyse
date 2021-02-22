@@ -11,10 +11,15 @@ void QmlAdapter::Init(const GameStats & gs, const PlayerStats & ps)
 {
     _gs = gs;
     _ps = ps;
-    //setCurrentRound(gs.GetCurrentRound());
-    //setLetter(QChar(gs.GetCurrentLetter().letter));
-    //setCategories(gs.GetCategories());
-    //setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
+
+    setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
+}
+
+void QmlAdapter::PrepareNextRound(const GameStats & gs, const PlayerStats & ps)
+{
+    setCurrentRound(gs.GetCurrentRound());
+    setLetter(QChar(gs.GetCurrentLetter().letter));
+    setCategories(gs.GetCategories());
 }
 
 // ------------------------------------------ getter ------------------------------------------
@@ -193,7 +198,7 @@ QString QmlAdapter::getCategoryName(int idx)
 
 void QmlAdapter::prepareGame()
 {
-    //onPrepareGame(_customCategories, _timeLeft, _maxRounds);
+    onPrepareGame(_customCategories.toStdString(), _timeLeft.toStdString(), _maxRounds.toStdString());
 }
 
 #define slotFunctionsEnd }
