@@ -6,9 +6,12 @@ ListView {
     id: category_list
     property alias count: list_model.count
     property alias listModel: list_model
+    property var spacingSum : spacing * 2
+    spacing: 5
     interactive: false
 
     delegate: Category{
+        id: cat
         categoryName: model.categoryName
         categoryEntry: model.categoryEntry
         width : category_list.width

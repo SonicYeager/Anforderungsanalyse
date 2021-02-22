@@ -9,10 +9,12 @@ CONFIG += c++20
 SOURCES += \
         QmlAdapter.cpp \
         controller.cpp \
-        main.cpp
+        main.cpp \
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+        resources/banner.png
 
+<file>resources/banner.png</file>
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
 

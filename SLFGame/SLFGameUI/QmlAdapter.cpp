@@ -22,6 +22,11 @@ QString QmlAdapter::getLetter()
     return _letter;
 }
 
+QString QmlAdapter::getLobbyCode()
+{
+    return _lobbyCode;
+}
+
 Categories QmlAdapter::getCategories()
 {
     return _categories;
@@ -60,6 +65,14 @@ void QmlAdapter::setLetter(QString letter)
         return;
     _letter = letter;
     emit letterChanged();
+}
+
+void QmlAdapter::setLobbyCode(QString lobbyCode)
+{
+    if (lobbyCode == _lobbyCode)
+        return;
+    _lobbyCode = lobbyCode;
+    emit lobbyCodeChanged();
 }
 
 void QmlAdapter::setCategories(Categories categories)

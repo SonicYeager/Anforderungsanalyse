@@ -20,10 +20,12 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(int maxRounds          READ getMaxRounds       WRITE setMaxRounds     NOTIFY maxRoundsChanged)
     Q_PROPERTY(int points             READ getPoints          WRITE setPoints        NOTIFY pointsChanged)
     Q_PROPERTY(int timeLeft           READ getTimeLeft        WRITE setTimeLeft      NOTIFY timeLeftChanged)
+    Q_PROPERTY(QString lobbyCode      READ getLobbyCode       WRITE setLobbyCode     NOTIFY lobbyCodeChanged)
 public:
     explicit QmlAdapter(QObject *parent = nullptr);
 
     QString getLetter();
+    QString getLobbyCode();
     Categories getCategories();
     int getCategoryCount();
     int getCurrentRound();
@@ -32,6 +34,7 @@ public:
     int getTimeLeft();
 
     void setLetter(QString letter);
+    void setLobbyCode(QString lobbyCode);
     void setCategories(Categories categories);
     void setCategoryCount(int categoryCount);
     void setCurrentRound(int currentRound);
@@ -51,9 +54,11 @@ signals:
     void maxRoundsChanged();
     void pointsChanged();
     void timeLeftChanged();
+    void lobbyCodeChanged();
 
 private:
     QString _letter = "C";
+    QString _lobbyCode = "0000";
     int _categoryCount = 3;
     int _currentRound = 0;
     int _maxRounds = 5;

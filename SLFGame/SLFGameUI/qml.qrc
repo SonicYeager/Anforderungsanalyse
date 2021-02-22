@@ -7,5 +7,9 @@
         <file>EntryBox.qml</file>
         <file>TextBox.qml</file>
         <file>InfoBox.qml</file>
+        <file>Banner.qml</file>
+        <file>GameButton.qml</file>
+        <file>GameScreen_Lobby.qml</file>
+        <file>Settings_Lobby.qml</file>
     </qresource>
 </RCC>

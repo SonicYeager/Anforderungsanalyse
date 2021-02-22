@@ -3,132 +3,145 @@ import QtQuick.Window 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
 
-Window{
-    id: gameScreen_window
-    width: Screen.width
-    height: Screen.height
-    visible: true
-    visibility: Window.Maximized
-    title: "GameScreen_Input"
-    color: "#000000"
-    RowLayout{
+Rectangle{
+    id: input_window
+    width: parent.width
+    height: parent.height
+    color: "#1c2b1e"
+    ColumnLayout {
         anchors.fill: parent
         spacing: 0
         Rectangle{
-            id: categoryContainer
-            color: "#333348"
-            Layout.alignment: Qt.AlignCenter
-            Layout.preferredWidth: 2/3 * parent.width
-            Layout.preferredHeight: parent.height
-            ColumnLayout
-            {
+            id: header
+            Layout.minimumHeight: 200
+            Layout.minimumWidth: parent.width - header.Layout.margins * 2
+            color: "#000000"
+            border.color: "white"
+            border.width: 5
+            Layout.margins: 10
+            RowLayout {
                 anchors.fill: parent
                 spacing: 0
-                Rectangle{
-                    id: categoryPlaceholder_top
-                    Layout.fillHeight: true
-                    Layout.preferredWidth: parent.width
-                    opacity:0
+                Banner{
+
                 }
-                Categories{
-                    id:categories
-                    Layout.preferredWidth: parent.width
-                    Layout.minimumHeight: 50 * categories.count
-                    Component.onCompleted: {
-                        for (var i = 0; i < qmlAdapter.categoryCount; i++)
-                        {
-                            listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":" "})
+                Rectangle {
+                    Layout.fillWidth: true -5
+                    Layout.fillHeight: true -5
+                    Layout.alignment: Qt.AlignCenter
+                    color: Qt.rgba(0,0,0,0)
+                    ColumnLayout{
+                        anchors.fill: parent
+                        spacing : 0
+                        Rectangle{
+                            Layout.preferredWidth: parent.width
+                            Layout.preferredHeight: parent.height * 1/2
+                            color: Qt.rgba(0,0,0,0)
+                            RowLayout{
+                                spacing: 0
+                                anchors.fill: parent
+                                InfoBox{
+                                    Layout.preferredWidth: parent.width * 1/2 -5
+                                    Layout.preferredHeight: parent.height -5
+                                    descriptionText: "Buchstabe"
+                                    outputText: qmlAdapter.letter
+                                    color: Qt.rgba(0,0,0,0)
+                                }
+                                InfoBox{
+                                    Layout.preferredWidth: parent.width * 1/2 -5
+                                    Layout.preferredHeight: parent.height -5
+                                    descriptionText: "Runde"
+                                    outputText: qmlAdapter.currentRound + " / " + qmlAdapter.maxRounds
+                                    color: Qt.rgba(0,0,0,0)
+                                }
+                            }
+                        }
+                        Rectangle{
+                            Layout.preferredWidth: parent.width
+                            Layout.preferredHeight: parent.height * 1/2
+                            color: Qt.rgba(0,0,0,0)
+                            RowLayout{
+                                spacing: 0
+                                anchors.fill: parent
+                                InfoBox{
+                                    Layout.preferredWidth: parent.width * 1/2 -5
+                                    Layout.preferredHeight: parent.height -5
+                                    descriptionText: "Zeit"
+                                    outputText: (qmlAdapter.timeLeft === 0) ? "unendlich" : qmlAdapter.timeLeft
+                                    outputTextColor: (qmlAdapter.timeLeft >= 10) ? "black" : "black"
+                                    color: Qt.rgba(0,0,0,0)
+                                }
+                                InfoBox{
+                                    Layout.preferredWidth: parent.width * 1/2 -5
+                                    Layout.preferredHeight: parent.height -5
+                                    descriptionText: "Punktzahl"
+                                    outputText: qmlAdapter.points
+                                    color: Qt.rgba(0,0,0,0)
+                                }
+                            }
                         }
                     }
-                }
-
-                Rectangle{
-                    id: categoryPlaceholder_bottom
-                    Layout.fillHeight: true
-                    Layout.preferredWidth: parent.width
-                    opacity:0
                 }
             }
         }
         Rectangle{
-            id: overviewContainer
-            color: "#333348"
-            Layout.alignment: Qt.AlignCenter
-            Layout.preferredWidth: 1/3 * parent.width
-            Layout.preferredHeight: parent.height
-            ColumnLayout{
-                anchors.fill: parent
+            id: categoryPlaceholder_top
+            Layout.fillHeight: true
+            Layout.minimumHeight: 25
+            Layout.preferredWidth: parent.width
+            color: Qt.rgba(0,0,0,0)
+        }
+        Categories{
+            id:categories
+            Layout.preferredWidth: parent.width
+            Layout.minimumHeight: listModel.count * 50
+            Component.onCompleted: {
+                for (var i = 0; i < qmlAdapter.categoryCount; i++)
+                {
+                    listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
+                }
+            }
+        }
+        Rectangle{
+            id: categoryPlaceholder_bottom
+            Layout.fillHeight: true
+            Layout.minimumHeight: 50
+            Layout.preferredWidth: parent.width
+            color: Qt.rgba(0,0,0,0)
+        }
+        Rectangle{
+            id: bottom
+            Layout.minimumHeight: 100
+            Layout.preferredWidth: parent.width * 0.5 - bottom.Layout.margins * 2
+            Layout.alignment: Qt.AlignHCenter
+            color: "black"
+            border.color: "white"
+            border.width: 5
+            Layout.margins: 10
+            Layout.bottomMargin: 30
+            RowLayout{
                 spacing: 0
-                Rectangle{
-                    Layout.preferredWidth: parent.width
-                    Layout.preferredHeight: parent.height * 1/6
-                    RowLayout{
-                        spacing: 0
-                        anchors.fill: parent
-                        InfoBox{
-                            Layout.preferredWidth: parent.width * 1/2
-                            Layout.preferredHeight: parent.height
-                            descriptionText: "Buchstabe"
-                            outputText: qmlAdapter.letter
-                            color: overviewContainer.color
-                        }
-                        InfoBox{
-                            Layout.preferredWidth: parent.width * 1/2
-                            Layout.preferredHeight: parent.height
-                            descriptionText: "Zeit verbleibend"
-                            outputText: qmlAdapter.timeLeft
-                            color: overviewContainer.color
-                        }
-                    }
+                anchors.fill: parent
+                GameButton
+                {
+                    Layout.preferredWidth: parent.width * 0.25
+                    text : "STOP"
+                    textColor: "white"
+                    state: "redButton"
+                    fontSize: height * 0.05 + width * 0.05
+                    border.width: 3
+                    border.color: "white"
+                    Layout.leftMargin: parent.width * 0.15
                 }
-                Rectangle{
-                    Layout.preferredWidth: parent.width
-                    Layout.preferredHeight: parent.height * 1/6
-                    color: "#333348"
-                    RowLayout{
-                        spacing: 0
-                        anchors.fill: parent
-                        InfoBox{
-                            Layout.preferredWidth: parent.width * 1/2
-                            Layout.preferredHeight: parent.height
-                            descriptionText: "Runde"
-                            outputText: qmlAdapter.currentRound + " / " + qmlAdapter.maxRounds
-                            color: overviewContainer.color
-                        }
-                        InfoBox{
-                            Layout.preferredWidth: parent.width * 1/2
-                            Layout.preferredHeight: parent.height
-                            descriptionText: "Punktzahl"
-                            outputText: qmlAdapter.points
-                            color: overviewContainer.color
-                        }
-                    }
-                }
-                Rectangle{
-                    Layout.preferredWidth: parent.width * 1/6
-                    Layout.preferredHeight: parent.height * 1/6
-                    color: "#333348"
-                    RowLayout{
-                        spacing: 0
-                        anchors.fill: parent
-                        Button {
-                            id: endRoundButton
-                            text: "Runde beenden"
-                            onClicked : {
-                            }
-                        }
-                        Button {
-                            id: exitGameBtn
-                            text: "Spiel verlassen"
-                            onClicked : {
-                            }
-                        }
-                    }
-                }
-                Rectangle{
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
-                    opacity: 0
+                GameButton
+                {
+                    Layout.preferredWidth: parent.width * 0.25
+                    text : "LEAVE GAME"
+                    textColor: "white"
+                    state: "blueButton"
+                    fontSize: height * 0.05 + width * 0.05
+                    border.width: 3
+                    border.color: "white"
                 }
             }
         }

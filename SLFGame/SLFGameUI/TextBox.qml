@@ -10,6 +10,7 @@ Rectangle {
     width: implicitWidth
     height: implicitHeight
     property alias text: text_name.text
+    property alias textColor : text_name.color
     Text {
         id: text_name
         color:"black"
@@ -19,14 +20,15 @@ Rectangle {
         horizontalAlignment: Text.AlignHCenter
         anchors.margins: 5
     }
-    MouseArea{
-        anchors.fill:parent
-        hoverEnabled: true
-        onEntered: {
-            textBox.color = "white"
+    states: State{
+        name: "desc"
+        PropertyChanges {
+            target: textBox
+            color: "black"
         }
-        onExited: {
-            textBox.color = "white"
+        PropertyChanges {
+            target: text_name
+            color: "white"
         }
     }
 }
