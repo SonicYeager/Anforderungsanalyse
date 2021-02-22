@@ -13,20 +13,25 @@ using Categories = std::vector<std::string>;
 class QmlAdapter : public QObject, public UI
 {
     Q_OBJECT
-    Q_PROPERTY(QString letter         READ getLetter          WRITE setLetter        NOTIFY letterChanged)
-    Q_PROPERTY(QString lobbyCode      READ getLobbyCode       WRITE setLobbyCode     NOTIFY lobbyCodeChanged)
-    Q_PROPERTY(Categories categories  READ getCategories      WRITE setCategories    NOTIFY categoriesChanged)
-    Q_PROPERTY(int categoryCount      READ getCategoryCount   WRITE setCategoryCount NOTIFY categoryCountChanged)
-    Q_PROPERTY(int currentRound       READ getCurrentRound    WRITE setCurrentRound  NOTIFY currentRoundChanged)
-    Q_PROPERTY(int maxRounds          READ getMaxRounds       WRITE setMaxRounds     NOTIFY maxRoundsChanged)
-    Q_PROPERTY(int points             READ getPoints          WRITE setPoints        NOTIFY pointsChanged)
-    Q_PROPERTY(int timeLeft           READ getTimeLeft        WRITE setTimeLeft      NOTIFY timeLeftChanged)
+    Q_PROPERTY(QString letter          READ getLetter             WRITE setLetter             NOTIFY letterChanged)
+    Q_PROPERTY(QString lobbyCode       READ getLobbyCode          WRITE setLobbyCode          NOTIFY lobbyCodeChanged)
+    Q_PROPERTY(Categories categories   READ getCategories         WRITE setCategories         NOTIFY categoriesChanged)
+    Q_PROPERTY(int categoryCount       READ getCategoryCount      WRITE setCategoryCount      NOTIFY categoryCountChanged)
+    Q_PROPERTY(int currentRound        READ getCurrentRound       WRITE setCurrentRound       NOTIFY currentRoundChanged)
+    Q_PROPERTY(int maxRounds           READ getMaxRounds          WRITE setMaxRounds          NOTIFY maxRoundsChanged)
+    Q_PROPERTY(int points              READ getPoints             WRITE setPoints             NOTIFY pointsChanged)
+    Q_PROPERTY(int timeLeft            READ getTimeLeft           WRITE setTimeLeft           NOTIFY timeLeftChanged)
+    Q_PROPERTY(bool lobbyScreenVisible READ getLobbyScreenVisible WRITE setLobbyScreenVisible NOTIFY lobbyScreenVisibleChanged)
+    Q_PROPERTY(bool entryScreenVisible READ getEntryScreenVisible WRITE setEntryScreenVisible NOTIFY entryScreenVisibleChanged)
+
 public:
     explicit QmlAdapter(QObject *parent = nullptr);
 
     QString getLetter();
     QString getLobbyCode();
     Categories getCategories();
+    bool getLobbyScreenVisible();
+    bool getEntryScreenVisible();
     int getCategoryCount();
     int getCurrentRound();
     int getMaxRounds();
@@ -36,6 +41,8 @@ public:
     void setLetter(QString letter);
     void setLobbyCode(QString lobbyCode);
     void setCategories(Categories categories);
+    void setLobbyScreenVisible(bool visibility);
+    void setEntryScreenVisible(bool visibility);
     void setCategoryCount(int categoryCount);
     void setCurrentRound(int currentRound);
     void setMaxRounds(int maxRounds);
@@ -50,6 +57,8 @@ signals:
     void letterChanged();
     void categoriesChanged();
     void categoryCountChanged();
+    void lobbyScreenVisibleChanged();
+    void entryScreenVisibleChanged();
     void currentRoundChanged();
     void maxRoundsChanged();
     void pointsChanged();
@@ -64,5 +73,7 @@ private:
     int _maxRounds = 5;
     int _points = 999;
     int _timeLeft = 0;
+    bool _lobbyScreenVisible = true;
+    bool _entryScreenVisible = false;
     Categories _categories = {"Stadt", "Land", "Fluss", "Name", "Tier", "Beruf"};
 };

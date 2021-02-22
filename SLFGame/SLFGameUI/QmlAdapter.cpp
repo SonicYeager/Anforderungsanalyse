@@ -33,6 +33,16 @@ Categories QmlAdapter::getCategories()
     return _categories;
 }
 
+bool QmlAdapter::getLobbyScreenVisible()
+{
+    return _lobbyScreenVisible;
+}
+
+bool QmlAdapter::getEntryScreenVisible()
+{
+    return _entryScreenVisible;
+}
+
 int QmlAdapter::getCategoryCount()
 {
     return _categoryCount;
@@ -84,6 +94,22 @@ void QmlAdapter::setCategories(Categories categories)
     _categoryCount = _categories.size();
     emit categoriesChanged();
     emit categoryCountChanged();
+}
+
+void QmlAdapter::setLobbyScreenVisible(bool visibility)
+{
+    if (visibility == _lobbyScreenVisible)
+        return;
+    _lobbyScreenVisible = visibility;
+    emit lobbyScreenVisibleChanged();
+}
+
+void QmlAdapter::setEntryScreenVisible(bool visibility)
+{
+    if (visibility == _entryScreenVisible)
+        return;
+    _entryScreenVisible = visibility;
+    emit entryScreenVisibleChanged();
 }
 
 void QmlAdapter::setCategoryCount(int categoryCount)

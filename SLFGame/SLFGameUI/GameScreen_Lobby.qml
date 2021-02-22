@@ -97,6 +97,13 @@ Rectangle{
                     border.width: 3
                     border.color: "white"
                     Layout.leftMargin: parent.width * 0.15
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: {
+                            qmlAdapter.lobbyScreenVisible = false;
+                            qmlAdapter.entryScreenVisible = true;
+                        }
+                    }
                 }
                 GameButton
                 {

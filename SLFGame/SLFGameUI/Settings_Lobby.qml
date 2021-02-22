@@ -22,7 +22,7 @@ Rectangle{
                     Layout.preferredWidth: 200
                     Layout.preferredHeight: 50
                     state: "desc"
-                    text: "Rundenzeit"
+                    text: "Kategorien"
                     Layout.rightMargin: 20
                 }
                 EntryBox {
