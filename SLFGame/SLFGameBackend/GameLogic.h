@@ -2,5 +2,6 @@
 
 class GameLogic
 {
-
+public:
+	virtual ~GameLogic() = default;
 };

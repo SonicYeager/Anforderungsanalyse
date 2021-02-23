@@ -65,6 +65,9 @@
     <ClInclude Include="..\SLFGameBackend\Timer.h">
       <Filter>Implementation</Filter>
     </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\Game.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\SLFGameBackend\GameInteractor.cpp">
@@ -83,6 +86,9 @@
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\SLFGameBackend\Timer.cpp">
+      <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SLFGameBackend\Game.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
   </ItemGroup>
