@@ -9,9 +9,6 @@ QmlAdapter::QmlAdapter(QObject *parent) :
 
 void QmlAdapter::Init(const GameStats & gs, const PlayerStats & ps)
 {
-    _gs = gs;
-    _ps = ps;
-
     setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
 }
 
@@ -40,9 +37,14 @@ QString QmlAdapter::getCustomCategories()
     return _customCategories;
 }
 
-Categories QmlAdapter::getCategories()
+StrVector QmlAdapter::getCategories()
 {
     return _categories;
+}
+
+StrVector QmlAdapter::getAnswers()
+{
+    return _answers;
 }
 
 bool QmlAdapter::getCustomChecked()
@@ -58,6 +60,11 @@ bool QmlAdapter::getLobbyScreenVisible()
 bool QmlAdapter::getEntryScreenVisible()
 {
     return _entryScreenVisible;
+}
+
+bool QmlAdapter::getOverviewScreenVisible()
+{
+    return _overviewScreenVisible;
 }
 
 int QmlAdapter::getCategoryCount()
@@ -113,7 +120,7 @@ void QmlAdapter::setCustomCategories(QString customCategories)
     emit customCategoriesChanged();
 }
 
-void QmlAdapter::setCategories(Categories categories)
+void QmlAdapter::setCategories(StrVector categories)
 {
     if (categories == _categories)
         return;
@@ -121,6 +128,14 @@ void QmlAdapter::setCategories(Categories categories)
     _categoryCount = _categories.size();
     emit categoriesChanged();
     emit categoryCountChanged();
+}
+
+void QmlAdapter::setAnswers(StrVector answers)
+{
+    if (answers == _answers)
+        return;
+    _answers = answers;
+    emit answersChanged();
 }
 
 void QmlAdapter::setCustomChecked(bool checked)
@@ -145,6 +160,14 @@ void QmlAdapter::setEntryScreenVisible(bool visibility)
         return;
     _entryScreenVisible = visibility;
     emit entryScreenVisibleChanged();
+}
+
+void QmlAdapter::setOverviewScreenVisible(bool visibility)
+{
+    if (visibility == _overviewScreenVisible)
+        return;
+    _overviewScreenVisible = visibility;
+    emit overviewScreenVisibleChanged();
 }
 
 void QmlAdapter::setCategoryCount(int categoryCount)
@@ -199,6 +222,16 @@ QString QmlAdapter::getCategoryName(int idx)
 void QmlAdapter::prepareGame()
 {
     onPrepareGame(_customCategories.toStdString(), _timeLeft.toStdString(), _maxRounds.toStdString());
+}
+
+void QmlAdapter::prepareOverview()
+{
+    //onPrepareOverview(_answers);
+}
+
+void QmlAdapter::addAnswer(QString answer)
+{
+    _answers.emplace_back(answer.toStdString());
 }
 
 #define slotFunctionsEnd }

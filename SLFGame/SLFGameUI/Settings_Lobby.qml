@@ -32,10 +32,16 @@ Rectangle{
                     Layout.preferredHeight: 50
                     text: qmlAdapter.customCategories
                     Layout.rightMargin: 10
+                    onTextChanged: {
+                        qmlAdapter.customCategories = text
+                    }
                 }
                 CheckBox {
                     text: "<font color=\"white\">custom</font>"
                     state: qmlAdapter.customChecked
+                    onStateChanged: {
+                        qmlAdapter.customChecked = state
+                    }
                 }
                 Rectangle {
                     Layout.fillWidth: true

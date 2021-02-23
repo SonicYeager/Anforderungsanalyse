@@ -11,5 +11,7 @@
         <file>GameButton.qml</file>
         <file>GameScreen_Lobby.qml</file>
         <file>Settings_Lobby.qml</file>
+        <file>GameScreen_Overview.qml</file>
+        <file>CategoryOverview.qml</file>
     </qresource>
 </RCC>

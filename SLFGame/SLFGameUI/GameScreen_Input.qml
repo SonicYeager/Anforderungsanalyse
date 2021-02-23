@@ -101,6 +101,17 @@ Rectangle{
                     listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
                 }
             }
+            Connections {
+                target: qmlAdapter
+                function onCategoryCountChanged()
+                {
+                    categories.listModel.clear()
+                    for (var i = 0; i < qmlAdapter.categoryCount; i++)
+                    {
+                        categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":"s"})
+                    }
+                }
+            }
         }
         Rectangle{
             id: categoryPlaceholder_bottom
@@ -132,6 +143,19 @@ Rectangle{
                     border.width: 3
                     border.color: "white"
                     Layout.leftMargin: parent.width * 0.15
+                    MouseArea{
+                        anchors.fill: parent
+                        onClicked: {
+                            for (var i = 0; i < categories.listModel.count; i++)
+                            {
+                                qmlAdapter.addAnswer(categories.listModel.get(i).categoryEntry)
+                            }
+
+                            qmlAdapter.prepareOverview();
+                            qmlAdapter.entryScreenVisible = false;
+                            qmlAdapter.overviewScreenVisible = true;
+                        }
+                    }
                 }
                 GameButton
                 {

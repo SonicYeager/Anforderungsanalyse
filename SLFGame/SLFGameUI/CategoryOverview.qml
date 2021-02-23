@@ -3,21 +3,23 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.5
 
 ListView {
-    id: category_list
+    id: list
     property alias count: list_model.count
     property alias listModel: list_model
     property var spacingSum : spacing * 2
     spacing: 5
     interactive: false
 
-    delegate: Category{
+    delegate: TextBox {
         id: cat
-        categoryName: model.categoryName
-        categoryEntry: model.categoryEntry
-        width : category_list.width
+        text: model.text
+        width : 200
         height: 50
-        onCategoryEntryChanged: {
-            model.categoryEntry = categoryEntry
+        state: "desc"
+        MouseArea{
+            anchors.fill: parent
+            hoverEnabled: true
+
         }
     }
     model: ListModel{

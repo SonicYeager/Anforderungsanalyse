@@ -9,4 +9,5 @@ public:
 	virtual ~UI() = default;
 
 	Event<const std::string&, const std::string&, const std::string&> onPrepareGame;
+	Event<const Categories&> onPrepareOverview;
 };

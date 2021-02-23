@@ -17,6 +17,10 @@ Window{
         id:gameScreen_Lobby
         visible: qmlAdapter.lobbyScreenVisible
     }
+    GameScreen_Overview{
+        id:gameScreen_Overview
+        visible: qmlAdapter.overviewScreenVisible
+    }
 }
 
 
