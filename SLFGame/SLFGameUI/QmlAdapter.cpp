@@ -19,6 +19,11 @@ void QmlAdapter::PrepareNextRound(const GameStats & gs, const PlayerStats & ps)
     setCategories(gs.GetCategories());
 }
 
+void QmlAdapter::PrepareOverview(const GameStats & gs, const PlayerStats & ps)
+{
+    setAnswers(ps.GetAnswers());
+}
+
 // ------------------------------------------ getter ------------------------------------------
 #define getterFunctions {
 
@@ -226,7 +231,7 @@ void QmlAdapter::prepareGame()
 
 void QmlAdapter::prepareOverview()
 {
-    //onPrepareOverview(_answers);
+    onPrepareOverview(_answers);
 }
 
 void QmlAdapter::addAnswer(QString answer)

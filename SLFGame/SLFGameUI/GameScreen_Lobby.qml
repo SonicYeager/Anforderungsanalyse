@@ -4,7 +4,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
 
 Rectangle{
-    id:lobby_window
+    id: lobby_window
     width: parent.width
     height: parent.height
     color: "#1c2b1e"

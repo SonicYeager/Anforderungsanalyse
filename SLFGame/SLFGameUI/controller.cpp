@@ -2,19 +2,27 @@
 #include "DataTypes.h"
 
 Controller::Controller(UI* ui, Interactor* inter) :
-    p_ui(ui),
-    p_inter(inter)
+    m_pUi(ui),
+    m_pInter(inter)
 {
     //connect ui + inter
-    p_ui->onPrepareGame = [this](std::string str1, std::string str2, std::string str3){p_inter->PrepareGame(str1, str2, str3);};
-    //p_ui->onPrepareOverview = [this](Categories answers) {p_inter->PrepareOverview(answers);};
-    p_inter->onPrepareNextRound = [this](GameStats gs, PlayerStats ps){p_ui->PrepareNextRound(gs,ps);};
+    m_pUi->onPrepareGame         = [this](std::string customCats, std::string timeLeft, std::string maxRounds)
+                                    {m_pInter->PrepareGame(customCats, timeLeft, maxRounds);};
+
+    m_pUi->onPrepareOverview     = [this](Categories answers)
+                                    {m_pInter->PrepareOverview(answers);};
+
+    m_pInter->onPrepareNextRound = [this](GameStats gs, PlayerStats ps)
+                                    {m_pUi->PrepareNextRound(gs,ps);};
+
+    m_pInter->onPrepareOverview  = [this](GameStats gs, PlayerStats ps)
+                                    {m_pUi->PrepareOverview(gs,ps);};
 
 }
 
 void Controller::Run()
 {
     //init here
-    auto stats = p_inter->PrepareLobby("");
-    p_ui->Init(stats.first, stats.second);
+    auto stats = m_pInter->PrepareLobby("");
+    m_pUi->Init(stats.first, stats.second);
 }

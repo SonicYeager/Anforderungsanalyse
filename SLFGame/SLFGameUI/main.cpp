@@ -15,12 +15,12 @@ int main(int argc, char *argv[])
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 #endif
     QmlAdapter qmlAdapter;
-    GameNetwork gn;
-    GameStatsOperations gso{};
-    RandomGenerator lg{};
-    SLFParser p;
-    GameInteractor gi{&lg, &gso, &gn, &p};
-    Controller controller{&qmlAdapter, &gi};
+    RandomGenerator rndGen{};
+    GameStatsOperations gsOperations{};
+    GameNetwork network;
+    SLFParser parser;
+    GameInteractor gameInteractor{&rndGen, &gsOperations, &network, &parser};
+    Controller controller{&qmlAdapter, &gameInteractor};
     controller.Run();
 
     QGuiApplication app(argc, argv);

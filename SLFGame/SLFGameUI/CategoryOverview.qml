@@ -19,7 +19,6 @@ ListView {
         MouseArea{
             anchors.fill: parent
             hoverEnabled: true
-
         }
     }
     model: ListModel{

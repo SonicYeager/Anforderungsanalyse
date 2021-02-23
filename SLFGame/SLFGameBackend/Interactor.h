@@ -11,4 +11,5 @@ public:
 	virtual ~Interactor() = default;
 
 	Event<GameStats, PlayerStats> onPrepareNextRound;
+	Event<GameStats, PlayerStats> onPrepareOverview;
 };

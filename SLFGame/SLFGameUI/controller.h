@@ -9,8 +9,8 @@ public:
     explicit Controller(UI*, Interactor*);
     void Run();
 private:
-    UI* p_ui;
-    Interactor* p_inter;
+    UI* m_pUi;
+    Interactor* m_pInter;
 };
 
 #endif // CONTROLLER_H
