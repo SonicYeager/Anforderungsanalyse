@@ -40,3 +40,7 @@ void GameInteractor::PrepareOverview(const std::vector<std::string>& answ)
 	m_pDataOperation->SetAnswers(answ, m_PlayerStats);
 	onPrepareOverview(m_GameStats, m_PlayerStats);
 }
+
+//void GameInteractor::PrepareNextRound(const std::vector<std::string>& evals)
+//{
+//}
