@@ -1,5 +1,5 @@
 #include "gmock/gmock.h"
-#include "../SLFGameBackendQt/SLFParser.h"
+#include "../SLFGameBackend/SLFParser.h"
 #include "../SLFGameBackend/DataTypes.h"
 
 TEST(TestSLFParser, ParseCategories_StandartCats_ReturnCategoriesStandart)

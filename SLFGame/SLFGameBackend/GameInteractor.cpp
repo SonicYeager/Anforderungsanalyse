@@ -8,30 +8,29 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 	mp_p(p)
 {}
 
-std::pair<GameStats, PlayerStats> GameInteractor::PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount)
+void GameInteractor::PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount)
 {
-	GameStats gs;
-	PlayerStats ps;
 	auto parsedCats = mp_p->ParseCategories(cats);
-	gs.SetCategories(parsedCats);
 	auto parsedRound = mp_p->ParseRoundCount(roundCount);
-	gs.SetCurrentRound(parsedRound);
-	gs.SetTimeout(roundTime);
-	gs.SetCurrentRound(0);
-	mp_op->InkrementRound(gs);
-	gs.SetMaxRounds(parsedRound);
+	m_GameStats.SetCategories(parsedCats);
+	m_GameStats.SetTimeout(roundTime);
+	m_GameStats.SetCurrentRound(0);
+	m_GameStats.SetMaxRounds(parsedRound);
+	mp_op->InkrementRound(m_GameStats);
 	Letter generated;
 	do 
 	{
 		generated = mp_rand->GenerateLetter();
-	} while (mp_op->LetterIsAlreadyUsed(generated, gs.GetUsedLetters()));
-	mp_op->SetNewLetter(generated, gs);
-	onPrepareNextRound(gs, ps);
-	return std::make_pair(gs, ps);
+	} while (mp_op->LetterIsAlreadyUsed(generated, m_GameStats.GetUsedLetters()));
+	mp_op->SetNewLetter(generated, m_GameStats);
+	onPrepareNextRound(m_GameStats, m_PlayerStats);
 }
 
 std::pair<GameStats, PlayerStats> GameInteractor::PrepareLobby(const std::string& lobbyCode)
 {
 	auto code = mp_n->GenerateLobbyCode();
-	return mp_op->CreateStats(code);
+	auto stats = mp_op->CreateStats(code);
+	m_GameStats = stats.first;
+	m_PlayerStats = stats.second;
+	return stats;
 }

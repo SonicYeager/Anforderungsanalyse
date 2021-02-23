@@ -11,7 +11,7 @@ class GameInteractor : public Interactor
 {
 public:
 	explicit GameInteractor(RandomGenRessource*, DataOperationLogic*, NetworkSource*, SLFParser*);
-	std::pair<GameStats, PlayerStats> PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount) override;
+	void PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount) override;
 	std::pair<GameStats, PlayerStats> PrepareLobby(const std::string& lobbyCode = "") override;
 
 private:
@@ -19,5 +19,7 @@ private:
 	DataOperationLogic* mp_op;
 	NetworkSource* mp_n;
 	SLFParser* mp_p;
+	GameStats m_GameStats;
+	PlayerStats m_PlayerStats;
 };
 
