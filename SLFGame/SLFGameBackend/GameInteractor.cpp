@@ -34,3 +34,8 @@ std::pair<GameStats, PlayerStats> GameInteractor::PrepareLobby(const std::string
 	m_PlayerStats = stats.second;
 	return stats;
 }
+
+std::pair<GameStats, PlayerStats> GameInteractor::PrepareOverview(const std::vector<std::string>&)
+{
+	return std::pair<GameStats, PlayerStats>();
+}

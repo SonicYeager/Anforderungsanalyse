@@ -4,7 +4,7 @@
 #include "../SLFGameBackend/RandomGenRessource.h"
 #include "../SLFGameBackend/GameStatsOperations.h"
 #include "../SLFGameBackend/NetworkSource.h"
-#include "../SLFGameBackendQt/SLFParser.h"
+#include "../SLFGameBackend/SLFParser.h"
 
 using namespace ::testing;
 
@@ -102,10 +102,26 @@ TEST_F(TestGameInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerSt
 
 TEST_F(TestGameInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStatsAndPlayerStatsFilledWithStdCatsRound0NoTimer)
 {
-	auto actual = gi.PrepareGame("Stadt,Land,Fluss,Name,Tier,Beruf", "", "0");
+	GameStats actualGS;
+	PlayerStats actualPS;
+	gi.onPrepareNextRound = [&actualGS, &actualPS](GameStats gs, PlayerStats ps) 
+	{
+		actualGS = gs;
+		actualPS = ps;
+	};
+
+	gi.PrepareGame("Stadt,Land,Fluss,Name,Tier,Beruf", "", "0");
 
 	Categories cat{ {"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"} };
-	EXPECT_EQ(actual.first.GetCategories(), cat);
-	EXPECT_EQ(actual.first.GetTimeout(), "");
-	EXPECT_EQ(actual.first.GetCurrentRound(), 1);
+	EXPECT_EQ(actualGS.GetCategories(), cat);
+	EXPECT_EQ(actualGS.GetTimeout(), "");
+	EXPECT_EQ(actualGS.GetCurrentRound(), 1);
+}
+
+TEST_F(TestGameInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_ReturnPlayerStatsFilledWithBremenBulgarienBrahmaputra)
+{
+	auto actual = gi.PrepareOverview({ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} });
+
+	std::vector<std::string> expected{ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} };
+	EXPECT_EQ(actual.second.GetAnswers(), expected);
 }

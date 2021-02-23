@@ -107,3 +107,16 @@ TEST(TestGameStatsOperations, CreateStats_LobbyCode0c346bv_ReturnConfiguredGameS
 	EXPECT_EQ(actual.second, expectedps);
 
 }
+
+TEST(TestGameStatsOperations, SetAnswers_BaumBerlinBen_SetToBaumBerlinBen)
+{
+	GameStatsOperations gso{};
+	PlayerStats ps{};
+	std::vector<std::string> answers{ {"Baum"}, {"Berlin"}, {"Ben"} };
+
+	gso.SetAnswers(answers, ps);
+
+
+	EXPECT_EQ(ps.GetAnswers(), answers);
+
+}

@@ -27,6 +27,11 @@ bool GameStatsOperations::LetterIsAlreadyUsed(Letter generated, Letters used)
 	return std::find(std::begin(used.letters), std::end(used.letters), generated) != std::end(used.letters);
 }
 
+void GameStatsOperations::SetAnswers(const std::vector<std::string>& answ, PlayerStats& ps)
+{
+	ps.SetAnswers(answ);
+}
+
 std::pair<GameStats, PlayerStats> GameStatsOperations::CreateStats(const std::string& code)
 {
 	GameStats gs{};
