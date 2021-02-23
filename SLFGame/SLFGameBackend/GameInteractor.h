@@ -13,7 +13,7 @@ public:
 	explicit GameInteractor(RandomGenRessource*, DataOperationLogic*, NetworkSource*, SLFParser*);
 	void PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount) override;
 	std::pair<GameStats, PlayerStats> PrepareLobby(const std::string& lobbyCode = "") override;
-	std::pair<GameStats, PlayerStats> PrepareOverview(const std::vector<std::string>&) override;
+	void PrepareOverview(const std::vector<std::string>&) override;
 
 private:
 	RandomGenRessource* m_pRandomGenerator;

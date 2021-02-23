@@ -35,9 +35,8 @@ std::pair<GameStats, PlayerStats> GameInteractor::PrepareLobby(const std::string
 	return stats;
 }
 
-std::pair<GameStats, PlayerStats> GameInteractor::PrepareOverview(const std::vector<std::string>& answ)
+void GameInteractor::PrepareOverview(const std::vector<std::string>& answ)
 {
 	m_pDataOperation->SetAnswers(answ, m_PlayerStats);
 	onPrepareOverview(m_GameStats, m_PlayerStats);
-	return std::make_pair(m_GameStats, m_PlayerStats);
 }
