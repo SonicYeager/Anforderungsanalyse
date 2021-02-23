@@ -16,10 +16,10 @@ public:
 	std::pair<GameStats, PlayerStats> PrepareOverview(const std::vector<std::string>&) override;
 
 private:
-	RandomGenRessource* mp_rand;
-	DataOperationLogic* mp_op;
-	NetworkSource* mp_n;
-	SLFParser* mp_p;
+	RandomGenRessource* m_pRandomGenerator;
+	DataOperationLogic* m_pDataOperation;
+	NetworkSource* m_pNetwork;
+	SLFParser* m_pParser;
 
 	GameStats m_GameStats;
 	PlayerStats m_PlayerStats;
