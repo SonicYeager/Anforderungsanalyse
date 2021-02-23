@@ -6,12 +6,20 @@
 #include "../SLFGameBackend/NetworkSource.h"
 #include "../SLFGameBackend/SLFParser.h"
 
+//#include "../SLFGameBackend/RandomGenerator.h"
+
 using namespace ::testing;
 
 class FakeRandomLetterGenerator : public RandomGenRessource
 {
 public:
 	Letter GenerateLetter() override
+	{
+		auto res = numCalls == 1 ? Letter{ 'B' } : Letter{ 'C' };
+		++numCalls;
+		return res;
+	}
+	Letter GenerateLetterByFilter(const Letters& filter) override
 	{
 		auto res = numCalls == 1 ? Letter{ 'B' } : Letter{ 'C' };
 		++numCalls;
@@ -120,8 +128,24 @@ TEST_F(TestGameInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStats
 
 TEST_F(TestGameInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_ReturnPlayerStatsFilledWithBremenBulgarienBrahmaputra)
 {
-	auto actual = gi.PrepareOverview({ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} });
+	GameStats actualGS;
+	PlayerStats actualPS;
+	gi.onPrepareOverview = [&actualGS, &actualPS](GameStats gs, PlayerStats ps)
+	{
+		actualGS = gs;
+		actualPS = ps;
+	};
+
+	gi.PrepareOverview({ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} });
 
 	std::vector<std::string> expected{ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} };
-	EXPECT_EQ(actual.second.GetAnswers(), expected);
+	EXPECT_EQ(actualPS.GetAnswers(), expected);
 }
+
+//TEST(TestRandom, NothingToSay)
+//{
+//	RandomGenerator rg{};
+//	Letters used{ {{{'L'}}, {{'C'}}, {{'X'}}, {{'W'}}, {{'B'}}, {{'F'}}, {{'G'}}, {{'U'}}}};
+//	auto val = rg.GenerateLetterByFilter(used);
+//	EXPECT_TRUE(false);
+//}

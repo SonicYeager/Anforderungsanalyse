@@ -18,12 +18,12 @@ void GameInteractor::PrepareGame(const std::string& cats, const std::string& rou
 	m_GameStats.SetMaxRounds(parsedRound);
 	m_pDataOperation->InkrementRound(m_GameStats);
 	Letter generated;
-	do 
-	{
-		generated = m_pRandomGenerator->GenerateLetter();
-	} while (m_pDataOperation->LetterIsAlreadyUsed(generated, m_GameStats.GetUsedLetters()));
+	//do 
+	//{
+	//	generated = m_pRandomGenerator->GenerateLetter();
+	//} while (m_pDataOperation->LetterIsAlreadyUsed(generated, m_GameStats.GetUsedLetters()));
 
-
+	generated = m_pRandomGenerator->GenerateLetterByFilter(m_GameStats.GetUsedLetters());
 
 	m_pDataOperation->SetNewLetter(generated, m_GameStats);
 	onPrepareNextRound(m_GameStats, m_PlayerStats);

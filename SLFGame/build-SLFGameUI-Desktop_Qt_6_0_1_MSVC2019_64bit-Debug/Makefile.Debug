@@ -179,6 +179,7 @@ compiler_rcc_clean:
 debug\qrc_qml.cpp: ..\SLFGameUI\qml.qrc \
 		G:\Software\Qt\6.0.1\msvc2019_64\bin\rcc.exe \
 		..\SLFGameUI\InfoBox.qml \
+		..\SLFGameUI\CategoryOverview.qml \
 		..\SLFGameUI\Category.qml \
 		..\SLFGameUI\Categories.qml \
 		..\SLFGameUI\TextBox.qml \
@@ -188,6 +189,7 @@ debug\qrc_qml.cpp: ..\SLFGameUI\qml.qrc \
 		..\SLFGameUI\GameButton.qml \
 		..\SLFGameUI\GameScreen_Lobby.qml \
 		..\SLFGameUI\main.qml \
+		..\SLFGameUI\GameScreen_Overview.qml \
 		..\SLFGameUI\Banner.qml
 	G:\Software\Qt\6.0.1\msvc2019_64\bin\rcc.exe -name qml ..\SLFGameUI\qml.qrc -o debug\qrc_qml.cpp
 
@@ -530,8 +532,10 @@ debug\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include\Q
 		..\SLFGameBackend\DataOperationLogic.h \
 		..\SLFGameBackend\RandomGenRessource.h \
 		..\SLFGameBackend\NetworkSource.h \
+		..\SLFGameBackend\SLFParser.h \
 		..\SLFGameBackend\GameStatsOperations.h \
-		..\SLFGameBackend\RandomGenerator.h
+		..\SLFGameBackend\RandomGenerator.h \
+		..\SLFGameBackend\GameNetwork.h
 
 debug\qrc_qml.obj: debug\qrc_qml.cpp 
 
