@@ -22,6 +22,9 @@ void GameInteractor::PrepareGame(const std::string& cats, const std::string& rou
 	{
 		generated = m_pRandomGenerator->GenerateLetter();
 	} while (m_pDataOperation->LetterIsAlreadyUsed(generated, m_GameStats.GetUsedLetters()));
+
+
+
 	m_pDataOperation->SetNewLetter(generated, m_GameStats);
 	onPrepareNextRound(m_GameStats, m_PlayerStats);
 }
