@@ -8,7 +8,8 @@ using Event = std::function<void(Args...)>;
 
 struct Letter
 {
-	bool operator==(const Letter& other);
+	bool operator==(const Letter& other) const;
+	bool operator<(const Letter& other) const;
 	char letter{};
 };
 
@@ -154,15 +155,20 @@ inline void GameStats::SetTimeout(const std::string& t)
 	timeout = t;
 }
 
-inline bool Letter::operator==(const Letter& other)
+inline bool Letter::operator==(const Letter& other)	const
 {
 	return letter == other.letter;
 }
 
-inline bool operator==(const Letter& left, const Letter& right)
+inline bool Letter::operator<(const Letter& other) const
 {
-	return left.letter == right.letter;
+	return letter < other.letter;
 }
+
+//inline bool operator==(const Letter& left, const Letter& right)
+//{
+//	return left.letter == right.letter;
+//}
 
 inline bool operator==(const GameStats& left, const GameStats& right)
 {

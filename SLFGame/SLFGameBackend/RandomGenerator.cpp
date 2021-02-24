@@ -2,6 +2,7 @@
 #include <random>
 #include <map>
 #include <algorithm>
+#include <set>
 
 Letter RandomGenerator::GenerateLetter()	//could also use range of char (ascii-code)
 {
@@ -42,9 +43,9 @@ Letter RandomGenerator::GenerateLetter()	//could also use range of char (ascii-c
 	return alphabet[distr(gen)];
 }
 
-Letter RandomGenerator::GenerateLetterByFilter(const Letters& filter)
+Letter RandomGenerator::GenerateUnusedLetter(const Letters& filter)
 {
-	std::vector<Letter> alphabet
+	std::set<Letter> alphabet
 	{
 		{{'A'}},
 		{{'B'}},
@@ -74,23 +75,12 @@ Letter RandomGenerator::GenerateLetterByFilter(const Letters& filter)
 		{{'Z'}}
 	};
 
-	std::for_each(std::begin(filter.letters), std::end(filter.letters), [&alphabet](const Letter& l) 
-		{
-			int index = 0;
-			for (auto& elem : alphabet)
-			{
-				if (elem == l)
-					break;
-				++index;
-			}
-			std::vector<Letter>::iterator nth = alphabet.begin() + index;
-			alphabet.erase(nth);
-		}
-	);
+	for (const auto& elem : filter.letters)
+		alphabet.erase(elem);
 
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_int_distribution<> distr(1, alphabet.size());
+	std::uniform_int_distribution<> distr(0, alphabet.size()-1);
 
-	return alphabet[distr(gen)];
+	return *std::next(alphabet.begin(), distr(gen));
 }

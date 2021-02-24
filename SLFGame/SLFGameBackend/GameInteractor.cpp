@@ -17,14 +17,8 @@ void GameInteractor::PrepareGame(const std::string& cats, const std::string& rou
 	m_GameStats.SetCurrentRound(0);
 	m_GameStats.SetMaxRounds(parsedRound);
 	m_pDataOperation->InkrementRound(m_GameStats);
-	Letter generated;
-	//do 
-	//{
-	//	generated = m_pRandomGenerator->GenerateLetter();
-	//} while (m_pDataOperation->LetterIsAlreadyUsed(generated, m_GameStats.GetUsedLetters()));
-
-	generated = m_pRandomGenerator->GenerateLetterByFilter(m_GameStats.GetUsedLetters());
-
+	Letter generated = m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.GetUsedLetters());
+	auto fun = m_pRandomGenerator->GenerateLetter();
 	m_pDataOperation->SetNewLetter(generated, m_GameStats);
 	onPrepareNextRound(m_GameStats, m_PlayerStats);
 }
@@ -32,10 +26,10 @@ void GameInteractor::PrepareGame(const std::string& cats, const std::string& rou
 std::pair<GameStats, PlayerStats> GameInteractor::PrepareLobby(const std::string& lobbyCode)
 {
 	auto code = m_pNetwork->GenerateLobbyCode();
-	auto stats = m_pDataOperation->CreateStats(code);
-	m_GameStats = stats.first;
-	m_PlayerStats = stats.second;
-	return stats;
+	auto [gameStats, playerStats] = m_pDataOperation->CreateStats(code);
+	m_GameStats = gameStats;
+	m_PlayerStats = playerStats;
+	return {gameStats, playerStats};
 }
 
 void GameInteractor::PrepareOverview(const std::vector<std::string>& answ)

@@ -2,10 +2,10 @@
 #include "framework.h"
 #include "RandomGenRessource.h"
 
-class RandomGenerator : public RandomGenRessource
+class /*[[deprecated("Use GenerateUnusedLetter instead")]]*/ RandomGenerator : public RandomGenRessource
 {
 public:
 	Letter GenerateLetter() override;
-	Letter GenerateLetterByFilter(const Letters&) override;
+	Letter GenerateUnusedLetter(const Letters&) override;
 };
 

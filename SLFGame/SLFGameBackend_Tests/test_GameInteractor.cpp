@@ -6,7 +6,7 @@
 #include "../SLFGameBackend/NetworkSource.h"
 #include "../SLFGameBackend/SLFParser.h"
 
-//#include "../SLFGameBackend/RandomGenerator.h"
+#include "../SLFGameBackend/RandomGenerator.h"
 
 using namespace ::testing;
 
@@ -19,7 +19,7 @@ public:
 		++numCalls;
 		return res;
 	}
-	Letter GenerateLetterByFilter(const Letters& filter) override
+	Letter GenerateUnusedLetter(const Letters& filter) override
 	{
 		auto res = numCalls == 1 ? Letter{ 'B' } : Letter{ 'C' };
 		++numCalls;
@@ -141,11 +141,3 @@ TEST_F(TestGameInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_Ret
 	std::vector<std::string> expected{ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} };
 	EXPECT_EQ(actualPS.GetAnswers(), expected);
 }
-
-//TEST(TestRandom, NothingToSay)
-//{
-//	RandomGenerator rg{};
-//	Letters used{ {{{'L'}}, {{'C'}}, {{'X'}}, {{'W'}}, {{'B'}}, {{'F'}}, {{'G'}}, {{'U'}}}};
-//	auto val = rg.GenerateLetterByFilter(used);
-//	EXPECT_TRUE(false);
-//}
