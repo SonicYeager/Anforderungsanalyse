@@ -5,10 +5,19 @@
 #include "../SLFGameBackend/GameStatsOperations.h"
 #include "../SLFGameBackend/NetworkSource.h"
 #include "../SLFGameBackend/SLFParser.h"
-
-#include "../SLFGameBackend/RandomGenerator.h"
+#include "../SLFGameBackend/Game.h"
+#include "../SLFGameBackend/UI.h"
 
 using namespace ::testing;
+
+class FakeUI : public UI
+{
+public:
+	MOCK_METHOD(void, Init, (const GameStats&, const PlayerStats&), (override));
+	MOCK_METHOD(void, PrepareGame, (const GameStats&, const PlayerStats&), (override));
+	MOCK_METHOD(void, PrepareOverview, (const GameStats&, const PlayerStats&), (override));
+	MOCK_METHOD(void, PrepareFinalScores, (const GameStats&, const PlayerStats&), (override));
+};
 
 class FakeRandomLetterGenerator : public RandomGenRessource
 {
@@ -44,7 +53,7 @@ class TestGameInteractor : public Test
 {
 public:
 	TestGameInteractor() :
-		gi{&frlg, &gsop, &fns, &p}
+		gi{&frlg, &gsop, &g, &fns, &p}
 	{}
 protected:
 	virtual void SetUp()
@@ -56,6 +65,7 @@ protected:
 		Test::TearDown();
 	}
 
+	Game g{};
 	FakeRandomLetterGenerator frlg{};
 	FakeNetworkSource fns{};
 	GameStatsOperations gsop{};
@@ -64,33 +74,6 @@ protected:
 	PlayerStats ps{};
 	SLFParser p;
 };
-
-//TEST_F(TestGameInteractor, PrepareNextRound_EmptyGameStatsEmptyPlayerStats_Round1LetterC)
-//{
-//	auto actual = gi.PrepareGame(gs, ps);
-//
-//	EXPECT_EQ(actual.first.GetCurrentLetter().letter, 'C');
-//	EXPECT_EQ(actual.first.GetCurrentRound(), 1);
-//}
-//
-//TEST_F(TestGameInteractor, PrepareNextRound_GameStatsFilledWithUsedLetterNoCurrentLetterPlayerStats_LetterB)
-//{
-//	Letters usedLetters{ {{'A'},{'C'}} };
-//	gs.SetUsedLetters(usedLetters);
-//
-//	auto actual = gi.PrepareGame(gs, ps);
-//
-//	EXPECT_EQ(actual.first.GetCurrentLetter().letter, 'B');
-//}
-//
-//TEST_F(TestGameInteractor, PrepareNextRound_GameStatsCurrentLetterBPlayerStats_LetterBIsTransferedToUsedLetters)
-//{
-//	gs.SetCurrentLetter(Letter{'B'});
-//
-//	auto actual = gi.PrepareGame(gs, ps);
-//
-//	EXPECT_EQ(actual.first.GetUsedLetters().letters[0].letter, 'B');
-//}
 
 TEST_F(TestGameInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerStats)
 {
@@ -140,4 +123,19 @@ TEST_F(TestGameInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_Ret
 
 	std::vector<std::string> expected{ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} };
 	EXPECT_EQ(actualPS.GetAnswers(), expected);
+}
+
+TEST_F(TestGameInteractor, EndRound_ZeroFromZeroRoundsWith40Points_CallGSWithRoundZeroFromZeroAndPSwith40Points)
+{
+	GameStats expectedGS;
+	expectedGS.SetCurrentRound(0);
+	PlayerStats expectedPS;
+	expectedPS.SetPoints(40);
+	::testing::StrictMock<FakeUI> fui;
+	gi.onGameOver = [&fui](GameStats gs, PlayerStats ps) {fui.PrepareFinalScores(gs, ps); };
+	std::vector<int> dec{2, 2, 1};
+
+	EXPECT_CALL(fui, PrepareFinalScores(expectedGS, expectedPS));
+
+	gi.EndRound(dec);
 }
