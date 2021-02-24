@@ -1,6 +1,6 @@
 QT += quick
 
-CONFIG += c++20
+CONFIG += c++17
 
 # You can make your code fail to compile if it uses deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -30,18 +30,13 @@ HEADERS += \
     QmlAdapter.h \
     controller.h
 
-win32: LIBS += -L$$PWD/../SLFGameBackend/x64/Debug/ -lSLFGameBackend
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/../SLFGameBackend/x64/Release/ -lSLFGameBackend
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/../SLFGameBackend/x64/Debug/ -lSLFGameBackend
 
 INCLUDEPATH += $$PWD/../SLFGameBackend
 DEPENDPATH += $$PWD/../SLFGameBackend
 
-win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/SLFGameBackend.lib
-else:win32-g++: PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/libSLFGameBackend.a
-
-win32: LIBS += -L$$PWD/../SLFGameBackend/x64/Debug/ -lFileHandler
-
-INCLUDEPATH += $$PWD/../FileHandler/FileHandler
-DEPENDPATH += $$PWD/../FileHandler/FileHandler
-
-win32:!win32-g++: PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/FileHandler.lib
-else:win32-g++: PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/libFileHandler.a
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Release/libSLFGameBackend.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/libSLFGameBackend.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Release/SLFGameBackend.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/SLFGameBackend.lib
