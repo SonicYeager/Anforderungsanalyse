@@ -35,6 +35,7 @@ public:
 
     void Init               (const GameStats&, const PlayerStats&) override;
     void PrepareGame        (const GameStats&, const PlayerStats&) override;
+    //void PrepareFinalScores(const GameStats & gs, const PlayerStats & ps) override;
     void PrepareOverview    (const GameStats&, const PlayerStats&) override;
 
     QString getLetter();

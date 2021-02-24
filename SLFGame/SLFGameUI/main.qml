@@ -21,6 +21,10 @@ Window{
         id:gameScreen_Overview
         visible: qmlAdapter.overviewScreenVisible
     }
+    //GameScreen_FinalScores{
+    //    id:gameScreen_FinalScores
+    //    visible: qmlAdapter.finalscoresScreenVisible
+    //}
 }
 
 

@@ -19,6 +19,11 @@ void QmlAdapter::PrepareGame(const GameStats & gs, const PlayerStats & ps)
     setCategories(gs.GetCategories());
 }
 
+//void QmlAdapter::PrepareFinalScores(const GameStats & gs, const PlayerStats & ps)
+//{
+//    //TODO
+//}
+
 void QmlAdapter::PrepareOverview(const GameStats & gs, const PlayerStats & ps)
 {
     setAnswers(ps.GetAnswers());
