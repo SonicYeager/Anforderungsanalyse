@@ -12,8 +12,8 @@ Controller::Controller(UI* ui, Interactor* inter) :
     m_pUi->onPrepareOverview     = [this](Categories answers)
                                     {m_pInter->PrepareOverview(answers);};
 
-    m_pInter->onPrepareNextRound = [this](GameStats gs, PlayerStats ps)
-                                    {m_pUi->PrepareNextRound(gs,ps);};
+    m_pInter->onPrepareGame =       [this](GameStats gs, PlayerStats ps)
+                                    {m_pUi->PrepareGame(gs,ps);};
 
     m_pInter->onPrepareOverview  = [this](GameStats gs, PlayerStats ps)
                                     {m_pUi->PrepareOverview(gs,ps);};

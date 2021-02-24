@@ -12,7 +12,7 @@ void QmlAdapter::Init(const GameStats & gs, const PlayerStats & ps)
     setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
 }
 
-void QmlAdapter::PrepareNextRound(const GameStats & gs, const PlayerStats & ps)
+void QmlAdapter::PrepareGame(const GameStats & gs, const PlayerStats & ps)
 {
     setCurrentRound(gs.GetCurrentRound());
     setLetter(QChar(gs.GetCurrentLetter().letter));
@@ -131,7 +131,10 @@ void QmlAdapter::setCustomCategories(QString customCategories)
 {
     if (customCategories == _customCategories)
         return;
-    _customCategories = customCategories;
+    if(_customChecked == true)
+        _customCategories = customCategories;
+    else
+        return;
     emit customCategoriesChanged();
 }
 

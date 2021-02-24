@@ -20,7 +20,7 @@ void GameInteractor::PrepareGame(const std::string& cats, const std::string& rou
 	Letter generated = m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.GetUsedLetters());
 	auto fun = m_pRandomGenerator->GenerateLetter();
 	m_pDataOperation->SetNewLetter(generated, m_GameStats);
-	onPrepareNextRound(m_GameStats, m_PlayerStats);
+	onPrepareGame(m_GameStats, m_PlayerStats);
 }
 
 std::pair<GameStats, PlayerStats> GameInteractor::PrepareLobby(const std::string& lobbyCode)

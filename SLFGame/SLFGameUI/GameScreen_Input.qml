@@ -108,7 +108,7 @@ Rectangle{
                     categories.listModel.clear()
                     for (var i = 0; i < qmlAdapter.categoryCount; i++)
                     {
-                        categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":"s"})
+                        categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
                     }
                 }
             }

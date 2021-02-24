@@ -34,7 +34,7 @@ public:
     explicit QmlAdapter     (QObject *parent = nullptr);
 
     void Init               (const GameStats&, const PlayerStats&) override;
-    void PrepareNextRound   (const GameStats&, const PlayerStats&) override;
+    void PrepareGame        (const GameStats&, const PlayerStats&) override;
     void PrepareOverview    (const GameStats&, const PlayerStats&) override;
 
     QString getLetter();

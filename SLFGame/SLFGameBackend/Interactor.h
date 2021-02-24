@@ -10,7 +10,7 @@ public:
 	//virtual void PrepareNextRound(const std::vector<std::string>&) = 0; //<- maybe a enum? mapped
 	virtual ~Interactor() = default;
 
-	Event<GameStats, PlayerStats> onPrepareNextRound; //prepare game??
+	Event<GameStats, PlayerStats> onPrepareGame; //prepare game??
 	Event<GameStats, PlayerStats> onPrepareOverview;
 	//Event<GameStats, PlayerStats> onPrepareRound;
 };
