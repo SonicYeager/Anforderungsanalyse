@@ -168,11 +168,9 @@ Rectangle{
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            qmlAdapter.maxRounds = settings_lobby.roundCount
-                            qmlAdapter.timeLeft = settings_lobby.roundTime
-                            qmlAdapter.prepareGame(); //nextround is called here -> needs function(s) to set screens (or change them)
-                            qmlAdapter.lobbyScreenVisible = false;
-                            qmlAdapter.entryScreenVisible = true;
+                            //qmlAdapter.prepareNextRound();
+                            qmlAdapter.overviewScreenVisible = false;
+                            qmlAdapter.fscoresScreenVisible = true;
                         }
                     }
                 }

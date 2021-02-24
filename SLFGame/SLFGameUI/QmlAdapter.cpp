@@ -17,12 +17,15 @@ void QmlAdapter::PrepareGame(const GameStats & gs, const PlayerStats & ps)
     setCurrentRound(gs.GetCurrentRound());
     setLetter(QChar(gs.GetCurrentLetter().letter));
     setCategories(gs.GetCategories());
+    //setScores
 }
 
-//void QmlAdapter::PrepareFinalScores(const GameStats & gs, const PlayerStats & ps)
-//{
-//    //TODO
-//}
+void QmlAdapter::PrepareFinalScores(const GameStats & gs, const PlayerStats & ps)
+{
+    //TODO
+    //setScores
+    //changeView
+}
 
 void QmlAdapter::PrepareOverview(const GameStats & gs, const PlayerStats & ps)
 {
@@ -75,6 +78,11 @@ bool QmlAdapter::getEntryScreenVisible()
 bool QmlAdapter::getOverviewScreenVisible()
 {
     return _overviewScreenVisible;
+}
+
+bool QmlAdapter::getFScoresScreenVisible()
+{
+    return _fscoresScreenVisible;
 }
 
 int QmlAdapter::getCategoryCount()
@@ -196,6 +204,14 @@ void QmlAdapter::setOverviewScreenVisible(bool visibility)
     emit overviewScreenVisibleChanged();
 }
 
+void QmlAdapter::setFScoresScreenVisible(bool visibility)
+{
+    if (visibility == _fscoresScreenVisible)
+        return;
+    _fscoresScreenVisible = visibility;
+    emit fscoresScreenVisibleChanged();
+}
+
 void QmlAdapter::setCategoryCount(int categoryCount)
 {
     if (categoryCount == _categoryCount)
@@ -284,6 +300,11 @@ void QmlAdapter::prepareGame()
 void QmlAdapter::prepareOverview()
 {
     onPrepareOverview(_unhandledanswers);
+}
+
+void QmlAdapter::prepareNextRound()
+{
+    onPrepareNextRound(_decisions);
 }
 
 void QmlAdapter::addAnswer(QString answer)

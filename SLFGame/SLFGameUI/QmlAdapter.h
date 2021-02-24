@@ -29,13 +29,14 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(bool lobbyScreenVisible     READ getLobbyScreenVisible    WRITE setLobbyScreenVisible    NOTIFY lobbyScreenVisibleChanged)
     Q_PROPERTY(bool entryScreenVisible     READ getEntryScreenVisible    WRITE setEntryScreenVisible    NOTIFY entryScreenVisibleChanged)
     Q_PROPERTY(bool overviewScreenVisible  READ getOverviewScreenVisible WRITE setOverviewScreenVisible NOTIFY overviewScreenVisibleChanged)
+    Q_PROPERTY(bool fscoresScreenVisible   READ getFScoresScreenVisible  WRITE setFScoresScreenVisible  NOTIFY fscoresScreenVisibleChanged)
 
 public:
     explicit QmlAdapter     (QObject *parent = nullptr);
 
     void Init               (const GameStats&, const PlayerStats&) override;
     void PrepareGame        (const GameStats&, const PlayerStats&) override;
-    //void PrepareFinalScores(const GameStats & gs, const PlayerStats & ps) override;
+    void PrepareFinalScores (const GameStats&, const PlayerStats&) override;
     void PrepareOverview    (const GameStats&, const PlayerStats&) override;
 
     QString getLetter();
@@ -54,6 +55,7 @@ public:
     bool getLobbyScreenVisible();
     bool getEntryScreenVisible();
     bool getOverviewScreenVisible();
+    bool getFScoresScreenVisible();
 
 
     void setLetter                      (QString letter);
@@ -72,6 +74,7 @@ public:
     void setLobbyScreenVisible          (bool visibility);
     void setEntryScreenVisible          (bool visibility);
     void setOverviewScreenVisible       (bool visibility);
+    void setFScoresScreenVisible        (bool visibility);
 
 public slots:
 
@@ -81,6 +84,7 @@ public slots:
     void setDecision(int idx, int newVal);
     void prepareGame();
     void prepareOverview();
+    void prepareNextRound();
     void addAnswer(QString answer);
 
 signals:
@@ -93,6 +97,7 @@ signals:
     void lobbyScreenVisibleChanged();
     void entryScreenVisibleChanged();
     void overviewScreenVisibleChanged();
+    void fscoresScreenVisibleChanged();
     void currentRoundChanged();
     void maxRoundsChanged();
     void pointsChanged();
@@ -121,4 +126,5 @@ private:
     bool _lobbyScreenVisible    = true;
     bool _entryScreenVisible    = false;
     bool _overviewScreenVisible = false;
+    bool _fscoresScreenVisible  = false;
 };

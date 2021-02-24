@@ -181,6 +181,7 @@ debug\qrc_qml.cpp: ..\SLFGameUI\qml.qrc \
 		..\SLFGameUI\AnswerBlock.qml \
 		..\SLFGameUI\InfoBox.qml \
 		..\SLFGameUI\CategoryOverview.qml \
+		..\SLFGameUI\GameScreen_FinalScores.qml \
 		..\SLFGameUI\Category.qml \
 		..\SLFGameUI\Categories.qml \
 		..\SLFGameUI\TextBox.qml \
