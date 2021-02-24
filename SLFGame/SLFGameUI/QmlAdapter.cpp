@@ -92,6 +92,16 @@ int QmlAdapter::getPoints()
     return _points;
 }
 
+int QmlAdapter::getActiveOverviewItem()
+{
+    return _activeOverviewItem;
+}
+
+int QmlAdapter::getPlayerCount()
+{
+    return _playerCount;
+}
+
 QString QmlAdapter::getTimeLeft()
 {
     return _timeLeft;
@@ -140,6 +150,9 @@ void QmlAdapter::setAnswers(StrVector answers)
     if (answers == _answers)
         return;
     _answers = answers;
+    _decisions.clear();
+    for (unsigned long long i = 0; i < _answers.size(); i++)
+        _decisions.emplace_back(0);
     emit answersChanged();
 }
 
@@ -207,6 +220,22 @@ void QmlAdapter::setPoints(int points)
     emit pointsChanged();
 }
 
+void QmlAdapter::setActiveOverviewItem(int activeOverviewItem)
+{
+    if (activeOverviewItem == _activeOverviewItem)
+        return;
+    _activeOverviewItem = activeOverviewItem;
+    emit activeOverviewItemChanged();
+}
+
+void QmlAdapter::setPlayerCount(int playerCount)
+{
+    if (playerCount == _playerCount)
+        return;
+    _playerCount = playerCount;
+    emit playerCountChanged();
+}
+
 void QmlAdapter::setTimeLeft(QString timeLeft)
 {
     if (timeLeft == _timeLeft)
@@ -224,6 +253,21 @@ QString QmlAdapter::getCategoryName(int idx)
     return QString::fromUtf8(_categories[idx].c_str());
 }
 
+QString QmlAdapter::getAnswer(int idx)
+{
+    return QString::fromUtf8(_answers[idx].c_str());
+}
+
+int QmlAdapter::getDecision(int idx)
+{
+    return _decisions[idx];
+}
+
+void QmlAdapter::setDecision(int idx, int newVal)
+{
+    _decisions[idx] = newVal;
+}
+
 void QmlAdapter::prepareGame()
 {
     onPrepareGame(_customCategories.toStdString(), _timeLeft.toStdString(), _maxRounds.toStdString());
@@ -231,12 +275,12 @@ void QmlAdapter::prepareGame()
 
 void QmlAdapter::prepareOverview()
 {
-    onPrepareOverview(_answers);
+    onPrepareOverview(_unhandledanswers);
 }
 
 void QmlAdapter::addAnswer(QString answer)
 {
-    _answers.emplace_back(answer.toStdString());
+    _unhandledanswers.emplace_back(answer.toStdString());
 }
 
 #define slotFunctionsEnd }

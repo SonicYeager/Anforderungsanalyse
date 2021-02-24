@@ -23,6 +23,8 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(int categoryCount           READ getCategoryCount         WRITE setCategoryCount         NOTIFY categoryCountChanged)
     Q_PROPERTY(int currentRound            READ getCurrentRound          WRITE setCurrentRound          NOTIFY currentRoundChanged)
     Q_PROPERTY(int points                  READ getPoints                WRITE setPoints                NOTIFY pointsChanged)
+    Q_PROPERTY(int activeOverviewItem      READ getActiveOverviewItem    WRITE setActiveOverviewItem    NOTIFY activeOverviewItemChanged)
+    Q_PROPERTY(int playerCount             READ getPlayerCount           WRITE setPlayerCount           NOTIFY playerCountChanged)
     Q_PROPERTY(bool customChecked          READ getCustomChecked         WRITE setCustomChecked         NOTIFY customCheckedChanged)
     Q_PROPERTY(bool lobbyScreenVisible     READ getLobbyScreenVisible    WRITE setLobbyScreenVisible    NOTIFY lobbyScreenVisibleChanged)
     Q_PROPERTY(bool entryScreenVisible     READ getEntryScreenVisible    WRITE setEntryScreenVisible    NOTIFY entryScreenVisibleChanged)
@@ -45,6 +47,8 @@ public:
     int getCategoryCount();
     int getCurrentRound();
     int getPoints();
+    int getActiveOverviewItem();
+    int getPlayerCount();
     bool getCustomChecked();
     bool getLobbyScreenVisible();
     bool getEntryScreenVisible();
@@ -61,6 +65,8 @@ public:
     void setCategoryCount               (int categoryCount);
     void setCurrentRound                (int currentRound);
     void setPoints                      (int points);
+    void setActiveOverviewItem          (int activeOverviewItem);
+    void setPlayerCount                 (int playerCount);
     void setCustomChecked               (bool checked);
     void setLobbyScreenVisible          (bool visibility);
     void setEntryScreenVisible          (bool visibility);
@@ -69,6 +75,9 @@ public:
 public slots:
 
     QString getCategoryName(int idx);
+    QString getAnswer(int idx);
+    int getDecision(int idx);
+    void setDecision(int idx, int newVal);
     void prepareGame();
     void prepareOverview();
     void addAnswer(QString answer);
@@ -88,6 +97,8 @@ signals:
     void pointsChanged();
     void timeLeftChanged();
     void lobbyCodeChanged();
+    void playerCountChanged();
+    void activeOverviewItemChanged();
 
 private:
     QString _letter             = "bad";
@@ -98,9 +109,13 @@ private:
     QString m_customCategories  = {};
     StrVector _categories       = {"Stadt", "Land", "Fluss", "Name", "Tier", "Beruf"};
     StrVector _answers          = {};
+    StrVector _unhandledanswers = {};
     int _categoryCount          = 6;
     int _currentRound           = 0;
     int _points                 = 999;
+    int _playerCount            = 1;
+    int _activeOverviewItem     = 0;
+    std::vector<int> _decisions = {0,0,0,0,0,0};
     bool _customChecked         = false;
     bool _lobbyScreenVisible    = true;
     bool _entryScreenVisible    = false;

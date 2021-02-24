@@ -13,5 +13,7 @@
         <file>Settings_Lobby.qml</file>
         <file>GameScreen_Overview.qml</file>
         <file>CategoryOverview.qml</file>
+        <file>AnswerBlock.qml</file>
+        <file>AnswerBlockList.qml</file>
     </qresource>
 </RCC>

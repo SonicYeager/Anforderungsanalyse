@@ -37,9 +37,7 @@ Rectangle{
             id:body
             Layout.preferredWidth: parent.width - body.Layout.margins * 2
             Layout.preferredHeight: parent.height * 0.4
-            color: "#000000"
-            border.color: "white"
-            border.width: 5
+            color: Qt.rgba(0,0,0,0)
             Layout.margins: 10
             RowLayout{
                 anchors.fill: parent
@@ -47,17 +45,10 @@ Rectangle{
                 Rectangle{
                     color: Qt.rgba(0,0,0,0)
                     id: categoryOverviewContainer
-                    Layout.preferredWidth: parent.width * 0.5
+                    Layout.preferredWidth: parent.width * 0.2
                     Layout.preferredHeight: parent.height
                     Layout.margins: 20
                     Layout.leftMargin: 40
-                    Rectangle{
-                        id: categoryOverviewPlaceholder_top
-                        Layout.fillHeight: true
-                        Layout.minimumHeight: 25
-                        Layout.preferredWidth: parent.width
-                        color: Qt.rgba(0,0,0,0)
-                    }
                     Rectangle{
                         Layout.preferredWidth: parent.width
                         Layout.preferredHeight: parent.height*0.8
@@ -72,7 +63,10 @@ Rectangle{
                                 Component.onCompleted: {
                                     for (var i = 0; i < qmlAdapter.categoryCount; i++)
                                     {
-                                        listModel.append({"text":qmlAdapter.getCategoryName(i)})
+                                        if (i === 0)
+                                            listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "active"})
+                                        else
+                                            listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "desc"})
                                     }
                                 }
                                 Connections {
@@ -82,19 +76,66 @@ Rectangle{
                                         categoryOverview.listModel.clear()
                                         for (var i = 0; i < qmlAdapter.categoryCount; i++)
                                         {
-                                            categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i)})
+                                            if (i === 0)
+                                                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "active"})
+                                            else
+                                                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "desc"})
                                         }
                                     }
                                 }
                             }
                         }
                     }
+                }
+                Rectangle{
+                    color: Qt.rgba(0,0,0,0)
+                    id: answerBlockContainer
+                    Layout.preferredWidth: parent.width * 0.8
+                    Layout.preferredHeight: parent.height
+                    Layout.margins: 20
+                    Layout.leftMargin: 40
                     Rectangle{
-                        id: categoryOverviewPlaceholder_bottom
-                        Layout.fillHeight: true
-                        Layout.minimumHeight: 50
                         Layout.preferredWidth: parent.width
+                        Layout.preferredHeight: parent.height*0.8
                         color: Qt.rgba(0,0,0,0)
+                        ColumnLayout{
+                            anchors.fill: parent
+                            spacing:0
+                            AnswerBlockList {
+                                id: answerBlockList
+                                Layout.preferredWidth: parent.width * (listModel.count * 0.1)
+                                Layout.minimumHeight: 150
+                                Component.onCompleted: {
+                                    for (var i = 0; i < qmlAdapter.playerCount; i++)
+                                    {
+                                            listModel.append({"answer":" "})
+                                    }
+                                }
+                                Connections {
+                                    target: qmlAdapter
+                                    function onAnswersChanged()
+                                    {
+                                        answerBlockList.listModel.clear()
+                                        for (var i = 0; i < qmlAdapter.playerCount; i++)
+                                        {
+                                            answerBlockList.listModel.append(
+                                                        {"answer":qmlAdapter.getAnswer(qmlAdapter.activeOverviewItem),
+                                                            "decision":qmlAdapter.getDecision(qmlAdapter.activeOverviewItem)})
+                                        }
+                                    }
+                                    function onActiveOverviewItemChanged()
+                                    {
+                                        answerBlockList.listModel.clear()
+                                        for (var i = 0; i < qmlAdapter.playerCount; i++)
+                                        {
+                                            answerBlockList.listModel.append(
+                                                        {"answer":qmlAdapter.getAnswer(qmlAdapter.activeOverviewItem),
+                                                            "decision":qmlAdapter.getDecision(qmlAdapter.activeOverviewItem)})
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -117,7 +158,7 @@ Rectangle{
                 GameButton
                 {
                     Layout.preferredWidth: parent.width * 0.25
-                    text : "START GAME"
+                    text : "CONFIRM"
                     textColor: "white"
                     state: "blueButton"
                     fontSize: height * 0.05 + width * 0.05

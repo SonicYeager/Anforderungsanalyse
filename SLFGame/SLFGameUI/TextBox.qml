@@ -20,15 +20,29 @@ Rectangle {
         horizontalAlignment: Text.AlignHCenter
         anchors.margins: 5
     }
-    states: State{
-        name: "desc"
-        PropertyChanges {
-            target: textBox
-            color: "black"
-        }
-        PropertyChanges {
-            target: text_name
-            color: "white"
-        }
-    }
+    states: [
+
+        State{
+            name: "desc"
+            PropertyChanges {
+                target: textBox
+                color: "black"
+            }
+            PropertyChanges {
+                target: text_name
+                color: "white"
+            }
+    },
+        State{
+            name: "active"
+            PropertyChanges {
+                target: textBox
+                color: "#669999"
+            }
+            PropertyChanges {
+                target: text_name
+                color: "black"
+            }
+       }
+    ]
 }
