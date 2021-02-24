@@ -120,3 +120,17 @@ TEST(TestGameStatsOperations, SetAnswers_BaumBerlinBen_SetToBaumBerlinBen)
 	EXPECT_EQ(ps.GetAnswers(), answers);
 
 }
+
+TEST(TestGameStatsOperations, AddPoints_65_SetTo65)
+{
+	GameStatsOperations gso{};
+	PlayerStats ps{};
+	int points = 65;
+
+	gso.AddPoints(65, ps);
+
+
+	EXPECT_EQ(ps.GetPoints(), points);
+
+}
+

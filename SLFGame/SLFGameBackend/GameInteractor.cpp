@@ -1,12 +1,22 @@
 #include "GameInteractor.h"
 #include "../FileHandler/FileHandler/FileHandler.h"
 
-GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, NetworkSource* n, SLFParser* p) :
-	m_pRandomGenerator(gen), 
-	m_pDataOperation(op), 
+GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, Game* game, NetworkSource* n, SLFParser* p) :
+	m_pRandomGenerator(gen),
+	m_pDataOperation(op),
+	m_pGame(game),
 	m_pNetwork(n),
 	m_pParser(p)
-{}
+
+{
+	m_pGame->onGameOver = [this]() { onGameOver(m_GameStats, m_PlayerStats); };
+	m_pGame->onPrepareNextRound = [this]() 
+	{
+		Letter generated = m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.GetUsedLetters());
+		m_pDataOperation->SetNewLetter(generated, m_GameStats);
+		onPrepareNextRound(m_GameStats, m_PlayerStats);
+	};
+}
 
 void GameInteractor::PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount)
 {
@@ -17,8 +27,7 @@ void GameInteractor::PrepareGame(const std::string& cats, const std::string& rou
 	m_GameStats.SetCurrentRound(0);
 	m_GameStats.SetMaxRounds(parsedRound);
 	m_pDataOperation->InkrementRound(m_GameStats);
-	Letter generated = m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.GetUsedLetters());
-	auto fun = m_pRandomGenerator->GenerateLetter();
+	Letter generated = m_pRandomGenerator->GenerateLetter();
 	m_pDataOperation->SetNewLetter(generated, m_GameStats);
 	onPrepareGame(m_GameStats, m_PlayerStats);
 }
@@ -38,6 +47,10 @@ void GameInteractor::PrepareOverview(const std::vector<std::string>& answ)
 	onPrepareOverview(m_GameStats, m_PlayerStats);
 }
 
-//void GameInteractor::PrepareNextRound(const std::vector<std::string>& evals)
-//{
-//}
+void GameInteractor::EndRound(const std::vector<int>& decisions)
+{
+	auto points = m_pGame->CalculatePoints(decisions);
+	m_pDataOperation->AddPoints(points, m_PlayerStats);
+	m_pDataOperation->InkrementRound(m_GameStats);
+	m_pGame->CheckGameFinished(m_GameStats);
+}

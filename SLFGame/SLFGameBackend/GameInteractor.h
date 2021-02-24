@@ -6,19 +6,21 @@
 #include "RandomGenRessource.h"
 #include "NetworkSource.h"
 #include "SLFParser.h"
+#include "Game.h"
 
 class GameInteractor : public Interactor
 {
 public:
-	explicit GameInteractor(RandomGenRessource*, DataOperationLogic*, NetworkSource*, SLFParser*);
+	explicit GameInteractor(RandomGenRessource*, DataOperationLogic*, Game*, NetworkSource*, SLFParser*);
 	void PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount) override;
 	std::pair<GameStats, PlayerStats> PrepareLobby(const std::string& lobbyCode = "") override;
 	void PrepareOverview(const std::vector<std::string>&) override;
-	//void PrepareNextRound(const std::vector<std::string>&) = 0;
+	void EndRound(const std::vector<int>&) override;
 
 private:
 	RandomGenRessource* m_pRandomGenerator;
 	DataOperationLogic* m_pDataOperation;
+	Game* m_pGame;
 	NetworkSource* m_pNetwork;
 	SLFParser* m_pParser;
 

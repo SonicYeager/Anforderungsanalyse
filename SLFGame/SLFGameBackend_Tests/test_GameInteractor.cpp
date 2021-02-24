@@ -112,7 +112,7 @@ TEST_F(TestGameInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStats
 {
 	GameStats actualGS;
 	PlayerStats actualPS;
-	gi.onPrepareNextRound = [&actualGS, &actualPS](GameStats gs, PlayerStats ps) 
+	gi.onPrepareGame = [&actualGS, &actualPS](GameStats gs, PlayerStats ps) 
 	{
 		actualGS = gs;
 		actualPS = ps;

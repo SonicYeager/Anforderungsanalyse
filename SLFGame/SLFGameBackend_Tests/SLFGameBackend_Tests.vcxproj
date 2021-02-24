@@ -202,6 +202,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="test_Game.cpp" />
     <ClCompile Include="test_GameInteractor.cpp" />
     <ClCompile Include="test_GameStatsOperations.cpp" />
     <ClCompile Include="test_RandomGenerator.cpp" />

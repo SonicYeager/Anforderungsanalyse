@@ -29,7 +29,7 @@ struct PlayerStats
 	void SetAnswers(const std::vector<std::string>&);
 
 private:
-	int points{};
+	int points = 0;
 	std::vector<std::string> answers;
 };
 

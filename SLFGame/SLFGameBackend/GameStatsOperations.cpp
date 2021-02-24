@@ -22,6 +22,11 @@ void GameStatsOperations::SetNewLetter(Letter letter, GameStats& gameStats)
 	gameStats.SetCurrentLetter(letter);
 }
 
+void GameStatsOperations::AddPoints(const int points, PlayerStats& ps)
+{
+	ps.SetPoints(ps.GetPoints() + points);
+}
+
 bool GameStatsOperations::LetterIsAlreadyUsed(Letter generated, Letters used)
 {
 	return std::find(std::begin(used.letters), std::end(used.letters), generated) != std::end(used.letters);
