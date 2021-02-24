@@ -35,24 +35,35 @@ Rectangle{
         }
         Rectangle{
             id: content
-            Layout.minimumHeight: 100
-            Layout.preferredWidth: parent.width * 0.5 - bottom.Layout.margins * 2
+            Layout.minimumHeight: 500
+            Layout.preferredWidth: parent.width - content.Layout.margins * 2
             Layout.alignment: Qt.AlignHCenter
             color: "black"
             border.color: "white"
             border.width: 5
             Layout.margins: 10
-            Layout.bottomMargin: 30
+            //Layout.bottomMargin: 30
             RowLayout{
                 spacing: 0
                 anchors.fill: parent
+                Rectangle
+                {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: parent.height
+                    color: Qt.rgba(0,0,0,0)
+                }
                 InfoBox{
-                    Layout.preferredWidth: parent.width * 0.25
-                    Layout.preferredHeight: parent.height - 5
+                    Layout.preferredWidth: parent.width * 0.5
+                    Layout.preferredHeight: parent.height
                     descriptionText: "Points"
                     outputText: qmlAdapter.points
                     color: Qt.rgba(0,0,0,0)
-                    Layout.alignment: Qt.AlignHCenter
+                }
+                Rectangle
+                {
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: parent.height
+                    color: Qt.rgba(0,0,0,0)
                 }
             }
         }
@@ -78,7 +89,7 @@ Rectangle{
                     fontSize: height * 0.05 + width * 0.05
                     border.width: 3
                     border.color: "white"
-                    Layout.alignment: Qt.AlignHCenter
+                    Layout.alignment: Qt.AlignCenter
                 }
             }
         }
