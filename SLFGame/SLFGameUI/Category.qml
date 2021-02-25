@@ -5,6 +5,7 @@ RowLayout {
     id:categoryRow
     property alias categoryName : category_name.text
     property alias categoryEntry : category_entry.text
+    property alias entryBox : category_entry
     Rectangle{
         id: cat_placeholderTop
         Layout.preferredHeight: parent.height

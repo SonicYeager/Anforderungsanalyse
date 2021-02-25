@@ -81,6 +81,7 @@ public slots:
     QString getCategoryName(int idx);
     QString getAnswer(int idx);
     int getDecision(int idx);
+    void setActiveItemIA(int idx);
     void setDecision(int idx, int newVal);
     void prepareGame();
     void prepareOverview();
@@ -105,6 +106,7 @@ signals:
     void lobbyCodeChanged();
     void playerCountChanged();
     void activeOverviewItemChanged();
+    void decisionsChanged();
 
 private:
     QString _letter             = "bad";

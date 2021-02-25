@@ -14,6 +14,7 @@ void QmlAdapter::Init(const GameStats & gs, const PlayerStats & ps)
 
 void QmlAdapter::PrepareGame(const GameStats & gs, const PlayerStats & ps)
 {
+    _unhandledanswers = {};
     setCurrentRound(gs.GetCurrentRound());
     setLetter(QChar(gs.GetCurrentLetter().letter));
     setCategories(gs.GetCategories());
@@ -33,6 +34,7 @@ void QmlAdapter::PrepareFinalScores(const GameStats & gs, const PlayerStats & ps
 void QmlAdapter::PrepareOverview(const GameStats & gs, const PlayerStats & ps)
 {
     setAnswers(ps.GetAnswers());
+    emit answersChanged();
 }
 
 // ------------------------------------------ getter ------------------------------------------
@@ -170,6 +172,7 @@ void QmlAdapter::setAnswers(StrVector answers)
     for (unsigned long long i = 0; i < _answers.size(); i++)
         _decisions.emplace_back(0);
     emit answersChanged();
+    emit decisionsChanged();
 }
 
 void QmlAdapter::setCustomChecked(bool checked)
@@ -287,9 +290,15 @@ int QmlAdapter::getDecision(int idx)
     return _decisions[idx];
 }
 
+void QmlAdapter::setActiveItemIA(int idx)
+{
+    setActiveOverviewItem(idx);
+}
+
 void QmlAdapter::setDecision(int idx, int newVal)
 {
     _decisions[idx] = newVal;
+    emit decisionsChanged();
 }
 
 void QmlAdapter::prepareGame()

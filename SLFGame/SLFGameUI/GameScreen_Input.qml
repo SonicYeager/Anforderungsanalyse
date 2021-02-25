@@ -111,6 +111,14 @@ Rectangle{
                         categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
                     }
                 }
+                function onAnswersChanged()
+                {
+                    categories.listModel.clear()
+                    for (var i = 0; i < qmlAdapter.categoryCount; i++)
+                    {
+                        categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
+                    }
+                }
             }
         }
         Rectangle{
@@ -160,7 +168,7 @@ Rectangle{
                 GameButton
                 {
                     Layout.preferredWidth: parent.width * 0.25
-                    text : "LEAVE GAME"
+                    text : "LEAVE LOBBY"
                     textColor: "white"
                     state: "blueButton"
                     fontSize: height * 0.05 + width * 0.05

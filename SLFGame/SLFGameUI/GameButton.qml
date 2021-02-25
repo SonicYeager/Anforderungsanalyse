@@ -71,6 +71,17 @@ Rectangle {
                     master.color = "#062e63"
                 }
             }
+        },
+        State {
+            name: "inactive"
+            PropertyChanges {
+                target: master
+                color: "gray"
+            }
+            PropertyChanges {
+                target: ma
+                hoverEnabled: false
+            }
         }
     ]
 }

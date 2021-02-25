@@ -15,7 +15,7 @@ ListView {
         width : 200
         height: 150
         answer: model.answer
-        decision : qmlAdapter.getDecision(qmlAdapter.activeOverviewItem)
+        decision : (answer === "") ? "4" : qmlAdapter.getDecision(qmlAdapter.activeOverviewItem)
         onDecisionChanged: {
             qmlAdapter.setDecision(qmlAdapter.activeOverviewItem, decision)
         }

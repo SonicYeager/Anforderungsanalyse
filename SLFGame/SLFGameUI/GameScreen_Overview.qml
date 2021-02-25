@@ -53,7 +53,7 @@ Rectangle{
                 Rectangle{
                     color: Qt.rgba(0,0,0,0)
                     id: categoryOverviewContainer
-                    Layout.preferredWidth: parent.width * 0.2
+                    Layout.preferredWidth: parent.width * 0.1
                     Layout.preferredHeight: parent.height
                     Layout.margins: 20
                     Layout.leftMargin: 40
@@ -80,6 +80,17 @@ Rectangle{
                                 Connections {
                                     target: qmlAdapter
                                     function onCategoryCountChanged()
+                                    {
+                                        categoryOverview.listModel.clear()
+                                        for (var i = 0; i < qmlAdapter.categoryCount; i++)
+                                        {
+                                            if (i === 0)
+                                                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "active"})
+                                            else
+                                                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "desc"})
+                                        }
+                                    }
+                                    function onAnswersChanged()
                                     {
                                         categoryOverview.listModel.clear()
                                         for (var i = 0; i < qmlAdapter.categoryCount; i++)
@@ -165,10 +176,11 @@ Rectangle{
                 anchors.fill: parent
                 GameButton
                 {
+                    id: confirmButton
                     Layout.preferredWidth: parent.width * 0.25
                     text : "CONFIRM"
                     textColor: "white"
-                    state: "blueButton"
+                    state: "inactive"
                     fontSize: height * 0.05 + width * 0.05
                     border.width: 3
                     border.color: "white"
@@ -176,7 +188,21 @@ Rectangle{
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            qmlAdapter.prepareNextRound();
+                            //if (confirmButton.state === "blueButton")
+                                qmlAdapter.prepareNextRound();
+                        }
+                    }
+                    Connections {
+                        target: qmlAdapter
+                        function onDecisionsChanged()
+                        {
+                            confirmButton.state = "inactive"
+                            var allset = 1
+                            for (var i = 0; i < categoryOverview.listModel.count; i++)
+                                if (qmlAdapter.getDecision(i) === 0)
+                                    allset = 0
+                            if (allset === 1)
+                                confirmButton.state = "blueButton"
                         }
                     }
                 }
