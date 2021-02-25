@@ -12,7 +12,7 @@ Controller::Controller(UI* ui, Interactor* inter) :
     m_pUi->onPrepareOverview     = [this](Categories answers)
                                     {m_pInter->PrepareOverview(answers);}
     ;
-    m_pUi->onPrepareNextRound    = [this](std::vector<int> decisions)
+    m_pUi->onPrepareNextRound    = [this](std::vector<DECISION> decisions)
                                     {m_pInter->EndRound(decisions);};
 
     m_pInter->onPrepareGame =      [this](GameStats gs, PlayerStats ps)

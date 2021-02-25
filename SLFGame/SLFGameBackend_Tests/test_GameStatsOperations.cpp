@@ -111,26 +111,26 @@ TEST(TestGameStatsOperations, CreateStats_LobbyCode0c346bv_ReturnConfiguredGameS
 TEST(TestGameStatsOperations, SetAnswers_BaumBerlinBen_SetToBaumBerlinBen)
 {
 	GameStatsOperations gso{};
-	PlayerStats ps{};
+	PlayerStats playerStats{};
 	std::vector<std::string> answers{ {"Baum"}, {"Berlin"}, {"Ben"} };
 
-	gso.SetAnswers(answers, ps);
+	gso.SetAnswers(answers, playerStats);
 
 
-	EXPECT_EQ(ps.GetAnswers(), answers);
+	EXPECT_EQ(playerStats.GetAnswers(), answers);
 
 }
 
 TEST(TestGameStatsOperations, AddPoints_65_SetTo65)
 {
 	GameStatsOperations gso{};
-	PlayerStats ps{};
+	PlayerStats playerStats{};
 	int points = 65;
 
-	gso.AddPoints(65, ps);
+	gso.AddPoints(65, playerStats);
 
 
-	EXPECT_EQ(ps.GetPoints(), points);
+	EXPECT_EQ(playerStats.GetPoints(), points);
 
 }
 

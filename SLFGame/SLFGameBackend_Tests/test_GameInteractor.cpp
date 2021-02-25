@@ -53,7 +53,7 @@ class TestGameInteractor : public Test
 {
 public:
 	TestGameInteractor() :
-		gi{&frlg, &gsop, &g, &fns, &p}
+		gameInteractor{&fakeRandomLetterGenerator, &gameStatsOperations, &game, &fakeNetworkSource, &parser}
 	{}
 protected:
 	virtual void SetUp()
@@ -65,19 +65,19 @@ protected:
 		Test::TearDown();
 	}
 
-	Game g{};
-	FakeRandomLetterGenerator frlg{};
-	FakeNetworkSource fns{};
-	GameStatsOperations gsop{};
-	GameInteractor gi;
-	GameStats gs{};
-	PlayerStats ps{};
-	SLFParser p;
+	Game game{};
+	FakeRandomLetterGenerator fakeRandomLetterGenerator{};
+	FakeNetworkSource fakeNetworkSource{};
+	GameStatsOperations gameStatsOperations{};
+	GameInteractor gameInteractor;
+	GameStats gameStats{};
+	PlayerStats playerStats{};
+	SLFParser parser;
 };
 
 TEST_F(TestGameInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerStats)
 {
-	auto actual = gi.PrepareLobby();
+	auto actual = gameInteractor.PrepareLobby();
 
 	EXPECT_EQ(actual.second.GetAnswers().size(), 0);
 	EXPECT_EQ(actual.second.GetPoints(), 0);
@@ -95,13 +95,13 @@ TEST_F(TestGameInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStats
 {
 	GameStats actualGS;
 	PlayerStats actualPS;
-	gi.onPrepareGame = [&actualGS, &actualPS](GameStats gs, PlayerStats ps) 
+	gameInteractor.onPrepareGame = [&actualGS, &actualPS](GameStats gs, PlayerStats playerStats) 
 	{
 		actualGS = gs;
-		actualPS = ps;
+		actualPS = playerStats;
 	};
 
-	gi.PrepareGame("Stadt,Land,Fluss,Name,Tier,Beruf", "", "0");
+	gameInteractor.PrepareGame("Stadt,Land,Fluss,Name,Tier,Beruf", "", "0");
 
 	Categories cat{ {"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"} };
 	EXPECT_EQ(actualGS.GetCategories(), cat);
@@ -113,47 +113,48 @@ TEST_F(TestGameInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_Ret
 {
 	GameStats actualGS;
 	PlayerStats actualPS;
-	gi.onPrepareOverview = [&actualGS, &actualPS](GameStats gs, PlayerStats ps)
+	gameInteractor.onPrepareOverview = [&actualGS, &actualPS](GameStats gs, PlayerStats playerStats)
 	{
 		actualGS = gs;
-		actualPS = ps;
+		actualPS = playerStats;
 	};
 
-	gi.PrepareOverview({ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} });
+	gameInteractor.PrepareOverview({ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} });
 
 	std::vector<std::string> expected{ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} };
 	EXPECT_EQ(actualPS.GetAnswers(), expected);
 }
 
-TEST_F(TestGameInteractor, EndRound_OneFromZeroRoundsWith40Points_CallGSWithRoundZeroFromZeroAndPSwith40Points)
+TEST_F(TestGameInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinalScoresWithCalculatedScores)
 {
 	GameStats expectedGS;
 	expectedGS.SetCurrentRound(1);
 	PlayerStats expectedPS;
 	expectedPS.SetPoints(40);
 	::testing::StrictMock<FakeUI> fui;
-	gi.onGameOver = [&fui](GameStats gs, PlayerStats ps) {fui.PrepareFinalScores(gs, ps); };
+	gameInteractor.onGameOver = [&fui](GameStats gs, PlayerStats playerStats) {fui.PrepareFinalScores(gs, playerStats); };
 	std::vector<int> dec{2, 2, 1};
 
 	EXPECT_CALL(fui, PrepareFinalScores(expectedGS, expectedPS));
 
-	gi.EndRound(dec);
+	gameInteractor.EndRound(dec);
 }
 
-TEST_F(TestGameInteractor, EndRound_ZeroFrom2RoundsWith40Points_CallGSWithRound1From2AndPSwith40Points)
+TEST_F(TestGameInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGameWithScoresAndUsedLetters)
 {
 	GameStats expectedGS;
 	expectedGS.SetCurrentRound(1);
 	expectedGS.SetCurrentLetter({'C'});
 	expectedGS.SetMaxRounds(2);
+	expectedGS.SetUsedLetters({ {{'C'} } });
 	PlayerStats expectedPS;
 	expectedPS.SetPoints(40);
 	::testing::StrictMock<FakeUI> fui;
-	gi.onPrepareNextRound = [&fui](GameStats gs, PlayerStats ps) {fui.PrepareGame(gs, ps); };
+	gameInteractor.onPrepareNextRound = [&fui](GameStats gs, PlayerStats playerStats) {fui.PrepareGame(gs, playerStats); };
 	std::vector<int> dec{ 2, 2, 1 };
-	gi.m_GameStats.SetMaxRounds(2);
+	gameInteractor.m_GameStats.SetMaxRounds(2);
 
 	EXPECT_CALL(fui, PrepareGame(expectedGS, expectedPS));
 
-	gi.EndRound(dec);
+	gameInteractor.EndRound(dec);
 }

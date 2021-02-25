@@ -6,6 +6,14 @@
 template<typename ... Args>
 using Event = std::function<void(Args...)>;
 
+enum DECISION
+{
+	UNANSWERED = 0,
+	SOLO = 1,
+	UNIQUE = 2,
+	MULTIPLE = 3
+};
+
 struct Letter
 {
 	bool operator==(const Letter& other) const;

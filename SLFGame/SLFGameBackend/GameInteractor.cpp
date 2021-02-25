@@ -14,6 +14,7 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 	{
 		Letter generated = m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.GetUsedLetters());
 		m_pDataOperation->SetNewLetter(generated, m_GameStats);
+		m_pDataOperation->AddPreviousLetter(m_GameStats);
 		onPrepareNextRound(m_GameStats, m_PlayerStats);
 	};
 }
@@ -47,7 +48,7 @@ void GameInteractor::PrepareOverview(const std::vector<std::string>& answ)
 	onPrepareOverview(m_GameStats, m_PlayerStats);
 }
 
-void GameInteractor::EndRound(const std::vector<int>& decisions)
+void GameInteractor::EndRound(const std::vector<DECISION>& decisions)
 {
 	auto points = m_pGame->CalculatePoints(decisions);
 	m_pDataOperation->AddPoints(points, m_PlayerStats);

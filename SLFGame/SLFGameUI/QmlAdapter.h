@@ -80,7 +80,7 @@ public slots:
 
     QString getCategoryName(int idx);
     QString getAnswer(int idx);
-    int getDecision(int idx);
+    DECISION getDecision(int idx);
     void setActiveItemIA(int idx);
     void setDecision(int idx, int newVal);
     void prepareGame();
@@ -123,7 +123,7 @@ private:
     int _points                 = 999;
     int _playerCount            = 1;
     int _activeOverviewItem     = 0;
-    std::vector<int> _decisions = {0,0,0,0,0,0};
+    std::vector<DECISION> _decisions = {DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED};
     bool _customChecked         = false;
     bool _lobbyScreenVisible    = true;
     bool _entryScreenVisible    = false;

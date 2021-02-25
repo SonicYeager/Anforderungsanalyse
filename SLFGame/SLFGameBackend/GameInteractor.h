@@ -15,7 +15,7 @@ public:
 	void PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount) override;
 	std::pair<GameStats, PlayerStats> PrepareLobby(const std::string& lobbyCode = "") override;
 	void PrepareOverview(const std::vector<std::string>&) override;
-	void EndRound(const std::vector<int>&) override;
+	void EndRound(const std::vector<DECISION>&) override;
 
 	GameStats m_GameStats;
 	PlayerStats m_PlayerStats;

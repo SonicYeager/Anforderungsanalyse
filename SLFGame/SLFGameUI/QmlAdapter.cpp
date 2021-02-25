@@ -170,7 +170,7 @@ void QmlAdapter::setAnswers(StrVector answers)
     _answers = answers;
     _decisions.clear();
     for (unsigned long long i = 0; i < _answers.size(); i++)
-        _decisions.emplace_back(0);
+        _decisions.emplace_back(DECISION::UNANSWERED);
     emit answersChanged();
     emit decisionsChanged();
 }
@@ -285,7 +285,7 @@ QString QmlAdapter::getAnswer(int idx)
     return QString::fromUtf8(_answers[idx].c_str());
 }
 
-int QmlAdapter::getDecision(int idx)
+DECISION QmlAdapter::getDecision(int idx)
 {
     return _decisions[idx];
 }
@@ -297,7 +297,8 @@ void QmlAdapter::setActiveItemIA(int idx)
 
 void QmlAdapter::setDecision(int idx, int newVal)
 {
-    _decisions[idx] = newVal;
+    auto dec = static_cast<DECISION>(newVal);
+    _decisions[idx] = dec;
     emit decisionsChanged();
 }
 

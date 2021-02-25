@@ -180,6 +180,7 @@ release\qrc_qml.cpp: ..\SLFGameUI\qml.qrc \
 		..\SLFGameUI\AnswerBlock.qml \
 		..\SLFGameUI\InfoBox.qml \
 		..\SLFGameUI\CategoryOverview.qml \
+		..\SLFGameUI\GameScreen_FinalScores.qml \
 		..\SLFGameUI\Category.qml \
 		..\SLFGameUI\Categories.qml \
 		..\SLFGameUI\TextBox.qml \
@@ -534,9 +535,11 @@ release\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include
 		..\SLFGameBackend\RandomGenRessource.h \
 		..\SLFGameBackend\NetworkSource.h \
 		..\SLFGameBackend\SLFParser.h \
+		..\SLFGameBackend\GameLogic.h \
 		..\SLFGameBackend\GameStatsOperations.h \
 		..\SLFGameBackend\RandomGenerator.h \
-		..\SLFGameBackend\GameNetwork.h
+		..\SLFGameBackend\GameNetwork.h \
+		..\SLFGameBackend\Game.h
 
 release\qrc_qml.obj: release\qrc_qml.cpp 
 

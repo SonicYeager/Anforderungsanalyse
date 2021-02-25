@@ -1,6 +1,6 @@
 #include "Game.h"
 
-int Game::CalculatePoints(const std::vector<int>& decisions)
+int Game::CalculatePoints(const std::vector<DECISION>& decisions)
 {
 	int result = 0;
 

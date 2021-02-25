@@ -12,5 +12,5 @@ public:
 
 	Event<const std::string&, const std::string&, const std::string&> onPrepareGame;
 	Event<const Categories&> onPrepareOverview;
-	Event<const std::vector<int>&> onPrepareNextRound;
+        Event<const std::vector<DECISION>&> onPrepareNextRound;
 };

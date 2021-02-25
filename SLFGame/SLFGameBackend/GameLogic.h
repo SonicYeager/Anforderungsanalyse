@@ -6,7 +6,7 @@ class GameLogic
 {
 public:
 	virtual ~GameLogic() = default;
-	virtual int CalculatePoints(const std::vector<int>&) = 0;
+	virtual int CalculatePoints(const std::vector<DECISION>&) = 0;
 	virtual void CheckGameFinished(GameStats&) = 0;
 
 	Event<> onGameOver;
