@@ -536,6 +536,7 @@ debug\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include\Q
 		..\SLFGameBackend\RandomGenRessource.h \
 		..\SLFGameBackend\NetworkSource.h \
 		..\SLFGameBackend\SLFParser.h \
+		..\SLFGameBackend\GameLogic.h \
 		..\SLFGameBackend\GameStatsOperations.h \
 		..\SLFGameBackend\RandomGenerator.h \
 		..\SLFGameBackend\GameNetwork.h

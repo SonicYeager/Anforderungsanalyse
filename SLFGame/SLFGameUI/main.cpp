@@ -8,6 +8,7 @@
 #include "RandomGenerator.h"
 #include "GameNetwork.h"
 #include "SLFParser.h"
+#include "Game.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,7 +20,8 @@ int main(int argc, char *argv[])
     GameStatsOperations gsOperations{};
     GameNetwork network;
     SLFParser parser;
-    GameInteractor gameInteractor{&rndGen, &gsOperations, &network, &parser};
+    Game g;
+    GameInteractor gameInteractor{&rndGen, &gsOperations, &g, &network, &parser};
     Controller controller{&qmlAdapter, &gameInteractor};
     controller.Run();
 

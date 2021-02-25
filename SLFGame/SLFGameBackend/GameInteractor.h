@@ -17,6 +17,9 @@ public:
 	void PrepareOverview(const std::vector<std::string>&) override;
 	void EndRound(const std::vector<int>&) override;
 
+	GameStats m_GameStats;
+	PlayerStats m_PlayerStats;
+
 private:
 	RandomGenRessource* m_pRandomGenerator;
 	DataOperationLogic* m_pDataOperation;
@@ -24,7 +27,5 @@ private:
 	NetworkSource* m_pNetwork;
 	SLFParser* m_pParser;
 
-	GameStats m_GameStats;
-	PlayerStats m_PlayerStats;
 };
 

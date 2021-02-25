@@ -125,10 +125,10 @@ TEST_F(TestGameInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_Ret
 	EXPECT_EQ(actualPS.GetAnswers(), expected);
 }
 
-TEST_F(TestGameInteractor, EndRound_ZeroFromZeroRoundsWith40Points_CallGSWithRoundZeroFromZeroAndPSwith40Points)
+TEST_F(TestGameInteractor, EndRound_OneFromZeroRoundsWith40Points_CallGSWithRoundZeroFromZeroAndPSwith40Points)
 {
 	GameStats expectedGS;
-	expectedGS.SetCurrentRound(0);
+	expectedGS.SetCurrentRound(1);
 	PlayerStats expectedPS;
 	expectedPS.SetPoints(40);
 	::testing::StrictMock<FakeUI> fui;
@@ -136,6 +136,24 @@ TEST_F(TestGameInteractor, EndRound_ZeroFromZeroRoundsWith40Points_CallGSWithRou
 	std::vector<int> dec{2, 2, 1};
 
 	EXPECT_CALL(fui, PrepareFinalScores(expectedGS, expectedPS));
+
+	gi.EndRound(dec);
+}
+
+TEST_F(TestGameInteractor, EndRound_ZeroFrom2RoundsWith40Points_CallGSWithRound1From2AndPSwith40Points)
+{
+	GameStats expectedGS;
+	expectedGS.SetCurrentRound(1);
+	expectedGS.SetCurrentLetter({'C'});
+	expectedGS.SetMaxRounds(2);
+	PlayerStats expectedPS;
+	expectedPS.SetPoints(40);
+	::testing::StrictMock<FakeUI> fui;
+	gi.onPrepareNextRound = [&fui](GameStats gs, PlayerStats ps) {fui.PrepareGame(gs, ps); };
+	std::vector<int> dec{ 2, 2, 1 };
+	gi.m_GameStats.SetMaxRounds(2);
+
+	EXPECT_CALL(fui, PrepareGame(expectedGS, expectedPS));
 
 	gi.EndRound(dec);
 }
