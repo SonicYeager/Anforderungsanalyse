@@ -144,10 +144,7 @@ void QmlAdapter::setCustomCategories(QString customCategories)
 {
     if (customCategories == _customCategories)
         return;
-    if(_customChecked == true)
-        _customCategories = customCategories;
-    else
-        return;
+    _customCategories = customCategories;
     emit customCategoriesChanged();
 }
 

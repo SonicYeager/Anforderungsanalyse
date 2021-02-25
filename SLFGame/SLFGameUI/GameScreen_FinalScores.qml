@@ -13,7 +13,7 @@ Rectangle{
         spacing: 0
         Rectangle{
             id: header
-            Layout.minimumHeight: 200
+            Layout.minimumHeight: 250
             Layout.minimumWidth: parent.width - header.Layout.margins * 2
             color: "#000000"
             border.color: "white"
@@ -22,6 +22,12 @@ Rectangle{
             RowLayout {
                 anchors.fill: parent
                 spacing: 0
+                Rectangle {
+                    Layout.fillWidth: true -5
+                    Layout.fillHeight: true -5
+                    Layout.alignment: Qt.AlignCenter
+                    color: Qt.rgba(0,0,0,0)
+                }
                 Banner{
 
                 }
@@ -35,12 +41,10 @@ Rectangle{
         }
         Rectangle{
             id: content
-            Layout.minimumHeight: 500
-            Layout.preferredWidth: parent.width - content.Layout.margins * 2
+            Layout.fillHeight: true
+            Layout.preferredWidth: parent.width * 0.5 - content.Layout.margins * 2
             Layout.alignment: Qt.AlignHCenter
-            color: "black"
-            border.color: "white"
-            border.width: 5
+            color: Qt.rgba(0,0,0,0)
             Layout.margins: 10
             //Layout.bottomMargin: 30
             RowLayout{
@@ -53,7 +57,7 @@ Rectangle{
                     color: Qt.rgba(0,0,0,0)
                 }
                 InfoBox{
-                    Layout.preferredWidth: parent.width * 0.5
+                    Layout.preferredWidth: parent.width
                     Layout.preferredHeight: parent.height
                     descriptionText: "Points"
                     outputText: qmlAdapter.points

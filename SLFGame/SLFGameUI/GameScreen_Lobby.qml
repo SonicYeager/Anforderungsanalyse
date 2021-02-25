@@ -13,7 +13,7 @@ Rectangle{
         spacing: 0
         Rectangle{
             id: header
-            Layout.minimumHeight: 200
+            Layout.minimumHeight: 250
             Layout.minimumWidth: parent.width - header.Layout.margins * 2
             color: "#000000"
             border.color: "white"
@@ -22,6 +22,12 @@ Rectangle{
             RowLayout {
                 anchors.fill: parent
                 spacing: 0
+                Rectangle {
+                    Layout.fillWidth: true -5
+                    Layout.fillHeight: true -5
+                    Layout.alignment: Qt.AlignCenter
+                    color: Qt.rgba(0,0,0,0)
+                }
                 Banner{
 
                 }
@@ -36,7 +42,7 @@ Rectangle{
         Rectangle {
             id:body
             Layout.preferredWidth: parent.width - body.Layout.margins * 2
-            Layout.preferredHeight: parent.height * 0.4
+            Layout.fillHeight: true
             color: "#000000"
             border.color: "white"
             border.width: 5

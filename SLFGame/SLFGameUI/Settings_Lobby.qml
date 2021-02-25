@@ -28,19 +28,33 @@ Rectangle{
                     Layout.rightMargin: 20
                 }
                 EntryBox {
+                    id: eb_customCats
                     Layout.preferredWidth: 500
                     Layout.preferredHeight: 50
                     text: qmlAdapter.customCategories
                     Layout.rightMargin: 10
+                    state: "inactive"
                     onTextChanged: {
                         qmlAdapter.customCategories = text
                     }
+                    Connections {
+                        target: chb_custom
+                        onStateChanged:  {
+                            eb_customCats.state = (chb_custom.state === "true") ? "active" : "inactive"
+                            if (chb_custom.state === "false")
+                                qmlAdapter.customCategories = "Stadt,Land,Fluss,Name,Tier,Beruf"
+                        }
+                    }
                 }
                 CheckBox {
+                    id: chb_custom
                     text: "<font color=\"white\">custom</font>"
                     state: qmlAdapter.customChecked
-                    onStateChanged: {
-                        qmlAdapter.customChecked = state
+                    onClicked: qmlAdapter.customChecked = checked
+                    Component.onCompleted: checked = qmlAdapter.customChecked
+                    Connections {
+                        target: qmlAdapter
+                        onCustomCheckedChanged: chb_custom.checked = qmlAdapter.customChecked
                     }
                 }
                 Rectangle {

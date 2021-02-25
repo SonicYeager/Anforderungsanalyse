@@ -17,4 +17,23 @@ TextField {
         border.color:"#CCCCCC"
         border.width: 0.5
     }
+    states : [
+        State {
+            name: "active"
+            PropertyChanges {
+                target:entryBox
+                activeFocusOnPress: true
+                background.color: entryBox.hovered? "#cccccc" : "white"
+            }
+        },
+        State {
+            name:"inactive"
+            PropertyChanges {
+                target: entryBox
+                activeFocusOnPress: false
+                background.color: "gray"
+            }
+        }
+
+    ]
 }

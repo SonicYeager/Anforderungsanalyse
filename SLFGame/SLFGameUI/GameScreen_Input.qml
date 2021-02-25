@@ -13,7 +13,7 @@ Rectangle{
         spacing: 0
         Rectangle{
             id: header
-            Layout.minimumHeight: 200
+            Layout.minimumHeight: 250
             Layout.minimumWidth: parent.width - header.Layout.margins * 2
             color: "#000000"
             border.color: "white"
