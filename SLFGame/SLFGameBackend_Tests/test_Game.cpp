@@ -25,33 +25,32 @@ TEST(TestGame, CheckGameFinished_3currentRound5MaxRound_ExpectCallPrepare)
 {
 	GameStats gs{};
 	Game game{};
-	FakeClass fc{};
+	::testing::StrictMock<FakeClass> fc{};
+	::testing::InSequence sq;
 
 	gs.SetCurrentRound(3);
 	gs.SetMaxRounds(5);
 
 	game.onPrepareNextRound = [&fc]() {fc.Prepare(); };
 	game.onGameOver = [&fc]() {fc.End(); };
+	EXPECT_CALL(fc, Prepare());
 
 	game.CheckGameFinished(gs);
-
-
-	EXPECT_CALL(fc, Prepare());
 }
 
 TEST(TestGame, CheckGameFinished_6currentRound5MaxRound_ExpectCallEnd)
 {
 	GameStats gs;
 	Game game;
-	FakeClass fc;
+	::testing::StrictMock<FakeClass> fc;
+	::testing::InSequence sq;
 
 	gs.SetCurrentRound(6);
 	gs.SetMaxRounds(5);
 
 	game.onPrepareNextRound = [&fc]() {fc.Prepare(); };
 	game.onGameOver = [&fc]() {fc.End(); };
+	EXPECT_CALL(fc, End());
 
 	game.CheckGameFinished(gs);
-
-	EXPECT_CALL(fc, End());
 }
