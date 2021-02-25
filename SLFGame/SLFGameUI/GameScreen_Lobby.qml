@@ -109,8 +109,6 @@ Rectangle{
                             qmlAdapter.maxRounds = settings_lobby.roundCount
                             qmlAdapter.timeLeft = settings_lobby.roundTime
                             qmlAdapter.prepareGame();
-                            qmlAdapter.lobbyScreenVisible = false;
-                            qmlAdapter.entryScreenVisible = true;
                         }
                     }
                 }

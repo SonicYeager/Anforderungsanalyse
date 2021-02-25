@@ -176,9 +176,7 @@ Rectangle{
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            //qmlAdapter.prepareNextRound();
-                            qmlAdapter.overviewScreenVisible = false;
-                            qmlAdapter.fscoresScreenVisible = true;
+                            qmlAdapter.prepareNextRound();
                         }
                     }
                 }

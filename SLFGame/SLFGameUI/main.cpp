@@ -8,6 +8,7 @@
 #include "RandomGenerator.h"
 #include "GameNetwork.h"
 #include "SLFParser.h"
+#include "Game.h"
 
 int main(int argc, char *argv[])
 {

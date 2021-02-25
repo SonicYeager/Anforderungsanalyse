@@ -17,14 +17,17 @@ void QmlAdapter::PrepareGame(const GameStats & gs, const PlayerStats & ps)
     setCurrentRound(gs.GetCurrentRound());
     setLetter(QChar(gs.GetCurrentLetter().letter));
     setCategories(gs.GetCategories());
-    //setScores
+    setPoints(ps.GetPoints());
+    setLobbyScreenVisible(false);
+    setOverviewScreenVisible(false);
+    setEntryScreenVisible(true);
 }
 
 void QmlAdapter::PrepareFinalScores(const GameStats & gs, const PlayerStats & ps)
 {
-    //TODO
-    //setScores
-    //changeView
+    setPoints(ps.GetPoints());
+    setOverviewScreenVisible(false);
+    setFScoresScreenVisible(true);
 }
 
 void QmlAdapter::PrepareOverview(const GameStats & gs, const PlayerStats & ps)
