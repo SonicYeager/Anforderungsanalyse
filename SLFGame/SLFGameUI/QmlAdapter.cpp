@@ -5,45 +5,46 @@ QmlAdapter::QmlAdapter(QObject *parent) :
 {}
 // ------------------------------------------ initializer function ------------------------------------------
 
-void QmlAdapter::Init(const GameStats & gs, const PlayerStats & ps)
+void QmlAdapter::Init(const GameStats & gs, const int & ps)
 {
     setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
 }
 
-void QmlAdapter::PrepareGame(const GameStats & gs, const PlayerStats & ps)
+void QmlAdapter::PrepareGame(const GameStats & gs, const int & ps)
 {
     _unhandledanswers = {};
+    setPlayerId(ps);
     setCurrentRound(gs.GetCurrentRound());
     setLetter(QChar(gs.GetCurrentLetter().letter));
     setCategories(gs.GetCategories());
-    setPoints(ps.GetPoints());
+    //setPoints(gs.GetPlayerStats(ps).GetPoints());
     setView("Input");
 }
 
-void QmlAdapter::PrepareFinalScores(const GameStats & gs, const PlayerStats & ps)
+void QmlAdapter::PrepareFinalScores(const GameStats & gs, const int & ps)
 {
-    setPoints(ps.GetPoints());
+    //setPoints(gs.GetPlayerStats(ps).GetPoints());
     setView("FinalScores");
 }
 
-void QmlAdapter::PrepareOverview(const GameStats & gs, const PlayerStats & ps)
+void QmlAdapter::PrepareOverview(const GameStats & gs, const int & ps)
 {
-    setAnswers(ps.GetAnswers());
+    //setAnswers(gs.GetPlayerStats(ps).GetAnswers());
     setView("Overview");
     emit answersChanged();
 }
 
-void QmlAdapter::PrepareLobby(const GameStats & gs, const PlayerStats & ps)
+void QmlAdapter::PrepareLobby(const GameStats & gs, const int & ps)
 {
     Init(gs, ps);
     setView("Lobby");
 }
 
-void QmlAdapter::PlayerJoined(const PlayerStats & ps)
+void QmlAdapter::PlayerJoined(const GameStats & gs)
 {
-    _players.push_back("placebo");
-    setPlayerCount(_players.size());
-    emit playersChanged();
+    //_players.push_back(gs.GetP);
+    //setPlayerCount(_players.size());
+    //emit playersChanged();
 }
 
 // ------------------------------------------ getter ------------------------------------------

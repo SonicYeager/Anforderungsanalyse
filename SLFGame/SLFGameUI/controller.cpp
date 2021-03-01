@@ -32,6 +32,5 @@ Controller::Controller(UI* ui, Interactor* inter) :
 void Controller::Run()
 {
     //init here
-    auto stats = m_pInter->PrepareLobby("");
-    m_pUi->Init(stats.first, stats.second);
+    m_pUi->Init(GameStats(), PlayerStats());
 }

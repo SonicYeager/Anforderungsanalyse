@@ -28,16 +28,17 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(int activeOverviewItem      READ getActiveOverviewItem    WRITE setActiveOverviewItem    NOTIFY activeOverviewItemChanged)
     Q_PROPERTY(int playerCount             READ getPlayerCount           WRITE setPlayerCount           NOTIFY playerCountChanged)
     Q_PROPERTY(bool customChecked          READ getCustomChecked         WRITE setCustomChecked         NOTIFY customCheckedChanged)
+    Q_PROPERTY(bool playerId               READ getPlayerId              WRITE setPlayerId              NOTIFY playerIdChanged)
 
 public:
     explicit QmlAdapter     (QObject *parent = nullptr);
 
-    void Init               (const GameStats&, const PlayerStats&) override;
-    void PrepareGame        (const GameStats&, const PlayerStats&) override;
-    void PrepareFinalScores (const GameStats&, const PlayerStats&) override;
-    void PrepareOverview    (const GameStats&, const PlayerStats&) override;
-    void PrepareLobby       (const GameStats&, const PlayerStats&) override;
-    void PlayerJoined       (const PlayerStats&) override;
+    void Init               (const GameStats&, const int&) override;
+    void PrepareGame        (const GameStats&, const int&) override;
+    void PrepareFinalScores (const GameStats&, const int&) override;
+    void PrepareOverview    (const GameStats&, const int&) override;
+    void PrepareLobby       (const GameStats&, const int&) override;
+    void PlayerJoined       (const GameStats&) override;
 
     QString getLetter();
     QString getLobbyCode();
@@ -53,6 +54,7 @@ public:
     int getPoints();
     int getActiveOverviewItem();
     int getPlayerCount();
+    int getPlayerId();
     bool getCustomChecked();
 
 
@@ -70,6 +72,7 @@ public:
     void setPoints                      (int points);
     void setActiveOverviewItem          (int activeOverviewItem);
     void setPlayerCount                 (int playerCount);
+    void setPlayerId                    (int playerId);
     void setCustomChecked               (bool checked);
 
 public slots:
@@ -104,6 +107,7 @@ signals:
     void decisionsChanged();
     void playersChanged();
     void viewChanged();
+    void playerIdChanged();
 
 private:
     QString _letter             = "bad";
@@ -122,6 +126,7 @@ private:
     int _points                 = 999;
     int _playerCount            = 2;
     int _activeOverviewItem     = 0;
+    int _playerId               = 0;
     std::vector<DECISION> _decisions = {DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED};
     bool _customChecked         = false;
 
