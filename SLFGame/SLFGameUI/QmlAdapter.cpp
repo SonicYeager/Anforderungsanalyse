@@ -44,7 +44,9 @@ void QmlAdapter::PrepareLobby(const GameStats & gs, const PlayerStats & ps)
 
 void QmlAdapter::PlayerJoined(const PlayerStats & ps)
 {
-    //setPlayerName (need a list of players anyway -> add to list or similar)
+    _players.push_back("placebo");
+    setPlayerCount(_players.size());
+    emit playersChanged();
 }
 
 // ------------------------------------------ getter ------------------------------------------
@@ -73,6 +75,11 @@ StrVector QmlAdapter::getCategories()
 StrVector QmlAdapter::getAnswers()
 {
     return _answers;
+}
+
+StrVector QmlAdapter::getPlayers()
+{
+    return _players;
 }
 
 bool QmlAdapter::getCustomChecked()
@@ -188,6 +195,14 @@ void QmlAdapter::setAnswers(StrVector answers)
         _decisions.emplace_back(DECISION::UNANSWERED);
     emit answersChanged();
     emit decisionsChanged();
+}
+
+void QmlAdapter::setPlayers(StrVector players)
+{
+    if (players == _players)
+        return;
+    _players = players;
+    emit playersChanged();
 }
 
 void QmlAdapter::setCustomChecked(bool checked)
@@ -306,6 +321,11 @@ QString QmlAdapter::getCategoryName(int idx)
 QString QmlAdapter::getAnswer(int idx)
 {
     return QString::fromUtf8(_answers[idx].c_str());
+}
+
+QString QmlAdapter::getPlayer(int idx)
+{
+    return QString::fromUtf8(_players[idx].c_str());
 }
 
 DECISION QmlAdapter::getDecision(int idx)

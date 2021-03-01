@@ -97,16 +97,22 @@ Rectangle{
                                 Layout.bottomMargin: 5
                             }
                             PlayerOverview {
-                                id:categoryOverview
+                                id:playersOverview
                                 Layout.preferredWidth: parent.width
                                 Layout.minimumHeight: listModel.count * 50
                                 Component.onCompleted: {
-                                    for (var i = 0; i < 1; i++)
+                                    for (var i = 0; i < qmlAdapter.playerCount; i++)
                                     {
-                                        if (i === 0)
-                                            listModel.append({"text":"Peter"})
-                                        //else
-                                        //    listModel.append({"text":"Player X"})
+                                        listModel.append({"text": qmlAdapter.getPlayer(i)})
+                                    }
+                                }
+                                Connections {
+                                    target: qmlAdapter
+                                    function onPlayersChanged()
+                                    {
+                                        playersOverview.listModel.clear()
+                                        for (var i = 0; i < qmlAdapter.playerCount; i++)
+                                            playersOverview.listModel.append({"text": qmlAdapter.getPlayer(i)})
                                     }
                                 }
                             }

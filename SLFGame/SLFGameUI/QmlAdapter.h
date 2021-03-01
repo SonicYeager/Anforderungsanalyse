@@ -20,6 +20,7 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(QString timeLeft            READ getTimeLeft              WRITE setTimeLeft              NOTIFY timeLeftChanged)
     Q_PROPERTY(StrVector categories        READ getCategories            WRITE setCategories            NOTIFY categoriesChanged)
     Q_PROPERTY(StrVector answers           READ getAnswers               WRITE setAnswers               NOTIFY answersChanged)
+    Q_PROPERTY(StrVector players           READ getPlayers               WRITE setPlayers               NOTIFY playersChanged)
     Q_PROPERTY(int categoryCount           READ getCategoryCount         WRITE setCategoryCount         NOTIFY categoryCountChanged)
     Q_PROPERTY(int currentRound            READ getCurrentRound          WRITE setCurrentRound          NOTIFY currentRoundChanged)
     Q_PROPERTY(int points                  READ getPoints                WRITE setPoints                NOTIFY pointsChanged)
@@ -31,6 +32,7 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(bool overviewScreenVisible  READ getOverviewScreenVisible WRITE setOverviewScreenVisible NOTIFY overviewScreenVisibleChanged)
     Q_PROPERTY(bool fscoresScreenVisible   READ getFScoresScreenVisible  WRITE setFScoresScreenVisible  NOTIFY fscoresScreenVisibleChanged)
     Q_PROPERTY(bool mainMenuScreenVisible  READ getMainMenuScreenVisible WRITE setMainMenuScreenVisible NOTIFY mainMenuScreenVisibleChanged)
+
 
 public:
     explicit QmlAdapter     (QObject *parent = nullptr);
@@ -49,6 +51,7 @@ public:
     QString getTimeLeft();
     StrVector getCategories();
     StrVector getAnswers();
+    StrVector getPlayers();
     int getCategoryCount();
     int getCurrentRound();
     int getPoints();
@@ -69,6 +72,7 @@ public:
     void setMaxRounds                   (QString maxRounds);
     void setCategories                  (StrVector categories);
     void setAnswers                     (StrVector answers);
+    void setPlayers                     (StrVector players);
     void setCategoryCount               (int categoryCount);
     void setCurrentRound                (int currentRound);
     void setPoints                      (int points);
@@ -85,6 +89,7 @@ public slots:
 
     QString getCategoryName(int idx);
     QString getAnswer(int idx);
+    QString getPlayer(int idx);
     DECISION getDecision(int idx);
     void setActiveItemIA(int idx);
     void setDecision(int idx, int newVal);
@@ -115,6 +120,7 @@ signals:
     void playerCountChanged();
     void activeOverviewItemChanged();
     void decisionsChanged();
+    void playersChanged();
 
 private:
     QString _letter             = "bad";
@@ -126,10 +132,11 @@ private:
     StrVector _categories       = {"Stadt", "Land", "Fluss", "Name", "Tier", "Beruf"};
     StrVector _answers          = {};
     StrVector _unhandledanswers = {};
+    StrVector _players          = {"Pyke", "Kamille"};
     int _categoryCount          = 6;
     int _currentRound           = 0;
     int _points                 = 999;
-    int _playerCount            = 1;
+    int _playerCount            = 2;
     int _activeOverviewItem     = 0;
     std::vector<DECISION> _decisions = {DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED};
     bool _customChecked         = false;

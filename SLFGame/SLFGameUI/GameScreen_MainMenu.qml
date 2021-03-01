@@ -79,7 +79,7 @@ Rectangle{
                             onClicked: {
                                 qmlAdapter.mainMenuScreenVisible = false;
                                 qmlAdapter.lobbyScreenVisible = true;
-                                qmlAdapter.startHost();
+                                //qmlAdapter.startHost();
                             }
                         }
                     }
@@ -107,7 +107,7 @@ Rectangle{
                             onClicked: {
                                 qmlAdapter.mainMenuScreenVisible = false;
                                 qmlAdapter.lobbyScreenVisible = true;
-                                qmlAdapter.joinHost(lobbyCode.text);
+                                //qmlAdapter.joinHost(lobbyCode.text);
                             }
                         }
                     }
