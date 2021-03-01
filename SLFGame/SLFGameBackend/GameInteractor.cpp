@@ -8,13 +8,13 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 	m_pParser(p)
 
 {
-	m_pGame->onGameOver = [this]() { onGameOver(m_GameStats, m_PlayerStats); };
+	m_pGame->onGameOver = [this]() { onGameOver(m_GameStats); };
 	m_pGame->onPrepareNextRound = [this]() 
 	{
 		Letter generated = m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.GetUsedLetters());
 		m_pDataOperation->SetNewLetter(generated, m_GameStats);
 		m_pDataOperation->AddPreviousLetter(m_GameStats);
-		onPrepareNextRound(m_GameStats, m_PlayerStats);
+		onPrepareNextRound(m_GameStats);
 	};
 }
 
@@ -29,28 +29,35 @@ void GameInteractor::PrepareGame(const std::string& cats, const std::string& rou
 	m_pDataOperation->InkrementRound(m_GameStats);
 	Letter generated = m_pRandomGenerator->GenerateLetter();
 	m_pDataOperation->SetNewLetter(generated, m_GameStats);
-	onPrepareGame(m_GameStats, m_PlayerStats);
+	onPrepareGame(m_GameStats);
 }
 
-std::pair<GameStats, PlayerStats> GameInteractor::PrepareLobby(const std::string& lobbyCode)
+void GameInteractor::PrepareOverview(const std::vector<std::string>& answ, int playerID)
 {
-	auto code = m_pNetwork->GenerateLobbyCode();
-	auto [gameStats, playerStats] = m_pDataOperation->CreateStats(code);
-	m_GameStats = gameStats;
-	m_PlayerStats = playerStats;
-	return {gameStats, playerStats};
+	m_pDataOperation->SetAnswers(answ, m_GameStats.GetPlayerStats(playerID));
+	onPrepareOverview(m_GameStats);
 }
 
-void GameInteractor::PrepareOverview(const std::vector<std::string>& answ)
-{
-	m_pDataOperation->SetAnswers(answ, m_PlayerStats);
-	onPrepareOverview(m_GameStats, m_PlayerStats);
-}
-
-void GameInteractor::EndRound(const std::vector<DECISION>& decisions)
+void GameInteractor::EndRound(const std::vector<DECISION>& decisions, int playerID)
 {
 	auto points = m_pGame->CalculatePoints(decisions);
-	m_pDataOperation->AddPoints(points, m_PlayerStats);
+	m_pDataOperation->AddPoints(points, m_GameStats.GetPlayerStats(playerID));
 	m_pDataOperation->InkrementRound(m_GameStats);
 	m_pGame->CheckGameFinished(m_GameStats);
+}
+
+void GameInteractor::HostGame(const std::string& playerName)
+{
+	auto lobbyCode = m_pNetwork->GenerateLobbyCode();
+	m_pNetwork->StartServer();
+	m_pNetwork->ConnectToServer(lobbyCode);
+	auto gameStats = m_pDataOperation->CreateStats(lobbyCode, playerName);
+	m_GameStats = gameStats;
+	onGameHosted(m_GameStats);
+}
+
+void GameInteractor::JoinGame(const std::string& playerName, const std::string& lobbyCode)
+{
+	m_pNetwork->ConnectToServer(lobbyCode);
+	onGameJoined(m_GameStats);
 }

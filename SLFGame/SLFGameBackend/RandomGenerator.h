@@ -5,7 +5,7 @@
 class /*[[deprecated("Use GenerateUnusedLetter instead")]]*/ RandomGenerator : public RandomGenRessource
 {
 public:
-	Letter GenerateLetter() override;
-	Letter GenerateUnusedLetter(const Letters&) override;
+	Letter GenerateLetter		()					override;
+	Letter GenerateUnusedLetter	(const Letters&)	override;
 };
 

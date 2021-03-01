@@ -4,6 +4,8 @@
 #include <QtCore/qtimer.h>
 #include <QtNetwork/qhostinfo.h>
 #include <QtNetwork/qnetworkinterface.h>
+#include <QtNetwork/qtcpserver.h>
+#include <QtNetwork/qtcpsocket.h>
 
 //SLFGAMEBACKENDQT_EXPORT -> export 
 

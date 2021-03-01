@@ -37,12 +37,15 @@ void GameStatsOperations::SetAnswers(const std::vector<std::string>& answ, Playe
 	ps.SetAnswers(answ);
 }
 
-std::pair<GameStats, PlayerStats> GameStatsOperations::CreateStats(const std::string& code)
+GameStats GameStatsOperations::CreateStats(const std::string& code, const std::string& playerName)
 {
 	GameStats gs{};
 	PlayerStats ps{};
 	gs.SetMaxRounds(5);
 	gs.SetCategories({ {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}} });
 	gs.SetLobbyCode(code);
-    return std::make_pair(gs, ps);
+	ps.SetPlayerID(gs.GetPlayerCount());
+	ps.SetPlayerName(playerName);
+	gs.AddPlayer(ps);
+    return gs;
 }

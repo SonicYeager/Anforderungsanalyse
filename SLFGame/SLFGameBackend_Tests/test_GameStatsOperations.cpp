@@ -96,15 +96,13 @@ TEST(TestGameStatsOperations, CreateStats_LobbyCode0c346bv_ReturnConfiguredGameS
 	GameStatsOperations gso{};
 	GameStats gs{};
 
-	auto actual = gso.CreateStats("0c346bv");
+	auto actual = gso.CreateStats("0c346bv", "horst");
 
 	GameStats expectedgs{};
-	PlayerStats expectedps{};
 	expectedgs.SetMaxRounds(5);
 	expectedgs.SetCategories({{{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}}});
 	expectedgs.SetLobbyCode("0c346bv");
-	EXPECT_EQ(actual.first, expectedgs);
-	EXPECT_EQ(actual.second, expectedps);
+	EXPECT_EQ(actual, expectedgs);
 
 }
 

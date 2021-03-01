@@ -5,8 +5,9 @@ class Timer : public TimerRessource
 {
 public:
 	Timer();
-	void Start() override;
-	void Stop() override;
+
+	void Start()	override;
+	void Stop()		override;
 
 private:
 	QTimer timer{};

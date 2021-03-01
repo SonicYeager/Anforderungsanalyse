@@ -4,6 +4,6 @@
 class SLFParser
 {
 public:
-	Categories ParseCategories(const std::string&);
-	int ParseRoundCount(const std::string&);
+	Categories	ParseCategories	(const std::string&);
+	int			ParseRoundCount	(const std::string&);
 };
