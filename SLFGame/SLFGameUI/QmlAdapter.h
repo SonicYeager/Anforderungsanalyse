@@ -39,6 +39,8 @@ public:
     void PrepareGame        (const GameStats&, const PlayerStats&) override;
     void PrepareFinalScores (const GameStats&, const PlayerStats&) override;
     void PrepareOverview    (const GameStats&, const PlayerStats&) override;
+    void PrepareLobby       (const GameStats&, const PlayerStats&) override;
+    void PlayerJoined       (const PlayerStats&) override;
 
     QString getLetter();
     QString getLobbyCode();
@@ -90,6 +92,8 @@ public slots:
     void prepareOverview();
     void prepareNextRound();
     void addAnswer(QString answer);
+    void hostLobby();
+    void joinLobby(QString lobbyCode);
 
 signals:
     void letterChanged();

@@ -6,7 +6,7 @@ QmlAdapter::QmlAdapter(QObject *parent) :
     setLobbyScreenVisible(false);
     setOverviewScreenVisible(false);
     setEntryScreenVisible(false);
-    //setMenuScreenVisible(true);
+    setMainMenuScreenVisible(true);
 }
 // ------------------------------------------ initializer function ------------------------------------------
 
@@ -22,9 +22,6 @@ void QmlAdapter::PrepareGame(const GameStats & gs, const PlayerStats & ps)
     setLetter(QChar(gs.GetCurrentLetter().letter));
     setCategories(gs.GetCategories());
     setPoints(ps.GetPoints());
-    //setLobbyScreenVisible(false);
-    //setOverviewScreenVisible(false);
-    //setEntryScreenVisible(true);
 }
 
 void QmlAdapter::PrepareFinalScores(const GameStats & gs, const PlayerStats & ps)
@@ -38,6 +35,16 @@ void QmlAdapter::PrepareOverview(const GameStats & gs, const PlayerStats & ps)
 {
     setAnswers(ps.GetAnswers());
     emit answersChanged();
+}
+
+void QmlAdapter::PrepareLobby(const GameStats & gs, const PlayerStats & ps)
+{
+    Init(gs, ps);
+}
+
+void QmlAdapter::PlayerJoined(const PlayerStats & ps)
+{
+    //setPlayerName (need a list of players anyway -> add to list or similar)
 }
 
 // ------------------------------------------ getter ------------------------------------------
@@ -336,6 +343,16 @@ void QmlAdapter::prepareNextRound()
 void QmlAdapter::addAnswer(QString answer)
 {
     _unhandledanswers.emplace_back(answer.toStdString());
+}
+
+void QmlAdapter::hostLobby()
+{
+    onHost();
+}
+
+void QmlAdapter::joinLobby(QString lobbyCode)
+{
+    onJoin(lobbyCode.toStdString());
 }
 
 #define slotFunctionsEnd }

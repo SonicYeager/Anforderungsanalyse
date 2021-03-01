@@ -79,6 +79,7 @@ Rectangle{
                             onClicked: {
                                 qmlAdapter.mainMenuScreenVisible = false;
                                 qmlAdapter.lobbyScreenVisible = true;
+                                qmlAdapter.startHost();
                             }
                         }
                     }
@@ -106,10 +107,12 @@ Rectangle{
                             onClicked: {
                                 qmlAdapter.mainMenuScreenVisible = false;
                                 qmlAdapter.lobbyScreenVisible = true;
+                                qmlAdapter.joinHost(lobbyCode.text);
                             }
                         }
                     }
                     EntryBox {
+                        id: lobbyCode
                         text: ""
                         Layout.preferredWidth: 200
                         Layout.preferredHeight: 50

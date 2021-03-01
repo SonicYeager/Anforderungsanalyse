@@ -8,9 +8,14 @@ public:
 	virtual void PrepareGame(const GameStats&, const PlayerStats&) = 0;
 	virtual void PrepareOverview(const GameStats&, const PlayerStats&) = 0;
 	virtual void PrepareFinalScores(const GameStats&, const PlayerStats&) = 0;
+    virtual void PrepareLobby (const GameStats&, const PlayerStats&) = 0;
+    virtual void PlayerJoined (const PlayerStats&) = 0;
 	virtual ~UI() = default;
 
 	Event<const std::string&, const std::string&, const std::string&> onPrepareGame;
 	Event<const Categories&> onPrepareOverview;
-        Event<const std::vector<DECISION>&> onPrepareNextRound;
+    Event<const std::vector<DECISION>&> onPrepareNextRound;
+    Event<> onHost;
+    Event<const std::string&> onJoin;
+
 };
