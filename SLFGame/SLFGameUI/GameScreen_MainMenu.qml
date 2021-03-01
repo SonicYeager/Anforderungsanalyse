@@ -3,10 +3,11 @@ import QtQuick.Window 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
 
+
 Rectangle{
     id: mainMenu_window
-    width: parent.width
-    height: parent.height
+    width: Screen.width
+    height: Screen.height
     color: "#1c2b1e"
     ColumnLayout {
         anchors.fill: parent
@@ -77,9 +78,8 @@ Rectangle{
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                qmlAdapter.mainMenuScreenVisible = false;
-                                qmlAdapter.lobbyScreenVisible = true;
                                 //qmlAdapter.startHost();
+                                qmlAdapter.view = "Lobby";
                             }
                         }
                     }
@@ -108,6 +108,7 @@ Rectangle{
                                 qmlAdapter.mainMenuScreenVisible = false;
                                 qmlAdapter.lobbyScreenVisible = true;
                                 //qmlAdapter.joinHost(lobbyCode.text);
+                                qmlAdapter.view = "Lobby";
                             }
                         }
                     }

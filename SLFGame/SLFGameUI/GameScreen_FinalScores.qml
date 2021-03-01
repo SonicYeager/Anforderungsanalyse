@@ -5,8 +5,8 @@ import QtQuick.Controls 2.15
 
 Rectangle{
     id: finalscores_window
-    width: parent.width
-    height: parent.height
+    width: Screen.width
+    height: Screen.height
     color: "#1c2b1e"
     ColumnLayout {
         anchors.fill: parent
@@ -97,8 +97,7 @@ Rectangle{
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            qmlAdapter.fscoresScreenVisible = false;
-                            qmlAdapter.lobbyScreenVisible = true;
+                           qmlAdapter.view = "Lobby";
                         }
                     }
                 }
@@ -114,8 +113,7 @@ Rectangle{
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            qmlAdapter.fscoresScreenVisible = false;
-                            qmlAdapter.mainMenuScreenVisible = true;
+                            qmlAdapter.view = "MainMenu";
                         }
                     }
                 }

@@ -5,8 +5,8 @@ import QtQuick.Controls 2.15
 
 Rectangle{
     id: input_window
-    width: parent.width
-    height: parent.height
+    width: Screen.width
+    height: Screen.height
     color: "#1c2b1e"
     ColumnLayout {
         anchors.fill: parent
@@ -160,8 +160,8 @@ Rectangle{
                             }
 
                             qmlAdapter.prepareOverview();
-                            qmlAdapter.entryScreenVisible = false;
-                            qmlAdapter.overviewScreenVisible = true;
+                            qmlAdapter.view = "Overview";
+
                         }
                     }
                 }
@@ -177,8 +177,7 @@ Rectangle{
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            qmlAdapter.entryScreenVisible = false;
-                            qmlAdapter.mainMenuScreenVisible = true;
+                            qmlAdapter.view = "MainMenu";
                         }
                     }
                 }

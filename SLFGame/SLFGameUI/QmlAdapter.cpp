@@ -2,12 +2,7 @@
 
 QmlAdapter::QmlAdapter(QObject *parent) :
     QObject(parent)
-{
-    setLobbyScreenVisible(false);
-    setOverviewScreenVisible(false);
-    setEntryScreenVisible(false);
-    setMainMenuScreenVisible(true);
-}
+{}
 // ------------------------------------------ initializer function ------------------------------------------
 
 void QmlAdapter::Init(const GameStats & gs, const PlayerStats & ps)
@@ -22,24 +17,26 @@ void QmlAdapter::PrepareGame(const GameStats & gs, const PlayerStats & ps)
     setLetter(QChar(gs.GetCurrentLetter().letter));
     setCategories(gs.GetCategories());
     setPoints(ps.GetPoints());
+    setView("Input");
 }
 
 void QmlAdapter::PrepareFinalScores(const GameStats & gs, const PlayerStats & ps)
 {
     setPoints(ps.GetPoints());
-    setOverviewScreenVisible(false);
-    setFScoresScreenVisible(true);
+    setView("FinalScores");
 }
 
 void QmlAdapter::PrepareOverview(const GameStats & gs, const PlayerStats & ps)
 {
     setAnswers(ps.GetAnswers());
+    setView("Overview");
     emit answersChanged();
 }
 
 void QmlAdapter::PrepareLobby(const GameStats & gs, const PlayerStats & ps)
 {
     Init(gs, ps);
+    setView("Lobby");
 }
 
 void QmlAdapter::PlayerJoined(const PlayerStats & ps)
@@ -87,31 +84,6 @@ bool QmlAdapter::getCustomChecked()
     return _customChecked;
 }
 
-bool QmlAdapter::getLobbyScreenVisible()
-{
-    return _lobbyScreenVisible;
-}
-
-bool QmlAdapter::getEntryScreenVisible()
-{
-    return _entryScreenVisible;
-}
-
-bool QmlAdapter::getOverviewScreenVisible()
-{
-    return _overviewScreenVisible;
-}
-
-bool QmlAdapter::getFScoresScreenVisible()
-{
-    return _fscoresScreenVisible;
-}
-
-bool QmlAdapter::getMainMenuScreenVisible()
-{
-    return _mainMenuScreenVisible;
-}
-
 int QmlAdapter::getCategoryCount()
 {
     return _categoryCount;
@@ -145,6 +117,11 @@ int QmlAdapter::getPlayerCount()
 QString QmlAdapter::getTimeLeft()
 {
     return _timeLeft;
+}
+
+QString QmlAdapter::getView()
+{
+    return _view;
 }
 
 #define getterFunctionsEnd }
@@ -213,46 +190,6 @@ void QmlAdapter::setCustomChecked(bool checked)
     emit customCheckedChanged();
 }
 
-void QmlAdapter::setLobbyScreenVisible(bool visibility)
-{
-    if (visibility == _lobbyScreenVisible)
-        return;
-    _lobbyScreenVisible = visibility;
-    emit lobbyScreenVisibleChanged();
-}
-
-void QmlAdapter::setEntryScreenVisible(bool visibility)
-{
-    if (visibility == _entryScreenVisible)
-        return;
-    _entryScreenVisible = visibility;
-    emit entryScreenVisibleChanged();
-}
-
-void QmlAdapter::setOverviewScreenVisible(bool visibility)
-{
-    if (visibility == _overviewScreenVisible)
-        return;
-    _overviewScreenVisible = visibility;
-    emit overviewScreenVisibleChanged();
-}
-
-void QmlAdapter::setFScoresScreenVisible(bool visibility)
-{
-    if (visibility == _fscoresScreenVisible)
-        return;
-    _fscoresScreenVisible = visibility;
-    emit fscoresScreenVisibleChanged();
-}
-
-void QmlAdapter::setMainMenuScreenVisible(bool visibility)
-{
-    if (visibility == _mainMenuScreenVisible)
-        return;
-    _mainMenuScreenVisible = visibility;
-    emit mainMenuScreenVisibleChanged();
-}
-
 void QmlAdapter::setCategoryCount(int categoryCount)
 {
     if (categoryCount == _categoryCount)
@@ -275,6 +212,14 @@ void QmlAdapter::setMaxRounds(QString maxRounds)
         return;
     _maxRounds = maxRounds;
     emit maxRoundsChanged();
+}
+
+void QmlAdapter::setView(QString view)
+{
+    if (view == _view)
+        return;
+    _view = view;
+    emit viewChanged();
 }
 
 void QmlAdapter::setPoints(int points)

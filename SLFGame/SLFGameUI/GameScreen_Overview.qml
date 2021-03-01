@@ -5,8 +5,8 @@ import QtQuick.Controls 2.15
 
 Rectangle{
     id:lobby_window
-    width: parent.width
-    height: parent.height
+    width: Screen.width
+    height: Screen.height
     color: "#1c2b1e"
     ColumnLayout {
         anchors.fill: parent
@@ -189,7 +189,7 @@ Rectangle{
                         anchors.fill: parent
                         onClicked: {
                             //if (confirmButton.state === "blueButton")
-                                qmlAdapter.prepareNextRound();
+                            qmlAdapter.prepareNextRound();
                         }
                     }
                     Connections {
@@ -218,8 +218,7 @@ Rectangle{
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            qmlAdapter.overviewScreenVisible = false;
-                            qmlAdapter.mainMenuScreenVisible = true;
+                            qmlAdapter.view = "MainMenu";
                         }
                     }
                 }

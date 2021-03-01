@@ -9,25 +9,14 @@ Window{
     visibility: Window.Maximized
     title: "GameScreen_Input"
     color: "#1c2b1e"
-    GameScreen_Input{
-        id:gameScreen_Input
-        visible: qmlAdapter.entryScreenVisible
-    }
-    GameScreen_Lobby{
-        id:gameScreen_Lobby
-        visible: qmlAdapter.lobbyScreenVisible
-    }
-    GameScreen_Overview{
-        id:gameScreen_Overview
-        visible: qmlAdapter.overviewScreenVisible
-    }
-    GameScreen_FinalScores{
-        id:gameScreen_FinalScores
-        visible: qmlAdapter.fscoresScreenVisible
-    }
-    GameScreen_MainMenu{
-        id:gameScreen_MainMenu
-        visible: qmlAdapter.mainMenuScreenVisible
+    Loader { id: pageLoader }
+    Component.onCompleted: pageLoader.source = "GameScreen_" + qmlAdapter.view + ".qml"
+    Connections {
+        target: qmlAdapter
+        function onViewChanged()
+        {
+            pageLoader.source = "GameScreen_" + qmlAdapter.view + ".qml";
+        }
     }
 }
 

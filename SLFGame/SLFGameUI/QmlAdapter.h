@@ -18,6 +18,7 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(QString customCategories    READ getCustomCategories      WRITE setCustomCategories      NOTIFY customCategoriesChanged)
     Q_PROPERTY(QString maxRounds           READ getMaxRounds             WRITE setMaxRounds             NOTIFY maxRoundsChanged)
     Q_PROPERTY(QString timeLeft            READ getTimeLeft              WRITE setTimeLeft              NOTIFY timeLeftChanged)
+    Q_PROPERTY(QString view                READ getView                  WRITE setView                  NOTIFY viewChanged)
     Q_PROPERTY(StrVector categories        READ getCategories            WRITE setCategories            NOTIFY categoriesChanged)
     Q_PROPERTY(StrVector answers           READ getAnswers               WRITE setAnswers               NOTIFY answersChanged)
     Q_PROPERTY(StrVector players           READ getPlayers               WRITE setPlayers               NOTIFY playersChanged)
@@ -27,12 +28,6 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(int activeOverviewItem      READ getActiveOverviewItem    WRITE setActiveOverviewItem    NOTIFY activeOverviewItemChanged)
     Q_PROPERTY(int playerCount             READ getPlayerCount           WRITE setPlayerCount           NOTIFY playerCountChanged)
     Q_PROPERTY(bool customChecked          READ getCustomChecked         WRITE setCustomChecked         NOTIFY customCheckedChanged)
-    Q_PROPERTY(bool lobbyScreenVisible     READ getLobbyScreenVisible    WRITE setLobbyScreenVisible    NOTIFY lobbyScreenVisibleChanged)
-    Q_PROPERTY(bool entryScreenVisible     READ getEntryScreenVisible    WRITE setEntryScreenVisible    NOTIFY entryScreenVisibleChanged)
-    Q_PROPERTY(bool overviewScreenVisible  READ getOverviewScreenVisible WRITE setOverviewScreenVisible NOTIFY overviewScreenVisibleChanged)
-    Q_PROPERTY(bool fscoresScreenVisible   READ getFScoresScreenVisible  WRITE setFScoresScreenVisible  NOTIFY fscoresScreenVisibleChanged)
-    Q_PROPERTY(bool mainMenuScreenVisible  READ getMainMenuScreenVisible WRITE setMainMenuScreenVisible NOTIFY mainMenuScreenVisibleChanged)
-
 
 public:
     explicit QmlAdapter     (QObject *parent = nullptr);
@@ -49,6 +44,7 @@ public:
     QString getCustomCategories();
     QString getMaxRounds();
     QString getTimeLeft();
+    QString getView();
     StrVector getCategories();
     StrVector getAnswers();
     StrVector getPlayers();
@@ -58,11 +54,6 @@ public:
     int getActiveOverviewItem();
     int getPlayerCount();
     bool getCustomChecked();
-    bool getLobbyScreenVisible();
-    bool getEntryScreenVisible();
-    bool getOverviewScreenVisible();
-    bool getFScoresScreenVisible();
-    bool getMainMenuScreenVisible();
 
 
     void setLetter                      (QString letter);
@@ -70,6 +61,7 @@ public:
     void setCustomCategories            (QString customCategories);
     void setTimeLeft                    (QString timeLeft);
     void setMaxRounds                   (QString maxRounds);
+    void setView                        (QString view);
     void setCategories                  (StrVector categories);
     void setAnswers                     (StrVector answers);
     void setPlayers                     (StrVector players);
@@ -79,11 +71,6 @@ public:
     void setActiveOverviewItem          (int activeOverviewItem);
     void setPlayerCount                 (int playerCount);
     void setCustomChecked               (bool checked);
-    void setLobbyScreenVisible          (bool visibility);
-    void setEntryScreenVisible          (bool visibility);
-    void setOverviewScreenVisible       (bool visibility);
-    void setFScoresScreenVisible        (bool visibility);
-    void setMainMenuScreenVisible       (bool visibility);
 
 public slots:
 
@@ -107,11 +94,6 @@ signals:
     void answersChanged();
     void categoryCountChanged();
     void customCheckedChanged();
-    void lobbyScreenVisibleChanged();
-    void entryScreenVisibleChanged();
-    void overviewScreenVisibleChanged();
-    void fscoresScreenVisibleChanged();
-    void mainMenuScreenVisibleChanged();
     void currentRoundChanged();
     void maxRoundsChanged();
     void pointsChanged();
@@ -121,6 +103,7 @@ signals:
     void activeOverviewItemChanged();
     void decisionsChanged();
     void playersChanged();
+    void viewChanged();
 
 private:
     QString _letter             = "bad";
@@ -129,6 +112,7 @@ private:
     QString _maxRounds          = "5";
     QString _timeLeft           = "bis Stop";
     QString m_customCategories  = {};
+    QString _view               = "MainMenu";
     StrVector _categories       = {"Stadt", "Land", "Fluss", "Name", "Tier", "Beruf"};
     StrVector _answers          = {};
     StrVector _unhandledanswers = {};
@@ -140,9 +124,5 @@ private:
     int _activeOverviewItem     = 0;
     std::vector<DECISION> _decisions = {DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED};
     bool _customChecked         = false;
-    bool _lobbyScreenVisible    = false;
-    bool _entryScreenVisible    = false;
-    bool _overviewScreenVisible = false;
-    bool _fscoresScreenVisible  = false;
-    bool _mainMenuScreenVisible = true;
+
 };

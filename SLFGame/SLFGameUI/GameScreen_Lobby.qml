@@ -5,8 +5,8 @@ import QtQuick.Controls 2.15
 
 Rectangle{
     id: lobby_window
-    width: parent.width
-    height: parent.height
+    width: Screen.width
+    height: Screen.height
     color: "#1c2b1e"
     ColumnLayout {
         anchors.fill: parent
@@ -152,6 +152,7 @@ Rectangle{
                             qmlAdapter.maxRounds = settings_lobby.roundCount
                             qmlAdapter.timeLeft = settings_lobby.roundTime
                             qmlAdapter.prepareGame();
+                            qmlAdapter.view = "Input";
                         }
                     }
                 }
@@ -167,8 +168,7 @@ Rectangle{
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            qmlAdapter.lobbyScreenVisible = false;
-                            qmlAdapter.mainMenuScreenVisible = true;
+                            qmlAdapter.view = "MainMenu";
                         }
                     }
                 }
