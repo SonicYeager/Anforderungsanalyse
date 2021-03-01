@@ -3,7 +3,10 @@
 QmlAdapter::QmlAdapter(QObject *parent) :
     QObject(parent)
 {
-
+    setLobbyScreenVisible(false);
+    setOverviewScreenVisible(false);
+    setEntryScreenVisible(false);
+    //setMenuScreenVisible(true);
 }
 // ------------------------------------------ initializer function ------------------------------------------
 
@@ -19,9 +22,9 @@ void QmlAdapter::PrepareGame(const GameStats & gs, const PlayerStats & ps)
     setLetter(QChar(gs.GetCurrentLetter().letter));
     setCategories(gs.GetCategories());
     setPoints(ps.GetPoints());
-    setLobbyScreenVisible(false);
-    setOverviewScreenVisible(false);
-    setEntryScreenVisible(true);
+    //setLobbyScreenVisible(false);
+    //setOverviewScreenVisible(false);
+    //setEntryScreenVisible(true);
 }
 
 void QmlAdapter::PrepareFinalScores(const GameStats & gs, const PlayerStats & ps)
