@@ -90,6 +90,11 @@ bool QmlAdapter::getFScoresScreenVisible()
     return _fscoresScreenVisible;
 }
 
+bool QmlAdapter::getMainMenuScreenVisible()
+{
+    return _mainMenuScreenVisible;
+}
+
 int QmlAdapter::getCategoryCount()
 {
     return _categoryCount;
@@ -213,6 +218,14 @@ void QmlAdapter::setFScoresScreenVisible(bool visibility)
         return;
     _fscoresScreenVisible = visibility;
     emit fscoresScreenVisibleChanged();
+}
+
+void QmlAdapter::setMainMenuScreenVisible(bool visibility)
+{
+    if (visibility == _mainMenuScreenVisible)
+        return;
+    _mainMenuScreenVisible = visibility;
+    emit mainMenuScreenVisibleChanged();
 }
 
 void QmlAdapter::setCategoryCount(int categoryCount)

@@ -174,6 +174,13 @@ Rectangle{
                     fontSize: height * 0.05 + width * 0.05
                     border.width: 3
                     border.color: "white"
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            qmlAdapter.entryScreenVisible = false;
+                            qmlAdapter.mainMenuScreenVisible = true;
+                        }
+                    }
                 }
             }
         }

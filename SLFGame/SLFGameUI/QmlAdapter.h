@@ -30,6 +30,7 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(bool entryScreenVisible     READ getEntryScreenVisible    WRITE setEntryScreenVisible    NOTIFY entryScreenVisibleChanged)
     Q_PROPERTY(bool overviewScreenVisible  READ getOverviewScreenVisible WRITE setOverviewScreenVisible NOTIFY overviewScreenVisibleChanged)
     Q_PROPERTY(bool fscoresScreenVisible   READ getFScoresScreenVisible  WRITE setFScoresScreenVisible  NOTIFY fscoresScreenVisibleChanged)
+    Q_PROPERTY(bool mainMenuScreenVisible  READ getMainMenuScreenVisible WRITE setMainMenuScreenVisible NOTIFY mainMenuScreenVisibleChanged)
 
 public:
     explicit QmlAdapter     (QObject *parent = nullptr);
@@ -56,6 +57,7 @@ public:
     bool getEntryScreenVisible();
     bool getOverviewScreenVisible();
     bool getFScoresScreenVisible();
+    bool getMainMenuScreenVisible();
 
 
     void setLetter                      (QString letter);
@@ -75,6 +77,7 @@ public:
     void setEntryScreenVisible          (bool visibility);
     void setOverviewScreenVisible       (bool visibility);
     void setFScoresScreenVisible        (bool visibility);
+    void setMainMenuScreenVisible       (bool visibility);
 
 public slots:
 
@@ -99,6 +102,7 @@ signals:
     void entryScreenVisibleChanged();
     void overviewScreenVisibleChanged();
     void fscoresScreenVisibleChanged();
+    void mainMenuScreenVisibleChanged();
     void currentRoundChanged();
     void maxRoundsChanged();
     void pointsChanged();
@@ -125,8 +129,9 @@ private:
     int _activeOverviewItem     = 0;
     std::vector<DECISION> _decisions = {DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED};
     bool _customChecked         = false;
-    bool _lobbyScreenVisible    = true;
+    bool _lobbyScreenVisible    = false;
     bool _entryScreenVisible    = false;
     bool _overviewScreenVisible = false;
     bool _fscoresScreenVisible  = false;
+    bool _mainMenuScreenVisible = true;
 };

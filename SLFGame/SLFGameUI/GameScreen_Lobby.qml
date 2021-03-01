@@ -76,6 +76,43 @@ Rectangle{
                         color: Qt.rgba(0,0,0,0)
                     }
                 }
+                Rectangle{
+                    color: Qt.rgba(0,0,0,0)
+                    id: playerOverviewContainer
+                    Layout.preferredWidth: parent.width * 0.4
+                    Layout.preferredHeight: parent.height
+                    Layout.margins: 20
+                    Rectangle{
+                        Layout.preferredWidth: parent.width
+                        Layout.preferredHeight: parent.height*0.8
+                        color: Qt.rgba(0,0,0,0)
+                        ColumnLayout{
+                            anchors.fill: parent
+                            spacing:0
+                            TextBox {
+                                text: "Players"
+                                state: "desc"
+                                Layout.preferredWidth: 200
+                                Layout.preferredHeight: 50
+                                Layout.bottomMargin: 5
+                            }
+                            PlayerOverview {
+                                id:categoryOverview
+                                Layout.preferredWidth: parent.width
+                                Layout.minimumHeight: listModel.count * 50
+                                Component.onCompleted: {
+                                    for (var i = 0; i < 1; i++)
+                                    {
+                                        if (i === 0)
+                                            listModel.append({"text":"Peter"})
+                                        //else
+                                        //    listModel.append({"text":"Player X"})
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -121,6 +158,13 @@ Rectangle{
                     fontSize: height * 0.05 + width * 0.05
                     border.width: 3
                     border.color: "white"
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            qmlAdapter.lobbyScreenVisible = false;
+                            qmlAdapter.mainMenuScreenVisible = true;
+                        }
+                    }
                 }
             }
         }

@@ -1,5 +1,4 @@
 #include "GameInteractor.h"
-#include "../FileHandler/FileHandler/FileHandler.h"
 
 GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, GameLogic* game, NetworkSource* n, SLFParser* p) :
 	m_pRandomGenerator(gen),

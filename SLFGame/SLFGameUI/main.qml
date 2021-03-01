@@ -25,6 +25,10 @@ Window{
         id:gameScreen_FinalScores
         visible: qmlAdapter.fscoresScreenVisible
     }
+    GameScreen_MainMenu{
+        id:gameScreen_MainMenu
+        visible: qmlAdapter.mainMenuScreenVisible
+    }
 }
 
 

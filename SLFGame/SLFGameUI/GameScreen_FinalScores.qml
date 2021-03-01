@@ -87,13 +87,37 @@ Rectangle{
                 GameButton
                 {
                     Layout.preferredWidth: parent.width * 0.25
-                    text : "LEAVE"
+                    text : "LOBBY"
                     textColor: "white"
                     state: "blueButton"
                     fontSize: height * 0.05 + width * 0.05
                     border.width: 3
                     border.color: "white"
-                    Layout.alignment: Qt.AlignCenter
+                    Layout.leftMargin: parent.width * 0.15
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            qmlAdapter.fscoresScreenVisible = false;
+                            qmlAdapter.lobbyScreenVisible = true;
+                        }
+                    }
+                }
+                GameButton
+                {
+                    Layout.preferredWidth: parent.width * 0.25
+                    text : "MAIN MENU"
+                    textColor: "white"
+                    state: "blueButton"
+                    fontSize: height * 0.05 + width * 0.05
+                    border.width: 3
+                    border.color: "white"
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            qmlAdapter.fscoresScreenVisible = false;
+                            qmlAdapter.mainMenuScreenVisible = true;
+                        }
+                    }
                 }
             }
         }
