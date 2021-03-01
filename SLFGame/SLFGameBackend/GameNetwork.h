@@ -13,8 +13,6 @@ public:
 	void		StartServer			()								override;
 	void		ConnectToServer		(const std::string&)			override;
 
-	Event<>		onNewConnection;
-
 public slots:
 
 	void NewConnection();
@@ -26,4 +24,5 @@ private:
 	QTcpSocket					m_socket;
 	std::vector<QTcpSocket*>	m_connections;
 	int							m_port			= 3200;
+
 };

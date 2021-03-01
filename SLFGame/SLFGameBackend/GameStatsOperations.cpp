@@ -40,12 +40,8 @@ void GameStatsOperations::SetAnswers(const std::vector<std::string>& answ, Playe
 GameStats GameStatsOperations::CreateStats(const std::string& code, const std::string& playerName)
 {
 	GameStats gs{};
-	PlayerStats ps{};
 	gs.SetMaxRounds(5);
 	gs.SetCategories({ {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}} });
 	gs.SetLobbyCode(code);
-	ps.SetPlayerID(gs.GetPlayerCount());
-	ps.SetPlayerName(playerName);
-	gs.AddPlayer(ps);
     return gs;
 }

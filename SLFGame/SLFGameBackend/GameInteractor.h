@@ -7,6 +7,7 @@
 #include "NetworkSource.h"
 #include "SLFParser.h"
 #include "GameLogic.h"
+#include <map>
 
 class GameInteractor : public Interactor
 {
@@ -27,5 +28,6 @@ private:
 	NetworkSource*		m_pNetwork;
 	SLFParser*			m_pParser;
 
+	std::map<HEADER, Event<NetworkData>> onRead;
 };
 

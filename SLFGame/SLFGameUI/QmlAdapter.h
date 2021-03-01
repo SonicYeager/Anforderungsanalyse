@@ -33,12 +33,11 @@ class QmlAdapter : public QObject, public UI
 public:
     explicit QmlAdapter     (QObject *parent = nullptr);
 
-    void Init               (const GameStats&, const int&) override;
-    void PrepareGame        (const GameStats&, const int&) override;
-    void PrepareFinalScores (const GameStats&, const int&) override;
-    void PrepareOverview    (const GameStats&, const int&) override;
-    void PrepareLobby       (const GameStats&, const int&) override;
-    void PlayerJoined       (const GameStats&) override;
+    void PrepareGame        (const GameStats&) override;
+    void PrepareFinalScores (const GameStats&) override;
+    void PrepareOverview    (const GameStats&) override;
+    void PrepareLobby       (const GameStats&) override;
+    void PlayerJoined       (const GameStats&, int) override;
 
     QString getLetter();
     QString getLobbyCode();

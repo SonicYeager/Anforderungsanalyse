@@ -10,7 +10,8 @@ public:
 	virtual std::string GenerateLobbyCode()					= 0;
 	virtual void		StartServer()						= 0;
 	virtual void		ConnectToServer(const std::string&) = 0;
+	//write func
 
-	Event<const std::string&> onNewConnection;
-	Event<const std::string&> onReadyRead;
+	Event<int> onNewConnection;
+	Event<const NetworkData&> onReadyRead;
 };

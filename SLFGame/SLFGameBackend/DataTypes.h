@@ -6,6 +6,7 @@
 template<typename ... Args>
 using Event = std::function<void(Args...)>;
 
+
 enum DECISION
 {
 	UNANSWERED = 0,
@@ -81,6 +82,22 @@ private:
 };
 
 using Stats = std::pair<GameStats, PlayerStats>;
+
+enum class HEADER
+{
+   GETPLAYERNAME,
+   PLAYERNAME,
+   GETGAMESTATS,
+   GAMESTATS
+};
+
+struct NetworkData
+{
+	HEADER header{};
+	int potentialId{};
+	GameStats gamestats{};
+	std::string playerName{};
+};
 
 inline int PlayerStats::GetPoints()	const
 {

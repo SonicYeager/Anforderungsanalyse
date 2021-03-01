@@ -51,11 +51,22 @@ void GameNetwork::ConnectToServer(const std::string& ip)
 
 void GameNetwork::ReadyRead()
 {
-	//reader
+	NetworkData	ndata;
+	m_socket.read((char*)&ndata, sizeof(NetworkData));
+	onReadyRead(ndata);
 }
 
 void GameNetwork::NewConnection()
 {
-	m_connections.push_back(m_server.nextPendingConnection());
-	onNewConnection();
+	auto newConnection = m_server.nextPendingConnection();
+	m_connections.push_back(newConnection);
+	//get other playernames
+	NetworkData ndata;
+	ndata.header = HEADER::GETPLAYERNAME;
+	ndata.potentialId = m_connections.size() - 1;
+	QByteArray data{};
+	data.setRawData((char*)&ndata, sizeof(NetworkData));
+	newConnection->write(data);
+	//***********************
+	onNewConnection(m_connections.size() - 1);
 }

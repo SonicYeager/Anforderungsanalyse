@@ -18,4 +18,5 @@ public:
 	Event<GameStats> onGameOver;
 	Event<GameStats> onGameHosted;
 	Event<GameStats> onGameJoined;
+	Event<GameStats, int> onNewPlayerJoined;
 };

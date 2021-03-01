@@ -5,46 +5,39 @@ QmlAdapter::QmlAdapter(QObject *parent) :
 {}
 // ------------------------------------------ initializer function ------------------------------------------
 
-void QmlAdapter::Init(const GameStats & gs, const int & ps)
-{
-    setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
-}
-
-void QmlAdapter::PrepareGame(const GameStats & gs, const int & ps)
+void QmlAdapter::PrepareGame(const GameStats & gs)
 {
     _unhandledanswers = {};
-    setPlayerId(ps);
     setCurrentRound(gs.GetCurrentRound());
     setLetter(QChar(gs.GetCurrentLetter().letter));
     setCategories(gs.GetCategories());
-    //setPoints(gs.GetPlayerStats(ps).GetPoints());
+    setPoints(gs.GetPlayerStats(_playerId).GetPoints());
     setView("Input");
 }
 
-void QmlAdapter::PrepareFinalScores(const GameStats & gs, const int & ps)
+void QmlAdapter::PrepareFinalScores(const GameStats & gs)
 {
-    //setPoints(gs.GetPlayerStats(ps).GetPoints());
+    setPoints(gs.GetPlayerStats(_playerId).GetPoints());
     setView("FinalScores");
 }
 
-void QmlAdapter::PrepareOverview(const GameStats & gs, const int & ps)
+void QmlAdapter::PrepareOverview(const GameStats & gs)
 {
-    //setAnswers(gs.GetPlayerStats(ps).GetAnswers());
+    setAnswers(gs.GetPlayerStats(_playerId).GetAnswers());
     setView("Overview");
     emit answersChanged();
 }
 
-void QmlAdapter::PrepareLobby(const GameStats & gs, const int & ps)
+void QmlAdapter::PrepareLobby(const GameStats & gs)
 {
-    Init(gs, ps);
+    setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
     setView("Lobby");
 }
 
-void QmlAdapter::PlayerJoined(const GameStats & gs)
+void QmlAdapter::PlayerJoined(const GameStats & gs, int id)
 {
-    //_players.push_back(gs.GetP);
-    //setPlayerCount(_players.size());
-    //emit playersChanged();
+    _players.push_back(gs.GetPlayerStats(id).GetPlayerName());
+    setPlayerCount(_players.size());
 }
 
 // ------------------------------------------ getter ------------------------------------------
@@ -113,6 +106,11 @@ int QmlAdapter::getActiveOverviewItem()
 int QmlAdapter::getPlayerCount()
 {
     return _playerCount;
+}
+
+int QmlAdapter::getPlayerId()
+{
+    return _playerId;
 }
 
 QString QmlAdapter::getTimeLeft()
@@ -247,6 +245,11 @@ void QmlAdapter::setPlayerCount(int playerCount)
     emit playerCountChanged();
 }
 
+void QmlAdapter::setPlayerId(int playerId)
+{
+    _playerId = playerId;
+}
+
 void QmlAdapter::setTimeLeft(QString timeLeft)
 {
     if (timeLeft == _timeLeft)
@@ -298,12 +301,12 @@ void QmlAdapter::prepareGame()
 
 void QmlAdapter::prepareOverview()
 {
-    onPrepareOverview(_unhandledanswers);
+    onPrepareOverview(_unhandledanswers, _playerId);
 }
 
 void QmlAdapter::prepareNextRound()
 {
-    onPrepareNextRound(_decisions);
+    onPrepareNextRound(_decisions, _playerId);
 }
 
 void QmlAdapter::addAnswer(QString answer)

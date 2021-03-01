@@ -8,6 +8,18 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 	m_pParser(p)
 
 {
+	//filling the map
+
+	onRead = std::map<HEADER, Event<NetworkData>>
+	{
+		{HEADER::GETPLAYERNAME, [this](NetworkData data) { data.playerName = m_GameStats.GetPlayerStats(data.potentialId).GetPlayerName(); }},
+		{HEADER::PLAYERNAME, [this](NetworkData data) { /*modify gamestats -> add name to playerstats + broadcast to all*/ }},
+		{HEADER::GETGAMESTATS, [this](NetworkData data) { /*send gs to player (id socket)*/ }},
+		{HEADER::GAMESTATS, [this](NetworkData data) { /* set own gs to the ones retrieved */ }}
+	};
+
+	//**************
+
 	m_pGame->onGameOver = [this]() { onGameOver(m_GameStats); };
 	m_pGame->onPrepareNextRound = [this]() 
 	{
@@ -15,6 +27,19 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 		m_pDataOperation->SetNewLetter(generated, m_GameStats);
 		m_pDataOperation->AddPreviousLetter(m_GameStats);
 		onPrepareNextRound(m_GameStats);
+	};
+	m_pNetwork->onNewConnection = [this](int playerName) 
+	{ 
+		PlayerStats ps{};
+		auto id = m_GameStats.GetPlayerCount();
+		ps.SetPlayerID(id);
+		m_GameStats.AddPlayer(ps);
+		onNewPlayerJoined(m_GameStats, id); 
+	};
+	m_pNetwork->onReadyRead = [this](NetworkData data)
+	{
+		auto& func = onRead[data.header];
+		func(data);
 	};
 }
 
@@ -58,6 +83,8 @@ void GameInteractor::HostGame(const std::string& playerName)
 
 void GameInteractor::JoinGame(const std::string& playerName, const std::string& lobbyCode)
 {
+	auto gameStats = m_pDataOperation->CreateStats(lobbyCode, playerName);
+	m_GameStats = gameStats;
 	m_pNetwork->ConnectToServer(lobbyCode);
 	onGameJoined(m_GameStats);
 }
