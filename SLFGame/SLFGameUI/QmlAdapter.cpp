@@ -168,7 +168,7 @@ void QmlAdapter::setAnswers(StrVector2D answers)
     _answers = answers;
     _decisions.clear();
     for (int i = 0; i < _playerCount; i++)
-        _decisions.emplace_back(DECISION::UNANSWERED);
+        _decisions.emplace_back(/*DECISION::UNANSWERED*/);
     for (int i = 0; i < _categoryCount - 1; i++)
         _decisions[i].emplace_back(DECISION::UNANSWERED);
 

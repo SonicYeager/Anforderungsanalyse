@@ -129,7 +129,7 @@ private:
     int _playerCount            = 2;
     int _activeOverviewItem     = 0;
     int _playerId               = 0;
-    DecVector2D _decisions        = {};
+    DecVector2D _decisions      = {};
     bool _customChecked         = false;
 
 };
