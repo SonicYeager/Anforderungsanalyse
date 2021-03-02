@@ -56,6 +56,7 @@ struct GameStats
 	Letters GetUsedLetters()const;
 	Letter GetCurrentLetter()const;
 	PlayerStats GetPlayerStats(int)const;
+	std::vector<std::string> GetPlayerNames() const;
 	int GetPlayerCount()const;
 	int GetCurrentRound()const;
 	int GetMaxRound()const;
@@ -70,6 +71,7 @@ struct GameStats
 	void AddPlayer(PlayerStats);
 	void SetTimeout(const std::string&);
 	void SetPlayerName(const std::string&, int);
+	void SetPlayers(const Players&);
 
 private:
 	Categories categories{};
@@ -86,8 +88,9 @@ using Stats = std::pair<GameStats, PlayerStats>;
 
 enum class HEADER : int
 {
-   GET = 1,
-   SET = 2
+	GETNEWPLAYER = 1,
+	SETNEWPLAYER = 2,
+	UPDATELOBBY  = 3
 };
 
 struct NetworkData
@@ -169,6 +172,14 @@ inline PlayerStats GameStats::GetPlayerStats(int playerId) const
 	return players[playerId];
 }
 
+inline std::vector<std::string> GameStats::GetPlayerNames() const
+{
+	std::vector<std::string> names{};
+	for (auto name : players)
+		names.push_back(name.GetPlayerName());
+	return names;
+}
+
 inline int GameStats::GetPlayerCount() const
 {
 	return players.size();
@@ -237,6 +248,11 @@ inline void GameStats::SetTimeout(const std::string& t)
 inline void GameStats::SetPlayerName(const std::string& name, int idx)
 {
 	players[idx].SetPlayerName(name);
+}
+
+inline void GameStats::SetPlayers(const Players& play)
+{
+	players = play;
 }
 
 inline bool Letter::operator==(const Letter& other)	const

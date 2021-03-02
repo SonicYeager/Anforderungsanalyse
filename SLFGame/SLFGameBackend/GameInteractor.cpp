@@ -13,10 +13,53 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 
 	onRead = std::map<HEADER, Event<NetworkData>>
 	{
-		{HEADER::GET, [this](NetworkData data) 
-		{ data.header = HEADER::SET; data.playerNames.push_back(m_GameStats.GetPlayerStats(data.potentialId).GetPlayerName()); auto serialzed = m_pSerialzer->Serialize(data); m_pNetwork->WriteToHost(serialzed); }},
-		{HEADER::SET, [this](NetworkData data) 
-		{ m_GameStats.SetPlayerName(data.playerNames[data.potentialId], data.potentialId); }},
+		{HEADER::GETNEWPLAYER, [this](NetworkData data) 
+		{ 
+			data.header = HEADER::SETNEWPLAYER;
+			data.playerNames.insert(std::next(std::begin(data.playerNames), data.potentialId), m_GameStats.GetPlayerStats(data.potentialId).GetPlayerName());
+			auto serialzed = m_pSerialzer->Serialize(data); 
+			m_pNetwork->WriteToHost(serialzed);
+			//maybe fetch all data here as well?
+		}},
+		{HEADER::SETNEWPLAYER, [this](NetworkData data)
+		{ 
+			m_GameStats.SetPlayerName(data.playerNames[data.potentialId], data.potentialId);
+			Players ps;
+			for (size_t i{}; i < data.playerNames.size(); ++i)
+			{
+				PlayerStats p{};
+				p.SetPlayerName(data.playerNames[i]);
+				p.SetPlayerID(i);
+				p.SetPoints(data.points[i]);
+				p.SetAnswers(data.answers[i]);
+				ps.push_back(p);
+			}
+			m_GameStats.SetPlayers(ps);
+
+			//data.header = HEADER::UPDATELOBBY;
+			//data.playerNames = m_GameStats.GetPlayerNames();
+			//auto serialize = m_pSerialzer->Serialize(data);
+			//m_pNetwork->Broadcast(serialize);
+			onNewPlayerJoined(m_GameStats, data.potentialId);
+		}},
+		{HEADER::UPDATELOBBY, [this](NetworkData data)
+		{
+			m_GameStats.SetCategories(data.categories);
+			m_GameStats.SetMaxRounds(data.maxRounds);
+			m_GameStats.SetTimeout(data.timeout);
+			Players ps;
+			for (size_t i{}; i < data.playerNames.size(); ++i)
+			{
+				PlayerStats p{};
+				p.SetPlayerName(data.playerNames[i]);
+				p.SetPlayerID(i);
+				p.SetPoints(data.points[i]);
+				p.SetAnswers(data.answers[i]);
+				ps.push_back(p);
+			}
+			m_GameStats.SetPlayers(ps);
+			// add event to trg update
+		}}
 	};
 
 	//**************
@@ -35,16 +78,15 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 		ps.SetPlayerID(playerId);
 		m_GameStats.AddPlayer(ps);
 		NetworkData ndata;
-		ndata.header = HEADER::GET;
+		ndata.header = HEADER::GETNEWPLAYER;
 		ndata.potentialId = playerId;
 		ndata.categories = m_GameStats.GetCategories();
 		ndata.currentLetter = m_GameStats.GetCurrentLetter().letter;
 		ndata.maxRounds = m_GameStats.GetMaxRound();
-		//ndata.playerNames = m_GameStats.GetPlayerStats().GetPlayerNames();
+		ndata.playerNames = m_GameStats.GetPlayerNames();
 		ndata.timeout = m_GameStats.GetTimeout();
 		auto serialize = m_pSerialzer->Serialize(ndata);
 		m_pNetwork->Write(serialize, playerId);
-		onNewPlayerJoined(m_GameStats, playerId);
 	};
 	m_pNetwork->onReadyRead = [this](QByteArray data)
 	{
