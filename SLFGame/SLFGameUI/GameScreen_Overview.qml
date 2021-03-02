@@ -22,20 +22,8 @@ Rectangle{
             RowLayout {
                 anchors.fill: parent
                 spacing: 0
-                Rectangle {
-                    Layout.fillWidth: true -5
-                    Layout.fillHeight: true -5
-                    Layout.alignment: Qt.AlignCenter
-                    color: Qt.rgba(0,0,0,0)
-                }
                 Banner{
-
-                }
-                Rectangle {
-                    Layout.fillWidth: true -5
-                    Layout.fillHeight: true -5
-                    Layout.alignment: Qt.AlignCenter
-                    color: Qt.rgba(0,0,0,0)
+                    Layout.alignment: Qt.AlignHCenter
                 }
             }
         }
@@ -77,31 +65,31 @@ Rectangle{
                                             listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "desc"})
                                     }
                                 }
-                                Connections {
-                                    target: qmlAdapter
-                                    function onCategoryCountChanged()
-                                    {
-                                        categoryOverview.listModel.clear()
-                                        for (var i = 0; i < qmlAdapter.categoryCount; i++)
-                                        {
-                                            if (i === 0)
-                                                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "active"})
-                                            else
-                                                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "desc"})
-                                        }
-                                    }
-                                    function onAnswersChanged()
-                                    {
-                                        categoryOverview.listModel.clear()
-                                        for (var i = 0; i < qmlAdapter.categoryCount; i++)
-                                        {
-                                            if (i === 0)
-                                                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "active"})
-                                            else
-                                                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "desc"})
-                                        }
-                                    }
-                                }
+                                //Connections {
+                                //    target: qmlAdapter
+                                //    function onCategoryCountChanged()
+                                //    {
+                                //        categoryOverview.listModel.clear()
+                                //        for (var i = 0; i < qmlAdapter.categoryCount; i++)
+                                //        {
+                                //            if (i === 0)
+                                //                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "active"})
+                                //            else
+                                //                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "desc"})
+                                //        }
+                                //    }
+                                //    function onAnswersChanged()
+                                //    {
+                                //        categoryOverview.listModel.clear()
+                                //        for (var i = 0; i < qmlAdapter.categoryCount; i++)
+                                //        {
+                                //            if (i === 0)
+                                //                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "active"})
+                                //            else
+                                //                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "desc"})
+                                //        }
+                                //    }
+                                //}
                             }
                         }
                     }
@@ -127,29 +115,31 @@ Rectangle{
                                 Component.onCompleted: {
                                     for (var i = 0; i < qmlAdapter.playerCount; i++)
                                     {
-                                            listModel.append({"answer":" "})
+                                        answerBlockList.listModel.append(
+                                        {"answer"  :qmlAdapter.getAnswer  (i,qmlAdapter.activeOverviewItem),
+                                         "decision":qmlAdapter.getDecision(i,qmlAdapter.activeOverviewItem)})
                                     }
                                 }
                                 Connections {
                                     target: qmlAdapter
-                                    function onAnswersChanged()
-                                    {
-                                        answerBlockList.listModel.clear()
-                                        for (var i = 0; i < qmlAdapter.playerCount; i++)
-                                        {
-                                            answerBlockList.listModel.append(
-                                                        {"answer":qmlAdapter.getAnswer(qmlAdapter.activeOverviewItem),
-                                                            "decision":qmlAdapter.getDecision(qmlAdapter.activeOverviewItem)})
-                                        }
-                                    }
+                                    //function onAnswersChanged()
+                                    //{
+                                    //    answerBlockList.listModel.clear()
+                                    //    for (var i = 0; i < qmlAdapter.playerCount; i++)
+                                    //    {
+                                    //        answerBlockList.listModel.append(
+                                    //                    {"answer":qmlAdapter.getAnswer(qmlAdapter.activeOverviewItem),
+                                    //                        "decision":qmlAdapter.getDecision(qmlAdapter.activeOverviewItem)})
+                                    //    }
+                                    //}
                                     function onActiveOverviewItemChanged()
                                     {
                                         answerBlockList.listModel.clear()
                                         for (var i = 0; i < qmlAdapter.playerCount; i++)
                                         {
                                             answerBlockList.listModel.append(
-                                                        {"answer":qmlAdapter.getAnswer(qmlAdapter.activeOverviewItem),
-                                                            "decision":qmlAdapter.getDecision(qmlAdapter.activeOverviewItem)})
+                                            {"answer":  qmlAdapter.getAnswer  (i,qmlAdapter.activeOverviewItem),
+                                             "decision":qmlAdapter.getDecision(i,qmlAdapter.activeOverviewItem)})
                                         }
                                     }
                                 }
@@ -159,8 +149,6 @@ Rectangle{
                 }
             }
         }
-
-
         Rectangle{
             id: bottom
             Layout.minimumHeight: 100

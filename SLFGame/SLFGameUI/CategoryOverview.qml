@@ -22,7 +22,9 @@ ListView {
             onClicked: {
                 for (var i = 0; i < list.count; i++)
                     list_model.get(i).state = "desc"
+
                 model.state = "active"
+
                 for (var j = 0; j < list.count; j++)
                     if (list_model.get(j).state === "active")
                         qmlAdapter.activeOverviewItem = j

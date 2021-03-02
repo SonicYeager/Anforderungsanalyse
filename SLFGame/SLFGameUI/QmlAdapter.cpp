@@ -23,7 +23,7 @@ void QmlAdapter::PrepareFinalScores(const GameStats & gs)
 
 void QmlAdapter::PrepareOverview(const GameStats & gs)
 {
-    setAnswers(gs.GetPlayerStats(_playerId).GetAnswers());
+    addPlayerAnswers(gs);
     setView("Overview");
     emit answersChanged();
 }
@@ -63,7 +63,7 @@ StrVector QmlAdapter::getCategories()
     return _categories;
 }
 
-StrVector QmlAdapter::getAnswers()
+StrVector2D QmlAdapter::getAnswers()
 {
     return _answers;
 }
@@ -161,14 +161,17 @@ void QmlAdapter::setCategories(StrVector categories)
     emit categoryCountChanged();
 }
 
-void QmlAdapter::setAnswers(StrVector answers)
+void QmlAdapter::setAnswers(StrVector2D answers)
 {
     if (answers == _answers)
         return;
     _answers = answers;
     _decisions.clear();
-    for (unsigned long long i = 0; i < _answers.size(); i++)
+    for (int i = 0; i < _playerCount; i++)
         _decisions.emplace_back(DECISION::UNANSWERED);
+    for (int i = 0; i < _categoryCount - 1; i++)
+        _decisions[i].emplace_back(DECISION::UNANSWERED);
+
     emit answersChanged();
     emit decisionsChanged();
 }
@@ -267,9 +270,9 @@ QString QmlAdapter::getCategoryName(int idx)
     return QString::fromUtf8(_categories[idx].c_str());
 }
 
-QString QmlAdapter::getAnswer(int idx)
+QString QmlAdapter::getAnswer(int playerID, int categoryIDX)
 {
-    return QString::fromUtf8(_answers[idx].c_str());
+    return QString::fromUtf8(_answers[playerID][categoryIDX].c_str());
 }
 
 QString QmlAdapter::getPlayer(int idx)
@@ -277,9 +280,9 @@ QString QmlAdapter::getPlayer(int idx)
     return QString::fromUtf8(_players[idx].c_str());
 }
 
-DECISION QmlAdapter::getDecision(int idx)
+DECISION QmlAdapter::getDecision(int playerID, int categoryIDX)
 {
-    return _decisions[idx];
+    return _decisions[playerID][categoryIDX];
 }
 
 void QmlAdapter::setActiveItemIA(int idx)
@@ -287,10 +290,10 @@ void QmlAdapter::setActiveItemIA(int idx)
     setActiveOverviewItem(idx);
 }
 
-void QmlAdapter::setDecision(int idx, int newVal)
+void QmlAdapter::setDecision(int playerID, int categoryIDX, int newVal)
 {
     auto dec = static_cast<DECISION>(newVal);
-    _decisions[idx] = dec;
+    _decisions[playerID][categoryIDX] = dec;
     emit decisionsChanged();
 }
 
@@ -306,12 +309,21 @@ void QmlAdapter::prepareOverview()
 
 void QmlAdapter::prepareNextRound()
 {
-    onPrepareNextRound(_decisions, _playerId);
+    // CHANGE ME SOON ----------------------------------------------------------------------
+    onPrepareNextRound(_decisions[0], _playerId);
 }
 
 void QmlAdapter::addAnswer(QString answer)
 {
     _unhandledanswers.emplace_back(answer.toStdString());
+}
+
+void QmlAdapter::addPlayerAnswers(GameStats gs)
+{
+    StrVector2D result;
+    for (int i = 0; i < gs.GetPlayerCount(); i++)
+        result.push_back(gs.GetPlayerStats(i).GetAnswers());
+    setAnswers(result);
 }
 
 void QmlAdapter::hostLobby()

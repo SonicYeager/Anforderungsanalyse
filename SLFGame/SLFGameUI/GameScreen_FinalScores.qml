@@ -46,7 +46,6 @@ Rectangle{
             Layout.alignment: Qt.AlignHCenter
             color: Qt.rgba(0,0,0,0)
             Layout.margins: 10
-            //Layout.bottomMargin: 30
             RowLayout{
                 spacing: 0
                 anchors.fill: parent

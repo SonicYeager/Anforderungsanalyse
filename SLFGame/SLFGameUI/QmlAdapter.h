@@ -9,7 +9,9 @@
 #include "UI.h"
 
 using StrVector = std::vector<std::string>;
-
+using StrVector2D = std::vector<StrVector>;
+using DecVector = std::vector<DECISION>;
+using DecVector2D = std::vector<DecVector>;
 class QmlAdapter : public QObject, public UI
 {
     Q_OBJECT
@@ -20,7 +22,7 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(QString timeLeft            READ getTimeLeft              WRITE setTimeLeft              NOTIFY timeLeftChanged)
     Q_PROPERTY(QString view                READ getView                  WRITE setView                  NOTIFY viewChanged)
     Q_PROPERTY(StrVector categories        READ getCategories            WRITE setCategories            NOTIFY categoriesChanged)
-    Q_PROPERTY(StrVector answers           READ getAnswers               WRITE setAnswers               NOTIFY answersChanged)
+    Q_PROPERTY(StrVector2D answers         READ getAnswers               WRITE setAnswers               NOTIFY answersChanged)
     Q_PROPERTY(StrVector players           READ getPlayers               WRITE setPlayers               NOTIFY playersChanged)
     Q_PROPERTY(int categoryCount           READ getCategoryCount         WRITE setCategoryCount         NOTIFY categoryCountChanged)
     Q_PROPERTY(int currentRound            READ getCurrentRound          WRITE setCurrentRound          NOTIFY currentRoundChanged)
@@ -46,7 +48,7 @@ public:
     QString getTimeLeft();
     QString getView();
     StrVector getCategories();
-    StrVector getAnswers();
+    StrVector2D getAnswers();
     StrVector getPlayers();
     int getCategoryCount();
     int getCurrentRound();
@@ -64,7 +66,7 @@ public:
     void setMaxRounds                   (QString maxRounds);
     void setView                        (QString view);
     void setCategories                  (StrVector categories);
-    void setAnswers                     (StrVector answers);
+    void setAnswers                     (StrVector2D answers);
     void setPlayers                     (StrVector players);
     void setCategoryCount               (int categoryCount);
     void setCurrentRound                (int currentRound);
@@ -77,15 +79,16 @@ public:
 public slots:
 
     QString getCategoryName(int idx);
-    QString getAnswer(int idx);
+    QString getAnswer(int playerID, int categoryIDX);
     QString getPlayer(int idx);
-    DECISION getDecision(int idx);
+    DECISION getDecision(int playerID, int categoryIDX);
     void setActiveItemIA(int idx);
-    void setDecision(int idx, int newVal);
+    void setDecision(int playerID, int categoryIDX, int newVal);
     void prepareGame();
     void prepareOverview();
     void prepareNextRound();
     void addAnswer(QString answer);
+    void addPlayerAnswers(GameStats gs);
     void hostLobby();
     void joinLobby(QString lobbyCode);
 
@@ -117,16 +120,16 @@ private:
     QString m_customCategories  = {};
     QString _view               = "MainMenu";
     StrVector _categories       = {"Stadt", "Land", "Fluss", "Name", "Tier", "Beruf"};
-    StrVector _answers          = {};
     StrVector _unhandledanswers = {};
     StrVector _players          = {"Pyke", "Kamille"};
+    StrVector2D _answers        = {};
     int _categoryCount          = 6;
     int _currentRound           = 0;
     int _points                 = 999;
     int _playerCount            = 2;
     int _activeOverviewItem     = 0;
     int _playerId               = 0;
-    std::vector<DECISION> _decisions = {DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED,DECISION::UNANSWERED};
+    DecVector2D _decisions        = {};
     bool _customChecked         = false;
 
 };

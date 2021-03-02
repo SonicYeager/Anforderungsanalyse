@@ -101,25 +101,25 @@ Rectangle{
                     listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
                 }
             }
-            Connections {
-                target: qmlAdapter
-                function onCategoryCountChanged()
-                {
-                    categories.listModel.clear()
-                    for (var i = 0; i < qmlAdapter.categoryCount; i++)
-                    {
-                        categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
-                    }
-                }
-                function onAnswersChanged()
-                {
-                    categories.listModel.clear()
-                    for (var i = 0; i < qmlAdapter.categoryCount; i++)
-                    {
-                        categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
-                    }
-                }
-            }
+            //Connections {
+            //    target: qmlAdapter
+            //    function onCategoryCountChanged()
+            //    {
+            //        categories.listModel.clear()
+            //        for (var i = 0; i < qmlAdapter.categoryCount; i++)
+            //        {
+            //            categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
+            //        }
+            //    }
+            //    function onAnswersChanged()
+            //    {
+            //        categories.listModel.clear()
+            //        for (var i = 0; i < qmlAdapter.categoryCount; i++)
+            //        {
+            //            categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
+            //        }
+            //    }
+            //}
         }
         Rectangle{
             id: categoryPlaceholder_bottom

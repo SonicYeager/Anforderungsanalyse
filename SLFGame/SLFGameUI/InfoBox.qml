@@ -37,16 +37,12 @@ Rectangle{
                     state: "desc"
                     Layout.preferredHeight: 40
                     Layout.preferredWidth: 150
-                    //Layout.rightMargin: parent.width * 0.1
-                    //Layout.leftMargin: parent.width * 0.1
                 }
                 TextBox{
                     id: output
                     text: qmlAdapter[adapterProperty]
                     Layout.preferredHeight: 40
                     Layout.preferredWidth: 150
-                    //Layout.rightMargin: parent.width * 0.1
-                    //Layout.leftMargin: parent.width * 0.1
                 }
                 Rectangle
                 {

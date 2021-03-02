@@ -23,20 +23,8 @@ Rectangle{
             RowLayout {
                 anchors.fill: parent
                 spacing: 0
-                Rectangle {
-                    Layout.fillWidth: true -5
-                    Layout.fillHeight: true -5
-                    Layout.alignment: Qt.AlignCenter
-                    color: Qt.rgba(0,0,0,0)
-                }
                 Banner{
-
-                }
-                Rectangle {
-                    Layout.fillWidth: true -5
-                    Layout.fillHeight: true -5
-                    Layout.alignment: Qt.AlignCenter
-                    color: Qt.rgba(0,0,0,0)
+                    Layout.alignment: Qt.AlignHCenter
                 }
             }
         }
