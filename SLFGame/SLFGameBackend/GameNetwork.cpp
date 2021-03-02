@@ -49,18 +49,18 @@ void GameNetwork::ConnectToServer(const std::string& ip)
 	m_socket.connectToHost(address, m_port);
 }
 
-void GameNetwork::Write(const NetworkData& data, int idx)
+void GameNetwork::Write(const QDataStream& data, int idx)
 {
 	m_connections[idx]->write((char*)&data, sizeof(NetworkData));
 }
 
-void GameNetwork::Broadcast(const NetworkData& data)
+void GameNetwork::Broadcast(const QDataStream& data)
 {
 	for (size_t i{}; i < m_connections.size(); ++i)
 		Write(data, i);
 }
 
-void GameNetwork::WriteToHost(const NetworkData& data)
+void GameNetwork::WriteToHost(const QDataStream& data)
 {
 	m_socket.write((char*)&data, sizeof(NetworkData));
 }
