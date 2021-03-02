@@ -4,6 +4,6 @@
 class QDataSerializer : public Serializer
 {
 public:
-	virtual QDataStream Serialize(const NetworkData&) = 0;
-	virtual NetworkData Deserialize(const QDataStream&) = 0;
+	QByteArray Serialize(const NetworkData&) override;
+	NetworkData Deserialize(const QByteArray&) override;
 };

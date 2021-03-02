@@ -7,7 +7,7 @@ template<typename ... Args>
 using Event = std::function<void(Args...)>;
 
 
-enum DECISION
+enum class DECISION : int
 {
 	UNANSWERED = 0,
 	SOLO = 1,
@@ -84,18 +84,24 @@ private:
 
 using Stats = std::pair<GameStats, PlayerStats>;
 
-enum class HEADER
+enum class HEADER : int
 {
-   GET,
-   SET,
+   GET = 1,
+   SET = 2
 };
 
 struct NetworkData
 {
 	HEADER header{};
-	//std::string playerName{};
+	char currentLetter{};
 	int potentialId{};
-	//GameStats gamestats{};
+	int maxRounds{};
+	std::string timeout{};
+	std::vector<int> points{};
+	std::vector<std::string> categories{};
+	std::vector<std::string> playerNames{};
+	std::vector<std::vector<DECISION>> decisions{};
+	std::vector<std::vector<std::string>> answers{};
 };
 
 inline int PlayerStats::GetPoints()	const

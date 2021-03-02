@@ -11,10 +11,10 @@ public:
 	virtual std::string GenerateLobbyCode()					= 0;
 	virtual void		StartServer()						= 0;
 	virtual void		ConnectToServer(const std::string&) = 0;
-	virtual void		Broadcast(const QDataStream&)		= 0;
-	virtual void		Write(const QDataStream&, int)		= 0;
-	virtual void		WriteToHost(const QDataStream&)		= 0;
+	virtual void		Broadcast(const QByteArray&)		= 0;
+	virtual void		Write(const QByteArray&, int)		= 0;
+	virtual void		WriteToHost(const QByteArray&)		= 0;
 
 	Event<int> onNewConnection;
-	Event<const NetworkData&> onReadyRead;
+	Event<const QByteArray&> onReadyRead;
 };

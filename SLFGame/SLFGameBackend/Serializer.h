@@ -7,6 +7,6 @@ class Serializer
 public:
 	virtual ~Serializer() = default;
 
-	virtual QDataStream Serialize(const NetworkData&) = 0;
-	virtual NetworkData Deserialize(const QDataStream&) = 0;
+	virtual QByteArray Serialize(const NetworkData&) = 0;
+	virtual NetworkData Deserialize(const QByteArray&) = 0;
 };

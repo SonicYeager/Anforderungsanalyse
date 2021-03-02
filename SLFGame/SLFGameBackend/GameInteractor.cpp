@@ -1,19 +1,22 @@
 #include "GameInteractor.h"
 
-GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, GameLogic* game, NetworkSource* n, SLFParser* p) :
+GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, GameLogic* game, NetworkSource* n, SLFParser* p, Serializer* s) :
 	m_pRandomGenerator(gen),
 	m_pDataOperation(op),
 	m_pGame(game),
 	m_pNetwork(n),
-	m_pParser(p)
+	m_pParser(p), 
+	m_pSerialzer(s)
 
 {
 	//filling the map
 
 	onRead = std::map<HEADER, Event<NetworkData>>
 	{
-		{HEADER::GET, [this](NetworkData data) { data.header = HEADER::SET; m_pNetwork->WriteToHost(data); }},
-		{HEADER::SET, [this](NetworkData data) { /**/ }},
+		{HEADER::GET, [this](NetworkData data) 
+		{ data.header = HEADER::SET; data.playerNames.push_back(m_GameStats.GetPlayerStats(data.potentialId).GetPlayerName()); auto serialzed = m_pSerialzer->Serialize(data); m_pNetwork->WriteToHost(serialzed); }},
+		{HEADER::SET, [this](NetworkData data) 
+		{ m_GameStats.SetPlayerName(data.playerNames[data.potentialId], data.potentialId); }},
 	};
 
 	//**************
@@ -26,18 +29,28 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 		m_pDataOperation->AddPreviousLetter(m_GameStats);
 		onPrepareNextRound(m_GameStats);
 	};
-	m_pNetwork->onNewConnection = [this](int playerName) 
+	m_pNetwork->onNewConnection = [this](int playerId) 
 	{ 
 		PlayerStats ps{};
-		auto id = m_GameStats.GetPlayerCount();
-		ps.SetPlayerID(id);
+		ps.SetPlayerID(playerId);
 		m_GameStats.AddPlayer(ps);
-		onNewPlayerJoined(m_GameStats, id); 
+		NetworkData ndata;
+		ndata.header = HEADER::GET;
+		ndata.potentialId = playerId;
+		ndata.categories = m_GameStats.GetCategories();
+		ndata.currentLetter = m_GameStats.GetCurrentLetter().letter;
+		ndata.maxRounds = m_GameStats.GetMaxRound();
+		//ndata.playerNames = m_GameStats.GetPlayerStats().GetPlayerNames();
+		ndata.timeout = m_GameStats.GetTimeout();
+		auto serialize = m_pSerialzer->Serialize(ndata);
+		m_pNetwork->Write(serialize, playerId);
+		onNewPlayerJoined(m_GameStats, playerId);
 	};
-	m_pNetwork->onReadyRead = [this](NetworkData data)
+	m_pNetwork->onReadyRead = [this](QByteArray data)
 	{
-		auto& func = onRead[data.header];
-		func(data);
+		auto deserialized = m_pSerialzer->Deserialize(data);
+		auto& func = onRead[deserialized.header];
+		func(deserialized);
 	};
 }
 

@@ -49,39 +49,32 @@ void GameNetwork::ConnectToServer(const std::string& ip)
 	m_socket.connectToHost(address, m_port);
 }
 
-void GameNetwork::Write(const QDataStream& data, int idx)
+void GameNetwork::Write(const QByteArray& data, int idx)
 {
-	m_connections[idx]->write((char*)&data, sizeof(NetworkData));
+	m_connections[idx]->write(data, sizeof(NetworkData));
 }
 
-void GameNetwork::Broadcast(const QDataStream& data)
+void GameNetwork::Broadcast(const QByteArray& data)
 {
 	for (size_t i{}; i < m_connections.size(); ++i)
 		Write(data, i);
 }
 
-void GameNetwork::WriteToHost(const QDataStream& data)
+void GameNetwork::WriteToHost(const QByteArray& data)
 {
-	m_socket.write((char*)&data, sizeof(NetworkData));
+	m_socket.write(data, sizeof(NetworkData));
 }
 
 void GameNetwork::ReadyRead()
 {
-	NetworkData	ndata;
 	QByteArray qdata{};
-	m_socket.read((char*)&ndata, sizeof(NetworkData));
-	onReadyRead(ndata);
+	qdata = m_socket.read(sizeof(NetworkData));
+	onReadyRead(qdata);
 }
 
 void GameNetwork::NewConnection()
 {
 	auto newConnection = m_server.nextPendingConnection();
 	m_connections.push_back(newConnection);
-	//get other playernames
-	NetworkData ndata;
-	ndata.header = HEADER::GET;
-	ndata.potentialId = 333;//m_connections.size() - 1;
-	newConnection->write((char*)&ndata, sizeof(NetworkData));
-	//***********************
 	onNewConnection(m_connections.size() - 1);
 }

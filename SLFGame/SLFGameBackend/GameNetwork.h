@@ -11,9 +11,9 @@ public:
 	std::string GenerateLobbyCode	()								override;
 	void		StartServer			()								override;
 	void		ConnectToServer		(const std::string&)			override;
-	void		Write				(const QDataStream&, int)		override;
-	void		Broadcast			(const QDataStream&)			override;
-	void		WriteToHost			(const QDataStream&)			override;
+	void		Write				(const QByteArray&, int)		override;
+	void		Broadcast			(const QByteArray&)			override;
+	void		WriteToHost			(const QByteArray&)			override;
 
 public slots:
 

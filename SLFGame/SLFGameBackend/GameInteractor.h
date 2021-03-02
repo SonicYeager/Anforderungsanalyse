@@ -7,12 +7,13 @@
 #include "NetworkSource.h"
 #include "SLFParser.h"
 #include "GameLogic.h"
+#include "Serializer.h"
 #include <map>
 
 class GameInteractor : public Interactor
 {
 public:
-	explicit	GameInteractor	(RandomGenRessource*, DataOperationLogic*, GameLogic*, NetworkSource*, SLFParser*);
+	explicit	GameInteractor	(RandomGenRessource*, DataOperationLogic*, GameLogic*, NetworkSource*, SLFParser*, Serializer*);
 	void		PrepareGame		(const std::string& cats, const std::string& roundTime, const std::string& roundCount) override;
 	void		PrepareOverview	(const std::vector<std::string>&, int) override;
 	void		EndRound		(const std::vector<DECISION>&, int) override;
@@ -27,6 +28,7 @@ private:
 	GameLogic*			m_pGame;
 	NetworkSource*		m_pNetwork;
 	SLFParser*			m_pParser;
+	Serializer*			m_pSerialzer;
 
 	std::map<HEADER, Event<NetworkData>> onRead;
 };
