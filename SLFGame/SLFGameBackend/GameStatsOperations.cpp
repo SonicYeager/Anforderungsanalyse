@@ -48,5 +48,9 @@ GameStats GameStatsOperations::CreateStats(const std::string& code, const std::s
 	gs.SetMaxRounds(5);
 	gs.SetCategories({ {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}} });
 	gs.SetLobbyCode(code);
+	PlayerStats ps{};
+	ps.SetPlayerName(playerName);
+	ps.SetPlayerID(0);
+	gs.AddPlayer(ps);
     return gs;
 }

@@ -62,7 +62,10 @@ void GameNetwork::Broadcast(const QByteArray& data)
 
 void GameNetwork::WriteToHost(const QByteArray& data)
 {
-	m_socket.write(data, sizeof(NetworkData));
+	if (m_connections.size() == 0)
+		m_socket.write(data, sizeof(NetworkData));
+	else
+		m_connections[0]->write(data, sizeof(NetworkData));
 }
 
 void GameNetwork::ReadyRead()

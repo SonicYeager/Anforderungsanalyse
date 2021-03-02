@@ -16,7 +16,10 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 		{HEADER::GETNEWPLAYER, [this](NetworkData data) 
 		{ 
 			data.header = HEADER::SETNEWPLAYER;
-			data.playerNames.insert(std::next(std::begin(data.playerNames), data.potentialId), m_GameStats.GetPlayerStats(data.potentialId).GetPlayerName());
+			if (data.potentialId == 0)
+				data.playerNames[0] = m_GameStats.GetPlayerStats(data.potentialId).GetPlayerName();
+			else
+				data.playerNames.insert(std::next(std::begin(data.playerNames), data.potentialId), m_GameStats.GetPlayerStats(data.potentialId).GetPlayerName());
 			auto serialzed = m_pSerialzer->Serialize(data); 
 			m_pNetwork->WriteToHost(serialzed);
 			//maybe fetch all data here as well?
@@ -74,9 +77,6 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 	};
 	m_pNetwork->onNewConnection = [this](int playerId) 
 	{ 
-		PlayerStats ps{};
-		ps.SetPlayerID(playerId);
-		m_GameStats.AddPlayer(ps);
 		NetworkData ndata;
 		ndata.header = HEADER::GETNEWPLAYER;
 		ndata.potentialId = playerId;
@@ -85,6 +85,8 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 		ndata.maxRounds = m_GameStats.GetMaxRound();
 		ndata.playerNames = m_GameStats.GetPlayerNames();
 		ndata.timeout = m_GameStats.GetTimeout();
+		ndata.points.emplace_back();
+		ndata.answers.emplace_back();
 		auto serialize = m_pSerialzer->Serialize(ndata);
 		m_pNetwork->Write(serialize, playerId);
 	};
@@ -127,10 +129,10 @@ void GameInteractor::EndRound(const std::vector<DECISION>& decisions, int player
 void GameInteractor::HostGame(const std::string& playerName)
 {
 	auto lobbyCode = m_pNetwork->GenerateLobbyCode();
-	m_pNetwork->StartServer();
-	m_pNetwork->ConnectToServer(lobbyCode);
 	auto gameStats = m_pDataOperation->CreateStats(lobbyCode, playerName);
 	m_GameStats = gameStats;
+	m_pNetwork->StartServer();
+	m_pNetwork->ConnectToServer(lobbyCode);
 	onGameHosted(m_GameStats);
 }
 
