@@ -94,7 +94,7 @@ public slots:
     void addAnswer(QString answer);
     void addPlayerAnswers(GameStats gs);
     void hostLobby();
-    void joinLobby(QString lobbyCode);
+    void joinLobby();
 
 signals:
     void letterChanged();
@@ -118,7 +118,7 @@ signals:
 
 private:
     QString _letter             = "bad";
-    QString _lobbyCode          = "0000";
+    QString _lobbyCode          = "";
     QString _customCategories   = "Stadt,Land,Fluss,Name,Tier,Beruf";
     QString _maxRounds          = "5";
     QString _timeLeft           = "bis Stop";

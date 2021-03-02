@@ -116,21 +116,22 @@ Rectangle{
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                qmlAdapter.mainMenuScreenVisible = false;
-                                qmlAdapter.lobbyScreenVisible = true;
-                                qmlAdapter.joinLobby(lobbyCode.text);
+                                qmlAdapter.joinLobby();
                                 qmlAdapter.view = "Lobby";
                             }
                         }
                     }
                     EntryBox {
                         id: lobbyCode
-                        text: ""
+                        text: qmlAdapter.lobbyCode
                         placeholderText: "Lobby ID"
                         Layout.preferredWidth: 200
                         Layout.preferredHeight: 50
                         Layout.alignment: Qt.AlignCenter
                         Layout.bottomMargin: 15
+                        onTextChanged: {
+                            qmlAdapter.lobbyCode = text;
+                        }
                     }
 
                     Rectangle{

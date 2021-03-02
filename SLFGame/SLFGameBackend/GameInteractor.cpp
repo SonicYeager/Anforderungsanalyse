@@ -19,7 +19,7 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 			if (data.potentialId == 0)
 				data.playerNames[0] = m_GameStats.GetPlayerStats(data.potentialId).GetPlayerName();
 			else
-				data.playerNames.insert(std::next(std::begin(data.playerNames), data.potentialId), m_GameStats.GetPlayerStats(data.potentialId).GetPlayerName());
+                data.playerNames.insert(std::next(std::begin(data.playerNames), data.potentialId-1), m_GameStats.GetPlayerStats(0).GetPlayerName());
 			auto serialzed = m_pSerialzer->Serialize(data); 
 			m_pNetwork->WriteToHost(serialzed);
 			//maybe fetch all data here as well?
@@ -136,7 +136,7 @@ void GameInteractor::HostGame(const std::string& playerName)
 	onGameHosted(m_GameStats);
 }
 
-void GameInteractor::JoinGame(const std::string& playerName, const std::string& lobbyCode)
+void GameInteractor::JoinGame(const std::string& lobbyCode, const std::string& playerName)
 {
 	auto gameStats = m_pDataOperation->CreateStats(lobbyCode, playerName);
 	m_GameStats = gameStats;

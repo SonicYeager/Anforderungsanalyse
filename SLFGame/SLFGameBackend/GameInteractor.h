@@ -18,7 +18,7 @@ public:
 	void		PrepareOverview	(const std::vector<std::string>&, int) override;
 	void		EndRound		(const std::vector<DECISION>&, int) override;
 	void		HostGame		(const std::string&) override;
-	void		JoinGame		(const std::string& playerName, const std::string& lobbyCode) override;
+	void		JoinGame		(const std::string& lobbyCode, const std::string& playerName) override;
 
 	GameStats	m_GameStats;
 

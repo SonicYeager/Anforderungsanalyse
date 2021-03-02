@@ -38,6 +38,7 @@ void QmlAdapter::PlayerJoined(const GameStats & gs, int id)
 {
     _players.push_back(gs.GetPlayerStats(id).GetPlayerName());
     setPlayerCount(_players.size());
+    setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
     emit playerCountChanged();
     emit playersChanged();
 }
@@ -346,9 +347,9 @@ void QmlAdapter::hostLobby()
     onHost(_playerName.toStdString());
 }
 
-void QmlAdapter::joinLobby(QString lobbyCode)
+void QmlAdapter::joinLobby()
 {
-    onJoin(lobbyCode.toStdString(), _playerName.toStdString());
+    onJoin(_lobbyCode.toStdString(), _playerName.toStdString());
 }
 
 #define slotFunctionsEnd }

@@ -1,5 +1,7 @@
 #include "GameNetwork.h"
 
+const int readlength = sizeof(NetworkData);
+
 GameNetwork::GameNetwork(QObject* parent)
 {
 	QObject::connect(&m_server, &QTcpServer::newConnection, this, &GameNetwork::NewConnection);
@@ -46,12 +48,13 @@ void GameNetwork::ConnectToServer(const std::string& ip)
 {
 	QHostAddress address;
 	address.setAddress(QString(ip.c_str()));
-	m_socket.connectToHost(address, m_port);
+	m_socket.connectToHost(address, m_port, QIODeviceBase::ReadWrite);
 }
 
 void GameNetwork::Write(const QByteArray& data, int idx)
 {
-	m_connections[idx]->write(data, sizeof(NetworkData));
+	int written = m_connections[idx]->write(data, sizeof(NetworkData));
+	if (written == -1) throw;
 }
 
 void GameNetwork::Broadcast(const QByteArray& data)
@@ -62,16 +65,27 @@ void GameNetwork::Broadcast(const QByteArray& data)
 
 void GameNetwork::WriteToHost(const QByteArray& data)
 {
+	int written = 0;
 	if (m_connections.size() == 0)
-		m_socket.write(data, sizeof(NetworkData));
+	{
+		written = m_socket.write(data, sizeof(NetworkData));
+	}
 	else
-		m_connections[0]->write(data, sizeof(NetworkData));
+	{
+		written = m_connections[0]->write(data, sizeof(NetworkData));
+	}
+	if (written == -1) throw;
+	if (written < 216) throw;
 }
 
 void GameNetwork::ReadyRead()
 {
 	QByteArray qdata{};
-	qdata = m_socket.read(sizeof(NetworkData));
+	if(m_socket.bytesAvailable() == sizeof(NetworkData))
+		qdata = m_socket.read(sizeof(NetworkData));
+	for (size_t i{}; i < m_connections.size(); ++i)
+		if (m_connections[i]->bytesAvailable() == sizeof(NetworkData))
+			qdata = m_connections[i]->read(sizeof(NetworkData));
 	onReadyRead(qdata);
 }
 
@@ -79,5 +93,6 @@ void GameNetwork::NewConnection()
 {
 	auto newConnection = m_server.nextPendingConnection();
 	m_connections.push_back(newConnection);
+	QObject::connect(newConnection, &QIODevice::readyRead, this, &GameNetwork::ReadyRead);
 	onNewConnection(m_connections.size() - 1);
 }

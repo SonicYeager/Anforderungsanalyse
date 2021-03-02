@@ -247,7 +247,10 @@ inline void GameStats::SetTimeout(const std::string& t)
 
 inline void GameStats::SetPlayerName(const std::string& name, int idx)
 {
-	players[idx].SetPlayerName(name);
+	PlayerStats ps{};
+	ps.SetPlayerName(name);
+	ps.SetPlayerID(0);
+	players.insert(std::next(std::begin(players), idx), ps);
 }
 
 inline void GameStats::SetPlayers(const Players& play)
