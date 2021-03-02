@@ -14,7 +14,7 @@ public:
 	Event<const std::string&, const std::string&, const std::string&> onPrepareGame;
     Event<const Categories&, int> onPrepareOverview;
     Event<const std::vector<DECISION>&, int> onPrepareNextRound;
-    Event<> onHost;
-    Event<const std::string&> onJoin;
+    Event<const std::string&> onHost;
+    Event<const std::string&, const std::string&> onJoin;
 
 };

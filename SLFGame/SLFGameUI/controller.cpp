@@ -15,11 +15,11 @@ Controller::Controller(UI* ui, Interactor* inter) :
     m_pUi->onPrepareNextRound    = [this](std::vector<DECISION> decisions, int id)
                                     {m_pInter->EndRound(decisions, id);};
 
-    m_pUi->onHost                = [this]()
-                                    {m_pInter->HostGame("Placebo");};
+    m_pUi->onHost                = [this](const std::string& playerName)
+                                    {m_pInter->HostGame(playerName);};
 
-    m_pUi->onJoin                = [this](const std::string& lobbyCode)
-                                    {m_pInter->JoinGame(lobbyCode, "PlaceboClient");};
+    m_pUi->onJoin                = [this](const std::string& lobbyCode, const std::string& playerName)
+                                    {m_pInter->JoinGame(lobbyCode, playerName);};
 
     m_pInter->onPrepareGame =      [this](GameStats gs)
                                     {m_pUi->PrepareGame(gs);};

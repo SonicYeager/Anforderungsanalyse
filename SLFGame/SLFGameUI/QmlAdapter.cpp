@@ -123,6 +123,11 @@ QString QmlAdapter::getView()
     return _view;
 }
 
+QString QmlAdapter::getPlayerName()
+{
+    return _playerName;
+}
+
 #define getterFunctionsEnd }
 // ------------------------------------------ setter ------------------------------------------
 #define setterFuntions {
@@ -168,7 +173,7 @@ void QmlAdapter::setAnswers(StrVector2D answers)
     _answers = answers;
     _decisions.clear();
     for (int i = 0; i < _playerCount; i++)
-        _decisions.emplace_back(/*DECISION::UNANSWERED*/);
+        _decisions.emplace_back();
     for (int i = 0; i < _categoryCount - 1; i++)
         _decisions[i].emplace_back(DECISION::UNANSWERED);
 
@@ -222,6 +227,14 @@ void QmlAdapter::setView(QString view)
         return;
     _view = view;
     emit viewChanged();
+}
+
+void QmlAdapter::setPlayerName(QString playerName)
+{
+    if (playerName == _playerName)
+        return;
+    _playerName = playerName;
+    emit playerNameChanged();
 }
 
 void QmlAdapter::setPoints(int points)
@@ -328,12 +341,12 @@ void QmlAdapter::addPlayerAnswers(GameStats gs)
 
 void QmlAdapter::hostLobby()
 {
-    onHost();
+    onHost(_playerName.toStdString());
 }
 
 void QmlAdapter::joinLobby(QString lobbyCode)
 {
-    onJoin(lobbyCode.toStdString());
+    onJoin(lobbyCode.toStdString(), _playerName.toStdString());
 }
 
 #define slotFunctionsEnd }

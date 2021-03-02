@@ -3,10 +3,10 @@ import QtQuick.Window 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
 
-Rectangle{
+Rectangle {
     id: lobby_window
     width: Screen.width
-    height: Screen.height
+    height: Screen.height - 60
     color: "#1c2b1e"
     ColumnLayout {
         anchors.fill: parent

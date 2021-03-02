@@ -21,6 +21,7 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(QString maxRounds           READ getMaxRounds             WRITE setMaxRounds             NOTIFY maxRoundsChanged)
     Q_PROPERTY(QString timeLeft            READ getTimeLeft              WRITE setTimeLeft              NOTIFY timeLeftChanged)
     Q_PROPERTY(QString view                READ getView                  WRITE setView                  NOTIFY viewChanged)
+    Q_PROPERTY(QString playerName          READ getPlayerName            WRITE setPlayerName            NOTIFY playerNameChanged)
     Q_PROPERTY(StrVector categories        READ getCategories            WRITE setCategories            NOTIFY categoriesChanged)
     Q_PROPERTY(StrVector2D answers         READ getAnswers               WRITE setAnswers               NOTIFY answersChanged)
     Q_PROPERTY(StrVector players           READ getPlayers               WRITE setPlayers               NOTIFY playersChanged)
@@ -29,8 +30,9 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(int points                  READ getPoints                WRITE setPoints                NOTIFY pointsChanged)
     Q_PROPERTY(int activeOverviewItem      READ getActiveOverviewItem    WRITE setActiveOverviewItem    NOTIFY activeOverviewItemChanged)
     Q_PROPERTY(int playerCount             READ getPlayerCount           WRITE setPlayerCount           NOTIFY playerCountChanged)
+    Q_PROPERTY(int playerId                READ getPlayerId              WRITE setPlayerId              NOTIFY playerIdChanged)
     Q_PROPERTY(bool customChecked          READ getCustomChecked         WRITE setCustomChecked         NOTIFY customCheckedChanged)
-    Q_PROPERTY(bool playerId               READ getPlayerId              WRITE setPlayerId              NOTIFY playerIdChanged)
+
 
 public:
     explicit QmlAdapter     (QObject *parent = nullptr);
@@ -47,6 +49,7 @@ public:
     QString getMaxRounds();
     QString getTimeLeft();
     QString getView();
+    QString getPlayerName();
     StrVector getCategories();
     StrVector2D getAnswers();
     StrVector getPlayers();
@@ -65,6 +68,7 @@ public:
     void setTimeLeft                    (QString timeLeft);
     void setMaxRounds                   (QString maxRounds);
     void setView                        (QString view);
+    void setPlayerName                  (QString playerName);
     void setCategories                  (StrVector categories);
     void setAnswers                     (StrVector2D answers);
     void setPlayers                     (StrVector players);
@@ -110,6 +114,7 @@ signals:
     void playersChanged();
     void viewChanged();
     void playerIdChanged();
+    void playerNameChanged();
 
 private:
     QString _letter             = "bad";
@@ -119,6 +124,7 @@ private:
     QString _timeLeft           = "bis Stop";
     QString m_customCategories  = {};
     QString _view               = "MainMenu";
+    QString _playerName         = "";
     StrVector _categories       = {"Stadt", "Land", "Fluss", "Name", "Tier", "Beruf"};
     StrVector _unhandledanswers = {};
     StrVector _players          = {"Pyke", "Kamille"};

@@ -6,7 +6,7 @@ import QtQuick.Controls 2.15
 Rectangle{
     id:lobby_window
     width: Screen.width
-    height: Screen.height
+    height: Screen.height - 60
     color: "#1c2b1e"
     ColumnLayout {
         anchors.fill: parent
