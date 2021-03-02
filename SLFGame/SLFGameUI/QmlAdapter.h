@@ -127,12 +127,12 @@ private:
     QString _playerName         = "";
     StrVector _categories       = {"Stadt", "Land", "Fluss", "Name", "Tier", "Beruf"};
     StrVector _unhandledanswers = {};
-    StrVector _players          = {"Pyke", "Kamille"};
+    StrVector _players          = {};
     StrVector2D _answers        = {};
     int _categoryCount          = 6;
     int _currentRound           = 0;
     int _points                 = 999;
-    int _playerCount            = 2;
+    int _playerCount            = 0;
     int _activeOverviewItem     = 0;
     int _playerId               = 0;
     DecVector2D _decisions      = {};

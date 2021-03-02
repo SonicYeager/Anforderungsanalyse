@@ -108,7 +108,7 @@ Rectangle {
                                 }
                                 Connections {
                                     target: qmlAdapter
-                                    function onPlayersChanged()
+                                    function onPlayerCountChanged()
                                     {
                                         playersOverview.listModel.clear()
                                         for (var i = 0; i < qmlAdapter.playerCount; i++)

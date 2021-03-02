@@ -38,6 +38,8 @@ void QmlAdapter::PlayerJoined(const GameStats & gs, int id)
 {
     _players.push_back(gs.GetPlayerStats(id).GetPlayerName());
     setPlayerCount(_players.size());
+    emit playerCountChanged();
+    emit playersChanged();
 }
 
 // ------------------------------------------ getter ------------------------------------------
