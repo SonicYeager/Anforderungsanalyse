@@ -12,10 +12,8 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 
 	onRead = std::map<HEADER, Event<NetworkData>>
 	{
-		{HEADER::GETPLAYERNAME, [this](NetworkData data) { data.playerName = m_GameStats.GetPlayerStats(data.potentialId).GetPlayerName(); }},
-		{HEADER::PLAYERNAME, [this](NetworkData data) { /*modify gamestats -> add name to playerstats + broadcast to all*/ }},
-		{HEADER::GETGAMESTATS, [this](NetworkData data) { /*send gs to player (id socket)*/ }},
-		{HEADER::GAMESTATS, [this](NetworkData data) { /* set own gs to the ones retrieved */ }}
+		{HEADER::GET, [this](NetworkData data) { data.header = HEADER::SET; m_pNetwork->WriteToHost(data); }},
+		{HEADER::SET, [this](NetworkData data) { /**/ }},
 	};
 
 	//**************

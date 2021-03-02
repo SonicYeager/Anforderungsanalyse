@@ -69,6 +69,7 @@ struct GameStats
 	void SetMaxRounds(int);
 	void AddPlayer(PlayerStats);
 	void SetTimeout(const std::string&);
+	void SetPlayerName(const std::string&, int);
 
 private:
 	Categories categories{};
@@ -85,18 +86,16 @@ using Stats = std::pair<GameStats, PlayerStats>;
 
 enum class HEADER
 {
-   GETPLAYERNAME,
-   PLAYERNAME,
-   GETGAMESTATS,
-   GAMESTATS
+   GET,
+   SET,
 };
 
 struct NetworkData
 {
 	HEADER header{};
+	//std::string playerName{};
 	int potentialId{};
-	GameStats gamestats{};
-	std::string playerName{};
+	//GameStats gamestats{};
 };
 
 inline int PlayerStats::GetPoints()	const
@@ -227,6 +226,11 @@ inline std::string GameStats::GetTimeout() const
 inline void GameStats::SetTimeout(const std::string& t)
 {
 	timeout = t;
+}
+
+inline void GameStats::SetPlayerName(const std::string& name, int idx)
+{
+	players[idx].SetPlayerName(name);
 }
 
 inline bool Letter::operator==(const Letter& other)	const

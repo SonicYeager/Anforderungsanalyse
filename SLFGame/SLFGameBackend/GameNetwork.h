@@ -12,6 +12,9 @@ public:
 	std::string GenerateLobbyCode	()								override;
 	void		StartServer			()								override;
 	void		ConnectToServer		(const std::string&)			override;
+	void		Write				(const NetworkData&, int)		override;
+	void		Broadcast			(const NetworkData&)			override;
+	void		WriteToHost			(const NetworkData&)			override;
 
 public slots:
 

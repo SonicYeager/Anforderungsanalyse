@@ -49,9 +49,26 @@ void GameNetwork::ConnectToServer(const std::string& ip)
 	m_socket.connectToHost(address, m_port);
 }
 
+void GameNetwork::Write(const NetworkData& data, int idx)
+{
+	m_connections[idx]->write((char*)&data, sizeof(NetworkData));
+}
+
+void GameNetwork::Broadcast(const NetworkData& data)
+{
+	for (size_t i{}; i < m_connections.size(); ++i)
+		Write(data, i);
+}
+
+void GameNetwork::WriteToHost(const NetworkData& data)
+{
+	m_socket.write((char*)&data, sizeof(NetworkData));
+}
+
 void GameNetwork::ReadyRead()
 {
 	NetworkData	ndata;
+	QByteArray qdata{};
 	m_socket.read((char*)&ndata, sizeof(NetworkData));
 	onReadyRead(ndata);
 }
@@ -62,11 +79,9 @@ void GameNetwork::NewConnection()
 	m_connections.push_back(newConnection);
 	//get other playernames
 	NetworkData ndata;
-	ndata.header = HEADER::GETPLAYERNAME;
-	ndata.potentialId = m_connections.size() - 1;
-	QByteArray data{};
-	data.setRawData((char*)&ndata, sizeof(NetworkData));
-	newConnection->write(data);
+	ndata.header = HEADER::GET;
+	ndata.potentialId = 333;//m_connections.size() - 1;
+	newConnection->write((char*)&ndata, sizeof(NetworkData));
 	//***********************
 	onNewConnection(m_connections.size() - 1);
 }

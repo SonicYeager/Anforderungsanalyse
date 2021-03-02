@@ -11,6 +11,7 @@ public:
 	void		AddPoints			(const int, PlayerStats&)						override;
 	bool		LetterIsAlreadyUsed	(Letter, Letters)								override;
 	void		SetAnswers			(const std::vector<std::string>&, PlayerStats&) override;
+	void		SetPlayerName		(const std::string&, int, GameStats&)				override;
 	GameStats	CreateStats			(const std::string&, const std::string&)		override;
 };
 

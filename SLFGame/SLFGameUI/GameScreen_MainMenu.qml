@@ -78,7 +78,7 @@ Rectangle{
                         MouseArea {
                             anchors.fill: parent
                             onClicked: {
-                                qmlAdapter.startHost();
+                                qmlAdapter.hostLobby();
                                 qmlAdapter.view = "Lobby";
                             }
                         }
@@ -107,7 +107,7 @@ Rectangle{
                             onClicked: {
                                 qmlAdapter.mainMenuScreenVisible = false;
                                 qmlAdapter.lobbyScreenVisible = true;
-                                qmlAdapter.joinHost(lobbyCode.text);
+                                qmlAdapter.joinLobby(lobbyCode.text);
                                 qmlAdapter.view = "Lobby";
                             }
                         }

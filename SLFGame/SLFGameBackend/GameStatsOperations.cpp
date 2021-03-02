@@ -37,6 +37,11 @@ void GameStatsOperations::SetAnswers(const std::vector<std::string>& answ, Playe
 	ps.SetAnswers(answ);
 }
 
+void GameStatsOperations::SetPlayerName(const std::string& name, int idx, GameStats& gs)
+{
+	 
+}
+
 GameStats GameStatsOperations::CreateStats(const std::string& code, const std::string& playerName)
 {
 	GameStats gs{};
