@@ -6,7 +6,8 @@
 template<typename ... Args>
 using Event = std::function<void(Args...)>;
 
-enum DECISION
+
+enum class DECISION : int
 {
 	UNANSWERED = 0,
 	SOLO = 1,
@@ -31,21 +32,32 @@ using Categories = std::vector<std::string>;
 struct PlayerStats
 {
 	int GetPoints()const;
-	std::vector<std::string> GetAnswers()const;
-	std::string GetAnswerAt(int)const;
-	void SetPoints(int);
-	void SetAnswers(const std::vector<std::string>&);
+	std::vector<std::string>	GetAnswers		()const;
+	std::string					GetAnswerAt		(int)const;
+	std::string					GetPlayerName	()const;
+	int							GetPlayerID		()const;
+	void						SetPoints		(int);
+	void						SetPlayerName	(const std::string&);
+	void						SetAnswers		(const std::vector<std::string>&);
+	void						SetPlayerID		(int);
 
 private:
+	std::string playerName = "Pete";
+	int playerID = 0;
 	int points = 0;
 	std::vector<std::string> answers;
 };
+
+using Players = std::vector<PlayerStats>;
 
 struct GameStats
 {
 	Categories GetCategories()const;
 	Letters GetUsedLetters()const;
 	Letter GetCurrentLetter()const;
+	PlayerStats GetPlayerStats(int)const;
+	std::vector<std::string> GetPlayerNames() const;
+	int GetPlayerCount()const;
 	int GetCurrentRound()const;
 	int GetMaxRound()const;
 	std::string GetLobbyCode() const;
@@ -56,7 +68,10 @@ struct GameStats
 	void SetCategories(Categories);
 	void SetCurrentRound(int);
 	void SetMaxRounds(int);
+	void AddPlayer(PlayerStats);
 	void SetTimeout(const std::string&);
+	void SetPlayerName(const std::string&, int);
+	void SetPlayers(const Players&);
 
 private:
 	Categories categories{};
@@ -66,7 +81,32 @@ private:
 	int maxRounds{};
 	std::string lobbyCode{};
 	std::string timeout{};
+	Players players;
 };
+
+using Stats = std::pair<GameStats, PlayerStats>;
+
+enum class HEADER : int
+{
+	GETNEWPLAYER = 1,
+	SETNEWPLAYER = 2,
+	UPDATELOBBY  = 3
+};
+
+struct NetworkData
+{
+	HEADER header{};
+	char currentLetter{};
+	int potentialId{};
+	int maxRounds{};
+	std::string timeout{};
+	std::vector<int> points{};
+	std::vector<std::string> categories{};
+	std::vector<std::string> playerNames{};
+	std::vector<std::vector<DECISION>> decisions{};
+	std::vector<std::vector<std::string>> answers{};
+};
+
 
 inline int PlayerStats::GetPoints()	const
 {
@@ -83,14 +123,34 @@ inline std::string PlayerStats::GetAnswerAt(int i) const
 	return answers[i];
 }
 
+inline std::string PlayerStats::GetPlayerName() const
+{
+	return playerName;
+}
+
+inline int PlayerStats::GetPlayerID() const
+{
+	return playerID;
+}
+
 inline void PlayerStats::SetPoints(int newPoints)
 {
 	points = newPoints;
 }
 
-inline void PlayerStats::SetAnswers(const std::vector<std::string>& newAsnwers)
+inline void PlayerStats::SetPlayerName(const std::string& newName)
 {
-	answers = newAsnwers;
+	playerName = newName;
+}
+
+inline void PlayerStats::SetAnswers(const std::vector<std::string>& newAnswers)
+{
+	answers = newAnswers;
+}
+
+inline void PlayerStats::SetPlayerID(int id)
+{
+	playerID = id;
 }
 
 inline Categories GameStats::GetCategories() const 
@@ -106,6 +166,24 @@ inline Letters GameStats::GetUsedLetters() const
 inline Letter GameStats::GetCurrentLetter()	const
 {
 	return currentLetter;
+}
+
+inline PlayerStats GameStats::GetPlayerStats(int playerId) const
+{
+	return players[playerId];
+}
+
+inline std::vector<std::string> GameStats::GetPlayerNames() const
+{
+	std::vector<std::string> names{};
+	for (auto name : players)
+		names.push_back(name.GetPlayerName());
+	return names;
+}
+
+inline int GameStats::GetPlayerCount() const
+{
+	return players.size();
 }
 
 inline void GameStats::SetCategories(Categories cats)
@@ -153,6 +231,11 @@ inline void GameStats::SetMaxRounds(int num)
 	maxRounds = num;
 }
 
+inline void GameStats::AddPlayer(PlayerStats ps)
+{
+	players.push_back(ps);
+}
+
 inline std::string GameStats::GetTimeout() const
 {
 	return timeout;
@@ -161,6 +244,19 @@ inline std::string GameStats::GetTimeout() const
 inline void GameStats::SetTimeout(const std::string& t)
 {
 	timeout = t;
+}
+
+inline void GameStats::SetPlayerName(const std::string& name, int idx)
+{
+	PlayerStats ps{};
+	ps.SetPlayerName(name);
+	ps.SetPlayerID(idx);
+	players.insert(std::next(std::begin(players), idx), ps);
+}
+
+inline void GameStats::SetPlayers(const Players& play)
+{
+	players = play;
 }
 
 inline bool Letter::operator==(const Letter& other)	const

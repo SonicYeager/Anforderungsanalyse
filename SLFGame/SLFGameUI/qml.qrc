@@ -16,5 +16,7 @@
         <file>AnswerBlock.qml</file>
         <file>AnswerBlockList.qml</file>
         <file>GameScreen_FinalScores.qml</file>
+        <file>GameScreen_MainMenu.qml</file>
+        <file>PlayerOverview.qml</file>
     </qresource>
 </RCC>

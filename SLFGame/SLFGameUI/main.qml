@@ -9,29 +9,17 @@ Window{
     visibility: Window.Maximized
     title: "GameScreen_Input"
     color: "#1c2b1e"
-    GameScreen_Input{
-        id:gameScreen_Input
-        visible: qmlAdapter.entryScreenVisible
+    Loader {
+        id: pageLoader
+        anchors.fill: parent
+        source: "GameScreen_" + qmlAdapter.view + ".qml"
     }
-    GameScreen_Lobby{
-        id:gameScreen_Lobby
-        visible: qmlAdapter.lobbyScreenVisible
-    }
-    GameScreen_Overview{
-        id:gameScreen_Overview
-        visible: qmlAdapter.overviewScreenVisible
-    }
-    GameScreen_FinalScores{
-        id:gameScreen_FinalScores
-        visible: qmlAdapter.fscoresScreenVisible
-    }
+    //Component.onCompleted: pageLoader.source = "GameScreen_" + qmlAdapter.view + ".qml"
+    //Connections {
+    //    target: qmlAdapter
+    //    function onViewChanged()
+    //    {
+    //        pageLoader.source = "GameScreen_" + qmlAdapter.view + ".qml";
+    //    }
+    //}
 }
-
-
-//Window {
-//    width: 640
-//    height: 480
-//    visible: false
-//    title: qsTr("Hello World")
-//
-//}

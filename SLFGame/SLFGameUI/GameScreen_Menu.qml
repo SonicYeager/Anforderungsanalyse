@@ -5,8 +5,8 @@ import QtQuick.Controls 2.15
 
 Rectangle{
     id:lobby_window
-    width: Screen.width
-    height: Screen.height
+    width: parent.width
+    height: parent.height
     color: "#1c2b1e"
     ColumnLayout {
         anchors.fill: parent
@@ -22,8 +22,20 @@ Rectangle{
             RowLayout {
                 anchors.fill: parent
                 spacing: 0
+                Rectangle {
+                    Layout.fillWidth: true -5
+                    Layout.fillHeight: true -5
+                    Layout.alignment: Qt.AlignCenter
+                    color: Qt.rgba(0,0,0,0)
+                }
                 Banner{
-                    Layout.alignment: Qt.AlignHCenter
+
+                }
+                Rectangle {
+                    Layout.fillWidth: true -5
+                    Layout.fillHeight: true -5
+                    Layout.alignment: Qt.AlignCenter
+                    color: Qt.rgba(0,0,0,0)
                 }
             }
         }
@@ -65,31 +77,31 @@ Rectangle{
                                             listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "desc"})
                                     }
                                 }
-                                //Connections {
-                                //    target: qmlAdapter
-                                //    function onCategoryCountChanged()
-                                //    {
-                                //        categoryOverview.listModel.clear()
-                                //        for (var i = 0; i < qmlAdapter.categoryCount; i++)
-                                //        {
-                                //            if (i === 0)
-                                //                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "active"})
-                                //            else
-                                //                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "desc"})
-                                //        }
-                                //    }
-                                //    function onAnswersChanged()
-                                //    {
-                                //        categoryOverview.listModel.clear()
-                                //        for (var i = 0; i < qmlAdapter.categoryCount; i++)
-                                //        {
-                                //            if (i === 0)
-                                //                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "active"})
-                                //            else
-                                //                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "desc"})
-                                //        }
-                                //    }
-                                //}
+                                Connections {
+                                    target: qmlAdapter
+                                    function onCategoryCountChanged()
+                                    {
+                                        categoryOverview.listModel.clear()
+                                        for (var i = 0; i < qmlAdapter.categoryCount; i++)
+                                        {
+                                            if (i === 0)
+                                                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "active"})
+                                            else
+                                                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "desc"})
+                                        }
+                                    }
+                                    function onAnswersChanged()
+                                    {
+                                        categoryOverview.listModel.clear()
+                                        for (var i = 0; i < qmlAdapter.categoryCount; i++)
+                                        {
+                                            if (i === 0)
+                                                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "active"})
+                                            else
+                                                categoryOverview.listModel.append({"text":qmlAdapter.getCategoryName(i), "state": "desc"})
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -115,31 +127,29 @@ Rectangle{
                                 Component.onCompleted: {
                                     for (var i = 0; i < qmlAdapter.playerCount; i++)
                                     {
-                                        answerBlockList.listModel.append(
-                                        {"answer"  :qmlAdapter.getAnswer  (i,qmlAdapter.activeOverviewItem),
-                                         "decision":qmlAdapter.getDecision(i,qmlAdapter.activeOverviewItem)})
+                                            listModel.append({"answer":" "})
                                     }
                                 }
                                 Connections {
                                     target: qmlAdapter
-                                    //function onAnswersChanged()
-                                    //{
-                                    //    answerBlockList.listModel.clear()
-                                    //    for (var i = 0; i < qmlAdapter.playerCount; i++)
-                                    //    {
-                                    //        answerBlockList.listModel.append(
-                                    //                    {"answer":qmlAdapter.getAnswer(qmlAdapter.activeOverviewItem),
-                                    //                        "decision":qmlAdapter.getDecision(qmlAdapter.activeOverviewItem)})
-                                    //    }
-                                    //}
+                                    function onAnswersChanged()
+                                    {
+                                        answerBlockList.listModel.clear()
+                                        for (var i = 0; i < qmlAdapter.playerCount; i++)
+                                        {
+                                            answerBlockList.listModel.append(
+                                                        {"answer":qmlAdapter.getAnswer(qmlAdapter.activeOverviewItem),
+                                                            "decision":qmlAdapter.getDecision(qmlAdapter.activeOverviewItem)})
+                                        }
+                                    }
                                     function onActiveOverviewItemChanged()
                                     {
                                         answerBlockList.listModel.clear()
                                         for (var i = 0; i < qmlAdapter.playerCount; i++)
                                         {
                                             answerBlockList.listModel.append(
-                                            {"answer":  qmlAdapter.getAnswer  (i,qmlAdapter.activeOverviewItem),
-                                             "decision":qmlAdapter.getDecision(i,qmlAdapter.activeOverviewItem)})
+                                                        {"answer":qmlAdapter.getAnswer(qmlAdapter.activeOverviewItem),
+                                                            "decision":qmlAdapter.getDecision(qmlAdapter.activeOverviewItem)})
                                         }
                                     }
                                 }
@@ -149,6 +159,8 @@ Rectangle{
                 }
             }
         }
+
+
         Rectangle{
             id: bottom
             Layout.minimumHeight: 100
@@ -177,7 +189,7 @@ Rectangle{
                         anchors.fill: parent
                         onClicked: {
                             //if (confirmButton.state === "blueButton")
-                            qmlAdapter.prepareNextRound();
+                                qmlAdapter.prepareNextRound();
                         }
                     }
                     Connections {
@@ -203,12 +215,6 @@ Rectangle{
                     fontSize: height * 0.05 + width * 0.05
                     border.width: 3
                     border.color: "white"
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            qmlAdapter.view = "MainMenu";
-                        }
-                    }
                 }
             }
         }

@@ -5,8 +5,8 @@ import QtQuick.Controls 2.15
 
 Rectangle{
     id: input_window
-    width: parent.width
-    height: parent.height
+    width: Screen.width
+    height: Screen.height
     color: "#1c2b1e"
     ColumnLayout {
         anchors.fill: parent
@@ -101,25 +101,25 @@ Rectangle{
                     listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
                 }
             }
-            Connections {
-                target: qmlAdapter
-                function onCategoryCountChanged()
-                {
-                    categories.listModel.clear()
-                    for (var i = 0; i < qmlAdapter.categoryCount; i++)
-                    {
-                        categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
-                    }
-                }
-                function onAnswersChanged()
-                {
-                    categories.listModel.clear()
-                    for (var i = 0; i < qmlAdapter.categoryCount; i++)
-                    {
-                        categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
-                    }
-                }
-            }
+            //Connections {
+            //    target: qmlAdapter
+            //    function onCategoryCountChanged()
+            //    {
+            //        categories.listModel.clear()
+            //        for (var i = 0; i < qmlAdapter.categoryCount; i++)
+            //        {
+            //            categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
+            //        }
+            //    }
+            //    function onAnswersChanged()
+            //    {
+            //        categories.listModel.clear()
+            //        for (var i = 0; i < qmlAdapter.categoryCount; i++)
+            //        {
+            //            categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
+            //        }
+            //    }
+            //}
         }
         Rectangle{
             id: categoryPlaceholder_bottom
@@ -160,8 +160,8 @@ Rectangle{
                             }
 
                             qmlAdapter.prepareOverview();
-                            qmlAdapter.entryScreenVisible = false;
-                            qmlAdapter.overviewScreenVisible = true;
+                            qmlAdapter.view = "Overview";
+
                         }
                     }
                 }
@@ -174,6 +174,12 @@ Rectangle{
                     fontSize: height * 0.05 + width * 0.05
                     border.width: 3
                     border.color: "white"
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            qmlAdapter.view = "MainMenu";
+                        }
+                    }
                 }
             }
         }

@@ -9,6 +9,7 @@
 #include "GameNetwork.h"
 #include "SLFParser.h"
 #include "Game.h"
+#include "QDataSerializer.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,7 +22,8 @@ int main(int argc, char *argv[])
     GameNetwork network;
     SLFParser parser;
     Game game;
-    GameInteractor gameInteractor{&rndGen, &gsOperations, &game, &network, &parser};
+    QDataSerializer qdserializer;
+    GameInteractor gameInteractor{&rndGen, &gsOperations, &game, &network, &parser, &qdserializer};
     Controller controller{&qmlAdapter, &gameInteractor};
     controller.Run();
 

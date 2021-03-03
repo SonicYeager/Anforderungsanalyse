@@ -6,7 +6,7 @@ Rectangle {
     id: master
     Layout.preferredWidth: parent.width * 0.5
     Layout.preferredHeight: parent.height * 0.5
-    radius: 90
+    radius: 0
     color: "white"
     property alias text: text.text
     property alias textColor: text.color

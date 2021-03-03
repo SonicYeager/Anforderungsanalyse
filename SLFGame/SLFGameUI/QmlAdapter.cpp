@@ -2,39 +2,47 @@
 
 QmlAdapter::QmlAdapter(QObject *parent) :
     QObject(parent)
-{
-
-}
+{}
 // ------------------------------------------ initializer function ------------------------------------------
 
-void QmlAdapter::Init(const GameStats & gs, const PlayerStats & ps)
-{
-    setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
-}
-
-void QmlAdapter::PrepareGame(const GameStats & gs, const PlayerStats & ps)
+void QmlAdapter::PrepareGame(const GameStats & gs)
 {
     _unhandledanswers = {};
     setCurrentRound(gs.GetCurrentRound());
     setLetter(QChar(gs.GetCurrentLetter().letter));
     setCategories(gs.GetCategories());
-    setPoints(ps.GetPoints());
-    setLobbyScreenVisible(false);
-    setOverviewScreenVisible(false);
-    setEntryScreenVisible(true);
+    setPoints(gs.GetPlayerStats(_playerId).GetPoints());
+    setView("Input");
 }
 
-void QmlAdapter::PrepareFinalScores(const GameStats & gs, const PlayerStats & ps)
+void QmlAdapter::PrepareFinalScores(const GameStats & gs)
 {
-    setPoints(ps.GetPoints());
-    setOverviewScreenVisible(false);
-    setFScoresScreenVisible(true);
+    setPoints(gs.GetPlayerStats(_playerId).GetPoints());
+    setView("FinalScores");
 }
 
-void QmlAdapter::PrepareOverview(const GameStats & gs, const PlayerStats & ps)
+void QmlAdapter::PrepareOverview(const GameStats & gs)
 {
-    setAnswers(ps.GetAnswers());
+    addPlayerAnswers(gs);
+    setView("Overview");
     emit answersChanged();
+}
+
+void QmlAdapter::PrepareLobby(const GameStats & gs)
+{
+    setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
+    setView("Lobby");
+}
+
+void QmlAdapter::PlayerJoined(const GameStats & gs, int id)
+{
+    _players.clear();
+    for(int i{}; i < gs.GetPlayerCount(); ++i)
+        _players.push_back(gs.GetPlayerStats(i).GetPlayerName());
+    setPlayerCount(_players.size());
+    setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
+    emit playerCountChanged();
+    emit playersChanged();
 }
 
 // ------------------------------------------ getter ------------------------------------------
@@ -60,34 +68,19 @@ StrVector QmlAdapter::getCategories()
     return _categories;
 }
 
-StrVector QmlAdapter::getAnswers()
+StrVector2D QmlAdapter::getAnswers()
 {
     return _answers;
+}
+
+StrVector QmlAdapter::getPlayers()
+{
+    return _players;
 }
 
 bool QmlAdapter::getCustomChecked()
 {
     return _customChecked;
-}
-
-bool QmlAdapter::getLobbyScreenVisible()
-{
-    return _lobbyScreenVisible;
-}
-
-bool QmlAdapter::getEntryScreenVisible()
-{
-    return _entryScreenVisible;
-}
-
-bool QmlAdapter::getOverviewScreenVisible()
-{
-    return _overviewScreenVisible;
-}
-
-bool QmlAdapter::getFScoresScreenVisible()
-{
-    return _fscoresScreenVisible;
 }
 
 int QmlAdapter::getCategoryCount()
@@ -120,9 +113,24 @@ int QmlAdapter::getPlayerCount()
     return _playerCount;
 }
 
+int QmlAdapter::getPlayerId()
+{
+    return _playerId;
+}
+
 QString QmlAdapter::getTimeLeft()
 {
     return _timeLeft;
+}
+
+QString QmlAdapter::getView()
+{
+    return _view;
+}
+
+QString QmlAdapter::getPlayerName()
+{
+    return _playerName;
 }
 
 #define getterFunctionsEnd }
@@ -163,16 +171,27 @@ void QmlAdapter::setCategories(StrVector categories)
     emit categoryCountChanged();
 }
 
-void QmlAdapter::setAnswers(StrVector answers)
+void QmlAdapter::setAnswers(StrVector2D answers)
 {
     if (answers == _answers)
         return;
     _answers = answers;
     _decisions.clear();
-    for (unsigned long long i = 0; i < _answers.size(); i++)
-        _decisions.emplace_back(DECISION::UNANSWERED);
+    for (int i = 0; i < _playerCount; i++)
+        _decisions.emplace_back();
+    for (int i = 0; i < _categoryCount - 1; i++)
+        _decisions[i].emplace_back(DECISION::UNANSWERED);
+
     emit answersChanged();
     emit decisionsChanged();
+}
+
+void QmlAdapter::setPlayers(StrVector players)
+{
+    if (players == _players)
+        return;
+    _players = players;
+    emit playersChanged();
 }
 
 void QmlAdapter::setCustomChecked(bool checked)
@@ -181,38 +200,6 @@ void QmlAdapter::setCustomChecked(bool checked)
         return;
     _customChecked = checked;
     emit customCheckedChanged();
-}
-
-void QmlAdapter::setLobbyScreenVisible(bool visibility)
-{
-    if (visibility == _lobbyScreenVisible)
-        return;
-    _lobbyScreenVisible = visibility;
-    emit lobbyScreenVisibleChanged();
-}
-
-void QmlAdapter::setEntryScreenVisible(bool visibility)
-{
-    if (visibility == _entryScreenVisible)
-        return;
-    _entryScreenVisible = visibility;
-    emit entryScreenVisibleChanged();
-}
-
-void QmlAdapter::setOverviewScreenVisible(bool visibility)
-{
-    if (visibility == _overviewScreenVisible)
-        return;
-    _overviewScreenVisible = visibility;
-    emit overviewScreenVisibleChanged();
-}
-
-void QmlAdapter::setFScoresScreenVisible(bool visibility)
-{
-    if (visibility == _fscoresScreenVisible)
-        return;
-    _fscoresScreenVisible = visibility;
-    emit fscoresScreenVisibleChanged();
 }
 
 void QmlAdapter::setCategoryCount(int categoryCount)
@@ -239,6 +226,22 @@ void QmlAdapter::setMaxRounds(QString maxRounds)
     emit maxRoundsChanged();
 }
 
+void QmlAdapter::setView(QString view)
+{
+    if (view == _view)
+        return;
+    _view = view;
+    emit viewChanged();
+}
+
+void QmlAdapter::setPlayerName(QString playerName)
+{
+    if (playerName == _playerName)
+        return;
+    _playerName = playerName;
+    emit playerNameChanged();
+}
+
 void QmlAdapter::setPoints(int points)
 {
     if (points == _points)
@@ -263,6 +266,11 @@ void QmlAdapter::setPlayerCount(int playerCount)
     emit playerCountChanged();
 }
 
+void QmlAdapter::setPlayerId(int playerId)
+{
+    _playerId = playerId;
+}
+
 void QmlAdapter::setTimeLeft(QString timeLeft)
 {
     if (timeLeft == _timeLeft)
@@ -280,14 +288,19 @@ QString QmlAdapter::getCategoryName(int idx)
     return QString::fromUtf8(_categories[idx].c_str());
 }
 
-QString QmlAdapter::getAnswer(int idx)
+QString QmlAdapter::getAnswer(int playerID, int categoryIDX)
 {
-    return QString::fromUtf8(_answers[idx].c_str());
+    return QString::fromUtf8(_answers[playerID][categoryIDX].c_str());
 }
 
-DECISION QmlAdapter::getDecision(int idx)
+QString QmlAdapter::getPlayer(int idx)
 {
-    return _decisions[idx];
+    return QString::fromUtf8(_players[idx].c_str());
+}
+
+DECISION QmlAdapter::getDecision(int playerID, int categoryIDX)
+{
+    return _decisions[playerID][categoryIDX];
 }
 
 void QmlAdapter::setActiveItemIA(int idx)
@@ -295,10 +308,10 @@ void QmlAdapter::setActiveItemIA(int idx)
     setActiveOverviewItem(idx);
 }
 
-void QmlAdapter::setDecision(int idx, int newVal)
+void QmlAdapter::setDecision(int playerID, int categoryIDX, int newVal)
 {
     auto dec = static_cast<DECISION>(newVal);
-    _decisions[idx] = dec;
+    _decisions[playerID][categoryIDX] = dec;
     emit decisionsChanged();
 }
 
@@ -309,17 +322,36 @@ void QmlAdapter::prepareGame()
 
 void QmlAdapter::prepareOverview()
 {
-    onPrepareOverview(_unhandledanswers);
+    onPrepareOverview(_unhandledanswers, _playerId);
 }
 
 void QmlAdapter::prepareNextRound()
 {
-    onPrepareNextRound(_decisions);
+    // CHANGE ME SOON ----------------------------------------------------------------------
+    onPrepareNextRound(_decisions[0], _playerId);
 }
 
 void QmlAdapter::addAnswer(QString answer)
 {
     _unhandledanswers.emplace_back(answer.toStdString());
+}
+
+void QmlAdapter::addPlayerAnswers(GameStats gs)
+{
+    StrVector2D result;
+    for (int i = 0; i < gs.GetPlayerCount(); i++)
+        result.push_back(gs.GetPlayerStats(i).GetAnswers());
+    setAnswers(result);
+}
+
+void QmlAdapter::hostLobby()
+{
+    onHost(_playerName.toStdString());
+}
+
+void QmlAdapter::joinLobby()
+{
+    onJoin(_lobbyCode.toStdString(), _playerName.toStdString());
 }
 
 #define slotFunctionsEnd }

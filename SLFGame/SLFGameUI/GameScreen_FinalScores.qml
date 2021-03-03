@@ -5,8 +5,8 @@ import QtQuick.Controls 2.15
 
 Rectangle{
     id: finalscores_window
-    width: parent.width
-    height: parent.height
+    width: Screen.width
+    height: Screen.height
     color: "#1c2b1e"
     ColumnLayout {
         anchors.fill: parent
@@ -46,7 +46,6 @@ Rectangle{
             Layout.alignment: Qt.AlignHCenter
             color: Qt.rgba(0,0,0,0)
             Layout.margins: 10
-            //Layout.bottomMargin: 30
             RowLayout{
                 spacing: 0
                 anchors.fill: parent
@@ -87,13 +86,35 @@ Rectangle{
                 GameButton
                 {
                     Layout.preferredWidth: parent.width * 0.25
-                    text : "LEAVE"
+                    text : "LOBBY"
                     textColor: "white"
                     state: "blueButton"
                     fontSize: height * 0.05 + width * 0.05
                     border.width: 3
                     border.color: "white"
-                    Layout.alignment: Qt.AlignCenter
+                    Layout.leftMargin: parent.width * 0.15
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                           qmlAdapter.view = "Lobby";
+                        }
+                    }
+                }
+                GameButton
+                {
+                    Layout.preferredWidth: parent.width * 0.25
+                    text : "MAIN MENU"
+                    textColor: "white"
+                    state: "blueButton"
+                    fontSize: height * 0.05 + width * 0.05
+                    border.width: 3
+                    border.color: "white"
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            qmlAdapter.view = "MainMenu";
+                        }
+                    }
                 }
             }
         }
