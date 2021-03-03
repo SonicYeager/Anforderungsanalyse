@@ -29,9 +29,4 @@
   <ItemGroup>
     <CopyFileToFolders Include="..\ressources\categories.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\SLFGameBackendQt\slfgamebackendqt_global.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-  </ItemGroup>
 </Project>

@@ -249,7 +249,7 @@ inline void GameStats::SetPlayerName(const std::string& name, int idx)
 {
 	PlayerStats ps{};
 	ps.SetPlayerName(name);
-	ps.SetPlayerID(0);
+	ps.SetPlayerID(idx);
 	players.insert(std::next(std::begin(players), idx), ps);
 }
 

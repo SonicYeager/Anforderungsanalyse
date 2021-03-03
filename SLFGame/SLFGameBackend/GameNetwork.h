@@ -14,6 +14,8 @@ public:
 	void		Write				(const QByteArray&, int)		override;
 	void		Broadcast			(const QByteArray&)			override;
 	void		WriteToHost			(const QByteArray&)			override;
+	// receive disconect to cleanup the connection(s)
+	// receive error to handle (retry or abort)
 
 public slots:
 

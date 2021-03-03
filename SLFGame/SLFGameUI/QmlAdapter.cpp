@@ -36,7 +36,9 @@ void QmlAdapter::PrepareLobby(const GameStats & gs)
 
 void QmlAdapter::PlayerJoined(const GameStats & gs, int id)
 {
-    _players.push_back(gs.GetPlayerStats(id).GetPlayerName());
+    _players.clear();
+    for(int i{}; i < gs.GetPlayerCount(); ++i)
+        _players.push_back(gs.GetPlayerStats(i).GetPlayerName());
     setPlayerCount(_players.size());
     setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
     emit playerCountChanged();

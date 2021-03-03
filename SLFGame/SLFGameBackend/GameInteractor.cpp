@@ -19,14 +19,13 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 			if (data.potentialId == 0)
 				data.playerNames[0] = m_GameStats.GetPlayerStats(data.potentialId).GetPlayerName();
 			else
-                data.playerNames.insert(std::next(std::begin(data.playerNames), data.potentialId-1), m_GameStats.GetPlayerStats(0).GetPlayerName());
+                data.playerNames.insert(std::next(std::begin(data.playerNames), data.potentialId), m_GameStats.GetPlayerStats(0).GetPlayerName());
 			auto serialzed = m_pSerialzer->Serialize(data); 
 			m_pNetwork->WriteToHost(serialzed);
 			//maybe fetch all data here as well?
 		}},
 		{HEADER::SETNEWPLAYER, [this](NetworkData data)
 		{ 
-			m_GameStats.SetPlayerName(data.playerNames[data.potentialId], data.potentialId);
 			Players ps;
 			for (size_t i{}; i < data.playerNames.size(); ++i)
 			{
@@ -39,11 +38,10 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 			}
 			m_GameStats.SetPlayers(ps);
 
-			//data.header = HEADER::UPDATELOBBY;
-			//data.playerNames = m_GameStats.GetPlayerNames();
-			//auto serialize = m_pSerialzer->Serialize(data);
-			//m_pNetwork->Broadcast(serialize);
-			onNewPlayerJoined(m_GameStats, data.potentialId);
+			data.header = HEADER::UPDATELOBBY;
+			data.playerNames = m_GameStats.GetPlayerNames();
+			auto serialize = m_pSerialzer->Serialize(data);
+			m_pNetwork->Broadcast(serialize);
 		}},
 		{HEADER::UPDATELOBBY, [this](NetworkData data)
 		{
@@ -61,6 +59,7 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 				ps.push_back(p);
 			}
 			m_GameStats.SetPlayers(ps);
+			onNewPlayerJoined(m_GameStats, data.potentialId);
 			// add event to trg update
 		}}
 	};
@@ -85,7 +84,12 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 		ndata.maxRounds = m_GameStats.GetMaxRound();
 		ndata.playerNames = m_GameStats.GetPlayerNames();
 		ndata.timeout = m_GameStats.GetTimeout();
-		ndata.points.emplace_back();
+		for (size_t i{}; i < m_GameStats.GetPlayerCount(); ++i)
+		{
+			ndata.points.push_back(m_GameStats.GetPlayerStats(i).GetPoints());
+			ndata.answers.push_back(m_GameStats.GetPlayerStats(i).GetAnswers());
+		}
+		ndata.points.emplace_back(); 
 		ndata.answers.emplace_back();
 		auto serialize = m_pSerialzer->Serialize(ndata);
 		m_pNetwork->Write(serialize, playerId);

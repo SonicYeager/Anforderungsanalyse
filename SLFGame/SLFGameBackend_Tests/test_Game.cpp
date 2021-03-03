@@ -12,7 +12,7 @@ public:
 TEST(TestGame, CalculatePoints_2solo2multi2same_PointOutputEQ70)
 {
 	Game game{};
-	std::vector<DECISION> decisions{ SOLO, SOLO, UNIQUE, UNIQUE, MULTIPLE, MULTIPLE };
+	std::vector<DECISION> decisions{ DECISION::SOLO, DECISION::SOLO, DECISION::UNIQUE, DECISION::UNIQUE, DECISION::MULTIPLE, DECISION::MULTIPLE };
 
 	int actual = game.CalculatePoints(decisions);
 	int expected = 70;
