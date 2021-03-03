@@ -8,11 +8,11 @@ void GameStatsOperations::InkrementRound(GameStats& gameStats)
 
 void GameStatsOperations::AddPreviousLetter(GameStats& gameStats)
 {
-	auto curr = gameStats.GetCurrentLetter().letter;
+	auto curr = gameStats.GetCurrentLetter();
 	if(curr != '\0')
 	{
 		auto usedLetters = gameStats.GetUsedLetters();
-		usedLetters.letters.push_back(Letter{ curr });
+		usedLetters.push_back(curr);
 		gameStats.SetUsedLetters(usedLetters);
 	}
 }
@@ -29,7 +29,7 @@ void GameStatsOperations::AddPoints(const int points, PlayerStats& ps)
 
 bool GameStatsOperations::LetterIsAlreadyUsed(Letter generated, Letters used)
 {
-	return std::find(std::begin(used.letters), std::end(used.letters), generated) != std::end(used.letters);
+	return std::find(std::begin(used), std::end(used), generated) != std::end(used);
 }
 
 void GameStatsOperations::SetAnswers(const std::vector<std::string>& answ, PlayerStats& ps)

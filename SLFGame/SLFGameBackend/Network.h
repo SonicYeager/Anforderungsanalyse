@@ -1,7 +1,7 @@
 #pragma once
 #include "NetworkSource.h"
 
-class GameNetwork : public NetworkSource
+class Network : public NetworkSource
 {
 public:
 	std::string GenerateLobbyCode() override;

@@ -15,18 +15,8 @@ enum class DECISION : int
 	MULTIPLE = 3
 };
 
-struct Letter
-{
-	bool operator==(const Letter& other) const;
-	bool operator<(const Letter& other) const;
-	char letter{};
-};
-
-struct Letters
-{
-	std::vector<Letter> letters{};
-};
-
+using Letter = char;
+using Letters = std::vector<Letter>;
 using Categories = std::vector<std::string>;
 
 struct PlayerStats
@@ -238,6 +228,25 @@ inline void GameStats::SetTimeout(const std::string& t)
 	timeout = t;
 }
 
+//inline bool Letter::operator==(const Letter& other)	const
+//{
+//	return letter == other.letter;
+//}
+//
+//inline bool Letter::operator<(const Letter& other) const
+//{
+//	return letter < other.letter;
+//}
+//
+//inline bool operator==(const GameStats& left, const GameStats& right)
+//{
+//	return left.GetCategories() == right.GetCategories() &&
+//		left.GetCurrentLetter() == right.GetCurrentLetter() &&
+//		left.GetCurrentRound() == right.GetCurrentRound() &&
+//		left.GetLobbyCode() == right.GetLobbyCode() &&
+//		left.GetMaxRound() == right.GetMaxRound() &&
+//		left.GetUsedLetters().letters == right.GetUsedLetters().letters;
+//}
 inline void GameStats::SetPlayerName(const std::string& name, int idx)
 {
 	PlayerStats ps{};
@@ -254,21 +263,6 @@ inline void GameStats::SetPlayers(const Players& play)
 inline bool Letter::operator==(const Letter& other)	const
 {
 	return letter == other.letter;
-}
-
-inline bool Letter::operator<(const Letter& other) const
-{
-	return letter < other.letter;
-}
-
-inline bool operator==(const GameStats& left, const GameStats& right)
-{
-	return left.GetCategories() == right.GetCategories() &&
-		left.GetCurrentLetter() == right.GetCurrentLetter() &&
-		left.GetCurrentRound() == right.GetCurrentRound() &&
-		left.GetLobbyCode() == right.GetLobbyCode() &&
-		left.GetMaxRound() == right.GetMaxRound() &&
-		left.GetUsedLetters().letters == right.GetUsedLetters().letters;
 }
 
 inline bool operator==(const PlayerStats& left, const PlayerStats& right)
