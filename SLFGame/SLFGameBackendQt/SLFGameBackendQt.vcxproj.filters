@@ -53,9 +53,6 @@
     <ClInclude Include="..\SLFGameBackend\UI.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\SLFGameBackend\GameNetwork.h">
-      <Filter>Implementation</Filter>
-    </ClInclude>
     <ClInclude Include="..\SLFGameBackend\SLFParser.h">
       <Filter>Implementation</Filter>
     </ClInclude>
@@ -66,6 +63,33 @@
       <Filter>Implementation</Filter>
     </ClInclude>
     <ClInclude Include="..\SLFGameBackend\Game.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\ClientLogic.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\GameStatsSerializer.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\HostLogic.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\NetworkHandlerLogic.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\SerializerSource.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\Client.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\Host.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\NetworkHandler.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\Network.h">
       <Filter>Implementation</Filter>
     </ClInclude>
   </ItemGroup>
@@ -79,9 +103,6 @@
     <ClCompile Include="..\SLFGameBackend\RandomGenerator.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="..\SLFGameBackend\GameNetwork.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
     <ClCompile Include="..\SLFGameBackend\SLFParser.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
@@ -89,6 +110,18 @@
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\SLFGameBackend\Game.cpp">
+      <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SLFGameBackend\Client.cpp">
+      <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SLFGameBackend\Host.cpp">
+      <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SLFGameBackend\NetworkHandler.cpp">
+      <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SLFGameBackend\Network.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
   </ItemGroup>

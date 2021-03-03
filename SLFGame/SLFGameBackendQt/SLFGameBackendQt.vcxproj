@@ -119,27 +119,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\SLFGameBackend\Client.cpp" />
     <ClCompile Include="..\SLFGameBackend\Game.cpp" />
+    <ClCompile Include="..\SLFGameBackend\Host.cpp" />
+    <ClCompile Include="..\SLFGameBackend\NetworkHandler.cpp" />
     <ClCompile Include="..\SLFGameBackend\SLFParser.cpp" />
     <ClCompile Include="..\SLFGameBackend\Timer.cpp" />
+    <ClInclude Include="..\SLFGameBackend\Client.h" />
+    <ClInclude Include="..\SLFGameBackend\ClientLogic.h" />
     <ClInclude Include="..\SLFGameBackend\DataOperationLogic.h" />
     <ClInclude Include="..\SLFGameBackend\DataTypes.h" />
     <ClInclude Include="..\SLFGameBackend\Game.h" />
     <ClInclude Include="..\SLFGameBackend\GameInteractor.h" />
     <ClInclude Include="..\SLFGameBackend\GameLogic.h" />
-    <ClInclude Include="..\SLFGameBackend\GameNetwork.h" />
+    <ClInclude Include="..\SLFGameBackend\Network.h" />
     <ClInclude Include="..\SLFGameBackend\GameStatsOperations.h" />
+    <ClInclude Include="..\SLFGameBackend\GameStatsSerializer.h" />
+    <ClInclude Include="..\SLFGameBackend\Host.h" />
+    <ClInclude Include="..\SLFGameBackend\HostLogic.h" />
     <ClInclude Include="..\SLFGameBackend\Interactor.h" />
+    <ClInclude Include="..\SLFGameBackend\NetworkHandler.h" />
+    <ClInclude Include="..\SLFGameBackend\NetworkHandlerLogic.h" />
     <ClInclude Include="..\SLFGameBackend\NetworkSource.h" />
     <ClInclude Include="..\SLFGameBackend\RandomGenerator.h" />
     <ClInclude Include="..\SLFGameBackend\RandomGenRessource.h" />
+    <ClInclude Include="..\SLFGameBackend\SerializerSource.h" />
     <ClInclude Include="..\SLFGameBackend\SLFParser.h" />
     <ClInclude Include="..\SLFGameBackend\Timer.h" />
     <ClInclude Include="..\SLFGameBackend\TimerRessource.h" />
     <ClInclude Include="..\SLFGameBackend\UI.h" />
     <ClInclude Include="slfgamebackendqt_global.h" />
     <ClCompile Include="..\SLFGameBackend\GameInteractor.cpp" />
-    <ClCompile Include="..\SLFGameBackend\GameNetwork.cpp" />
+    <ClCompile Include="..\SLFGameBackend\Network.cpp" />
     <ClCompile Include="..\SLFGameBackend\GameStatsOperations.cpp" />
     <ClCompile Include="..\SLFGameBackend\RandomGenerator.cpp" />
   </ItemGroup>
