@@ -1,6 +1,7 @@
 #pragma once
 #include "DataTypes.h"
-#include "../SLFGameBackendQt/slfgamebackendqt_global.h"
+
+using QByteArray = class QByteArray;
 
 class Serializer
 {

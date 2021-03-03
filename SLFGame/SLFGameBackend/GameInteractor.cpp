@@ -1,4 +1,5 @@
 #include "GameInteractor.h"
+#include "../SLFGameBackendQt/slfgamebackendqt_global.h"
 
 GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, GameLogic* game, NetworkSource* n, SLFParser* p, Serializer* s) :
 	m_pRandomGenerator(gen),

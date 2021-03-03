@@ -1,5 +1,6 @@
 #pragma once
 #include "NetworkSource.h"
+#include "../SLFGameBackendQt/slfgamebackendqt_global.h"
 
 class GameNetwork : public NetworkSource, public QObject
 {

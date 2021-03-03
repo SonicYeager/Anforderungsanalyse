@@ -1,5 +1,6 @@
 #pragma once
 #include "Serializer.h"
+#include "../SLFGameBackendQt/slfgamebackendqt_global.h"
 
 class QDataSerializer : public Serializer
 {

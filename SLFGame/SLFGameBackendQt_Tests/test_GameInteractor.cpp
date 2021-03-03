@@ -7,16 +7,25 @@
 #include "../SLFGameBackend/SLFParser.h"
 #include "../SLFGameBackend/Game.h"
 #include "../SLFGameBackend/UI.h"
+#include "../SLFGameBackend/Serializer.h"
+
+#include <QtCore/qglobal.h>
+#include <QtCore/qtimer.h>
+#include <QtNetwork/qhostinfo.h>
+#include <QtNetwork/qnetworkinterface.h>
+#include <QtNetwork/qtcpserver.h>
+#include <QtNetwork/qtcpsocket.h>
 
 using namespace ::testing;
 
 class FakeUI : public UI
 {
 public:
-	MOCK_METHOD(void, Init, (const GameStats&), (override));
 	MOCK_METHOD(void, PrepareGame, (const GameStats&), (override));
 	MOCK_METHOD(void, PrepareOverview, (const GameStats&), (override));
 	MOCK_METHOD(void, PrepareFinalScores, (const GameStats&), (override));
+	MOCK_METHOD(void, PrepareLobby, (const GameStats&), (override));
+	MOCK_METHOD(void, PlayerJoined, (const GameStats&, int), (override));
 };
 
 class FakeRandomLetterGenerator : public RandomGenRessource
@@ -45,23 +54,25 @@ public:
 	{
 		return "CODE";
 	}
-	// Geerbt über NetworkSource
-	void StartServer() override
-	{
-	}
-	void ConnectToServer(const std::string&) override
-	{
-	}
-private:
-	int numCalls = 0;
+	MOCK_METHOD(void, StartServer,		(),							(override));
+	MOCK_METHOD(void, ConnectToServer,	(const std::string&),		(override));
+	MOCK_METHOD(void, Broadcast,		(const QByteArray&),		(override));
+	MOCK_METHOD(void, Write,			(const QByteArray&, int),	(override));
+	MOCK_METHOD(void, WriteToHost,		(const QByteArray&),		(override));
+};
 
+class FakeSerializer : public Serializer
+{
+public:
+	MOCK_METHOD(QByteArray, Serialize, (const NetworkData&), (override));
+	MOCK_METHOD(NetworkData, Deserialize, (const QByteArray&), (override));
 };
 
 class TestGameInteractor : public Test
 {
 public:
 	TestGameInteractor() :
-		gameInteractor{&fakeRandomLetterGenerator, &gameStatsOperations, &game, &fakeNetworkSource, &parser}
+		gameInteractor{&fakeRandomLetterGenerator, &gameStatsOperations, &game, &fakeNetworkSource, &parser, &fSerializer}
 	{}
 protected:
 	virtual void SetUp()
@@ -81,6 +92,7 @@ protected:
 	GameStats gameStats{};
 	PlayerStats playerStats{};
 	SLFParser parser;
+	FakeSerializer fSerializer{};
 };
 
 //TEST_F(TestGameInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerStats)
@@ -123,6 +135,9 @@ TEST_F(TestGameInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_Ret
 	int playerID = 0;
 	ps.SetPlayerID(playerID);
 	actualGS.AddPlayer(ps);
+	Players players{};
+	players.emplace_back();
+	gameInteractor.m_GameStats.SetPlayers(players);
 
 	gameInteractor.onPrepareOverview = [&actualGS](GameStats gs)
 	{
@@ -144,7 +159,10 @@ TEST_F(TestGameInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinalSc
 	expectedGS.GetPlayerStats(0).SetPoints(40);
 	::testing::StrictMock<FakeUI> fui;
 	gameInteractor.onGameOver = [&fui](GameStats gs) {fui.PrepareFinalScores(gs); };
-	std::vector<DECISION> dec{UNIQUE, UNIQUE, SOLO};
+	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO};
+	Players players{};
+	players.emplace_back();
+	gameInteractor.m_GameStats.SetPlayers(players);
 
 	EXPECT_CALL(fui, PrepareFinalScores(expectedGS));
 
@@ -163,8 +181,11 @@ TEST_F(TestGameInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGameWi
 	expectedGS.AddPlayer(ps);
 	::testing::StrictMock<FakeUI> fui;
 	gameInteractor.onPrepareNextRound = [&fui](GameStats gs) {fui.PrepareGame(gs); };
-	std::vector<DECISION> dec{ UNIQUE, UNIQUE, SOLO };
+	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO };
 	gameInteractor.m_GameStats.SetMaxRounds(2);
+	Players players{};
+	players.emplace_back();
+	gameInteractor.m_GameStats.SetPlayers(players);
 
 	EXPECT_CALL(fui, PrepareGame(expectedGS));
 
