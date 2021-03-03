@@ -3,28 +3,28 @@
 
 void GameStatsOperations::InkrementRound(GameStats& gameStats)
 {
-	gameStats.SetCurrentRound(gameStats.GetCurrentRound()+1);
+	gameStats.currentRound += 1;
 }
 
 void GameStatsOperations::AddPreviousLetter(GameStats& gameStats)
 {
-	auto curr = gameStats.GetCurrentLetter();
+	auto curr = gameStats.currentLetter;
 	if(curr != '\0')
 	{
-		auto usedLetters = gameStats.GetUsedLetters();
+		auto usedLetters = gameStats.lettersUsed;
 		usedLetters.push_back(curr);
-		gameStats.SetUsedLetters(usedLetters);
+		gameStats.lettersUsed = usedLetters;
 	}
 }
 
 void GameStatsOperations::SetNewLetter(Letter letter, GameStats& gameStats)
 {
-	gameStats.SetCurrentLetter(letter);
+	gameStats.currentLetter = letter;
 }
 
 void GameStatsOperations::AddPoints(const int points, PlayerStats& ps)
 {
-	ps.SetPoints(ps.GetPoints() + points);
+	ps.points += points;
 }
 
 bool GameStatsOperations::LetterIsAlreadyUsed(Letter generated, Letters used)
@@ -34,15 +34,15 @@ bool GameStatsOperations::LetterIsAlreadyUsed(Letter generated, Letters used)
 
 void GameStatsOperations::SetAnswers(const std::vector<std::string>& answ, PlayerStats& ps)
 {
-	ps.SetAnswers(answ);
+	ps.answers = answ;
 }
 
 std::pair<GameStats, PlayerStats> GameStatsOperations::CreateStats(const std::string& code)
 {
 	GameStats gs{};
 	PlayerStats ps{};
-	gs.SetMaxRounds(5);
-	gs.SetCategories({ {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}} });
-	gs.SetLobbyCode(code);
+	gs.maxRounds = 5;
+	gs.categories = { {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}} };
+	gs.lobbyCode = code;
     return std::make_pair(gs, ps);
 }

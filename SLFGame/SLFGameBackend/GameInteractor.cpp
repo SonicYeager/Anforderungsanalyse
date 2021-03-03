@@ -12,7 +12,7 @@ GameInteractor::GameInteractor(RandomGenRessource* gen, DataOperationLogic* op, 
 	m_pGame->onGameOver = [this]() { onGameOver(m_GameStats, m_PlayerStats); };
 	m_pGame->onPrepareNextRound = [this]() 
 	{
-		Letter generated = m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.GetUsedLetters());
+		Letter generated = m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.lettersUsed);
 		m_pDataOperation->SetNewLetter(generated, m_GameStats);
 		m_pDataOperation->AddPreviousLetter(m_GameStats);
 		onPrepareNextRound(m_GameStats, m_PlayerStats);
@@ -23,10 +23,10 @@ void GameInteractor::PrepareGame(const std::string& cats, const std::string& rou
 {
 	auto parsedCats = m_pParser->ParseCategories(cats);
 	auto parsedRound = m_pParser->ParseRoundCount(roundCount);
-	m_GameStats.SetCategories(parsedCats);
-	m_GameStats.SetTimeout(roundTime);
-	m_GameStats.SetCurrentRound(0);
-	m_GameStats.SetMaxRounds(parsedRound);
+	m_GameStats.categories = parsedCats;
+	m_GameStats.timeout = roundTime;
+	m_GameStats.currentRound = 0;
+	m_GameStats.maxRounds = parsedRound;
 	m_pDataOperation->InkrementRound(m_GameStats);
 	Letter generated = m_pRandomGenerator->GenerateLetter();
 	m_pDataOperation->SetNewLetter(generated, m_GameStats);

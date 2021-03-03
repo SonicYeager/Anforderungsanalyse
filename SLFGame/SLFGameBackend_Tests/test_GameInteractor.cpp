@@ -79,16 +79,16 @@ TEST_F(TestGameInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerSt
 {
 	auto actual = gameInteractor.PrepareLobby();
 
-	EXPECT_EQ(actual.second.GetAnswers().size(), 0);
-	EXPECT_EQ(actual.second.GetPoints(), 0);
+	EXPECT_EQ(actual.second.answers.size(), 0);
+	EXPECT_EQ(actual.second.points, 0);
 
 	Categories cat{ {"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"} };
-	EXPECT_EQ(actual.first.GetCategories(), cat);
-	EXPECT_EQ(actual.first.GetCurrentLetter(), Letter{});
-	EXPECT_EQ(actual.first.GetUsedLetters().letters.size(), 0);
-	EXPECT_EQ(actual.first.GetCurrentRound(), 0);
-	EXPECT_EQ(actual.first.GetMaxRound(), 5);
-	EXPECT_EQ(actual.first.GetLobbyCode(), "CODE");
+	EXPECT_EQ(actual.first.categories, cat);
+	EXPECT_EQ(actual.first.currentLetter, Letter{});
+	EXPECT_EQ(actual.first.lettersUsed.size(), 0);
+	EXPECT_EQ(actual.first.currentRound, 0);
+	EXPECT_EQ(actual.first.maxRounds, 5);
+	EXPECT_EQ(actual.first.lobbyCode, "CODE");
 }
 
 TEST_F(TestGameInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStatsAndPlayerStatsFilledWithStdCatsRound0NoTimer)
@@ -104,9 +104,9 @@ TEST_F(TestGameInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStats
 	gameInteractor.PrepareGame("Stadt,Land,Fluss,Name,Tier,Beruf", "", "0");
 
 	Categories cat{ {"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"} };
-	EXPECT_EQ(actualGS.GetCategories(), cat);
-	EXPECT_EQ(actualGS.GetTimeout(), "");
-	EXPECT_EQ(actualGS.GetCurrentRound(), 1);
+	EXPECT_EQ(actualGS.categories, cat);
+	EXPECT_EQ(actualGS.timeout, "");
+	EXPECT_EQ(actualGS.currentRound, 1);
 }
 
 TEST_F(TestGameInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_ReturnPlayerStatsFilledWithBremenBulgarienBrahmaputra)
@@ -122,18 +122,18 @@ TEST_F(TestGameInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_Ret
 	gameInteractor.PrepareOverview({ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} });
 
 	std::vector<std::string> expected{ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} };
-	EXPECT_EQ(actualPS.GetAnswers(), expected);
+	EXPECT_EQ(actualPS.answers, expected);
 }
 
 TEST_F(TestGameInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinalScoresWithCalculatedScores)
 {
 	GameStats expectedGS;
-	expectedGS.SetCurrentRound(1);
+	expectedGS.currentRound = 1;
 	PlayerStats expectedPS;
-	expectedPS.SetPoints(40);
+	expectedPS.points = 40;
 	::testing::StrictMock<FakeUI> fui;
 	gameInteractor.onGameOver = [&fui](GameStats gs, PlayerStats playerStats) {fui.PrepareFinalScores(gs, playerStats); };
-	std::vector<int> dec{2, 2, 1};
+	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO};
 
 	EXPECT_CALL(fui, PrepareFinalScores(expectedGS, expectedPS));
 
@@ -143,16 +143,16 @@ TEST_F(TestGameInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinalSc
 TEST_F(TestGameInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGameWithScoresAndUsedLetters)
 {
 	GameStats expectedGS;
-	expectedGS.SetCurrentRound(1);
-	expectedGS.SetCurrentLetter({'C'});
-	expectedGS.SetMaxRounds(2);
-	expectedGS.SetUsedLetters({ {{'C'} } });
+	expectedGS.currentRound = 1;
+	expectedGS.currentLetter = {'C'};
+	expectedGS.maxRounds = 2;
+	expectedGS.lettersUsed = {{'C'}};
 	PlayerStats expectedPS;
-	expectedPS.SetPoints(40);
+	expectedPS.points = 40;
 	::testing::StrictMock<FakeUI> fui;
 	gameInteractor.onPrepareNextRound = [&fui](GameStats gs, PlayerStats playerStats) {fui.PrepareGame(gs, playerStats); };
-	std::vector<int> dec{ 2, 2, 1 };
-	gameInteractor.m_GameStats.SetMaxRounds(2);
+	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO };
+	gameInteractor.m_GameStats.maxRounds = 2;
 
 	EXPECT_CALL(fui, PrepareGame(expectedGS, expectedPS));
 

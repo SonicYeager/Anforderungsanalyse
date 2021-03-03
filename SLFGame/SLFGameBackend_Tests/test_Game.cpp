@@ -12,7 +12,15 @@ public:
 TEST(TestGame, CalculatePoints_2solo2multi2same_PointOutputEQ70)
 {
 	Game game{};
-	std::vector<int> decisions = { 1,1,2,2,3,3 };
+	std::vector<DECISION> decisions = 
+	{ 
+		DECISION::SOLO,
+		DECISION::SOLO,
+		DECISION::UNIQUE,
+		DECISION::UNIQUE,
+		DECISION::MULTIPLE,
+		DECISION::MULTIPLE
+	};
 
 	int actual = game.CalculatePoints(decisions);
 	int expected = 70;
@@ -28,8 +36,8 @@ TEST(TestGame, CheckGameFinished_3currentRound5MaxRound_ExpectCallPrepare)
 	::testing::StrictMock<FakeClass> fc{};
 	::testing::InSequence sq;
 
-	gs.SetCurrentRound(3);
-	gs.SetMaxRounds(5);
+	gs.currentRound = 3;
+	gs.maxRounds = 5;
 
 	game.onPrepareNextRound = [&fc]() {fc.Prepare(); };
 	game.onGameOver = [&fc]() {fc.End(); };
@@ -45,8 +53,8 @@ TEST(TestGame, CheckGameFinished_6currentRound5MaxRound_ExpectCallEnd)
 	::testing::StrictMock<FakeClass> fc;
 	::testing::InSequence sq;
 
-	gs.SetCurrentRound(6);
-	gs.SetMaxRounds(5);
+	gs.currentRound= 6;
+	gs.maxRounds = 5;
 
 	game.onPrepareNextRound = [&fc]() {fc.Prepare(); };
 	game.onGameOver = [&fc]() {fc.End(); };

@@ -19,7 +19,7 @@ int Game::CalculatePoints(const std::vector<DECISION>& decisions)
 
 void Game::CheckGameFinished(GameStats& gs)
 {
-	if (gs.GetCurrentRound() > gs.GetMaxRound())
+	if (gs.currentRound > gs.maxRounds)
 		onGameOver();
 	else
 		onPrepareNextRound();

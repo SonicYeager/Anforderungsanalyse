@@ -66,6 +66,100 @@ struct GameStats
 	Players players;
 };
 
+//inline int PlayerStats::GetPoints()	const
+//{
+//	return points;
+//}
+//
+//inline std::vector<std::string> PlayerStats::GetAnswers() const
+//{
+//	return answers;
+//}
+//
+//inline std::string PlayerStats::GetAnswerAt(int i) const
+//{
+//	return answers[i];
+//}
+//
+//inline void PlayerStats::SetPoints(int newPoints)
+//{
+//	points = newPoints;
+//}
+//
+//inline void PlayerStats::SetAnswers(const std::vector<std::string>& newAsnwers)
+//{
+//	answers = newAsnwers;
+//}
+//
+//inline Categories GameStats::GetCategories() const 
+//{
+//	return categories;
+//}
+//
+//inline Letters GameStats::GetUsedLetters() const
+//{
+//	return lettersUsed;
+//}
+//
+//inline Letter GameStats::GetCurrentLetter()	const
+//{
+//	return currentLetter;
+//}
+//
+//inline void GameStats::SetCategories(Categories cats)
+//{
+//	categories = cats;
+//}
+//
+//inline int GameStats::GetCurrentRound()	const
+//{
+//	return currentRound;
+//}
+//
+//inline int GameStats::GetMaxRound()	const
+//{
+//	return maxRounds;
+//}
+//
+//inline std::string GameStats::GetLobbyCode() const
+//{
+//	return lobbyCode;
+//}
+//
+//inline void GameStats::SetLobbyCode(const std::string& code)
+//{
+//	lobbyCode = code;
+//}
+//
+//inline void GameStats::SetUsedLetters(Letters newLetters)
+//{
+//	lettersUsed = newLetters;
+//}
+//
+//inline void GameStats::SetCurrentLetter(Letter newLetter)
+//{
+//	currentLetter = newLetter;
+//}
+//
+//inline void GameStats::SetCurrentRound(int newCurrentRound)
+//{
+//	currentRound = newCurrentRound;
+//}
+//
+//inline void GameStats::SetMaxRounds(int num)
+//{
+//	maxRounds = num;
+//}
+//
+//inline std::string GameStats::GetTimeout() const
+//{
+//	return timeout;
+//}
+//
+//inline void GameStats::SetTimeout(const std::string& t)
+//{
+//	timeout = t;
+//}
 using Stats = std::pair<GameStats, PlayerStats>;
 
 enum class HEADER : int
@@ -238,15 +332,15 @@ inline void GameStats::SetTimeout(const std::string& t)
 //	return letter < other.letter;
 //}
 //
-//inline bool operator==(const GameStats& left, const GameStats& right)
-//{
-//	return left.GetCategories() == right.GetCategories() &&
-//		left.GetCurrentLetter() == right.GetCurrentLetter() &&
-//		left.GetCurrentRound() == right.GetCurrentRound() &&
-//		left.GetLobbyCode() == right.GetLobbyCode() &&
-//		left.GetMaxRound() == right.GetMaxRound() &&
-//		left.GetUsedLetters().letters == right.GetUsedLetters().letters;
-//}
+inline bool operator==(const GameStats& left, const GameStats& right)
+{
+	return left.categories == right.categories &&
+		left.currentLetter == right.currentLetter &&
+		left.currentRound == right.currentRound &&
+		left.lobbyCode == right.lobbyCode &&
+		left.maxRounds == right.maxRounds &&
+		left.lettersUsed == right.lettersUsed;
+}
 inline void GameStats::SetPlayerName(const std::string& name, int idx)
 {
 	PlayerStats ps{};
@@ -267,5 +361,5 @@ inline bool Letter::operator==(const Letter& other)	const
 
 inline bool operator==(const PlayerStats& left, const PlayerStats& right)
 {
-	return left.GetAnswers() == right.GetAnswers() && left.GetPoints() == right.GetPoints();
+	return left == right && left == right;
 }

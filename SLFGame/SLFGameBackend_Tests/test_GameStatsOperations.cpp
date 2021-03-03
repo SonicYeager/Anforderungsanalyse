@@ -10,7 +10,7 @@ TEST(TestGameStatsOperations, InkrementRound_GameStatsZeroRounds_GameStatsOneRou
 
 	gso.InkrementRound(gs);
 
-	EXPECT_EQ(gs.GetCurrentRound(), 1);
+	EXPECT_EQ(gs.currentRound, 1);
 
 }
 
@@ -19,11 +19,11 @@ TEST(TestGameStatsOperations, AddPreviousLetter_GameStatsLettersUsedEmpty_GameSt
 
 	GameStatsOperations gso{};
 	GameStats gs{};
-	gs.SetCurrentLetter(Letter{'C'});
+	gs.currentLetter = {'C'};
 
 	gso.AddPreviousLetter(gs);
 
-	EXPECT_EQ(gs.GetUsedLetters().letters[0].letter, 'C');
+	EXPECT_EQ(gs.lettersUsed[0], 'C');
 
 }
 
@@ -32,13 +32,13 @@ TEST(TestGameStatsOperations, AddPreviousLetter_GameStatsLettersUsedFilledWithC_
 
 	GameStatsOperations gso{};
 	GameStats gs{};
-	gs.SetCurrentLetter(Letter{ 'D' });
+	gs.currentLetter = { 'D' };
 	Letters letters{{{'C'}}};
-	gs.SetUsedLetters(letters);
+	gs.lettersUsed = letters;
 
 	gso.AddPreviousLetter(gs);
 
-	EXPECT_EQ(gs.GetUsedLetters().letters[1].letter, 'D');
+	EXPECT_EQ(gs.lettersUsed[1], 'D');
 
 }
 
@@ -50,7 +50,7 @@ TEST(TestGameStatsOperations, AddPreviousLetter_GameStatsLettersUsedEmptyCurrent
 
 	gso.AddPreviousLetter(gs);
 
-	EXPECT_EQ(gs.GetUsedLetters().letters.size(), 0);
+	EXPECT_EQ(gs.lettersUsed.size(), 0);
 
 }
 
@@ -62,7 +62,7 @@ TEST(TestGameStatsOperations, SetNewLetter_GameStatsCurrentLetterEmpty_GameStats
 
 	gso.SetNewLetter(Letter{'C'}, gs);
 
-	EXPECT_EQ(gs.GetCurrentLetter().letter, 'C');
+	EXPECT_EQ(gs.currentLetter, 'C');
 
 }
 
@@ -100,9 +100,9 @@ TEST(TestGameStatsOperations, CreateStats_LobbyCode0c346bv_ReturnConfiguredGameS
 
 	GameStats expectedgs{};
 	PlayerStats expectedps{};
-	expectedgs.SetMaxRounds(5);
-	expectedgs.SetCategories({{{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}}});
-	expectedgs.SetLobbyCode("0c346bv");
+	expectedgs.maxRounds = 5;
+	expectedgs.categories = {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}};
+	expectedgs.lobbyCode = "0c346bv";
 	EXPECT_EQ(actual.first, expectedgs);
 	EXPECT_EQ(actual.second, expectedps);
 
@@ -117,7 +117,7 @@ TEST(TestGameStatsOperations, SetAnswers_BaumBerlinBen_SetToBaumBerlinBen)
 	gso.SetAnswers(answers, playerStats);
 
 
-	EXPECT_EQ(playerStats.GetAnswers(), answers);
+	EXPECT_EQ(playerStats.answers, answers);
 
 }
 
@@ -130,7 +130,7 @@ TEST(TestGameStatsOperations, AddPoints_65_SetTo65)
 	gso.AddPoints(65, playerStats);
 
 
-	EXPECT_EQ(playerStats.GetPoints(), points);
+	EXPECT_EQ(playerStats.points, points);
 
 }
 
