@@ -32,16 +32,9 @@ using Categories = std::vector<std::string>;
 struct PlayerStats
 {
 	int GetPoints()const;
-	std::vector<std::string>	GetAnswers		()const;
-	std::string					GetAnswerAt		(int)const;
-	std::string					GetPlayerName	()const;
-	int							GetPlayerID		()const;
-	void						SetPoints		(int);
-	void						SetPlayerName	(const std::string&);
-	void						SetAnswers		(const std::vector<std::string>&);
-	void						SetPlayerID		(int);
 
-private:
+	std::string playerName;
+	int playerID;
 	std::string playerName = "Pete";
 	int playerID = 0;
 	int points = 0;
@@ -73,7 +66,6 @@ struct GameStats
 	void SetPlayerName(const std::string&, int);
 	void SetPlayers(const Players&);
 
-private:
 	Categories categories{};
 	Letter currentLetter{};
 	Letters lettersUsed{};
@@ -268,11 +260,6 @@ inline bool Letter::operator<(const Letter& other) const
 {
 	return letter < other.letter;
 }
-
-//inline bool operator==(const Letter& left, const Letter& right)
-//{
-//	return left.letter == right.letter;
-//}
 
 inline bool operator==(const GameStats& left, const GameStats& right)
 {
