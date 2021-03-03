@@ -6,11 +6,11 @@ int Game::CalculatePoints(const std::vector<DECISION>& decisions)
 
 	for (unsigned int i = 0; i < decisions.size(); i++)
 	{
-		if (decisions[i] == 1)
+		if (decisions[i] == DECISION::UNIQUE)
 			result += 20;
-		else if (decisions[i] == 2)
+		else if (decisions[i] == DECISION::SOLO)
 			result += 10;
-		else if (decisions[i] == 3)
+		else if (decisions[i] == DECISION::MULTIPLE)
 			result += 5;
 	}
 

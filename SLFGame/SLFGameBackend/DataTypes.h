@@ -21,11 +21,7 @@ using Categories = std::vector<std::string>;
 
 struct PlayerStats
 {
-	int GetPoints()const;
-
-	std::string playerName;
-	int playerID;
-	std::string playerName = "Pete";
+	std::string playerName = "";
 	int playerID = 0;
 	int points = 0;
 	std::vector<std::string> answers;
@@ -35,27 +31,6 @@ using Players = std::vector<PlayerStats>;
 
 struct GameStats
 {
-	Categories GetCategories()const;
-	Letters GetUsedLetters()const;
-	Letter GetCurrentLetter()const;
-	PlayerStats GetPlayerStats(int)const;
-	std::vector<std::string> GetPlayerNames() const;
-	int GetPlayerCount()const;
-	int GetCurrentRound()const;
-	int GetMaxRound()const;
-	std::string GetLobbyCode() const;
-	std::string GetTimeout() const;
-	void SetLobbyCode(const std::string&);
-	void SetUsedLetters(Letters);
-	void SetCurrentLetter(Letter);
-	void SetCategories(Categories);
-	void SetCurrentRound(int);
-	void SetMaxRounds(int);
-	void AddPlayer(PlayerStats);
-	void SetTimeout(const std::string&);
-	void SetPlayerName(const std::string&, int);
-	void SetPlayers(const Players&);
-
 	Categories categories{};
 	Letter currentLetter{};
 	Letters lettersUsed{};
@@ -66,100 +41,6 @@ struct GameStats
 	Players players;
 };
 
-//inline int PlayerStats::GetPoints()	const
-//{
-//	return points;
-//}
-//
-//inline std::vector<std::string> PlayerStats::GetAnswers() const
-//{
-//	return answers;
-//}
-//
-//inline std::string PlayerStats::GetAnswerAt(int i) const
-//{
-//	return answers[i];
-//}
-//
-//inline void PlayerStats::SetPoints(int newPoints)
-//{
-//	points = newPoints;
-//}
-//
-//inline void PlayerStats::SetAnswers(const std::vector<std::string>& newAsnwers)
-//{
-//	answers = newAsnwers;
-//}
-//
-//inline Categories GameStats::GetCategories() const 
-//{
-//	return categories;
-//}
-//
-//inline Letters GameStats::GetUsedLetters() const
-//{
-//	return lettersUsed;
-//}
-//
-//inline Letter GameStats::GetCurrentLetter()	const
-//{
-//	return currentLetter;
-//}
-//
-//inline void GameStats::SetCategories(Categories cats)
-//{
-//	categories = cats;
-//}
-//
-//inline int GameStats::GetCurrentRound()	const
-//{
-//	return currentRound;
-//}
-//
-//inline int GameStats::GetMaxRound()	const
-//{
-//	return maxRounds;
-//}
-//
-//inline std::string GameStats::GetLobbyCode() const
-//{
-//	return lobbyCode;
-//}
-//
-//inline void GameStats::SetLobbyCode(const std::string& code)
-//{
-//	lobbyCode = code;
-//}
-//
-//inline void GameStats::SetUsedLetters(Letters newLetters)
-//{
-//	lettersUsed = newLetters;
-//}
-//
-//inline void GameStats::SetCurrentLetter(Letter newLetter)
-//{
-//	currentLetter = newLetter;
-//}
-//
-//inline void GameStats::SetCurrentRound(int newCurrentRound)
-//{
-//	currentRound = newCurrentRound;
-//}
-//
-//inline void GameStats::SetMaxRounds(int num)
-//{
-//	maxRounds = num;
-//}
-//
-//inline std::string GameStats::GetTimeout() const
-//{
-//	return timeout;
-//}
-//
-//inline void GameStats::SetTimeout(const std::string& t)
-//{
-//	timeout = t;
-//}
 using Stats = std::pair<GameStats, PlayerStats>;
 
 enum class HEADER : int
@@ -183,155 +64,6 @@ struct NetworkData
 	std::vector<std::vector<std::string>> answers{};
 };
 
-
-inline int PlayerStats::GetPoints()	const
-{
-	return points;
-}
-
-inline std::vector<std::string> PlayerStats::GetAnswers() const
-{
-	return answers;
-}
-
-inline std::string PlayerStats::GetAnswerAt(int i) const
-{
-	return answers[i];
-}
-
-inline std::string PlayerStats::GetPlayerName() const
-{
-	return playerName;
-}
-
-inline int PlayerStats::GetPlayerID() const
-{
-	return playerID;
-}
-
-inline void PlayerStats::SetPoints(int newPoints)
-{
-	points = newPoints;
-}
-
-inline void PlayerStats::SetPlayerName(const std::string& newName)
-{
-	playerName = newName;
-}
-
-inline void PlayerStats::SetAnswers(const std::vector<std::string>& newAnswers)
-{
-	answers = newAnswers;
-}
-
-inline void PlayerStats::SetPlayerID(int id)
-{
-	playerID = id;
-}
-
-inline Categories GameStats::GetCategories() const 
-{
-	return categories;
-}
-
-inline Letters GameStats::GetUsedLetters() const
-{
-	return lettersUsed;
-}
-
-inline Letter GameStats::GetCurrentLetter()	const
-{
-	return currentLetter;
-}
-
-inline PlayerStats GameStats::GetPlayerStats(int playerId) const
-{
-	return players[playerId];
-}
-
-inline std::vector<std::string> GameStats::GetPlayerNames() const
-{
-	std::vector<std::string> names{};
-	for (auto name : players)
-		names.push_back(name.GetPlayerName());
-	return names;
-}
-
-inline int GameStats::GetPlayerCount() const
-{
-	return players.size();
-}
-
-inline void GameStats::SetCategories(Categories cats)
-{
-	categories = cats;
-}
-
-inline int GameStats::GetCurrentRound()	const
-{
-	return currentRound;
-}
-
-inline int GameStats::GetMaxRound()	const
-{
-	return maxRounds;
-}
-
-inline std::string GameStats::GetLobbyCode() const
-{
-	return lobbyCode;
-}
-
-inline void GameStats::SetLobbyCode(const std::string& code)
-{
-	lobbyCode = code;
-}
-
-inline void GameStats::SetUsedLetters(Letters newLetters)
-{
-	lettersUsed = newLetters;
-}
-
-inline void GameStats::SetCurrentLetter(Letter newLetter)
-{
-	currentLetter = newLetter;
-}
-
-inline void GameStats::SetCurrentRound(int newCurrentRound)
-{
-	currentRound = newCurrentRound;
-}
-
-inline void GameStats::SetMaxRounds(int num)
-{
-	maxRounds = num;
-}
-
-inline void GameStats::AddPlayer(PlayerStats ps)
-{
-	players.push_back(ps);
-}
-
-inline std::string GameStats::GetTimeout() const
-{
-	return timeout;
-}
-
-inline void GameStats::SetTimeout(const std::string& t)
-{
-	timeout = t;
-}
-
-//inline bool Letter::operator==(const Letter& other)	const
-//{
-//	return letter == other.letter;
-//}
-//
-//inline bool Letter::operator<(const Letter& other) const
-//{
-//	return letter < other.letter;
-//}
-//
 inline bool operator==(const GameStats& left, const GameStats& right)
 {
 	return left.categories == right.categories &&
@@ -340,23 +72,6 @@ inline bool operator==(const GameStats& left, const GameStats& right)
 		left.lobbyCode == right.lobbyCode &&
 		left.maxRounds == right.maxRounds &&
 		left.lettersUsed == right.lettersUsed;
-}
-inline void GameStats::SetPlayerName(const std::string& name, int idx)
-{
-	PlayerStats ps{};
-	ps.SetPlayerName(name);
-	ps.SetPlayerID(idx);
-	players.insert(std::next(std::begin(players), idx), ps);
-}
-
-inline void GameStats::SetPlayers(const Players& play)
-{
-	players = play;
-}
-
-inline bool Letter::operator==(const Letter& other)	const
-{
-	return letter == other.letter;
 }
 
 inline bool operator==(const PlayerStats& left, const PlayerStats& right)
