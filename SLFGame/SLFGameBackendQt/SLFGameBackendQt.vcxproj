@@ -148,6 +148,7 @@
     <ClInclude Include="..\SLFGameBackend\Timer.h" />
     <ClInclude Include="..\SLFGameBackend\TimerRessource.h" />
     <ClInclude Include="..\SLFGameBackend\UI.h" />
+    <ClInclude Include="Checker.h" />
     <ClInclude Include="Messages.h" />
     <ClInclude Include="slfgamebackendqt_global.h" />
     <ClCompile Include="..\SLFGameBackend\GameInteractor.cpp" />

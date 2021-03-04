@@ -95,6 +95,9 @@
     <ClInclude Include="Messages.h">
       <Filter>Data</Filter>
     </ClInclude>
+    <ClInclude Include="Checker.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\SLFGameBackend\GameInteractor.cpp">

@@ -1,8 +1,30 @@
 #pragma once
 #include "NetworkSource.h"
+#include "../SLFGameBackendQt/slfgamebackendqt_global.h"
 
-class Network : public NetworkSource
+const int PORT = 3400;
+
+class Network : public NetworkSource, public QObject
 {
 public:
-	std::string GenerateLobbyCode() override;
+	Network();
+
+	std::string GenerateLobbyCode() override; //pls remove
+	virtual LobbyCode StartServer() override;
+	virtual void ConnectToServer(const LobbyCode&) override;
+	virtual void WriteTo(const ByteStream&, int) override;
+	virtual void WriteToHost(const ByteStream&) override;
+	virtual void Broadcast(const ByteStream&) override;
+	virtual ByteStream ReceiveData() override;
+	virtual ByteStream ReceiveData(int) override;
+
+public slots:
+	void OnNewConnection();
+	void OnSelfReceivedData();
+
+private:
+	void OnReceivedData(int);
+	QTcpServer m_server;
+	QTcpSocket m_serverSocket;
+	std::vector<std::unique_ptr<QTcpSocket>> m_sockets;
 };

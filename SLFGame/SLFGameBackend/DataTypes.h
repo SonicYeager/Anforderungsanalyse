@@ -6,6 +6,8 @@
 template<typename ... Args>
 using Event = std::function<void(Args...)>;
 
+using LobbyCode = std::string;
+using ByteStream = std::vector<char>;
 
 enum class DECISION : int
 {
@@ -63,6 +65,8 @@ struct NetworkData
 	std::vector<std::vector<DECISION>> decisions{};
 	std::vector<std::vector<std::string>> answers{};
 };
+
+const int HEADERSIZE = sizeof(int);
 
 inline bool operator==(const GameStats& left, const GameStats& right)
 {
