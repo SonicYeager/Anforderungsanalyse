@@ -121,6 +121,7 @@
   <ItemGroup>
     <ClCompile Include="..\SLFGameBackend\Client.cpp" />
     <ClCompile Include="..\SLFGameBackend\Game.cpp" />
+    <ClCompile Include="..\SLFGameBackend\GameStatsSerializer.cpp" />
     <ClCompile Include="..\SLFGameBackend\Host.cpp" />
     <ClCompile Include="..\SLFGameBackend\NetworkHandler.cpp" />
     <ClCompile Include="..\SLFGameBackend\SLFParser.cpp" />
@@ -132,9 +133,10 @@
     <ClInclude Include="..\SLFGameBackend\Game.h" />
     <ClInclude Include="..\SLFGameBackend\GameInteractor.h" />
     <ClInclude Include="..\SLFGameBackend\GameLogic.h" />
+    <ClInclude Include="..\SLFGameBackend\GameStatsSerializer.h" />
+    <ClInclude Include="..\SLFGameBackend\Messages.h" />
     <ClInclude Include="..\SLFGameBackend\Network.h" />
     <ClInclude Include="..\SLFGameBackend\GameStatsOperations.h" />
-    <ClInclude Include="..\SLFGameBackend\GameStatsSerializer.h" />
     <ClInclude Include="..\SLFGameBackend\Host.h" />
     <ClInclude Include="..\SLFGameBackend\HostLogic.h" />
     <ClInclude Include="..\SLFGameBackend\Interactor.h" />
@@ -148,8 +150,6 @@
     <ClInclude Include="..\SLFGameBackend\Timer.h" />
     <ClInclude Include="..\SLFGameBackend\TimerRessource.h" />
     <ClInclude Include="..\SLFGameBackend\UI.h" />
-    <ClInclude Include="Checker.h" />
-    <ClInclude Include="Messages.h" />
     <ClInclude Include="slfgamebackendqt_global.h" />
     <ClCompile Include="..\SLFGameBackend\GameInteractor.cpp" />
     <ClCompile Include="..\SLFGameBackend\Network.cpp" />

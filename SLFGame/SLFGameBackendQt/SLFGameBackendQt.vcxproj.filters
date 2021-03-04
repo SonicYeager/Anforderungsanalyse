@@ -68,9 +68,6 @@
     <ClInclude Include="..\SLFGameBackend\ClientLogic.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\SLFGameBackend\GameStatsSerializer.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="..\SLFGameBackend\HostLogic.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -92,7 +89,10 @@
     <ClInclude Include="..\SLFGameBackend\Network.h">
       <Filter>Implementation</Filter>
     </ClInclude>
-    <ClInclude Include="Messages.h">
+    <ClInclude Include="..\SLFGameBackend\GameStatsSerializer.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\Messages.h">
       <Filter>Data</Filter>
     </ClInclude>
     <ClInclude Include="Checker.h">
@@ -128,6 +128,9 @@
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\SLFGameBackend\Network.cpp">
+      <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SLFGameBackend\GameStatsSerializer.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
   </ItemGroup>

@@ -47,9 +47,22 @@ using Stats = std::pair<GameStats, PlayerStats>;
 
 enum class HEADER : int
 {
-	GETNEWPLAYER = 1,
-	SETNEWPLAYER = 2,
-	UPDATELOBBY  = 3
+	HANDLEGAMESTATS = 1,
+	ALTERNATIVE = 2,
+};
+
+struct NetworkData
+{
+	HEADER header{};
+	char currentLetter{};
+	int potentialId{};
+	int maxRounds{};
+	std::string timeout{};
+	std::vector<int> points{};
+	std::vector<std::string> categories{};
+	std::vector<std::string> playerNames{};
+	std::vector<std::vector<DECISION>> decisions{};
+	std::vector<std::vector<std::string>> answers{};
 };
 
 struct NetworkData
