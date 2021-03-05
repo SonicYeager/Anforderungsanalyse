@@ -7,6 +7,8 @@
 #include "../SLFGameBackend/SLFParser.h"
 #include "../SLFGameBackend/Game.h"
 #include "../SLFGameBackend/UI.h"
+#include "../SLFGameBackend/Client.h"
+#include "../SLFGameBackend/Host.h"
 
 using namespace ::testing;
 
@@ -56,7 +58,7 @@ class TestGameInteractor : public Test
 {
 public:
 	TestGameInteractor() :
-		gameInteractor{&fakeRandomLetterGenerator, &gameStatsOperations, &game, &fakeNetworkSource, &parser}
+		gameInteractor{&fakeRandomLetterGenerator, &gameStatsOperations, &game, &fakeNetworkSource, &parser, &clientLogic, &hostLogic}
 	{}
 protected:
 	virtual void SetUp()
@@ -76,6 +78,8 @@ protected:
 	GameStats gameStats{};
 	PlayerStats playerStats{};
 	SLFParser parser;
+	Client clientLogic{&fakeNetworkSource};
+	Host hostLogic{&fakeNetworkSource};
 };
 
 TEST_F(TestGameInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerStats)
@@ -97,11 +101,9 @@ TEST_F(TestGameInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerSt
 TEST_F(TestGameInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStatsAndPlayerStatsFilledWithStdCatsRound0NoTimer)
 {
 	GameStats actualGS;
-	PlayerStats actualPS;
-	gameInteractor.onPrepareGame = [&actualGS, &actualPS](GameStats gs, PlayerStats playerStats) 
+	gameInteractor.onPrepareGame = [&actualGS](GameStats gs) 
 	{
 		actualGS = gs;
-		actualPS = playerStats;
 	};
 
 	gameInteractor.PrepareGame("Stadt,Land,Fluss,Name,Tier,Beruf", "", "0");
@@ -116,12 +118,13 @@ TEST_F(TestGameInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_Ret
 {
 	GameStats actualGS;
 	PlayerStats actualPS;
-	gameInteractor.onPrepareOverview = [&actualGS, &actualPS](GameStats gs, PlayerStats playerStats)
+	gameInteractor.onPrepareOverview = [&actualGS, &actualPS](GameStats gs)
 	{
 		actualGS = gs;
-		actualPS = playerStats;
+		actualPS = gs.players[0];
 	};
 
+	gameInteractor.m_GameStats.players.push_back({ "Name", 0, {}, {} });
 	gameInteractor.PrepareOverview({ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} });
 
 	std::vector<std::string> expected{ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} };
@@ -134,12 +137,15 @@ TEST_F(TestGameInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinalSc
 	expectedGS.currentRound = 1;
 	PlayerStats expectedPS;
 	expectedPS.points = 40;
+	expectedGS.players.push_back(expectedPS);
 	::testing::StrictMock<FakeUI> fui;
-	gameInteractor.onGameOver = [&fui](GameStats gs, PlayerStats playerStats) {fui.PrepareFinalScores(gs, playerStats); };
+	gameInteractor.onGameOver = [&fui](GameStats gs) 
+		{fui.PrepareFinalScores(gs, gs.players[0]); };
 	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO};
 
 	EXPECT_CALL(fui, PrepareFinalScores(expectedGS, expectedPS));
 
+	gameInteractor.m_GameStats.players.push_back({ "", 0, 0, {} });
 	gameInteractor.EndRound(dec);
 }
 
@@ -152,12 +158,40 @@ TEST_F(TestGameInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGameWi
 	expectedGS.lettersUsed = {{'C'}};
 	PlayerStats expectedPS;
 	expectedPS.points = 40;
+	expectedGS.players.push_back(expectedPS);
 	::testing::StrictMock<FakeUI> fui;
-	gameInteractor.onPrepareNextRound = [&fui](GameStats gs, PlayerStats playerStats) {fui.PrepareGame(gs, playerStats); };
+	gameInteractor.onPrepareNextRound = [&fui](GameStats gs) {fui.PrepareGame(gs, gs.players[0]); };
 	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO };
 	gameInteractor.m_GameStats.maxRounds = 2;
 
 	EXPECT_CALL(fui, PrepareGame(expectedGS, expectedPS));
 
+	gameInteractor.m_GameStats.players.push_back({ "", 0, 0, {} });
 	gameInteractor.EndRound(dec);
+}
+
+TEST_F(TestGameInteractor, HostLobby_StatsAreCreated_GameStatsShouldBeFilledWithPlayer0AndBasicSettings)
+{
+	GameStats expectedgs{};
+	expectedgs.maxRounds = 5;
+	expectedgs.categories = { {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}} };
+	expectedgs.lobbyCode = "";
+	PlayerStats expectedps{};
+	expectedps.playerName = "Johnny";
+	expectedps.playerID = 0;
+	expectedgs.players.push_back(expectedps);
+	GameStats actualGS;
+	PlayerStats actualPS;
+	gameInteractor.onPrepareLobby = [&actualGS, &actualPS](GameStats gs)
+	{
+		actualGS = gs;
+		actualPS = gs.players[0];
+	};
+
+	gameInteractor.HostLobby("Johnny");
+	EXPECT_EQ(expectedgs.maxRounds, actualGS.maxRounds);
+	EXPECT_EQ(expectedgs.categories, actualGS.categories);
+	EXPECT_EQ(expectedgs.lobbyCode, actualGS.lobbyCode);
+	EXPECT_EQ(expectedgs.players[0].playerName, expectedps.playerName);
+	EXPECT_EQ(expectedgs.players[0].playerID, expectedps.playerID);
 }

@@ -38,10 +38,10 @@ void GameInteractor::PrepareGame(const std::string& cats, const std::string& rou
 std::pair<GameStats, PlayerStats> GameInteractor::PrepareLobby(const std::string& lobbyCode)
 {
 	//auto code = m_pNetwork->GenerateLobbyCode();
-	auto [gameStats, playerStats] = m_pDataOperation->CreateStats(lobbyCode);
+	auto gameStats = m_pDataOperation->CreateStats(lobbyCode, "");
 	m_GameStats = gameStats;
-	m_GameStats.players.push_back(playerStats);
-	return {gameStats, playerStats};
+	m_GameStats.players.push_back(m_GameStats.players[0]);
+	return { m_GameStats, m_GameStats.players[0] };
 }
 
 void GameInteractor::PrepareOverview(const std::vector<std::string>& answ)
@@ -58,12 +58,24 @@ void GameInteractor::EndRound(const std::vector<DECISION>& decisions)
 	m_pGame->CheckGameFinished(m_GameStats);
 }
 
-void GameInteractor::HostLobby(const std::string&)
+void GameInteractor::HostLobby(const std::string& playerName)
 {
 	//TODO
+	//CreateGameStats
+	//StartServer
+	//ConnectToServer
+	//WaitForGameStats
+	//add self
+	//Send changed
+	//callOnLobby
 }
 
-void GameInteractor::JoinLobby(const LobbyCode&, const std::string&)
+void GameInteractor::JoinLobby(const LobbyCode& lobbyCode, const std::string& playerName)
 {
 	//TODO
+	//ConnectToServer
+	//WaitForGameStats
+	//add self
+	//Send changed
+	//callOnLobby
 }

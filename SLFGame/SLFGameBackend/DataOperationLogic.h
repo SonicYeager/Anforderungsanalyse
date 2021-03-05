@@ -10,6 +10,6 @@ public:
 	virtual bool LetterIsAlreadyUsed(Letter, Letters) = 0;
 	virtual void AddPoints(const int, PlayerStats&) = 0;
 	virtual void SetAnswers(const std::vector<std::string>&, PlayerStats&) = 0;
-	virtual std::pair<GameStats, PlayerStats> CreateStats(const std::string&) = 0;
+	virtual GameStats CreateStats(const LobbyCode&, const std::string&) = 0;
 	virtual ~DataOperationLogic() = default;
 };

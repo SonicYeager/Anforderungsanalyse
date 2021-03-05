@@ -96,15 +96,15 @@ TEST(TestGameStatsOperations, CreateStats_LobbyCode0c346bv_ReturnConfiguredGameS
 	GameStatsOperations gso{};
 	GameStats gs{};
 
-	auto actual = gso.CreateStats("0c346bv");
+	auto actual = gso.CreateStats("0c346bv", "");
 
 	GameStats expectedgs{};
 	PlayerStats expectedps{};
 	expectedgs.maxRounds = 5;
 	expectedgs.categories = {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}};
 	expectedgs.lobbyCode = "0c346bv";
-	EXPECT_EQ(actual.first, expectedgs);
-	EXPECT_EQ(actual.second, expectedps);
+	EXPECT_EQ(actual, expectedgs);
+	EXPECT_EQ(actual.players[0], expectedps);
 
 }
 

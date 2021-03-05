@@ -11,6 +11,6 @@ public:
 	void AddPoints(const int, PlayerStats&) override;
 	bool LetterIsAlreadyUsed(Letter, Letters) override;
 	void SetAnswers(const std::vector<std::string>&, PlayerStats&) override;
-	std::pair<GameStats, PlayerStats> CreateStats(const std::string&) override;
+	GameStats CreateStats(const LobbyCode&, const std::string&) override;
 };
 
