@@ -41,10 +41,13 @@ private:
 class FakeNetworkSource : public NetworkSource
 {
 public:
-	std::string GenerateLobbyCode() override
-	{
-		return "CODE";
-	}
+	MOCK_METHOD(LobbyCode,	StartServer,		(),							(override));
+	MOCK_METHOD(void,		ConnectToServer,	(const LobbyCode&),			(override));
+	MOCK_METHOD(void,		WriteTo,			(const ByteStream&, int),	(override));
+	MOCK_METHOD(void,		WriteToHost,		(const ByteStream&),		(override));
+	MOCK_METHOD(void,		Broadcast,			(const ByteStream&),		(override));
+	MOCK_METHOD(ByteStream,	ReceiveData,		(),							(override));
+	MOCK_METHOD(ByteStream,	ReceiveData,		(int),						(override));
 private:
 	int numCalls = 0;
 };
@@ -88,7 +91,7 @@ TEST_F(TestGameInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerSt
 	EXPECT_EQ(actual.first.lettersUsed.size(), 0);
 	EXPECT_EQ(actual.first.currentRound, 0);
 	EXPECT_EQ(actual.first.maxRounds, 5);
-	EXPECT_EQ(actual.first.lobbyCode, "CODE");
+	EXPECT_EQ(actual.first.lobbyCode, "");
 }
 
 TEST_F(TestGameInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStatsAndPlayerStatsFilledWithStdCatsRound0NoTimer)

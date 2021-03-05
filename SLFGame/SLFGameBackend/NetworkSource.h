@@ -7,7 +7,6 @@ class NetworkSource
 public:
 	virtual ~NetworkSource() = default;
 
-	virtual std::string GenerateLobbyCode() = 0; //pls remove
 	virtual LobbyCode StartServer() = 0;
 	virtual void ConnectToServer(const LobbyCode&) = 0;
 	virtual void WriteTo(const ByteStream&, int) = 0;
@@ -18,5 +17,4 @@ public:
 
 	Event<> onNewConnection;
 	Event<ByteStream> onReceivedData;
-
 };

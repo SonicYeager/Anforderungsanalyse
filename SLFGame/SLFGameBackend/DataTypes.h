@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 #include <functional>
+#include <iostream>
+#include <sstream>
 
 template<typename ... Args>
 using Event = std::function<void(Args...)>;
@@ -40,7 +42,7 @@ struct GameStats
 	int maxRounds{};
 	std::string lobbyCode{};
 	std::string timeout{};
-	Players players;
+	Players players{};
 };
 
 using Stats = std::pair<GameStats, PlayerStats>;
@@ -49,20 +51,6 @@ enum class HEADER : int
 {
 	HANDLEGAMESTATS = 1,
 	ALTERNATIVE = 2,
-};
-
-struct NetworkData
-{
-	HEADER header{};
-	char currentLetter{};
-	int potentialId{};
-	int maxRounds{};
-	std::string timeout{};
-	std::vector<int> points{};
-	std::vector<std::string> categories{};
-	std::vector<std::string> playerNames{};
-	std::vector<std::vector<DECISION>> decisions{};
-	std::vector<std::vector<std::string>> answers{};
 };
 
 struct NetworkData
@@ -93,5 +81,8 @@ inline bool operator==(const GameStats& left, const GameStats& right)
 
 inline bool operator==(const PlayerStats& left, const PlayerStats& right)
 {
-	return left == right && left == right;
+	return left.playerID == right.playerID 
+		&& left.playerName == right.playerName
+		&& left.answers == right.answers
+		&& left.points == right.points;
 }

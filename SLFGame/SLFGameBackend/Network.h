@@ -9,7 +9,6 @@ class Network : public NetworkSource, public QObject
 public:
 	Network();
 
-	std::string GenerateLobbyCode() override; //pls remove
 	virtual LobbyCode StartServer() override;
 	virtual void ConnectToServer(const LobbyCode&) override;
 	virtual void WriteTo(const ByteStream&, int) override;
@@ -24,6 +23,7 @@ public slots:
 
 private:
 	void OnReceivedData(int);
+	std::string GenerateLobbyCode(); //pls remove
 	QTcpServer m_server;
 	QTcpSocket m_serverSocket;
 	std::vector<std::unique_ptr<QTcpSocket>> m_sockets;

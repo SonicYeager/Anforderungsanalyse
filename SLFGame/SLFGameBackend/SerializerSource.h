@@ -1,3 +1,4 @@
+#pragma once
 #include "Messages.h"
 #include "DataTypes.h"
 

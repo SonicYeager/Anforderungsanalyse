@@ -157,11 +157,6 @@
     <ClCompile Include="..\SLFGameBackend\RandomGenerator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\FileHandler\FileHandler\FileHandler.vcxproj">
-      <Project>{017314c3-4b82-4d1a-b23c-3ab8cd9d5a96}</Project>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <CopyFileToFolders Include="..\ressources\categories.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,32 +1,25 @@
 #include "Host.h"
 
-LobbyCode HostLogic::StartServer()
+Host::Host(NetworkSource* source)
+	: m_pNetwork(source)
+{}
+
+LobbyCode Host::StartServer()
 {
-    return LobbyCode();
+	return m_pNetwork->StartServer();
 }
 
-void HostLogic::WriteTo(const ByteStream&, int)
+void Host::WriteTo(const ByteStream& data, int id)
 {
+	m_pNetwork->WriteTo(data, id);
 }
 
-void HostLogic::Broadcast(const ByteStream&)
+void Host::Broadcast(const ByteStream& data)
 {
+	m_pNetwork->Broadcast(data);
 }
 
-ByteStream HostLogic::ReceiveData(int)
+ByteStream Host::ReceiveData(int id)
 {
-	return ByteStream();
-}
-
-ByteStream HostLogic::ReceiveData()
-{
-	return ByteStream();
-}
-
-void HostLogic::WriteToHost(const ByteStream&)
-{
-}
-
-void HostLogic::ConnectToServer(const LobbyCode&)
-{
+	return m_pNetwork->ReceiveData(id);
 }
