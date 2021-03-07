@@ -1,3 +1,4 @@
+#pragma once
 #include "GameStatsOperations.h"
 #include <algorithm>
 

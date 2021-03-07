@@ -1,3 +1,4 @@
+#pragma once
 #include "SLFParser.h"
 
 Categories SLFParser::ParseCategories(const std::string& cats)

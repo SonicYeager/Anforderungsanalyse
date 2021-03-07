@@ -1,14 +1,14 @@
 #pragma once
-#include "DataTypes.h"
 #include "Messages.h"
-#include <variant>
+
+using namespace Messages;
 
 class NetworkHandlerLogic {
 public:
-	virtual void handleMessage(Messages::Message msg, NetworkData data) = 0;
-	virtual void on(Messages::HandleGameStats pl, NetworkData data) = 0;
-	virtual void on(Messages::Alternative pl, NetworkData data) = 0;
+	virtual void handleMessage(const Message&) = 0;
+	virtual void on(const HandleGameStats&) = 0;
+	virtual void on(const AddNewPlayer&) = 0;
 
-	Event<Messages::HandleGameStats, NetworkData> onHandleGameStats;
-	Event<Messages::Alternative, NetworkData> onAlternative;
+	Event<HandleGameStats> onHandleGameStats;
+	Event<AddNewPlayer> onAddNewPlayer;
 };

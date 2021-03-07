@@ -204,11 +204,15 @@
   <ItemGroup>
     <ClCompile Include="test_Client.cpp" />
     <ClCompile Include="test_Game.cpp" />
-    <ClCompile Include="test_GameInteractor.cpp" />
+    <ClCompile Include="test_GameInteractor.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="test_GameStatsOperations.cpp" />
     <ClCompile Include="test_GameStatsSerializer.cpp" />
     <ClCompile Include="test_Host.cpp" />
-    <ClCompile Include="test_NetworkHandler.cpp" />
+    <ClCompile Include="test_NetworkHandler.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="test_RandomGenerator.cpp" />
     <ClCompile Include="test_SLFParser.cpp" />
   </ItemGroup>

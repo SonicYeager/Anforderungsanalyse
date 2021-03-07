@@ -1,3 +1,4 @@
+#pragma once
 #include "Game.h"
 
 int Game::CalculatePoints(const std::vector<DECISION>& decisions)

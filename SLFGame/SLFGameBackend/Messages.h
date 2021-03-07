@@ -4,9 +4,28 @@
 
 namespace Messages
 {
-	//code data messages here if there are any packages
-	struct HandleGameStats {};
-	struct Alternative {};
+	enum class HEADER : int
+	{
+		HANDLEGAMESTATS = 1,
+		ADDNEWPLAYER = 2
+	};
 
-	using Message = std::variant<Alternative, HandleGameStats>;
+	struct HandleGameStats { NetworkData gs; };
+	struct AddNewPlayer    { PlayerStats player; };
+
+	using Message = std::variant<HandleGameStats, AddNewPlayer>;
+
+	HEADER GetMessageID(const HandleGameStats& ) { return HEADER::HANDLEGAMESTATS; }
+	HEADER GetMessageID(const AddNewPlayer&)	 { return HEADER::ADDNEWPLAYER;    }
+
+	Message CreateMessage(HEADER header)
+	{
+		switch (header)
+		{
+			case HEADER::HANDLEGAMESTATS: return HandleGameStats{};
+			case HEADER::ADDNEWPLAYER: return AddNewPlayer{};
+		}
+		return HandleGameStats{};
+	}
+	
 }

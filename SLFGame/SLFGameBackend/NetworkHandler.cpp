@@ -1,16 +1,16 @@
 #include "NetworkHandler.h"
 
-void MessageHandler::handleMessage(Messages::Message msg, NetworkData data)
+void NetworkHandler::handleMessage(const Message& msg)
 {
-	std::visit([&](auto&& type) {on(type, data); }, msg);
+	std::visit([&](auto&& type) {on(type); }, msg);
 }
 
-void MessageHandler::on(Messages::HandleGameStats pl, NetworkData data)
+void NetworkHandler::on(const HandleGameStats& msg)
 {
-	onGet(pl, data);
+	onHandleGameStats(msg);
 }
 
-void MessageHandler::on(Messages::Alternative pl, NetworkData data)
+void NetworkHandler::on(const AddNewPlayer& msg)
 {
-	onSet(pl, data);
+	onAddNewPlayer(msg);
 }

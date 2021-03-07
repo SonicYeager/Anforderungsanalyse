@@ -47,15 +47,8 @@ struct GameStats
 
 using Stats = std::pair<GameStats, PlayerStats>;
 
-enum class HEADER : int
-{
-	HANDLEGAMESTATS = 1,
-	ALTERNATIVE = 2,
-};
-
 struct NetworkData
 {
-	HEADER header{};
 	char currentLetter{};
 	int potentialId{};
 	int maxRounds{};

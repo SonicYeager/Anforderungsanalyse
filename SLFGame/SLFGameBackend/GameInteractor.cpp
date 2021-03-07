@@ -1,3 +1,4 @@
+#pragma once
 #include "GameInteractor.h"
 #include "../FileHandler/FileHandler/FileHandler.h"
 

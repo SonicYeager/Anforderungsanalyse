@@ -1,9 +1,10 @@
 #pragma once
+#include "../SLFGameBackendQt/slfgamebackendqt_global.h"
 #include "Messages.h"
-#include "DataTypes.h"
 
+using namespace Messages;
 class SerializerSource {
 public:
-	virtual void Serialize(Messages::Message msg, NetworkData data) = 0;
-	virtual void Deserialize(Messages::Message msg, std::vector<char> data) = 0;
+	virtual std::vector<char> Serialize(const Message& msg) = 0;
+	virtual Message Deserialize(const std::vector<char>& data) = 0;
 };
