@@ -82,11 +82,11 @@ void GameInteractor::HostLobby(const std::string& playerName)
 
 	// Verbindungsaufbau zum Server
 	m_pClient->ConnectToServer(lobbycode);
+	m_pHost->WaitForConnection();
 
 	//Erhalten der GameStats
 	auto data = m_pClient->ReceiveData();
 	m_pClient->WriteToHost(data);
-	m_pHost->WaitForConnection();
 
 	// Signal an GUI zum Übergang in Lobby
 	onPrepareLobby(m_GameStats);

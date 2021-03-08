@@ -65,6 +65,5 @@ TEST_F(TestGameInteractor, Enjoy)
 	gameInteractorHost.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
 	gameInteractorClient.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
 	gameInteractorHost.HostLobby("Sahrah Connor");
-	auto async = std::async(std::launch::async, [this]() {gameInteractorClient.JoinLobby("192.168.0.80", "T-3000"); });
-	async.get();
+	gameInteractorClient.JoinLobby("192.168.0.80", "T-3000");
 }

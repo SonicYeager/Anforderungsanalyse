@@ -4,7 +4,7 @@
 
 Network::Network()
 {
-	//QObject::connect(&m_server, &QTcpServer::newConnection, this, &Network::OnNewConnection);
+	QObject::connect(&m_server, &QTcpServer::newConnection, this, &Network::OnNewConnection);
 	QObject::connect(&m_serverSocket, &QIODevice::readyRead, this, &Network::OnSelfReceivedData);
 	QObject::connect(&m_serverSocket, &QTcpSocket::errorOccurred, this, &Network::OnClientConnectError);
 	QObject::connect(&m_server, &QTcpServer::acceptError, this, &Network::OnHostConnectError);
@@ -34,6 +34,12 @@ LobbyCode Network::StartServer()
 void Network::ConnectToServer(const LobbyCode& code)
 {
 	m_serverSocket.connectToHost(QHostAddress(code.c_str()), PORT, QIODeviceBase::ReadWrite);
+	m_serverSocket.waitForConnected(2000);
+
+	auto conn = m_server.nextPendingConnection();
+	m_sockets.push_back(std::unique_ptr<QTcpSocket>(conn));
+	auto id = m_sockets.size() - 1;
+	QObject::connect(&*m_sockets[id], &QIODevice::readyRead, [this, id]() {OnReceivedData(id); });
 }
 
 void Network::WriteTo(const ByteStream& data, int id)
@@ -90,7 +96,7 @@ ByteStream Network::ReceiveData(int id)
 
 void Network::WaitForNewConnection()
 {
-	m_server.waitForNewConnection(-1);
+	m_server.waitForNewConnection(2000);
 	std::fstream f{ "error_log.txt", std::fstream::in | std::fstream::out | std::fstream::app };
 	f << "New Connection" << std::endl;
 	auto conn = m_server.nextPendingConnection();
