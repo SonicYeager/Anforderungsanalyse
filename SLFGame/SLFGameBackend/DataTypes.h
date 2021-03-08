@@ -62,6 +62,19 @@ struct NetworkData
 
 const int HEADERSIZE = sizeof(int);
 
+inline bool operator==(const NetworkData& left, const NetworkData& right)
+{
+	return left.currentLetter == right.currentLetter &&
+		left.potentialId == right.potentialId &&
+		left.maxRounds == right.maxRounds &&
+		left.timeout == right.timeout &&
+		left.points == right.points &&
+		left.categories == right.categories &&
+		left.playerNames == right.playerNames &&
+		left.decisions == right.decisions &&
+		left.answers == right.answers;
+}
+
 inline bool operator==(const GameStats& left, const GameStats& right)
 {
 	return left.categories == right.categories &&

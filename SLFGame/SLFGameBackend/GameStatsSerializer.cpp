@@ -39,8 +39,8 @@ void GameStatsSerializer::Serialize_impl(const HandleGameStats& msg, QDataStream
 	data << msg.gs.currentLetter;
 	data << msg.gs.potentialId;
 	data << msg.gs.maxRounds;
-	//QString timeout{ msg.gs.timeout.c_str() };
-	data << msg.gs.timeout.c_str();
+	QString timeout{ msg.gs.timeout.c_str() };
+	data << timeout;
 	QVector<qint8> points{ std::begin(msg.gs.points), std::end(msg.gs.points) };
 	//std::for_each(std::begin(msg.gs.points), std::end(msg.gs.points), [&points](const int& point) {points.push_back(point); });
 	data << points;
@@ -112,7 +112,8 @@ void GameStatsSerializer::Deserialize_impl(HandleGameStats& msg, QDataStream& da
 
 void GameStatsSerializer::Serialize_impl(const AddNewPlayer& msg, QDataStream& data)
 {
-	data << msg.player.playerName.c_str();
+	QString playername{ msg.player.playerName.c_str() };
+	data << playername;
 	data << msg.player.playerID;
 	data << msg.player.points;
 	QStringList answers;
@@ -122,7 +123,7 @@ void GameStatsSerializer::Serialize_impl(const AddNewPlayer& msg, QDataStream& d
 
 void GameStatsSerializer::Deserialize_impl(AddNewPlayer& msg, QDataStream& data)
 {
-	QString playername;
+	QString playername{};
 	data >> playername;
 	msg.player.playerName = playername.toStdString();
 	data >> msg.player.playerID;
