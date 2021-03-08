@@ -1,5 +1,4 @@
 #pragma once
-#include "../SLFGameBackendQt/slfgamebackendqt_global.h"
 #include "Messages.h"
 
 using namespace Messages;

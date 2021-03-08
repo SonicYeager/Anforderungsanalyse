@@ -1,4 +1,5 @@
 #pragma once
+#include "../SLFGameBackendQt/slfgamebackendqt_global.h"
 #include "GameStatsSerializer.h"
 #include <algorithm>
 

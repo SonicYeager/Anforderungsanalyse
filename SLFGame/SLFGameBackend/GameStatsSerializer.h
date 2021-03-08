@@ -2,6 +2,7 @@
 #include "SerializerSource.h"
 
 using namespace Messages;
+using QDataStream = class QDataStream;
 
 class GameStatsSerializer : public SerializerSource
 {
