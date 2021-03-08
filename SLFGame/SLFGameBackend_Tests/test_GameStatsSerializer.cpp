@@ -6,7 +6,7 @@ TEST(SerializerTest, SerializationAndDeserialization_AddNewPlayer)
 {
 	GameStatsSerializer serializer;
 	AddNewPlayer msg;
-	//AddNewPlayer result;
+	Message result;
 
 	msg.player.playerID = 5;
 	msg.player.playerName = "Klausi";
@@ -14,5 +14,5 @@ TEST(SerializerTest, SerializationAndDeserialization_AddNewPlayer)
 	msg.player.answers = { "Mordor", "Mittelerde", "Mitheithel" };
 
 	ByteStream data = serializer.Serialize(msg);
-	Message result = serializer.Deserialize(data);
+	result = serializer.Deserialize(data);
 }
