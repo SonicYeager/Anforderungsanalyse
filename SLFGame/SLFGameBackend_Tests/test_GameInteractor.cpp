@@ -195,3 +195,21 @@ TEST_F(TestGameInteractor, HostLobby_StatsAreCreated_GameStatsShouldBeFilledWith
 	EXPECT_EQ(expectedgs.players[0].playerName, expectedps.playerName);
 	EXPECT_EQ(expectedgs.players[0].playerID, expectedps.playerID);
 }
+
+TEST_F(TestGameInteractor, HostLobby_ConnectToServer_CallConnectToServer)
+{
+	EXPECT_CALL(fakeNetworkSource, ConnectToServer(::testing::_));
+	gameInteractor.HostLobby("CODE");
+}
+
+TEST_F(TestGameInteractor, HostLobby_StartServer_CallStartServer)
+{
+	EXPECT_CALL(fakeNetworkSource, StartServer());
+	gameInteractor.HostLobby("T-3000");
+}
+
+TEST_F(TestGameInteractor, JoinLobby_ConnectToServer_CallConnectToServer) 
+{
+	EXPECT_CALL(fakeNetworkSource, ConnectToServer("CODE"));
+	gameInteractor.JoinLobby("CODE", "T-3000");
+}
