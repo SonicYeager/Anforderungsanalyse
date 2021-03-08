@@ -8,16 +8,16 @@ QmlAdapter::QmlAdapter(QObject *parent) :
 void QmlAdapter::PrepareGame(const GameStats & gs)
 {
     _unhandledanswers = {};
-    setCurrentRound(gs.GetCurrentRound());
-    setLetter(QChar(gs.GetCurrentLetter().letter));
-    setCategories(gs.GetCategories());
-    setPoints(gs.GetPlayerStats(_playerId).GetPoints());
+    setCurrentRound(gs.currentRound);
+    setLetter(QChar(gs.currentLetter));
+    setCategories(gs.categories);
+    setPoints(gs.players[_playerId].points);
     setView("Input");
 }
 
 void QmlAdapter::PrepareFinalScores(const GameStats & gs)
 {
-    setPoints(gs.GetPlayerStats(_playerId).GetPoints());
+    setPoints(gs.players[_playerId].points);
     setView("FinalScores");
 }
 
@@ -30,17 +30,23 @@ void QmlAdapter::PrepareOverview(const GameStats & gs)
 
 void QmlAdapter::PrepareLobby(const GameStats & gs)
 {
-    setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
+    setLobbyCode(QString::fromLocal8Bit(gs.lobbyCode.c_str()));
+    _players.clear();
+    for(unsigned long long i{}; i < gs.players.size(); ++i)
+        _players.push_back(gs.players[i].playerName);
+    setPlayerCount(_players.size());
+    setTimeLeft(gs.timeout.c_str());
+    emit playerCountChanged();
+    emit playersChanged();
     setView("Lobby");
 }
 
-void QmlAdapter::PlayerJoined(const GameStats & gs, int id)
+void QmlAdapter::UpdateGameStats(const GameStats& gs)
 {
     _players.clear();
-    for(int i{}; i < gs.GetPlayerCount(); ++i)
-        _players.push_back(gs.GetPlayerStats(i).GetPlayerName());
+    for(unsigned long long i{}; i < gs.players.size(); ++i)
+        _players.push_back(gs.players[i].playerName);
     setPlayerCount(_players.size());
-    setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
     emit playerCountChanged();
     emit playersChanged();
 }
@@ -322,13 +328,13 @@ void QmlAdapter::prepareGame()
 
 void QmlAdapter::prepareOverview()
 {
-    onPrepareOverview(_unhandledanswers, _playerId);
+    onPrepareOverview(_unhandledanswers);
 }
 
 void QmlAdapter::prepareNextRound()
 {
     // CHANGE ME SOON ----------------------------------------------------------------------
-    onPrepareNextRound(_decisions[0], _playerId);
+    onPrepareNextRound(_decisions[0]);
 }
 
 void QmlAdapter::addAnswer(QString answer)
@@ -339,19 +345,19 @@ void QmlAdapter::addAnswer(QString answer)
 void QmlAdapter::addPlayerAnswers(GameStats gs)
 {
     StrVector2D result;
-    for (int i = 0; i < gs.GetPlayerCount(); i++)
-        result.push_back(gs.GetPlayerStats(i).GetAnswers());
+    for (unsigned long long i = 0; i < gs.players.size(); i++)
+           result.push_back(gs.players[i].answers);
     setAnswers(result);
 }
 
 void QmlAdapter::hostLobby()
 {
-    onHost(_playerName.toStdString());
+    onHostLobby(_playerName.toStdString());
 }
 
 void QmlAdapter::joinLobby()
 {
-    onJoin(_lobbyCode.toStdString(), _playerName.toStdString());
+    onJoinLobby(_lobbyCode.toStdString(), _playerName.toStdString());
 }
 
 #define slotFunctionsEnd }

@@ -6,10 +6,13 @@
 #include "GameInteractor.h"
 #include "GameStatsOperations.h"
 #include "RandomGenerator.h"
-#include "GameNetwork.h"
 #include "SLFParser.h"
 #include "Game.h"
-#include "QDataSerializer.h"
+#include "Client.h"
+#include "Host.h"
+#include "Network.h"
+#include "GameStatsSerializer.h"
+#include "NetworkHandler.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,11 +22,15 @@ int main(int argc, char *argv[])
     QmlAdapter qmlAdapter;
     RandomGenerator rndGen{};
     GameStatsOperations gsOperations{};
-    GameNetwork network;
     SLFParser parser;
+    Network net;
+    Client client(&net);
+    Host host(&net);
     Game game;
-    QDataSerializer qdserializer;
-    GameInteractor gameInteractor{&rndGen, &gsOperations, &game, &network, &parser, &qdserializer};
+    GameStatsSerializer serializer;
+    NetworkHandler netHandler;
+
+    GameInteractor gameInteractor{&rndGen, &gsOperations, &game, &parser, &client, &host, &serializer, &netHandler};
     Controller controller{&qmlAdapter, &gameInteractor};
     controller.Run();
 
