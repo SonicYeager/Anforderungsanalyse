@@ -2,7 +2,7 @@
 #include "NetworkSource.h"
 #include "../SLFGameBackendQt/slfgamebackendqt_global.h"
 
-const int PORT = 3400;
+const int PORT = 5200;
 
 class Network : public NetworkSource, public QObject
 {
@@ -20,6 +20,8 @@ public:
 public slots:
 	void OnNewConnection();
 	void OnSelfReceivedData();
+	void OnError();
+	void OnConnected();
 
 private:
 	void OnReceivedData(int);

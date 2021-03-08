@@ -1,10 +1,13 @@
 #pragma once
 #include "Network.h"
+#include <fstream>
 
 Network::Network()
 {
 	QObject::connect(&m_server, &QTcpServer::newConnection, this, &Network::OnNewConnection);
 	QObject::connect(&m_serverSocket, &QIODevice::readyRead, this, &Network::OnSelfReceivedData);
+	QObject::connect(&m_serverSocket, &QTcpSocket::errorOccurred, this, &Network::OnError);
+	QObject::connect(&m_serverSocket, &QTcpSocket::connected, this, &Network::OnConnected);
 }
 
 std::string Network::GenerateLobbyCode()
@@ -19,7 +22,7 @@ std::string Network::GenerateLobbyCode()
 
 LobbyCode Network::StartServer()
 {
-	m_server.listen(QHostAddress::Any, PORT);
+	auto checker = m_server.listen(QHostAddress::Any, PORT);
 	return GenerateLobbyCode();
 }
 
@@ -82,6 +85,8 @@ ByteStream Network::ReceiveData(int id)
 
 void Network::OnNewConnection()
 {
+	std::fstream f{ "error_log.txt", std::fstream::in | std::fstream::out | std::fstream::app };
+	f << "New Connection" << std::endl;
 	auto conn = m_server.nextPendingConnection();
 	m_sockets.push_back(std::unique_ptr<QTcpSocket>(conn));
 	auto id = m_sockets.size()-1;
@@ -91,6 +96,8 @@ void Network::OnNewConnection()
 
 void Network::OnSelfReceivedData()
 {
+	std::fstream f{ "error_log.txt", std::fstream::in | std::fstream::out | std::fstream::app };
+	f << "Data Self Received" << std::endl;
 	if (m_serverSocket.bytesAvailable() > 0)
 	{
 		auto qreadsize = m_serverSocket.read(HEADERSIZE);
@@ -103,8 +110,24 @@ void Network::OnSelfReceivedData()
 	}
 }
 
+void Network::OnError()
+{
+	//TODO
+	std::fstream f{"error_log.txt", std::fstream::in | std::fstream::out | std::fstream::app };
+	f << "Connection Error" << std::endl;
+}
+
+void Network::OnConnected()
+{
+	//TODO
+	std::fstream f{ "error_log.txt", std::fstream::in | std::fstream::out | std::fstream::app };
+	f << "Connection Succ" << std::endl;
+}
+
 void Network::OnReceivedData(int id)
 {
+	std::fstream f{ "error_log.txt", std::fstream::in | std::fstream::out | std::fstream::app };
+	f << "Data Received" << std::endl;
 	if (m_sockets[id]->bytesAvailable() > 0)
 	{
 		auto qreadsize = m_sockets[id]->read(HEADERSIZE);
