@@ -74,70 +74,103 @@ void GameInteractor::EndRound(const std::vector<DECISION>& decisions)
 
 void GameInteractor::HostLobby(const std::string& playerName)
 {
+	// Serverstart und LobbyCode-Generierung
 	auto lobbycode = m_pHost->StartServer();
-	auto stats = m_pDataOperation->CreateStats(lobbycode, playerName);
-	m_GameStats = stats;
+
+	//Erstellung der GameStats
+	m_GameStats = m_pDataOperation->CreateStats(lobbycode, playerName);
+
+	// Verbindungsaufbau zum Server
 	m_pClient->ConnectToServer(lobbycode);
+
+	//Erhalten der GameStats
 	auto data = m_pClient->ReceiveData();
 	m_pClient->WriteToHost(data);
+
+	// Signal an GUI zum Übergang in Lobby
 	onPrepareLobby(m_GameStats);
 }
 
 void GameInteractor::JoinLobby(const LobbyCode& lobbyCode, const std::string& playerName)
 {
+	//Verbindungsaufbau zum Server
 	m_pClient->ConnectToServer(lobbyCode);
+
+	//Erhalten der GameStats
 	auto data = m_pClient->ReceiveData();
 	auto msg = m_pSerializer->Deserialize(data);
 	m_pNetHandler->handleMessage(msg);
-	m_GameStats.categories = m_handleGS.gs.categories;
-	m_GameStats.maxRounds = m_handleGS.gs.maxRounds;
-	m_GameStats.timeout = m_handleGS.gs.timeout;
-	for (int i{}; i < m_handleGS.gs.playerNames.size(); ++i)
-		m_GameStats.players.push_back({ m_handleGS.gs.playerNames[i], i, 0, {} });
-	m_handleGS.gs.playerNames.push_back(playerName);
-	m_handleGS.gs.answers.emplace_back();
-	m_handleGS.gs.points.emplace_back();
-	m_handleGS.gs.decisions.emplace_back();
-	m_GameStats.players.push_back({ playerName, m_handleGS.gs.potentialId, 0, {} });
-	auto ser = m_pSerializer->Serialize(m_handleGS);
-	m_pClient->WriteToHost(ser);
+
+	//Update der GameStats und hinzufügen der eigenen Daten
+	UpdateGameStats(playerName);
+	AddPlayerStatsToMessage(playerName);
+
+	//Übermittlung der geupdateten GameStats an Host
+	auto serializedGS = m_pSerializer->Serialize(m_handleGS);
+	m_pClient->WriteToHost(serializedGS);
+
+	//Signal an GUI zum Übergang in Lobby
 	onPrepareLobby(m_GameStats);
 }
 
 void GameInteractor::OnNewClientConnected()
 {
-	HandleGameStats gs{};
-	gs.gs.categories = m_GameStats.categories;
-	gs.gs.maxRounds = m_GameStats.maxRounds;
-	gs.gs.timeout = m_GameStats.timeout;
-	for (int i{}; i < m_GameStats.players.size(); ++i)
-	{
-		gs.gs.playerNames.push_back(m_GameStats.players[i].playerName);
-		gs.gs.points.push_back(m_GameStats.players[i].points);
-		gs.gs.answers.push_back(m_GameStats.players[i].answers);
-	}
-	gs.gs.potentialId = m_GameStats.players.size();
-	auto ser = m_pSerializer->Serialize(gs);
-	m_pHost->WriteTo(ser, m_GameStats.players.size());
+	//Erstellung von GameStatsMassage
+	HandleGameStats gameStatsMsg = CreateGameStatsMessage();
+	gameStatsMsg.gs.potentialId = m_GameStats.players.size();
+
+	//Serialisierung und Senden der Daten an neuen Spieler
+	auto serializedMsg = m_pSerializer->Serialize(gameStatsMsg);
+	m_pHost->WriteTo(serializedMsg, m_GameStats.players.size());
+
+	//Erhalten der geupdateten Spielerdaten
 	auto data = m_pHost->ReceiveData(m_GameStats.players.size());
 	auto msg = m_pSerializer->Deserialize(data);
 	m_pNetHandler->handleMessage(msg);
+
+	//Host -> Hinzufügen des neuen Spielers
 	m_GameStats.players.push_back({m_handleGS.gs.playerNames[m_GameStats.players.size()], (int)m_GameStats.players.size(), m_handleGS.gs.points[m_GameStats.players.size()], m_handleGS.gs.answers[m_GameStats.players.size()] });
-	HandleGameStats gsb{};
-	gsb.gs.categories = m_GameStats.categories;
-	gsb.gs.maxRounds = m_GameStats.maxRounds;
-	gsb.gs.timeout = m_GameStats.timeout;
-	for (int i{}; i < m_GameStats.players.size(); ++i)
-	{
-		gsb.gs.playerNames.push_back(m_GameStats.players[i].playerName);
-		gsb.gs.points.push_back(m_GameStats.players[i].points);
-		gsb.gs.answers.push_back(m_GameStats.players[i].answers);
-	}
-	auto serb = m_pSerializer->Serialize(gsb);
+	
+	//Broadcasten der geupdaten Spielerdaten
+	HandleGameStats updatedGameStatsMsg = CreateGameStatsMessage();
+	auto serb = m_pSerializer->Serialize(updatedGameStatsMsg);
 	m_pHost->Broadcast(serb);
 }
 
 void GameInteractor::OnDataReceived(const ByteStream& stream)
 {
    //TODO
+}
+
+void GameInteractor::UpdateGameStats(const std::string& playerName)
+{
+	m_GameStats.categories = m_handleGS.gs.categories;
+	m_GameStats.maxRounds = m_handleGS.gs.maxRounds;
+	m_GameStats.timeout = m_handleGS.gs.timeout;
+	for (int i{}; i < m_handleGS.gs.playerNames.size(); ++i)
+		m_GameStats.players.push_back({ m_handleGS.gs.playerNames[i], i, 0, {} });
+	m_GameStats.players.push_back({ playerName, m_handleGS.gs.potentialId, 0, {} });
+}
+
+void GameInteractor::AddPlayerStatsToMessage(const std::string& playerName)
+{
+	m_handleGS.gs.playerNames.push_back(playerName);
+	m_handleGS.gs.answers.emplace_back();
+	m_handleGS.gs.points.emplace_back();
+	m_handleGS.gs.decisions.emplace_back();
+}
+
+HandleGameStats GameInteractor::CreateGameStatsMessage()
+{
+	HandleGameStats result{};
+	result.gs.categories = m_GameStats.categories;
+	result.gs.maxRounds = m_GameStats.maxRounds;
+	result.gs.timeout = m_GameStats.timeout;
+	for (int i{}; i < m_GameStats.players.size(); ++i)
+	{
+		result.gs.playerNames.push_back(m_GameStats.players[i].playerName);
+		result.gs.points.push_back(m_GameStats.players[i].points);
+		result.gs.answers.push_back(m_GameStats.players[i].answers);
+	}
+	return result;
 }

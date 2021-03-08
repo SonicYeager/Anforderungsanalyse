@@ -30,6 +30,9 @@ public:
 private:
 	void OnNewClientConnected();
 	void OnDataReceived(const ByteStream&);
+	void UpdateGameStats(const std::string&);
+	void AddPlayerStatsToMessage(const std::string&);
+	HandleGameStats CreateGameStatsMessage();
 
 	RandomGenRessource* m_pRandomGenerator;
 	DataOperationLogic* m_pDataOperation;
