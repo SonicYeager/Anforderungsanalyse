@@ -17,10 +17,11 @@ using namespace ::testing;
 class FakeUI : public UI
 {
 public:
-	MOCK_METHOD(void, Init, (const GameStats&, const PlayerStats&), (override));
-	MOCK_METHOD(void, PrepareGame, (const GameStats&, const PlayerStats&), (override));
-	MOCK_METHOD(void, PrepareOverview, (const GameStats&, const PlayerStats&), (override));
-	MOCK_METHOD(void, PrepareFinalScores, (const GameStats&, const PlayerStats&), (override));
+	MOCK_METHOD(void, PrepareLobby, (const GameStats&), (override));
+	MOCK_METHOD(void, PrepareGame, (const GameStats&), (override));
+	MOCK_METHOD(void, PrepareOverview, (const GameStats&), (override));
+	MOCK_METHOD(void, PrepareFinalScores, (const GameStats&), (override));
+	MOCK_METHOD(void, UpdateGameStats, (const GameStats&), (override));
 };
 
 class FakeRandomLetterGenerator : public RandomGenRessource
@@ -45,15 +46,14 @@ private:
 class FakeNetworkSource : public NetworkSource
 {
 public:
-	MOCK_METHOD(LobbyCode,	StartServer,		(),							(override));
-	MOCK_METHOD(void,		ConnectToServer,	(const LobbyCode&),			(override));
-	MOCK_METHOD(void,		WriteTo,			(const ByteStream&, int),	(override));
-	MOCK_METHOD(void,		WriteToHost,		(const ByteStream&),		(override));
-	MOCK_METHOD(void,		Broadcast,			(const ByteStream&),		(override));
-	MOCK_METHOD(ByteStream,	ReceiveData,		(),							(override));
-	MOCK_METHOD(ByteStream,	ReceiveData,		(int),						(override));
-private:
-	int numCalls = 0;
+	MOCK_METHOD(LobbyCode, StartServer, (), (override));
+	MOCK_METHOD(void, ConnectToServer, (const LobbyCode&), (override));
+	MOCK_METHOD(void, WriteTo, (const ByteStream&, int), (override));
+	MOCK_METHOD(void, WriteToHost, (const ByteStream&), (override));
+	MOCK_METHOD(void, Broadcast, (const ByteStream&), (override));
+	MOCK_METHOD(ByteStream, ReceiveData, (), (override));
+	MOCK_METHOD(ByteStream, ReceiveData, (int), (override));
+	MOCK_METHOD(void, WaitForNewConnection, (), (override));
 };
 
 class TestGameInteractor : public Test
@@ -144,10 +144,10 @@ TEST_F(TestGameInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinalSc
 	expectedGS.players.push_back(expectedPS);
 	::testing::StrictMock<FakeUI> fui;
 	gameInteractor.onGameOver = [&fui](GameStats gs) 
-		{fui.PrepareFinalScores(gs, gs.players[0]); };
+		{fui.PrepareFinalScores(gs); };
 	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO};
 
-	EXPECT_CALL(fui, PrepareFinalScores(expectedGS, expectedPS));
+	EXPECT_CALL(fui, PrepareFinalScores(expectedGS));
 
 	gameInteractor.m_GameStats.players.push_back({ "", 0, 0, {} });
 	gameInteractor.EndRound(dec);
@@ -164,11 +164,11 @@ TEST_F(TestGameInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGameWi
 	expectedPS.points = 40;
 	expectedGS.players.push_back(expectedPS);
 	::testing::StrictMock<FakeUI> fui;
-	gameInteractor.onPrepareNextRound = [&fui](GameStats gs) {fui.PrepareGame(gs, gs.players[0]); };
+	gameInteractor.onPrepareNextRound = [&fui](GameStats gs) {fui.PrepareGame(gs); };
 	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO };
 	gameInteractor.m_GameStats.maxRounds = 2;
 
-	EXPECT_CALL(fui, PrepareGame(expectedGS, expectedPS));
+	EXPECT_CALL(fui, PrepareGame(expectedGS));
 
 	gameInteractor.m_GameStats.players.push_back({ "", 0, 0, {} });
 	gameInteractor.EndRound(dec);
@@ -204,7 +204,7 @@ TEST_F(TestGameInteractor, HostLobby_ConnectToServer_CallConnectToServer)
 {
 	EXPECT_CALL(fakeNetworkSource, ConnectToServer(::testing::_));
 	FakeUI fui{};
-	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats, PlayerStats()); };
+	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
 	gameInteractor.HostLobby("CODE");
 }
 
@@ -212,7 +212,7 @@ TEST_F(TestGameInteractor, HostLobby_StartServer_CallStartServer)
 {
 	EXPECT_CALL(fakeNetworkSource, StartServer());
 	FakeUI fui{};
-	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats, PlayerStats()); };
+	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
 	gameInteractor.HostLobby("T-3000");
 }
 
@@ -220,6 +220,6 @@ TEST_F(TestGameInteractor, JoinLobby_ConnectToServer_CallConnectToServer)
 {
 	EXPECT_CALL(fakeNetworkSource, ConnectToServer("CODE"));
 	FakeUI fui{};
-	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats, PlayerStats()); };
+	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
 	gameInteractor.JoinLobby("CODE", "T-3000");
 }

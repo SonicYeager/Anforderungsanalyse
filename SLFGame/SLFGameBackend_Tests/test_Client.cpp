@@ -12,6 +12,7 @@ public:
 	MOCK_METHOD(void, Broadcast, (const ByteStream&), (override));
 	MOCK_METHOD(ByteStream, ReceiveData, (), (override));
 	MOCK_METHOD(ByteStream, ReceiveData, (int), (override));
+	MOCK_METHOD(void, WaitForNewConnection, (), (override));
 };
 
 TEST(TestClient, ReceiveData_ReceiveData_CallReceiveData)

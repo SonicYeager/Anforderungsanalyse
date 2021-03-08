@@ -26,3 +26,8 @@ ByteStream Host::ReceiveData(int id)
 {
 	return m_pNetwork->ReceiveData(id);
 }
+
+void Host::WaitForConnection()
+{
+	m_pNetwork->WaitForNewConnection();
+}

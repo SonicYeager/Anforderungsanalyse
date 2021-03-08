@@ -14,6 +14,7 @@ public:
 	virtual void Broadcast(const ByteStream&) = 0;
 	virtual ByteStream ReceiveData() = 0;
 	virtual ByteStream ReceiveData(int) = 0;
+	virtual void WaitForNewConnection() = 0;
 
 	Event<> onNewConnection;
 	Event<ByteStream> onReceivedData;

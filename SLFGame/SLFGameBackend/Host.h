@@ -11,6 +11,7 @@ public:
 	void WriteTo(const ByteStream&, int) override;
 	void Broadcast(const ByteStream&) override;
 	ByteStream ReceiveData(int) override;
+	void WaitForConnection() override;
 
 private:
 	NetworkSource* m_pNetwork{};

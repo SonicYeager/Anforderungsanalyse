@@ -2,25 +2,27 @@
 #include "NetworkSource.h"
 #include "../SLFGameBackendQt/slfgamebackendqt_global.h"
 
-const int PORT = 5200;
+const int PORT = 4242;
 
 class Network : public NetworkSource, public QObject
 {
 public:
 	Network();
 
-	virtual LobbyCode StartServer() override;
-	virtual void ConnectToServer(const LobbyCode&) override;
-	virtual void WriteTo(const ByteStream&, int) override;
-	virtual void WriteToHost(const ByteStream&) override;
-	virtual void Broadcast(const ByteStream&) override;
-	virtual ByteStream ReceiveData() override;
-	virtual ByteStream ReceiveData(int) override;
+	LobbyCode StartServer() override;
+	void ConnectToServer(const LobbyCode&) override;
+	void WriteTo(const ByteStream&, int) override;
+	void WriteToHost(const ByteStream&) override;
+	void Broadcast(const ByteStream&) override;
+	ByteStream ReceiveData() override;
+	ByteStream ReceiveData(int) override;
+	void WaitForNewConnection() override;
 
 public slots:
 	void OnNewConnection();
 	void OnSelfReceivedData();
-	void OnError();
+	void OnClientConnectError(const QAbstractSocket::SocketError&);
+	void OnHostConnectError(const QAbstractSocket::SocketError&);
 	void OnConnected();
 
 private:

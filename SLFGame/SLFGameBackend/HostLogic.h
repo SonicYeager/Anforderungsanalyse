@@ -8,6 +8,7 @@ public:
 	virtual void WriteTo(const ByteStream&, int) = 0;
 	virtual void Broadcast(const ByteStream&) = 0;
 	virtual ByteStream ReceiveData(int) = 0;
+	virtual void WaitForConnection() = 0;
 
 	Event<>	onNewConnection;
 	Event<ByteStream> onDataReceived;
