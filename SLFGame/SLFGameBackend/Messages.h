@@ -15,10 +15,10 @@ namespace Messages
 
 	using Message = std::variant<HandleGameStats, AddNewPlayer>;
 
-	HEADER GetMessageID(const HandleGameStats& ) { return HEADER::HANDLEGAMESTATS; }
-	HEADER GetMessageID(const AddNewPlayer&)	 { return HEADER::ADDNEWPLAYER;    }
+	inline HEADER GetMessageID(const HandleGameStats& ) { return HEADER::HANDLEGAMESTATS; }
+	inline HEADER GetMessageID(const AddNewPlayer&)	 { return HEADER::ADDNEWPLAYER;    }
 
-	Message CreateMessage(HEADER header)
+	inline Message CreateMessage(HEADER header)
 	{
 		switch (header)
 		{

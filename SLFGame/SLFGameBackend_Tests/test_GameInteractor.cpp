@@ -170,7 +170,7 @@ TEST_F(TestGameInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGameWi
 	gameInteractor.EndRound(dec);
 }
 
-TEST_F(TestGameInteractor, HostLobby_StatsAreCreated_GameStatsShouldBeFilledWithPlayer0AndBasicSettings)
+TEST_F(TestGameInteractor, HostLobby_StatsAreCreated_GameStatsShouldBeFilledWithPlayer0AndBasicSettings)   //not done
 {
 	GameStats expectedgs{};
 	expectedgs.maxRounds = 5;

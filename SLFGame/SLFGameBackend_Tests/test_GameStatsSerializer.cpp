@@ -6,7 +6,7 @@ TEST(SerializerTest, SerializationAndDeserialization_AddNewPlayer)
 {
 	GameStatsSerializer serializer;
 	AddNewPlayer msg;
-	AddNewPlayer result;
+	//AddNewPlayer result;
 
 	msg.player.playerID = 5;
 	msg.player.playerName = "Klausi";

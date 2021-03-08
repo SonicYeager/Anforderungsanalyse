@@ -40,6 +40,8 @@
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\ressources\categories.txt" />
+    <CopyFileToFolders Include="Dependencys\Qt6Cored.dll" />
+    <CopyFileToFolders Include="Dependencys\Qt6Networkd.dll" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\SLFGameBackendQt\slfgamebackendqt_global.h">

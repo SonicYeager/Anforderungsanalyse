@@ -181,6 +181,8 @@
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>DebugFull</GenerateDebugInformation>
+      <AdditionalDependencies>Qt6Networkd.lib;Qt6Cored.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>Dependencys;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -205,13 +207,15 @@
     <ClCompile Include="test_Client.cpp" />
     <ClCompile Include="test_Game.cpp" />
     <ClCompile Include="test_GameInteractor.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="test_GameStatsOperations.cpp" />
-    <ClCompile Include="test_GameStatsSerializer.cpp" />
+    <ClCompile Include="test_GameStatsSerializer.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|x64'">false</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="test_Host.cpp" />
     <ClCompile Include="test_NetworkHandler.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="test_RandomGenerator.cpp" />
     <ClCompile Include="test_SLFParser.cpp" />
@@ -226,6 +230,14 @@
     <ProjectReference Include="..\SLFGameBackendQt\SLFGameBackendQt.vcxproj">
       <Project>{0c096fa7-8645-4407-a1ee-3cc26741eb10}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="Dependencys\Qt6Cored.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
+    <CopyFileToFolders Include="Dependencys\Qt6Networkd.dll">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
