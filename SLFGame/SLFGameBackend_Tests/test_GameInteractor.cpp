@@ -9,6 +9,8 @@
 #include "../SLFGameBackend/UI.h"
 #include "../SLFGameBackend/Client.h"
 #include "../SLFGameBackend/Host.h"
+#include "../SLFGameBackend/GameStatsSerializer.h"
+#include "../SLFGameBackend/NetworkHandler.h"
 
 using namespace ::testing;
 
@@ -58,7 +60,7 @@ class TestGameInteractor : public Test
 {
 public:
 	TestGameInteractor() :
-		gameInteractor{&fakeRandomLetterGenerator, &gameStatsOperations, &game, &fakeNetworkSource, &parser, &clientLogic, &hostLogic}
+		gameInteractor{&fakeRandomLetterGenerator, &gameStatsOperations, &game, &parser, &clientLogic, &hostLogic, &serializer, &netHandler}
 	{}
 protected:
 	virtual void SetUp()
@@ -72,14 +74,16 @@ protected:
 
 	Game game{};
 	FakeRandomLetterGenerator fakeRandomLetterGenerator{};
-	FakeNetworkSource fakeNetworkSource{};
+	::testing::NiceMock<FakeNetworkSource> fakeNetworkSource{};
 	GameStatsOperations gameStatsOperations{};
-	GameInteractor gameInteractor;
 	GameStats gameStats{};
 	PlayerStats playerStats{};
 	SLFParser parser;
 	Client clientLogic{&fakeNetworkSource};
 	Host hostLogic{&fakeNetworkSource};
+	GameStatsSerializer serializer{};
+	NetworkHandler netHandler{};
+	GameInteractor gameInteractor;
 };
 
 TEST_F(TestGameInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerStats)
@@ -199,17 +203,23 @@ TEST_F(TestGameInteractor, HostLobby_StatsAreCreated_GameStatsShouldBeFilledWith
 TEST_F(TestGameInteractor, HostLobby_ConnectToServer_CallConnectToServer)
 {
 	EXPECT_CALL(fakeNetworkSource, ConnectToServer(::testing::_));
+	FakeUI fui{};
+	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats, PlayerStats()); };
 	gameInteractor.HostLobby("CODE");
 }
 
 TEST_F(TestGameInteractor, HostLobby_StartServer_CallStartServer)
 {
 	EXPECT_CALL(fakeNetworkSource, StartServer());
+	FakeUI fui{};
+	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats, PlayerStats()); };
 	gameInteractor.HostLobby("T-3000");
 }
 
 TEST_F(TestGameInteractor, JoinLobby_ConnectToServer_CallConnectToServer) 
 {
 	EXPECT_CALL(fakeNetworkSource, ConnectToServer("CODE"));
+	FakeUI fui{};
+	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats, PlayerStats()); };
 	gameInteractor.JoinLobby("CODE", "T-3000");
 }

@@ -2,7 +2,10 @@
 
 Host::Host(NetworkSource* source)
 	: m_pNetwork(source)
-{}
+{
+	m_pNetwork->onNewConnection = [this]() { onNewConnection(); };
+	m_pNetwork->onReceivedData = [this](const ByteStream stream) { onDataReceived(stream); };
+}
 
 LobbyCode Host::StartServer()
 {

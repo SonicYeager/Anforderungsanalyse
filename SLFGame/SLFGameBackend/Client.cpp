@@ -2,7 +2,9 @@
 
 Client::Client(NetworkSource* source)
 	: m_pNetwork(source)
-{}
+{
+	m_pNetwork->onReceivedData = [this](const ByteStream& stream) { onDataReceived(stream); };
+}
 
 ByteStream Client::ReceiveData()
 {

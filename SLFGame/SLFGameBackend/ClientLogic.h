@@ -8,5 +8,7 @@ public:
 	virtual void WriteToHost(const ByteStream&) = 0;
 	virtual void ConnectToServer(const LobbyCode&) = 0;
 
+	Event<ByteStream> onDataReceived;
+
 	virtual ~ClientLogic() = default;
 };
