@@ -16,11 +16,6 @@ ApplicationWindow {
             Layout.fillHeight: true
             Layout.fillWidth: true
             color: "black"
-            //Label{
-            //    Layout.alignment: Qt.AlignHCenter
-            //    text: qmlAdapter.labelText
-            //    color: "white"
-            //}
             Flickable {
                 id: flickable
                 anchors.fill: parent
@@ -58,6 +53,13 @@ ApplicationWindow {
                     text: "Join"
                     onClicked: {
                         qmlAdapter.joinHost();
+                    }
+                }
+                Button{
+                    id: buttonsend
+                    text: "Send Data"
+                    onClicked: {
+                        //qmlAdapter.sendData();
                     }
                 }
             }

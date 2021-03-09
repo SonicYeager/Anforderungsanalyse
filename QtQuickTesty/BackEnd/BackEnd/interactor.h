@@ -7,17 +7,17 @@
 class Interactor
 {
 public:
-    Interactor(Client*, ServerInteractor*);
+    Interactor(Client*);
 
 	void StartHost();
 	void JoinHost();
 
 	Event<const std::string> onLog;
+	Event<> onStartServer;
 
 private:
 	void OnData(const ByteStream&);
 	void OnLog(const std::string&);
 
 	Client* m_client{};
-	ServerInteractor* m_server{};
 };

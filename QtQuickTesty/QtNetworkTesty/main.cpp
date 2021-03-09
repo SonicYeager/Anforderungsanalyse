@@ -10,9 +10,11 @@ int main(int argc, char *argv[])
 #endif
 
     QmlAdapter qmlAdapter{};
-    Network net{};
-    Interactor inter{&net};
-    controller cntr{&qmlAdapter, &inter};
+    Server server{};
+    ServerInteractor sinter{&server};
+    Client client{};
+    Interactor inter{&client};
+    controller cntr{&qmlAdapter, &inter, &sinter};
     cntr.Run();
 
     QGuiApplication app(argc, argv);

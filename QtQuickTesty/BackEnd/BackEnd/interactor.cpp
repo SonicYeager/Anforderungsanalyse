@@ -1,18 +1,16 @@
 #include "interactor.h"
 
-Interactor::Interactor(Client* c, ServerInteractor* s) :
-	m_client(c),
-	m_server(s)
+Interactor::Interactor(Client* c) :
+	m_client(c)
 {
 	//conect ress and log to each other or interactor events
-	m_server->onLog = [this](const std::string& log) { OnLog(log); };
 	m_client->onData = [this](const ByteStream& data) { OnData(data); };
 	m_client->onLog = [this](const std::string& log) { OnLog(log); };
 }
 
 void Interactor::StartHost()
 {
-	m_server->StartServer();
+	onStartServer();
 	JoinHost();
 }
 
