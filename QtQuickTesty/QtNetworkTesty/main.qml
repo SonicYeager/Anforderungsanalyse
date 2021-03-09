@@ -16,10 +16,25 @@ ApplicationWindow {
             Layout.fillHeight: true
             Layout.fillWidth: true
             color: "black"
-            Label{
-                Layout.alignment: Qt.AlignHCenter
-                text: qmlAdapter.labelText
-                color: "white"
+            //Label{
+            //    Layout.alignment: Qt.AlignHCenter
+            //    text: qmlAdapter.labelText
+            //    color: "white"
+            //}
+            Flickable {
+                id: flickable
+                anchors.fill: parent
+
+                TextArea.flickable: TextArea {
+                    text: qmlAdapter.labelText
+                    color: "white"
+                    wrapMode: TextArea.Wrap
+                    background: Rectangle {
+                            color: "black"
+                        }
+                }
+
+                ScrollBar.vertical: ScrollBar { }
             }
         }
         Rectangle {
