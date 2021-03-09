@@ -1,22 +1,32 @@
 #include "interactor.h"
 
-Interactor::Interactor(Network* n) :
-	net(n)
+Interactor::Interactor(Client* c) :
+	m_client(c)
 {
 	//conect ress and log to each other or interactor events
-	net->onData = [this](const ByteStream& data) { /*this->onDataReceived(data);*/ };
-	net->onLog = [this](const std::string& data) { this->onLog(data); };
+	m_client->onData = [this](const ByteStream& data) { OnData(data); };
+	m_client->onLog = [this](const std::string& log) { OnLog(log); };
 }
 
-void Interactor::StartHost()
+void Interactor::StartServer()
 {
-	auto addr = net->StartServer();
-	net->ConnectToServer(addr);
-	//after this the ui or the connection events should trigger anything else 
+	onStartServer();
+	JoinServer();
 }
 
-void Interactor::JoinHost()
+void Interactor::JoinServer()
 {
-	auto addr = net->GenerateLobbyCode();
-	net->ConnectToServer(addr);
+	auto addr = m_client->GenerateLobbyCode();
+	m_client->ConnectToServer(addr);
+}
+
+void Interactor::OnData(const ByteStream& stream)
+{
+	std::string text{stream.begin(), stream.end()};
+	onLog("Interactor: Received Data ->" + text);
+}
+
+void Interactor::OnLog(const std::string& log)
+{
+	onLog("Network: " + log);
 }
