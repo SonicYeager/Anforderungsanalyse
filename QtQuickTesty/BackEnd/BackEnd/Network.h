@@ -1,6 +1,5 @@
 #pragma once
-#include "NetworkSource.h"
-#include "../SLFGameBackendQt/slfgamebackendqt_global.h"
+#include "backend_global.h"
 
 const int PORT = 4242;
 

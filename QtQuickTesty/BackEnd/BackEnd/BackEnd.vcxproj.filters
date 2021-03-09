@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
+      <Extensions>qrc;*</Extensions>
+      <ParseFiles>false</ParseFiles>
+    </Filter>
+    <Filter Include="Logic">
+      <UniqueIdentifier>{10a2077e-7f68-4658-8989-732acf661d1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Interactor">
+      <UniqueIdentifier>{3ba5ae15-296c-4aeb-971f-b741609ad810}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{880582b1-c8c0-4658-92f9-55d72fe853eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{0bf5875e-58d3-47bb-bd28-23b32a0d73e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+      <ParseFiles>true</ParseFiles>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="backend_global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="interactor.h">
+      <Filter>Interactor</Filter>
+    </ClInclude>
+    <ClInclude Include="datatypes.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Network.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="interactor.cpp">
+      <Filter>Interactor</Filter>
+    </ClCompile>
+    <ClCompile Include="Network.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

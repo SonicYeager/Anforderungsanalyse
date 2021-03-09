@@ -1,0 +1,1 @@
+.\windeployqt.exe --qmldir H:\Repositories\CppPractice\QtQuickTesty\QtNetworkTesty H:\Repositories\CppPractice\QtQuickTesty\build-QtNetworkTesty-Desktop_Qt_6_0_1_MSVC2019_64bit-Release\release\QtNetworkTesty.exe

@@ -64,6 +64,6 @@ TEST_F(TestGameInteractor, Enjoy)
 	FakeUI fui{};
 	gameInteractorHost.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
 	gameInteractorClient.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
-	gameInteractorHost.HostLobby("Sahrah Connor");
+	gameInteractorHost.HostLobby("Sarah Connor");
 	gameInteractorClient.JoinLobby("192.168.0.80", "T-3000");
 }

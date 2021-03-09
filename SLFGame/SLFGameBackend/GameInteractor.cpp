@@ -1,6 +1,10 @@
 #pragma once
 #include "GameInteractor.h"
+#include <thread>
+#include <chrono>
 #include "../FileHandler/FileHandler/FileHandler.h"
+
+using namespace std::chrono_literals;
 
 GameInteractor::GameInteractor(RandomGenRessource* gen,
 	DataOperationLogic* op,
@@ -80,16 +84,18 @@ void GameInteractor::HostLobby(const std::string& playerName)
 	//Erstellung der GameStats
 	m_GameStats = m_pDataOperation->CreateStats(lobbycode, playerName);
 
+	JoinLobby(lobbycode, playerName);
+
 	// Verbindungsaufbau zum Server
-	m_pClient->ConnectToServer(lobbycode);
-	m_pHost->WaitForConnection();
+	//m_pClient->ConnectToServer(lobbycode);
+	//m_pHost->WaitForConnection();
 
 	//Erhalten der GameStats
-	auto data = m_pClient->ReceiveData();
-	m_pClient->WriteToHost(data);
+	//auto data = m_pClient->ReceiveData();
+	//m_pClient->WriteToHost(data);
 
 	// Signal an GUI zum Übergang in Lobby
-	onPrepareLobby(m_GameStats);
+	//onPrepareLobby(m_GameStats);
 }
 
 void GameInteractor::JoinLobby(const LobbyCode& lobbyCode, const std::string& playerName)
