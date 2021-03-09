@@ -14,3 +14,8 @@ void NetworkHandler::on(const AddNewPlayer& msg)
 {
 	onAddNewPlayer(msg);
 }
+
+void NetworkHandler::on(const Playername& msg)
+{
+	onPlayername(msg);
+}

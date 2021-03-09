@@ -133,3 +133,16 @@ void GameStatsSerializer::Deserialize_impl(AddNewPlayer& msg, QDataStream& data)
 	for (const QString& answer : answers)
 		msg.player.answers.push_back(answer.toStdString());
 }
+
+void GameStatsSerializer::Serialize_impl(const Playername& msg, QDataStream& data)
+{
+	QString playername{ msg.playername.c_str() };
+	data << playername;
+}
+
+void GameStatsSerializer::Deserialize_impl(Playername& msg, QDataStream& data)
+{
+	QString playername{};
+	data >> playername;
+	msg.playername = playername.toStdString();
+}

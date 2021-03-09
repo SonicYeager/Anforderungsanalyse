@@ -53,3 +53,23 @@ TEST(SerializerTest, SerializationAndDeserialization_HandleGameStats)
 
 	EXPECT_EQ(msg.gs, result.gs);
 }
+
+TEST(SerializerTest, SerializationAndDeserialization_Playername)
+{
+	GameStatsSerializer serializer;
+	NetworkHandler netHandler;
+
+	Message resultingMsg;
+	Playername result;
+	Playername msg;
+
+	msg.playername = "Faust";
+
+	ByteStream data = serializer.Serialize(msg);
+	resultingMsg = serializer.Deserialize(data);
+
+	netHandler.onPlayername = [&result](const Playername& anp) {result = anp; };
+	netHandler.handleMessage(resultingMsg);
+
+	EXPECT_EQ(msg.playername, result.playername);
+}

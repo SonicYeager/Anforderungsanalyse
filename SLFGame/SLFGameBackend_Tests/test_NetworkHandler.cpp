@@ -13,6 +13,10 @@ public:
 	{
 		return 2;
 	}
+	int PlayernameCalled(const Playername& hgs)
+	{
+		return 3;
+	}
 };
 
 TEST(NetworkHandlerTest, RightEventCalled_onHandleGameStats)
@@ -39,4 +43,17 @@ TEST(NetworkHandlerTest, RightEventCalled_onAddNewPlayer)
 	netHandler.handleMessage(hgs);
 
 	EXPECT_EQ(2, result);
+}
+
+TEST(NetworkHandlerTest, RightEventCalled_onPlayername)
+{
+	NetworkHandler netHandler;
+	FakeClass fc{};
+	Message hgs = Playername();
+	int result = 0;
+
+	netHandler.onPlayername = [&fc, &result](const Playername& msg) {result = fc.PlayernameCalled(msg); };
+	netHandler.handleMessage(hgs);
+
+	EXPECT_EQ(3, result);
 }
