@@ -33,13 +33,10 @@ void Client::ConnectToServer(const LobbyCode& code)
 void Client::WriteToHost(const ByteStream& data)
 {
 	QByteArray qdata{};
-	QDataStream sizestream{ &qdata, QDataStream::WriteOnly };
-
-	auto size = std::to_string(data.size());
-	ByteStream sizeStream{ std::begin(size), std::end(size) };
-
-	sizestream.writeBytes(sizeStream.data(), HEADERSIZE);
-	sizestream.writeBytes(data.data(), data.size());
+	QDataStream sizestream{ &qdata, QIODevice::WriteOnly };
+	sizestream.setVersion(QDataStream::Qt_5_15);
+	QVector<char> datavec{std::begin(data), std::end(data)};
+	sizestream << datavec;
 	m_socket.write(qdata);
 	onLog("Data has been send to Host!");
 }
@@ -49,7 +46,8 @@ void Client::OnSelfReceivedData()
 	if (m_socket.bytesAvailable() > 0)
 	{
 		auto qreadsize = m_socket.read(HEADERSIZE);
-		QDataStream sizestream{ qreadsize };
+		QDataStream sizestream{ &qreadsize, QIODevice::ReadOnly };
+		sizestream.setVersion(QDataStream::Qt_5_15);
 		int size{};
 		sizestream >> size;
 		auto qdata = m_socket.read(size);

@@ -39,12 +39,8 @@ void Server::WriteTo(const ByteStream& data, int id)
 {
 	QByteArray qdata{};
 	QDataStream sizestream{ &qdata, QDataStream::WriteOnly };
-
-	auto size = std::to_string(data.size());
-	ByteStream sizeStream{ std::begin(size), std::end(size) };
-
-	sizestream.writeBytes(sizeStream.data(), HEADERSIZE);
-	sizestream.writeBytes(data.data(), data.size());
+	QVector<char> datavec{ std::begin(data), std::end(data) };
+	sizestream << datavec;
 	m_sockets[id]->write(qdata);
 	onLog("Data has been send to client: " + std::to_string(id));
 }
@@ -97,7 +93,9 @@ void Server::OnClientReceivedData(int id)
 	if (m_sockets[id]->bytesAvailable() > 0)
 	{
 		auto qreadsize = m_sockets[id]->read(HEADERSIZE);
-		QDataStream sizestream{ qreadsize };
+		QDataStream sizestream{ &qreadsize, QIODevice::ReadOnly};
+		sizestream.setVersion(QDataStream::Qt_5_15);
+
 		int size{};
 		sizestream >> size;
 		auto qdata = m_sockets[id]->read(size);
