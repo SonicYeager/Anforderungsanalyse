@@ -7,8 +7,7 @@ controller::controller(QmlAdapter* oui, Interactor* inter) :
     //connect ui + inter
     ui->onJoinHost = [this](){ interactor->JoinHost();};
     ui->onStartHost = [this](){ interactor->StartHost();};
-    interactor->onDataReceived = [this](const std::string& data){ui->LogConnection(data);};
-    interactor->onNewConnection = [this](const std::string& data){ui->LogConnection(data);};
+    interactor->onLog = [this](const std::string& data){ui->LogConnection(data);};
 }
 
 void controller::Run()
