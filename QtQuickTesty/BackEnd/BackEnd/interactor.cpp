@@ -8,13 +8,13 @@ Interactor::Interactor(Client* c) :
 	m_client->onLog = [this](const std::string& log) { OnLog(log); };
 }
 
-void Interactor::StartHost()
+void Interactor::StartServer()
 {
 	onStartServer();
-	JoinHost();
+	JoinServer();
 }
 
-void Interactor::JoinHost()
+void Interactor::JoinServer()
 {
 	auto addr = m_client->GenerateLobbyCode();
 	m_client->ConnectToServer(addr);

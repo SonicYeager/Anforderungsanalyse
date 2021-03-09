@@ -9,8 +9,8 @@ class Interactor
 public:
     Interactor(Client*);
 
-	void StartHost();
-	void JoinHost();
+	void StartServer();
+	void JoinServer();
 
 	Event<const std::string> onLog;
 	Event<> onStartServer;

@@ -33,10 +33,10 @@ void QmlAdapter::setLabelText(QString text)
 
 void QmlAdapter::startHost()
 {
-    onStartHost();
+    onStartServer();
 }
 
 void QmlAdapter::joinHost()
 {
-    onJoinHost();
+    onJoinServer();
 }

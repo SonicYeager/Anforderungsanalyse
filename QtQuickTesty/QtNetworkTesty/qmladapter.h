@@ -28,8 +28,8 @@ public:
     void setLabelText(QString text);
 
     //events
-    Event<> onStartHost;
-    Event<> onJoinHost;
+    Event<> onStartServer;
+    Event<> onJoinServer;
 
 public slots:
 

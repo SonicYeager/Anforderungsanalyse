@@ -6,8 +6,8 @@ controller::controller(QmlAdapter* oui, Interactor* inter, ServerInteractor* sin
     serverInteractor(sinter)
 {
     //connect ui + inter | inter + inter
-    ui->onJoinHost = [this](){ interactor->JoinHost();};
-    ui->onStartHost = [this](){ interactor->StartHost();};
+    ui->onJoinServer = [this](){ interactor->JoinServer();};
+    ui->onStartServer = [this](){ interactor->StartServer();};
     interactor->onLog = [this](const std::string& data){ui->LogConnection(data);};
     interactor->onStartServer = [this](){serverInteractor->StartServer();};
     serverInteractor->onLog = [this](const std::string& data){ui->LogConnection(data);};
