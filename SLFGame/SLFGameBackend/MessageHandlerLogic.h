@@ -3,7 +3,7 @@
 
 using namespace Messages;
 
-class NetworkHandlerLogic {
+class MessageHandlerLogic {
 public:
 	virtual void handleMessage(const Message&) = 0;
 	virtual void on(const HandleGameStats&) = 0;

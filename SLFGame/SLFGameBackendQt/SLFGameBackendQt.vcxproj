@@ -123,7 +123,7 @@
     <ClCompile Include="..\SLFGameBackend\Game.cpp" />
     <ClCompile Include="..\SLFGameBackend\GameStatsSerializer.cpp" />
     <ClCompile Include="..\SLFGameBackend\Host.cpp" />
-    <ClCompile Include="..\SLFGameBackend\NetworkHandler.cpp" />
+    <ClCompile Include="..\SLFGameBackend\MessageHandler.cpp" />
     <ClCompile Include="..\SLFGameBackend\SLFParser.cpp" />
     <ClCompile Include="..\SLFGameBackend\Timer.cpp" />
     <ClInclude Include="..\SLFGameBackend\Client.h" />
@@ -140,8 +140,8 @@
     <ClInclude Include="..\SLFGameBackend\Host.h" />
     <ClInclude Include="..\SLFGameBackend\HostLogic.h" />
     <ClInclude Include="..\SLFGameBackend\Interactor.h" />
-    <ClInclude Include="..\SLFGameBackend\NetworkHandler.h" />
-    <ClInclude Include="..\SLFGameBackend\NetworkHandlerLogic.h" />
+    <ClInclude Include="..\SLFGameBackend\MessageHandler.h" />
+    <ClInclude Include="..\SLFGameBackend\MessageHandlerLogic.h" />
     <ClInclude Include="..\SLFGameBackend\NetworkSource.h" />
     <ClInclude Include="..\SLFGameBackend\RandomGenerator.h" />
     <ClInclude Include="..\SLFGameBackend\RandomGenRessource.h" />

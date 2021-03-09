@@ -13,7 +13,7 @@ GameInteractor::GameInteractor(RandomGenRessource* gen,
 	ClientLogic* cl,
 	HostLogic* hl,
 	SerializerSource* s,
-	NetworkHandlerLogic* n)
+	MessageHandlerLogic* n)
 	:
 	m_pRandomGenerator(gen),
 	m_pDataOperation(op),
@@ -22,7 +22,7 @@ GameInteractor::GameInteractor(RandomGenRessource* gen,
 	m_pClient(cl),
 	m_pHost(hl),
 	m_pSerializer(s),
-	m_pNetHandler(n)
+	m_pMsgHandler(n)
 {
 	m_pGame->onGameOver = [this]() { onGameOver(m_GameStats); };
 	m_pGame->onPrepareNextRound = [this]() 
@@ -32,8 +32,8 @@ GameInteractor::GameInteractor(RandomGenRessource* gen,
 		m_pDataOperation->AddPreviousLetter(m_GameStats);
 		onPrepareNextRound(m_GameStats);
 	};
-	m_pNetHandler->onAddNewPlayer = [this](const AddNewPlayer& nPlayer) { m_newPlayer = nPlayer; };
-	m_pNetHandler->onHandleGameStats = [this](const HandleGameStats& handlegs) { m_handleGS = handlegs; };
+	m_pMsgHandler->onAddNewPlayer = [this](const AddNewPlayer& nPlayer) { m_newPlayer = nPlayer; };
+	m_pMsgHandler->onHandleGameStats = [this](const HandleGameStats& handlegs) { m_handleGS = handlegs; };
 	m_pHost->onNewConnection = [this]() {OnNewClientConnected(); };
 	m_pHost->onDataReceived = [this](const ByteStream& stream) {OnDataReceived(stream); };
 	m_pClient->onDataReceived = [this](const ByteStream& stream) {OnDataReceived(stream); };
@@ -87,15 +87,15 @@ void GameInteractor::HostLobby(const std::string& playerName)
 	JoinLobby(lobbycode, playerName);
 
 	// Verbindungsaufbau zum Server
-	//m_pClient->ConnectToServer(lobbycode);
-	//m_pHost->WaitForConnection();
+	m_pClient->ConnectToServer(lobbycode);
+	m_pHost->WaitForConnection();
 
 	//Erhalten der GameStats
-	//auto data = m_pClient->ReceiveData();
-	//m_pClient->WriteToHost(data);
+	auto data = m_pClient->ReceiveData();
+	m_pClient->WriteToHost(data);
 
 	// Signal an GUI zum Übergang in Lobby
-	//onPrepareLobby(m_GameStats);
+	onPrepareLobby(m_GameStats);
 }
 
 void GameInteractor::JoinLobby(const LobbyCode& lobbyCode, const std::string& playerName)
@@ -106,7 +106,7 @@ void GameInteractor::JoinLobby(const LobbyCode& lobbyCode, const std::string& pl
 	//Erhalten der GameStats
 	auto data = m_pClient->ReceiveData();
 	auto msg = m_pSerializer->Deserialize(data);
-	m_pNetHandler->handleMessage(msg);
+	m_pMsgHandler->handleMessage(msg);
 
 	//Update der GameStats und hinzufügen der eigenen Daten
 	UpdateGameStats(playerName);
@@ -133,7 +133,7 @@ void GameInteractor::OnNewClientConnected()
 	//Erhalten der geupdateten Spielerdaten
 	auto data = m_pHost->ReceiveData(m_GameStats.players.size());
 	auto msg = m_pSerializer->Deserialize(data);
-	m_pNetHandler->handleMessage(msg);
+	m_pMsgHandler->handleMessage(msg);
 
 	//Host -> Hinzufügen des neuen Spielers
 	m_GameStats.players.push_back({m_handleGS.gs.playerNames[m_GameStats.players.size()], (int)m_GameStats.players.size(), m_handleGS.gs.points[m_GameStats.players.size()], m_handleGS.gs.answers[m_GameStats.players.size()] });

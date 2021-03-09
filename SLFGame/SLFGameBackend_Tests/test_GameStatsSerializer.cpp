@@ -1,12 +1,12 @@
 #pragma once
 #include "gmock/gmock.h"
 #include "../SLFGameBackend/GameStatsSerializer.h"
-#include "../SLFGameBackend/NetworkHandler.h"
+#include "../SLFGameBackend/MessageHandler.h"
 
 TEST(SerializerTest, SerializationAndDeserialization_AddNewPlayer)
 {
 	GameStatsSerializer serializer;
-	NetworkHandler netHandler;
+	MessageHandler msgHandler;
 
 	Message resultingMsg;
 	AddNewPlayer result;
@@ -20,8 +20,8 @@ TEST(SerializerTest, SerializationAndDeserialization_AddNewPlayer)
 	ByteStream data = serializer.Serialize(msg);
 	resultingMsg = serializer.Deserialize(data);
 
-	netHandler.onAddNewPlayer = [&result](const AddNewPlayer& anp) {result = anp; };
-	netHandler.handleMessage(resultingMsg);
+	msgHandler.onAddNewPlayer = [&result](const AddNewPlayer& anp) {result = anp; };
+	msgHandler.handleMessage(resultingMsg);
 
 	EXPECT_EQ(msg.player, result.player);
 }
@@ -29,7 +29,7 @@ TEST(SerializerTest, SerializationAndDeserialization_AddNewPlayer)
 TEST(SerializerTest, SerializationAndDeserialization_HandleGameStats)
 {
 	GameStatsSerializer serializer;
-	NetworkHandler netHandler;
+	MessageHandler msgHandler;
 
 	Message resultingMsg;
 	HandleGameStats result;
@@ -48,8 +48,8 @@ TEST(SerializerTest, SerializationAndDeserialization_HandleGameStats)
 	ByteStream data = serializer.Serialize(msg);
 	resultingMsg = serializer.Deserialize(data);
 
-	netHandler.onHandleGameStats = [&result](const HandleGameStats& hgs) {result = hgs; };
-	netHandler.handleMessage(resultingMsg);
+	msgHandler.onHandleGameStats = [&result](const HandleGameStats& hgs) {result = hgs; };
+	msgHandler.handleMessage(resultingMsg);
 
 	EXPECT_EQ(msg.gs, result.gs);
 }
@@ -57,7 +57,7 @@ TEST(SerializerTest, SerializationAndDeserialization_HandleGameStats)
 TEST(SerializerTest, SerializationAndDeserialization_Playername)
 {
 	GameStatsSerializer serializer;
-	NetworkHandler netHandler;
+	MessageHandler msgHandler;
 
 	Message resultingMsg;
 	Playername result;
@@ -68,8 +68,8 @@ TEST(SerializerTest, SerializationAndDeserialization_Playername)
 	ByteStream data = serializer.Serialize(msg);
 	resultingMsg = serializer.Deserialize(data);
 
-	netHandler.onPlayername = [&result](const Playername& anp) {result = anp; };
-	netHandler.handleMessage(resultingMsg);
+	msgHandler.onPlayername = [&result](const Playername& anp) {result = anp; };
+	msgHandler.handleMessage(resultingMsg);
 
 	EXPECT_EQ(msg.playername, result.playername);
 }

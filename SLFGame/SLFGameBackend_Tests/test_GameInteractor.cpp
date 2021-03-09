@@ -10,7 +10,7 @@
 #include "../SLFGameBackend/Client.h"
 #include "../SLFGameBackend/Host.h"
 #include "../SLFGameBackend/GameStatsSerializer.h"
-#include "../SLFGameBackend/NetworkHandler.h"
+#include "../SLFGameBackend/MessageHandler.h"
 
 using namespace ::testing;
 
@@ -60,7 +60,7 @@ class TestGameInteractor : public Test
 {
 public:
 	TestGameInteractor() :
-		gameInteractor{&fakeRandomLetterGenerator, &gameStatsOperations, &game, &parser, &clientLogic, &hostLogic, &serializer, &netHandler}
+		gameInteractor{&fakeRandomLetterGenerator, &gameStatsOperations, &game, &parser, &clientLogic, &hostLogic, &serializer, &msgHandler}
 	{}
 protected:
 	virtual void SetUp()
@@ -82,7 +82,7 @@ protected:
 	Client clientLogic{&fakeNetworkSource};
 	Host hostLogic{&fakeNetworkSource};
 	GameStatsSerializer serializer{};
-	NetworkHandler netHandler{};
+	MessageHandler msgHandler{};
 	GameInteractor gameInteractor;
 };
 

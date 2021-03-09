@@ -1,7 +1,7 @@
 #pragma once
-#include "NetworkHandlerLogic.h"
+#include "MessageHandlerLogic.h"
 
-class NetworkHandler : public NetworkHandlerLogic {
+class MessageHandler : public MessageHandlerLogic {
 public:
 	void handleMessage(const Message&) override;
 	void on(const HandleGameStats&) override;

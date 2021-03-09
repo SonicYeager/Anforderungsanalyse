@@ -34,10 +34,10 @@
     <ClCompile Include="test_GameStatsSerializer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="test_NetworkHandler.cpp">
+    <ClCompile Include="test_Network.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="test_Network.cpp">
+    <ClCompile Include="test_MessageHandler.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>

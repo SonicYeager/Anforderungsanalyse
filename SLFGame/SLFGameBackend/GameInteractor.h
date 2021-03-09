@@ -10,12 +10,12 @@
 #include "ClientLogic.h"
 #include "HostLogic.h"
 #include "SerializerSource.h"
-#include "NetworkHandlerLogic.h"
+#include "MessageHandlerLogic.h"
 
 class GameInteractor : public Interactor
 {
 public:
-	explicit GameInteractor(RandomGenRessource*, DataOperationLogic*, GameLogic*, SLFParser*, ClientLogic*, HostLogic*, SerializerSource*, NetworkHandlerLogic*);
+	explicit GameInteractor(RandomGenRessource*, DataOperationLogic*, GameLogic*, SLFParser*, ClientLogic*, HostLogic*, SerializerSource*, MessageHandlerLogic*);
 	void PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount) override;
 	std::pair<GameStats, PlayerStats> PrepareLobby(const std::string& lobbyCode = "") override;
 	void PrepareOverview(const std::vector<std::string>&) override;
@@ -41,6 +41,6 @@ private:
 	ClientLogic* m_pClient;
 	HostLogic* m_pHost;
 	SerializerSource* m_pSerializer;
-	NetworkHandlerLogic* m_pNetHandler;
+	MessageHandlerLogic* m_pMsgHandler;
 };
 

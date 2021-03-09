@@ -216,7 +216,7 @@
     </ClCompile>
     <ClCompile Include="test_Host.cpp" />
     <ClCompile Include="test_Network.cpp" />
-    <ClCompile Include="test_NetworkHandler.cpp">
+    <ClCompile Include="test_MessageHandler.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Tests|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="test_RandomGenerator.cpp" />

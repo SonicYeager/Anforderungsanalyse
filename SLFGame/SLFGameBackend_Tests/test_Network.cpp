@@ -10,7 +10,7 @@
 #include "../SLFGameBackend/Client.h"
 #include "../SLFGameBackend/Host.h"
 #include "../SLFGameBackend/GameStatsSerializer.h"
-#include "../SLFGameBackend/NetworkHandler.h"
+#include "../SLFGameBackend/MessageHandler.h"
 
 #include <future>
 
@@ -30,8 +30,8 @@ class TestGameInteractor : public Test
 {
 public:
 	TestGameInteractor() :
-		gameInteractorHost{ &RandomLetterGenerator, &gameStatsOperations, &game, &parser, &clientLogic, &hostLogic, &serializer, &netHandler },
-		gameInteractorClient{ &RandomLetterGenerator, &gameStatsOperations, &game, &parser, &clientLogic, &hostLogic, &serializer, &netHandler }
+		gameInteractorHost{ &RandomLetterGenerator, &gameStatsOperations, &game, &parser, &clientLogic, &hostLogic, &serializer, &msgHandler },
+		gameInteractorClient{ &RandomLetterGenerator, &gameStatsOperations, &game, &parser, &clientLogic, &hostLogic, &serializer, &msgHandler }
 	{}
 protected:
 	virtual void SetUp()
@@ -54,7 +54,7 @@ protected:
 	Client clientLogic{ &ClietnNet };
 	Host hostLogic{ &HostNet };
 	GameStatsSerializer serializer{};
-	NetworkHandler netHandler{};
+	MessageHandler msgHandler{};
 	GameInteractor gameInteractorHost;
 	GameInteractor gameInteractorClient;
 };
