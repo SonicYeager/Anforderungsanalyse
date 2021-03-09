@@ -1,7 +1,7 @@
 #pragma once
 #include "backend_global.h"
 #include "datatypes.h"
-#include "network.h"
+#include "Network.h"
 
 class Interactor
 {
@@ -11,8 +11,7 @@ public:
 	void StartHost();
 	void JoinHost();
 
-	Event<const std::string> onNewConnection;
-	Event<const std::string> onDataReceived;
+	Event<const std::string> onLog;
 
 private:
 	Network* net{};

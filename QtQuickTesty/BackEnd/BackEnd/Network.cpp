@@ -5,10 +5,11 @@
 Network::Network()
 {
 	QObject::connect(&m_server, &QTcpServer::newConnection, this, &Network::OnNewConnection);
+	QObject::connect(&m_server, &QTcpServer::acceptError, this, &Network::OnHostConnectError);
+
+	QObject::connect(&m_serverSocket, &QTcpSocket::connected, this, &Network::OnConnected);
 	QObject::connect(&m_serverSocket, &QIODevice::readyRead, this, &Network::OnSelfReceivedData);
 	QObject::connect(&m_serverSocket, &QTcpSocket::errorOccurred, this, &Network::OnClientConnectError);
-	QObject::connect(&m_server, &QTcpServer::acceptError, this, &Network::OnHostConnectError);
-	QObject::connect(&m_serverSocket, &QTcpSocket::connected, this, &Network::OnConnected);
 }
 
 std::string Network::GenerateLobbyCode()
@@ -94,23 +95,20 @@ ByteStream Network::ReceiveData(int id)
 void Network::WaitForNewConnection()
 {
 	m_server.waitForNewConnection(2000);
-	std::fstream f{ "error_log.txt", std::fstream::in | std::fstream::out | std::fstream::app };
-	f << "New Connection" << std::endl;
 	auto conn = m_server.nextPendingConnection();
 	m_sockets.push_back(std::unique_ptr<QTcpSocket>(conn));
 	auto id = m_sockets.size() - 1;
+
 	QObject::connect(&*m_sockets[id], &QIODevice::readyRead, [this, id]() {OnReceivedData(id); });
 }
 
 void Network::OnNewConnection()
 {
-	std::fstream f{ "error_log.txt", std::fstream::in | std::fstream::out | std::fstream::app };
-	f << "New Connection" << std::endl;
 	auto conn = m_server.nextPendingConnection();
 	m_sockets.emplace_back(conn);
 	auto id = m_sockets.size()-1;
 	QObject::connect(&*m_sockets[id], &QIODevice::readyRead, [this, id]() {OnReceivedData(id); });
-	onNewConnection();
+	onLog("New Connection Processed!");
 }
 
 void Network::OnSelfReceivedData()
@@ -125,7 +123,7 @@ void Network::OnSelfReceivedData()
 		sizestream >> size;
 		auto qdata = m_serverSocket.read(size);
 		std::vector<char> data{ std::begin(qdata), std::end(qdata) };
-		onReceivedData(data);
+		onData(data);
 	}
 }
 
@@ -162,6 +160,6 @@ void Network::OnReceivedData(int id)
 		sizestream >> size;
 		auto qdata = m_sockets[id]->read(size);
 		std::vector<char> data{ std::begin(qdata), std::end(qdata) };
-		onReceivedData(data);
+		onData(data);
 	}
 }

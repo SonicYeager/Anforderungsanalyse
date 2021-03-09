@@ -1,32 +1,37 @@
 #pragma once
 #include "backend_global.h"
+#include "datatypes.h"
 
 const int PORT = 4242;
+const int HEADERSIZE = sizeof(int);
 
-class Network : public NetworkSource, public QObject
+class Network : public QObject
 {
 public:
 	Network();
 
-	LobbyCode StartServer() override;
-	void ConnectToServer(const LobbyCode&) override;
-	void WriteTo(const ByteStream&, int) override;
-	void WriteToHost(const ByteStream&) override;
-	void Broadcast(const ByteStream&) override;
-	ByteStream ReceiveData() override;
-	ByteStream ReceiveData(int) override;
-	void WaitForNewConnection() override;
+	std::string GenerateLobbyCode();
+	LobbyCode StartServer();
+	void ConnectToServer(const LobbyCode&);
+	void WriteTo(const ByteStream&, int);
+	void WriteToHost(const ByteStream&);
+	void Broadcast(const ByteStream&);
+	ByteStream ReceiveData();
+	ByteStream ReceiveData(int);
+	void WaitForNewConnection();
+
+	Event<std::string> onLog;
+	Event<ByteStream> onData;
 
 public slots:
 	void OnNewConnection();
 	void OnSelfReceivedData();
+	void OnReceivedData(int);
 	void OnClientConnectError(const QAbstractSocket::SocketError&);
 	void OnHostConnectError(const QAbstractSocket::SocketError&);
 	void OnConnected();
 
 private:
-	void OnReceivedData(int);
-	std::string GenerateLobbyCode(); //pls remove
 	QThread serverThread;
 	QTcpServer m_server;
 	QTcpSocket m_serverSocket;

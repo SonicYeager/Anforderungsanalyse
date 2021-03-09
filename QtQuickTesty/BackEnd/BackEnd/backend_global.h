@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QtCore/qglobal.h>
+#include <QtCore/qthread.h>
 #include <QtNetwork/qhostinfo.h>
 #include <QtNetwork/qnetworkinterface.h>
 #include <QtNetwork/qtcpserver.h>
