@@ -38,16 +38,28 @@
     <ClInclude Include="datatypes.h">
       <Filter>Data</Filter>
     </ClInclude>
-    <ClInclude Include="Network.h">
+    <ClInclude Include="Client.h">
       <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="Server.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="ServerInteractor.h">
+      <Filter>Interactor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="interactor.cpp">
       <Filter>Interactor</Filter>
     </ClCompile>
-    <ClCompile Include="Network.cpp">
+    <ClCompile Include="Client.cpp">
       <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="Server.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="ServerInteractor.cpp">
+      <Filter>Interactor</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

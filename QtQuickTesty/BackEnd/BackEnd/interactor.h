@@ -1,12 +1,13 @@
 #pragma once
 #include "backend_global.h"
 #include "datatypes.h"
-#include "Network.h"
+#include "Client.h"
+#include "ServerInteractor.h" //replace by another interactor
 
 class Interactor
 {
 public:
-    Interactor(Network* );
+    Interactor(Client*, ServerInteractor*);
 
 	void StartHost();
 	void JoinHost();
@@ -14,5 +15,9 @@ public:
 	Event<const std::string> onLog;
 
 private:
-	Network* net{};
+	void OnData(const ByteStream&);
+	void OnLog(const std::string&);
+
+	Client* m_client{};
+	ServerInteractor* m_server{};
 };

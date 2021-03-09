@@ -110,12 +110,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Network.cpp" />
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="Server.cpp" />
+    <ClCompile Include="ServerInteractor.cpp" />
     <ClInclude Include="backend_global.h" />
+    <ClInclude Include="Client.h" />
     <ClInclude Include="datatypes.h" />
     <ClInclude Include="interactor.h" />
     <ClCompile Include="interactor.cpp" />
-    <ClInclude Include="Network.h" />
+    <ClInclude Include="Server.h" />
+    <ClInclude Include="ServerInteractor.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
