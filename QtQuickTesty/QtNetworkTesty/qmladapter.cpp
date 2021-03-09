@@ -26,7 +26,8 @@ void QmlAdapter::setData(QString data)
 
 void QmlAdapter::setLabelText(QString text)
 {
-    _labelText += text + "\n";
+    _labelText += "#" + QString::number(_msgNr) + "  " + text + "\n";
+    _msgNr++;
     emit labelTextChanged();
 }
 

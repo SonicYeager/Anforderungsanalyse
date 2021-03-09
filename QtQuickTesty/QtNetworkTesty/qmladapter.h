@@ -43,5 +43,6 @@ signals:
 
 private:
     QString _data = "";
-    QString _labelText = "Logs:\n";
+    QString _labelText = "Logs:\n\n";
+    int _msgNr = 0;
 };
