@@ -16,6 +16,9 @@ void ServerInteractor::StartServer()
 void ServerInteractor::OnNewConnection(int id)
 {
 	onLog("ServerInteractor: New Connection Handled; ID: " + std::to_string(id));
+	auto text = std::to_string(id);
+	ByteStream stream{std::begin(text), std::end(text)};
+	m_server->WriteTo(stream, id);
 }
 
 void ServerInteractor::OnData(const ByteStream& stream, int id)

@@ -30,12 +30,14 @@ public:
     //events
     Event<> onStartServer;
     Event<> onJoinServer;
+    Event<> onSendData;
 
 public slots:
 
     //anything the ui asks for or triggers (interactions with backend process)
     void startHost();
     void joinHost();
+    void sendData();
 
 signals:
     void dataChanged();

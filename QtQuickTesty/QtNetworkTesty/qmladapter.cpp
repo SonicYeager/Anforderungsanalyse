@@ -40,3 +40,8 @@ void QmlAdapter::joinHost()
 {
     onJoinServer();
 }
+
+void QmlAdapter::sendData()
+{
+    onSendData();
+}

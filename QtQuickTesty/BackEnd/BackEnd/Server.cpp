@@ -10,6 +10,11 @@ Server::Server()
 	serverThread.start();
 }
 
+Server::~Server()
+{
+	serverThread.exit();
+}
+
 std::string Server::GenerateLobbyCode()
 {
 	const QHostAddress& localhost = QHostAddress(QHostAddress::LocalHost);
@@ -34,7 +39,11 @@ void Server::WriteTo(const ByteStream& data, int id)
 {
 	QByteArray qdata{};
 	QDataStream sizestream{ &qdata, QDataStream::WriteOnly };
-	sizestream << sizeof(data);
+
+	auto size = std::to_string(data.size());
+	ByteStream sizeStream{ std::begin(size), std::end(size) };
+
+	sizestream.writeBytes(sizeStream.data(), HEADERSIZE);
 	sizestream.writeBytes(data.data(), data.size());
 	m_sockets[id]->write(qdata);
 	onLog("Data has been send to client: " + std::to_string(id));
@@ -44,7 +53,11 @@ void Server::Broadcast(const ByteStream& data)
 {
 	QByteArray qdata{};
 	QDataStream sizestream{ &qdata, QDataStream::WriteOnly };
-	sizestream << sizeof(data);
+	
+	auto size = std::to_string(data.size());
+	ByteStream sizeStream{ std::begin(size), std::end(size) };
+
+	sizestream.writeBytes(sizeStream.data(), HEADERSIZE);
 	sizestream.writeBytes(data.data(), data.size());
 	for (const auto& socket : m_sockets)
 		socket->write(qdata);

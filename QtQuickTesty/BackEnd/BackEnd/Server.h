@@ -6,6 +6,7 @@ class Server : public QObject
 {
 public:
 	Server();
+	virtual ~Server();
 
 	std::string GenerateLobbyCode();
 	LobbyCode StartServer();

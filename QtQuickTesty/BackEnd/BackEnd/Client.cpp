@@ -34,7 +34,11 @@ void Client::WriteToHost(const ByteStream& data)
 {
 	QByteArray qdata{};
 	QDataStream sizestream{ &qdata, QDataStream::WriteOnly };
-	sizestream << sizeof(data);
+
+	auto size = std::to_string(data.size());
+	ByteStream sizeStream{ std::begin(size), std::end(size) };
+
+	sizestream.writeBytes(sizeStream.data(), HEADERSIZE);
 	sizestream.writeBytes(data.data(), data.size());
 	m_socket.write(qdata);
 	onLog("Data has been send to Host!");

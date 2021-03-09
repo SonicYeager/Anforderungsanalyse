@@ -20,13 +20,21 @@ void Interactor::JoinServer()
 	m_client->ConnectToServer(addr);
 }
 
+void Interactor::SendData()
+{
+	std::string text{"Hello World from Client: " + m_id};
+	ByteStream stream{std::begin(text), std::end(text)};
+	m_client->WriteToHost(stream);
+}
+
 void Interactor::OnData(const ByteStream& stream)
 {
 	std::string text{stream.begin(), stream.end()};
 	onLog("Interactor: Received Data ->" + text);
+	m_id = text;
 }
 
 void Interactor::OnLog(const std::string& log)
 {
-	onLog("Network: " + log);
+	onLog("Client: " + log);
 }

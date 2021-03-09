@@ -59,7 +59,7 @@ ApplicationWindow {
                     id: buttonsend
                     text: "Send Data"
                     onClicked: {
-                        //qmlAdapter.sendData();
+                        qmlAdapter.sendData();
                     }
                 }
             }
