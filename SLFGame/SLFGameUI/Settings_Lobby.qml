@@ -36,13 +36,20 @@ Rectangle{
                     state: "inactive"
                     onTextChanged: {
                         qmlAdapter.customCategories = text
+                        qmlAdapter.lobbySettingsChanged()
                     }
+                    Connections {
+                        target:qmlAdapter
+                        function onCustomCategoriesChanged()
+                        {
+                            eb_customCats.text = qmlAdapter.customCategories
+                        }
+                    }
+
                     Connections {
                         target: chb_custom
                         onStateChanged:  {
                             eb_customCats.state = (chb_custom.state === "true") ? "active" : "inactive"
-                            if (chb_custom.state === "false")
-                                qmlAdapter.customCategories = "Stadt,Land,Fluss,Name,Tier,Beruf"
                         }
                     }
                 }
@@ -85,6 +92,11 @@ Rectangle{
                     Layout.preferredWidth: 100
                     Layout.preferredHeight: 50
                     model: [ "bis Stop", "60", "80", "100", "120", "150", "180", "210" ]
+                    currentIndex: 0
+                    onCurrentTextChanged: {
+                        qmlAdapter.timeLeft = cb_roundTime.currentText
+                        qmlAdapter.lobbySettingsChanged()
+                    }
                 }
             }
         }
@@ -108,6 +120,10 @@ Rectangle{
                     Layout.preferredWidth: 100
                     Layout.preferredHeight: 50
                     model: [ "5","6","7","8","9","10" ]
+                    onCurrentIndexChanged: {
+                        qmlAdapter.maxRounds = cb_roundCount.currentValue
+                        qmlAdapter.lobbySettingsChanged()
+                    }
                 }
             }
         }

@@ -61,12 +61,11 @@ void ServerInteractorImpl::OnMsgPlayerName(const Playername& playerName)
 
 void ServerInteractorImpl::OnMsgHandleGameSettings(const HandleGameSettings& settings)
 {
-	m_GameStats.categories = settings.gs.cats ;
-	m_GameStats.timeout = settings.gs.timeout ;
-	m_GameStats.maxRounds = settings.gs.maxRounds ;
+	m_GameStats.categories = settings.ls.cats ;
+	m_GameStats.timeout = settings.ls.timeout ;
+	m_GameStats.maxRounds = settings.ls.maxRounds ;
 
-	HandleGameSettings set{ { m_GameStats.maxRounds,  m_GameStats.timeout, m_GameStats.categories} };
-	auto ser = m_pSerializer->Serialize(set);
+	auto ser = m_pSerializer->Serialize(settings);
 	m_pServer->Broadcast(ser);
 }
 

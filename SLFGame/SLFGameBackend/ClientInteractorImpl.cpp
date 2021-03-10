@@ -99,11 +99,7 @@ void ClientInteractorImpl::LobbyChanged(const std::string& cats, const std::stri
 	auto categories = m_pParser->ParseCategories(cats);
 	auto maxRounds = m_pParser->ParseRoundCount(rounds);
 
-	m_GameStats.categories = categories;
-	m_GameStats.maxRounds = maxRounds;
-	m_GameStats.timeout = timeout;
-
-	HandleGameSettings gs{ {maxRounds, timeout, categories} };
+	HandleGameSettings gs{ {cats, timeout, rounds, maxRounds, categories} };
 	auto ser = m_pSerializer->Serialize(gs);
 	m_pClient->WriteToHost(ser);
 }
@@ -137,22 +133,9 @@ void ClientInteractorImpl::OnMsgGameStats(const HandleGameStats& gs)
 
 void ClientInteractorImpl::OnMsgHandleGameSettings(const HandleGameSettings& settings)
 {
-	m_GameStats.categories = settings.gs.cats;
-	m_GameStats.maxRounds = settings.gs.maxRounds;
-	m_GameStats.timeout = settings.gs.timeout;
+	m_GameStats.categories = settings.ls.cats;
+	m_GameStats.maxRounds = settings.ls.maxRounds;
+	m_GameStats.timeout = settings.ls.timeout;
 
-	std::string categories{};
-
-	for (int i{}; i < m_GameStats.categories.size()-1; ++i)
-		categories += m_GameStats.categories[i] + ",";
-	categories += m_GameStats.categories[m_GameStats.categories.size() - 1];
-
-	auto maxRounds = std::to_string(settings.gs.maxRounds);
-
-	LobbySettings ls{};
-	ls.timeout = settings.gs.timeout;
-	ls.categories = categories;
-	ls.rounds = maxRounds;
-
-	onUpdateLobbySettings(ls);
+	onUpdateLobbySettings(settings.ls);
 }

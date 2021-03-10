@@ -69,7 +69,7 @@ public:
     void setCustomCategories            (QString customCategories);
     void setTimeLeft                    (QString timeLeft);
     void setMaxRounds                   (QString maxRounds);
-    void setView                        (STATE view);
+    void setView                        (QString view);
     void setPlayerName                  (QString playerName);
     void setCategories                  (StrVector categories);
     void setAnswers                     (StrVector2D answers);
@@ -97,7 +97,7 @@ public slots:
     void addPlayerAnswers(GameStats gs);
     void hostLobby();
     void joinLobby();
-    void LobbySettingsChanged();
+    void lobbySettingsChanged();
 
 signals:
     void letterChanged();
@@ -120,6 +120,9 @@ signals:
     void playerNameChanged();
 
 private:
+
+    QString GetViewFromState(STATE);
+
     QString _letter             = "bad";
     QString _lobbyCode          = "";
     QString _customCategories   = "Stadt,Land,Fluss,Name,Tier,Beruf";

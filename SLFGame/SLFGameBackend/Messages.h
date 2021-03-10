@@ -14,7 +14,7 @@ namespace Messages
 	};
 
 	struct HandleGameStats		{ NetworkData gs; };
-	struct HandleGameSettings	{ LobbySettings gs; };
+	struct HandleGameSettings	{ LobbySettings ls; };
 	struct Playername			{ std::string playername; };
 	struct PlayerID				{ int id; };
 	struct PlayerAnswers		{ std::vector<std::string> answers; };

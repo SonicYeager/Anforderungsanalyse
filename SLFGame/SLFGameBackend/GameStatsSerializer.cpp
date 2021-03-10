@@ -150,22 +150,34 @@ void GameStatsSerializer::Deserialize_impl(PlayerAnswers& msg, QDataStream& data
 
 void GameStatsSerializer::Serialize_impl(const HandleGameSettings& msg, QDataStream& data)
 {
+	QString timeout{msg.ls.timeout.c_str()};
+	QString catString{ msg.ls.categories.c_str() };
+	QString rounds{ msg.ls.rounds.c_str() };
 	QStringList cats;
-	std::for_each(std::begin(msg.gs.cats), std::end(msg.gs.cats), [&cats](const std::string& str) {cats.push_back(str.c_str()); });
-	data << cats;
-	QString timeout{msg.gs.timeout.c_str()};
+	std::for_each(std::begin(msg.ls.cats), std::end(msg.ls.cats), [&cats](const std::string& str) {cats.push_back(str.c_str()); });
 	data << timeout;
-	data << msg.gs.maxRounds;
+	data << catString;
+	data << rounds;
+	data << msg.ls.maxRounds;
+	data << cats;
 }
 
 void GameStatsSerializer::Deserialize_impl(HandleGameSettings& msg, QDataStream& data)
 {
-	QStringList cats;
-	data >> cats;
-	for (const QString& cat : cats)
-		msg.gs.cats.push_back(cat.toStdString());
 	QString timeout{};
-	data << timeout;
-	msg.gs.timeout = timeout.toStdString();
-	data >> msg.gs.maxRounds;
+	QString catString{};
+	QString rounds{};
+	QStringList cats;
+
+	data >> timeout;
+	data >> catString;
+	data >> rounds;
+	data >> msg.ls.maxRounds;
+	data >> cats;
+
+	msg.ls.timeout = timeout.toStdString();
+	msg.ls.categories = catString.toStdString();
+	msg.ls.rounds = rounds.toStdString();
+	for (const QString& cat : cats)
+		msg.ls.cats.push_back(cat.toStdString());
 }

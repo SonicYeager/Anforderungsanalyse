@@ -18,19 +18,19 @@ void QmlAdapter::PrepareGame(const GameStats & gs)
     setLetter(QChar(gs.currentLetter));
     setCategories(gs.categories);
     setPoints(gs.players[_playerId].points);
-    setView(STATE::INGAME);
+    setView(getView());
 }
 
 void QmlAdapter::PrepareFinalScores(const GameStats & gs)
 {
     setPoints(gs.players[_playerId].points);
-    setView(STATE::FINALSCORES);
+    setView(GetViewFromState(STATE::FINALSCORES));
 }
 
 void QmlAdapter::PrepareOverview(const GameStats & gs)
 {
     addPlayerAnswers(gs);
-    setView(STATE::OVERVIEW);
+    setView(GetViewFromState(STATE::OVERVIEW));
     emit answersChanged();
 }
 
@@ -44,7 +44,7 @@ void QmlAdapter::PrepareLobby(const GameStats & gs)
     setTimeLeft(gs.timeout.c_str());
     emit playerCountChanged();
     emit playersChanged();
-    setView(gs.state);
+    setView(GetViewFromState(gs.state));
 }
 
 void QmlAdapter::UpdateGameStats(const GameStats& gs)
@@ -57,14 +57,14 @@ void QmlAdapter::UpdateGameStats(const GameStats& gs)
     setTimeLeft(gs.timeout.c_str());
     emit playerCountChanged();
     emit playersChanged();
-    setView(gs.state);
+    setView(GetViewFromState(gs.state));
 }
 
 void QmlAdapter::UpdateLobby(const LobbySettings & ls)
 {
-    setMaxRounds(ls.rounds.c_str());
-    setTimeLeft(ls.timeout.c_str());
     setCustomCategories(ls.categories.c_str());
+    setTimeLeft(ls.timeout.c_str());
+    setMaxRounds(ls.rounds.c_str());
 }
 
 // ------------------------------------------ getter ------------------------------------------
@@ -180,8 +180,6 @@ void QmlAdapter::setCustomCategories(QString customCategories)
     if (customCategories == _customCategories)
         return;
     _customCategories = customCategories;
-    if (getPlayerId() == 0)
-        LobbySettingsChanged();
     emit customCategoriesChanged();
 }
 
@@ -247,27 +245,14 @@ void QmlAdapter::setMaxRounds(QString maxRounds)
     if (maxRounds == _maxRounds)
         return;
     _maxRounds = maxRounds;
-    if (getPlayerId() == 0)
-        LobbySettingsChanged();
     emit maxRoundsChanged();
 }
 
-void QmlAdapter::setView(STATE view)
+void QmlAdapter::setView(QString view)
 {
-    QString newView;
-    switch (view)
-    {
-        case STATE::MAINMENU :      newView = "MainMenu"; break;
-        case STATE::LOBBY :         newView = "Lobby"; break;
-        case STATE::INGAME :        newView = "Input"; break;
-        case STATE::OVERVIEW :      newView = "Overview"; break;
-        case STATE::INTERVENTION :  newView = (getPlayerId() == 0) ? "Intervention" : "Waiting"; break;
-        case STATE::FINALSCORES :   newView = "FinalScores"; break;
-    }
-
-    if (newView == _view)
+    if (view == _view)
         return;
-    _view = newView;
+    _view = view;
     emit viewChanged();
 }
 
@@ -313,8 +298,6 @@ void QmlAdapter::setTimeLeft(QString timeLeft)
     if (timeLeft == _timeLeft)
         return;
     _timeLeft = timeLeft;
-    if (getPlayerId() == 0 && _view == "Lobby")
-        LobbySettingsChanged();
     emit timeLeftChanged();
 }
 
@@ -393,9 +376,22 @@ void QmlAdapter::joinLobby()
     onJoinLobby(_lobbyCode.toStdString(), _playerName.toStdString());
 }
 
-void QmlAdapter::LobbySettingsChanged()
+void QmlAdapter::lobbySettingsChanged()
 {
     onLobbySettingsChanged(_customCategories.toStdString(), _timeLeft.toStdString(), _maxRounds.toStdString());
+}
+
+QString QmlAdapter::GetViewFromState(STATE view)
+{
+    switch (view)
+    {
+        case STATE::MAINMENU :      return "MainMenu";
+        case STATE::LOBBY :         return "Lobby";
+        case STATE::INGAME :        return "Input";
+        case STATE::OVERVIEW :      return "Overview";
+        case STATE::INTERVENTION :  return (getPlayerId() == 0) ? "Intervention" : "Waiting";
+        case STATE::FINALSCORES :   return "FinalScores"; break;
+    }
 }
 
 #define slotFunctionsEnd }

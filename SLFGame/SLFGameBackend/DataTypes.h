@@ -48,9 +48,9 @@ struct GameStats
 	Letter currentLetter{};
 	Letters lettersUsed{};
 	int currentRound{};
-	int maxRounds{};
+	int maxRounds = 5;
 	std::string lobbyCode{};
-	std::string timeout{};
+	std::string timeout = "bis Stop";
 	Players players{};
 	STATE state{};
 };
@@ -72,11 +72,11 @@ struct NetworkData
 
 struct LobbySettings
 {
-	int maxRounds{};
-	std::string timeout{};
-	std::vector<std::string> cats{};
 	std::string categories{};
+	std::string timeout{};
 	std::string rounds{};
+	int maxRounds{};
+	std::vector<std::string> cats{};
 };
 
 using HeaderType = int;
