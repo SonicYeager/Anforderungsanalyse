@@ -36,7 +36,6 @@ using Categories = std::vector<std::string>;
 struct PlayerStats
 {
 	std::string playerName = "";
-	int playerID = 0;
 	int points = 0;
 	std::vector<std::string> answers;
 };
@@ -75,6 +74,13 @@ using HeaderType = int;
 const int HEADERSIZE = sizeof(HeaderType);
 const int PORT = 4242;
 
+inline std::ostream& operator<<(std::ostream& out, const ByteStream& stream)
+{
+	for (const char& c : stream)
+		out << c << ',';
+	return out;
+}
+
 inline bool operator==(const NetworkData& left, const NetworkData& right)
 {
 	return left.currentLetter == right.currentLetter &&
@@ -100,8 +106,7 @@ inline bool operator==(const GameStats& left, const GameStats& right)
 
 inline bool operator==(const PlayerStats& left, const PlayerStats& right)
 {
-	return left.playerID == right.playerID 
-		&& left.playerName == right.playerName
+	return left.playerName == right.playerName
 		&& left.answers == right.answers
 		&& left.points == right.points;
 }

@@ -1,14 +1,12 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "../SLFGameBackend/GameInteractor.h"
+#include "../SLFGameBackend/ClientInteractorImpl.h"
 #include "../SLFGameBackend/RandomGenRessource.h"
 #include "../SLFGameBackend/GameStatsOperations.h"
-#include "../SLFGameBackend/NetworkSource.h"
+#include "../SLFGameBackend/ClientSource.h"
 #include "../SLFGameBackend/SLFParser.h"
 #include "../SLFGameBackend/Game.h"
 #include "../SLFGameBackend/UI.h"
-#include "../SLFGameBackend/Client.h"
-#include "../SLFGameBackend/Host.h"
 #include "../SLFGameBackend/GameStatsSerializer.h"
 #include "../SLFGameBackend/MessageHandler.h"
 
@@ -43,24 +41,19 @@ private:
 	int numCalls = 0;
 };
 
-class FakeNetworkSource : public NetworkSource
+class FakeClient : public ClientSource
 {
 public:
-	MOCK_METHOD(LobbyCode, StartServer, (), (override));
-	MOCK_METHOD(void, ConnectToServer, (const LobbyCode&), (override));
-	MOCK_METHOD(void, WriteTo, (const ByteStream&, int), (override));
-	MOCK_METHOD(void, WriteToHost, (const ByteStream&), (override));
-	MOCK_METHOD(void, Broadcast, (const ByteStream&), (override));
-	MOCK_METHOD(ByteStream, ReceiveData, (), (override));
-	MOCK_METHOD(ByteStream, ReceiveData, (int), (override));
-	MOCK_METHOD(void, WaitForNewConnection, (), (override));
+	MOCK_METHOD(std::string,	GenerateLobbyCode,	(),					(override));
+	MOCK_METHOD(void,			ConnectToServer,	(const LobbyCode&),	(override));
+	MOCK_METHOD(void,			WriteToHost,		(const ByteStream&),(override));
 };
 
-class TestGameInteractor : public Test
+class TestClientInteractor : public Test
 {
 public:
-	TestGameInteractor() :
-		gameInteractor{&fakeRandomLetterGenerator, &gameStatsOperations, &game, &parser, &clientLogic, &hostLogic, &serializer, &msgHandler}
+	TestClientInteractor() :
+		gameInteractor{&fakeRandomLetterGenerator, &gameStatsOperations, &game, &parser, &fakeServer, &serializer, &msgHandler}
 	{}
 protected:
 	virtual void SetUp()
@@ -74,19 +67,17 @@ protected:
 
 	Game game{};
 	FakeRandomLetterGenerator fakeRandomLetterGenerator{};
-	::testing::NiceMock<FakeNetworkSource> fakeNetworkSource{};
+	::testing::NiceMock<FakeClient> fakeServer{};
 	GameStatsOperations gameStatsOperations{};
 	GameStats gameStats{};
 	PlayerStats playerStats{};
 	SLFParser parser;
-	Client clientLogic{&fakeNetworkSource};
-	Host hostLogic{&fakeNetworkSource};
 	GameStatsSerializer serializer{};
 	MessageHandler msgHandler{};
-	GameInteractor gameInteractor;
+	ClientInteractorImpl gameInteractor;
 };
 
-TEST_F(TestGameInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerStats)
+TEST_F(TestClientInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerStats)
 {
 	auto actual = gameInteractor.PrepareLobby();
 
@@ -102,7 +93,7 @@ TEST_F(TestGameInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerSt
 	EXPECT_EQ(actual.first.lobbyCode, "");
 }
 
-TEST_F(TestGameInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStatsAndPlayerStatsFilledWithStdCatsRound0NoTimer)
+TEST_F(TestClientInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStatsAndPlayerStatsFilledWithStdCatsRound0NoTimer)
 {
 	GameStats actualGS;
 	gameInteractor.onPrepareGame = [&actualGS](GameStats gs) 
@@ -118,7 +109,7 @@ TEST_F(TestGameInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStats
 	EXPECT_EQ(actualGS.currentRound, 1);
 }
 
-TEST_F(TestGameInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_ReturnPlayerStatsFilledWithBremenBulgarienBrahmaputra)
+TEST_F(TestClientInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_ReturnPlayerStatsFilledWithBremenBulgarienBrahmaputra)
 {
 	GameStats actualGS;
 	PlayerStats actualPS;
@@ -128,14 +119,14 @@ TEST_F(TestGameInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_Ret
 		actualPS = gs.players[0];
 	};
 
-	gameInteractor.m_GameStats.players.push_back({ "Name", 0, {}, {} });
+	gameInteractor.m_GameStats.players.push_back({ "Name", {}, {} });
 	gameInteractor.PrepareOverview({ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} });
 
 	std::vector<std::string> expected{ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} };
 	EXPECT_EQ(actualPS.answers, expected);
 }
 
-TEST_F(TestGameInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinalScoresWithCalculatedScores)
+TEST_F(TestClientInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinalScoresWithCalculatedScores)
 {
 	GameStats expectedGS;
 	expectedGS.currentRound = 1;
@@ -149,11 +140,11 @@ TEST_F(TestGameInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinalSc
 
 	EXPECT_CALL(fui, PrepareFinalScores(expectedGS));
 
-	gameInteractor.m_GameStats.players.push_back({ "", 0, 0, {} });
+	gameInteractor.m_GameStats.players.push_back({ "", 0, {} });
 	gameInteractor.EndRound(dec);
 }
 
-TEST_F(TestGameInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGameWithScoresAndUsedLetters)
+TEST_F(TestClientInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGameWithScoresAndUsedLetters)
 {
 	GameStats expectedGS;
 	expectedGS.currentRound = 1;
@@ -170,56 +161,35 @@ TEST_F(TestGameInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGameWi
 
 	EXPECT_CALL(fui, PrepareGame(expectedGS));
 
-	gameInteractor.m_GameStats.players.push_back({ "", 0, 0, {} });
+	gameInteractor.m_GameStats.players.push_back({ "", 0, {} });
 	gameInteractor.EndRound(dec);
 }
 
-TEST_F(TestGameInteractor, HostLobby_StatsAreCreated_GameStatsShouldBeFilledWithPlayer0AndBasicSettings)   //not done
+TEST_F(TestClientInteractor, HostLobby_StartServer_CallStartServer)
 {
-	GameStats expectedgs{};
-	expectedgs.maxRounds = 5;
-	expectedgs.categories = { {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}} };
-	expectedgs.lobbyCode = "";
-	PlayerStats expectedps{};
-	expectedps.playerName = "Johnny";
-	expectedps.playerID = 0;
-	expectedgs.players.push_back(expectedps);
-	GameStats actualGS;
-	PlayerStats actualPS;
-	gameInteractor.onPrepareLobby = [&actualGS, &actualPS](GameStats gs)
-	{
-		actualGS = gs;
-		actualPS = gs.players[0];
-	};
-
-	gameInteractor.HostLobby("Johnny");
-	EXPECT_EQ(expectedgs.maxRounds, actualGS.maxRounds);
-	EXPECT_EQ(expectedgs.categories, actualGS.categories);
-	EXPECT_EQ(expectedgs.lobbyCode, actualGS.lobbyCode);
-	EXPECT_EQ(expectedgs.players[0].playerName, expectedps.playerName);
-	EXPECT_EQ(expectedgs.players[0].playerID, expectedps.playerID);
-}
-
-TEST_F(TestGameInteractor, HostLobby_ConnectToServer_CallConnectToServer)
-{
-	EXPECT_CALL(fakeNetworkSource, ConnectToServer(::testing::_));
 	FakeUI fui{};
+	bool started = false;
 	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
-	gameInteractor.HostLobby("CODE");
-}
+	gameInteractor.onStartServer = [&started]() { started = true; };
 
-TEST_F(TestGameInteractor, HostLobby_StartServer_CallStartServer)
-{
-	EXPECT_CALL(fakeNetworkSource, StartServer());
-	FakeUI fui{};
-	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
 	gameInteractor.HostLobby("T-3000");
+
+	EXPECT_TRUE(started);
 }
 
-TEST_F(TestGameInteractor, JoinLobby_ConnectToServer_CallConnectToServer) 
+TEST_F(TestClientInteractor, JoinLobby_ConnectToServer_CallConnectToServer)
 {
-	EXPECT_CALL(fakeNetworkSource, ConnectToServer("CODE"));
+	EXPECT_CALL(fakeServer, ConnectToServer("CODE"));
 	FakeUI fui{};
 	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
+	gameInteractor.JoinLobby("CODE", "T-3000");
+}
+
+TEST_F(TestClientInteractor, JoinLobby_WriteToHost_CallConnectToServer)
+{
+	EXPECT_CALL(fakeServer, WriteToHost(ByteStream{ '\0', '\0', '\0', '\x2', '\0', '\0', '\0', '\f', '\0', 'T', '\0', '-','\0', '3','\0', '0','\0', '0','\0', '0'}));
+	FakeUI fui{};
+	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
+
 	gameInteractor.JoinLobby("CODE", "T-3000");
 }

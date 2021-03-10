@@ -46,7 +46,6 @@ GameStats GameStatsOperations::CreateStats(const LobbyCode& code, const std::str
 	gs.lobbyCode = code;
 	PlayerStats ps{};
 	ps.playerName = playerName;
-	ps.playerID = 0;
 	ps.answers = Categories{};
 	gs.players.push_back(ps);
 	return gs;

@@ -21,12 +21,16 @@ public:
 	void HostLobby(const std::string&) override;
 	void JoinLobby(const LobbyCode&, const std::string&) override;
 
+	int m_ID;
 	GameStats m_GameStats;
-	AddNewPlayer m_newPlayer;
-	HandleGameStats m_handleGS;
 
 private:
+	//client events
 	void OnDataReceived(const ByteStream&);
+
+	//msg events
+	void OnMsgID(const PlayerID&);
+	void OnMsgGameStats(const HandleGameStats&);
 
 	ClientSource* m_pClient;
 	MessageHandlerLogic* m_pMsgHandler;

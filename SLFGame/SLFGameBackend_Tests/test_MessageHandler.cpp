@@ -37,18 +37,18 @@ TEST(MessageHandlerTest, RightEventCalled_onPlayername)
 	EXPECT_EQ(2, result);
 }
 
-TEST(MessageHandlerTest, RightEventCalled_onPlayername)
-{
-	MessageHandler msgHandler;
-	FakeClass fc{};
-	Message hgs = Playername();
-	int result = 0;
-
-	msgHandler.onPlayername = [&fc, &result](const Playername& msg) {result = fc.PlayernameCalled(msg); };
-	msgHandler.handleMessage(hgs);
-
-	EXPECT_EQ(2, result);
-}
+//TEST(MessageHandlerTest, RightEventCalled_onPlayername)
+//{
+//	MessageHandler msgHandler;
+//	FakeClass fc{};
+//	Message hgs = Playername();
+//	int result = 0;
+//
+//	msgHandler.onPlayername = [&fc, &result](const Playername& msg) {result = fc.PlayernameCalled(msg); };
+//	msgHandler.handleMessage(hgs);
+//
+//	EXPECT_EQ(2, result);
+//}
 
 TEST(MessageHandlerTest, RightEventCalled_onPlayerID)
 {
@@ -63,7 +63,7 @@ TEST(MessageHandlerTest, RightEventCalled_onPlayerID)
 	EXPECT_EQ(3, result);
 }
 
-TEST(MessageHandlerTest, RightEventCalled_onPlayerID)
+TEST(MessageHandlerTest, RightEventCalled_onPlayerAnswers)
 {
 	MessageHandler msgHandler;
 	FakeClass fc{};

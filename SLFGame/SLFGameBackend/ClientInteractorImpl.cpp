@@ -27,9 +27,8 @@ ClientInteractorImpl::ClientInteractorImpl(RandomGenRessource* gen,
 	};
 	m_pClient->onData = [this](const ByteStream& stream) {OnDataReceived(stream); };
 	
-	//m_pMsgHandler->onHandleGameStats = [this](const HandleGameStats& handlegs) { m_handleGS = handlegs; };
-	//add id
-	//handle gs
+	m_pMsgHandler->onPlayerID = [this](const PlayerID& id) { OnMsgID(id); };
+	m_pMsgHandler->onHandleGameStats = [this](const HandleGameStats& gs) { OnMsgGameStats(gs); };
 }
 
 void ClientInteractorImpl::PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount)
@@ -82,13 +81,40 @@ void ClientInteractorImpl::JoinLobby(const LobbyCode& lobbyCode, const std::stri
 	//Verbindungsaufbau zum Server
 	m_pClient->ConnectToServer(lobbyCode);
 
+	//lobbycode einspeisen
+	m_GameStats.lobbyCode = lobbyCode;
+
+	//senden vom spielernamen
+	Playername msg{playerName};
+	auto ser = m_pSerializer->Serialize(msg);
+	m_pClient->WriteToHost(ser);
+
 	//Signal an GUI zum Übergang in Lobby
 	onPrepareLobby(m_GameStats);
 }
 
-void ClientInteractorImpl::OnDataReceived(const ByteStream&)
+void ClientInteractorImpl::OnDataReceived(const ByteStream& stream)
 {
-	//TODO
-	//handle incoming data from server
-	//deserialize and send to msg
+	auto des = m_pSerializer->Deserialize(stream);
+	m_pMsgHandler->handleMessage(des);
+}
+
+void ClientInteractorImpl::OnMsgID(const PlayerID& id)
+{
+	m_ID = id.id;
+}
+
+void ClientInteractorImpl::OnMsgGameStats(const HandleGameStats& gs)
+{
+	Players players{};
+	for (int i{}; i < gs.gs.playerNames.size(); ++i)
+		players.push_back({gs.gs.playerNames[i], gs.gs.points[i], gs.gs.answers[i]});
+
+	m_GameStats.categories = gs.gs.categories;
+	m_GameStats.maxRounds = gs.gs.maxRounds;
+	m_GameStats.state = gs.gs.state;
+	m_GameStats.timeout = gs.gs.timeout;
+	m_GameStats.players = players;
+
+	onUpdateLobby(m_GameStats);
 }

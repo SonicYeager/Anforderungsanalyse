@@ -13,9 +13,15 @@ public:
 	void StartServer();
 
 private:
+	//server events
 	void OnNewConnection(int);
 	void OnData(const ByteStream&, int);
 	void OnLog(const std::string&);
+
+	//msg events
+	void OnMsgPlayerName(const Playername&);
+
+	//helper funcs
 	void UpdateGameStats(const std::string&);
 	void AddPlayerStatsToMessage(const std::string&);
 	HandleGameStats CreateGameStatsMessage();

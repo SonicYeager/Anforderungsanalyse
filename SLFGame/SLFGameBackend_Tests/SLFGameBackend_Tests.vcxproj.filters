@@ -13,7 +13,7 @@
     <ClCompile Include="test_GameStatsOperations.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="test_GameInteractor.cpp">
+    <ClCompile Include="test_ClientInteractorImpl.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="test_SLFParser.cpp">
@@ -25,16 +25,13 @@
     <ClCompile Include="test_Game.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="test_Client.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="test_Host.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="test_GameStatsSerializer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="test_MessageHandler.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="test_ServerInteractorImpl.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
   </ItemGroup>
