@@ -102,6 +102,7 @@ void ClientInteractorImpl::OnDataReceived(const ByteStream& stream)
 void ClientInteractorImpl::OnMsgID(const PlayerID& id)
 {
 	m_ID = id.id;
+	onReceivedID(m_ID);
 }
 
 void ClientInteractorImpl::OnMsgGameStats(const HandleGameStats& gs)

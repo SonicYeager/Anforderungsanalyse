@@ -22,8 +22,6 @@ private:
 	void OnMsgPlayerName(const Playername&);
 
 	//helper funcs
-	void UpdateGameStats(const std::string&);
-	void AddPlayerStatsToMessage(const std::string&);
 	HandleGameStats CreateGameStatsMessage();
 
 	ServerSource* m_pServer{};

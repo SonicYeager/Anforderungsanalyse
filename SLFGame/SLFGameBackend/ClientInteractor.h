@@ -19,6 +19,7 @@ public:
 	Event<GameStats> onPrepareLobby;
 	Event<GameStats> onUpdateLobby;
 	Event<GameStats> onGameOver;
+	Event<int> onReceivedID;
 
 	//server events
 	Event<> onStartServer;
