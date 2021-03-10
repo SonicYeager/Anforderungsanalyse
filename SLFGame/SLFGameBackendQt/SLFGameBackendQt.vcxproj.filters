@@ -26,7 +26,7 @@
     <ClInclude Include="..\SLFGameBackend\DataTypes.h">
       <Filter>Data</Filter>
     </ClInclude>
-    <ClInclude Include="..\SLFGameBackend\GameInteractor.h">
+    <ClInclude Include="..\SLFGameBackend\ClientInteractorImpl.h">
       <Filter>Implementation</Filter>
     </ClInclude>
     <ClInclude Include="..\SLFGameBackend\GameStatsOperations.h">
@@ -41,10 +41,7 @@
     <ClInclude Include="..\SLFGameBackend\GameLogic.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="..\SLFGameBackend\Interactor.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SLFGameBackend\NetworkSource.h">
+    <ClInclude Include="..\SLFGameBackend\ClientInteractor.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="..\SLFGameBackend\RandomGenRessource.h">
@@ -65,23 +62,8 @@
     <ClInclude Include="..\SLFGameBackend\Game.h">
       <Filter>Implementation</Filter>
     </ClInclude>
-    <ClInclude Include="..\SLFGameBackend\ClientLogic.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SLFGameBackend\HostLogic.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="..\SLFGameBackend\SerializerSource.h">
       <Filter>Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SLFGameBackend\Client.h">
-      <Filter>Implementation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SLFGameBackend\Host.h">
-      <Filter>Implementation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\SLFGameBackend\Network.h">
-      <Filter>Implementation</Filter>
     </ClInclude>
     <ClInclude Include="..\SLFGameBackend\GameStatsSerializer.h">
       <Filter>Implementation</Filter>
@@ -95,9 +77,27 @@
     <ClInclude Include="..\SLFGameBackend\MessageHandler.h">
       <Filter>Implementation</Filter>
     </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\Client.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\Server.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\ServerInteractorImpl.h">
+      <Filter>Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\ServerSource.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\ClientSource.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\ServerInteractor.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\SLFGameBackend\GameInteractor.cpp">
+    <ClCompile Include="..\SLFGameBackend\ClientInteractorImpl.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\SLFGameBackend\GameStatsOperations.cpp">
@@ -115,19 +115,19 @@
     <ClCompile Include="..\SLFGameBackend\Game.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="..\SLFGameBackend\Client.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SLFGameBackend\Host.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\SLFGameBackend\Network.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
     <ClCompile Include="..\SLFGameBackend\GameStatsSerializer.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\SLFGameBackend\MessageHandler.cpp">
+      <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SLFGameBackend\Server.cpp">
+      <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SLFGameBackend\ServerInteractorImpl.cpp">
+      <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SLFGameBackend\Client.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
   </ItemGroup>

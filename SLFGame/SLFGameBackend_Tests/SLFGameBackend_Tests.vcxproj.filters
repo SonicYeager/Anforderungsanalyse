@@ -34,9 +34,6 @@
     <ClCompile Include="test_GameStatsSerializer.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="test_Network.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
     <ClCompile Include="test_MessageHandler.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>

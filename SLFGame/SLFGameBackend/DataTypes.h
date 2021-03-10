@@ -71,7 +71,9 @@ struct NetworkData
 	STATE state{};
 };
 
-const int HEADERSIZE = sizeof(int);
+using HeaderType = int;
+const int HEADERSIZE = sizeof(HeaderType);
+const int PORT = 4242;
 
 inline bool operator==(const NetworkData& left, const NetworkData& right)
 {

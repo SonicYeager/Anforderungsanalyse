@@ -1,16 +1,28 @@
 #pragma once
+#include "../SLFGameBackendQt/slfgamebackendqt_global.h"
 #include "DataTypes.h"
-#include "NetworkSource.h"
-#include "ClientLogic.h"
+#include "ClientSource.h"
 
-class Client : public ClientLogic
+class Client : public ClientSource, public QObject
 {
 public:
-	explicit Client(NetworkSource*);
-	ByteStream ReceiveData() override;
-	void WriteToHost(const ByteStream&) override;
-	void ConnectToServer(const LobbyCode&) override;
+	Client();
+	virtual ~Client();
+
+	std::string GenerateLobbyCode();
+	void ConnectToServer(const LobbyCode&);
+	void WriteToHost(const ByteStream&);
+
+private slots:
+
+	void OnSelfReceivedData();
+	void OnSelfConnected();
+	void OnSelfDisconnect();
+	void OnSelfClientConnectError(const QAbstractSocket::SocketError&);
+	void OnSelfHostFound();
+	void OnSelfStateChanged(const QAbstractSocket::SocketState&);
+	void OnSelfBytesWritten(int);
 
 private:
-	NetworkSource* m_pNetwork{};
+	QTcpSocket m_socket;
 };
