@@ -10,6 +10,7 @@ public:
 	virtual void EndRound(const std::vector<DECISION>& decisions) = 0;
 	virtual void HostLobby(const std::string&) = 0;
 	virtual void JoinLobby(const LobbyCode&, const std::string&) = 0;
+	virtual void LobbyChanged(const std::string& cats, const std::string& timeout, const std::string& rounds) = 0;
 	virtual ~ClientInteractor() = default;
 
 	//ui events
@@ -20,6 +21,7 @@ public:
 	Event<GameStats> onUpdateLobby;
 	Event<GameStats> onGameOver;
 	Event<int> onReceivedID;
+	Event<LobbySettings> onUpdateLobbySettings;
 
 	//server events
 	Event<> onStartServer;

@@ -15,6 +15,11 @@ void MessageHandler::on(const PlayerAnswers& msg)
 	onPlayerAnswers(msg);
 }
 
+void MessageHandler::on(const HandleGameSettings& msg)
+{
+	onHandleGameSettings(msg);
+}
+
 void MessageHandler::on(const Playername& msg)
 {
 	onPlayername(msg);

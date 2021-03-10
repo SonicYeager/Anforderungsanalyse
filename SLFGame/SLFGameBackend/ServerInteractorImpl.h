@@ -20,6 +20,7 @@ private:
 
 	//msg events
 	void OnMsgPlayerName(const Playername&);
+	void OnMsgHandleGameSettings(const HandleGameSettings&);
 
 	//helper funcs
 	HandleGameStats CreateGameStatsMessage();

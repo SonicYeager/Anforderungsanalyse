@@ -1,9 +1,11 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
+#include "../SLFGameBackend/ServerInteractorImpl.h"
 #include "../SLFGameBackend/ClientInteractorImpl.h"
-#include "../SLFGameBackend/RandomGenRessource.h"
+#include "../SLFGameBackend/RandomGenerator.h"
 #include "../SLFGameBackend/GameStatsOperations.h"
-#include "../SLFGameBackend/ClientSource.h"
+#include "../SLFGameBackend/Client.h"
+#include "../SLFGameBackend/Server.h"
 #include "../SLFGameBackend/SLFParser.h"
 #include "../SLFGameBackend/Game.h"
 #include "../SLFGameBackend/UI.h"
@@ -22,39 +24,26 @@ public:
 	MOCK_METHOD(void, UpdateGameStats, (const GameStats&), (override));
 };
 
-class FakeRandomLetterGenerator : public RandomGenRessource
+class Testy : public Test
 {
 public:
-	Letter GenerateLetter() override
+	Testy() :
+		clientInteractor{ &RandomLetterGenerator, &gameStatsOperations, &game, &parser, &client, &serializer, &msgHandler },
+		serverInteractor{ &server, &serializer, &msgHandler},
+		clientInteractorII{ &RandomLetterGenerator, &gameStatsOperations, &game, &parser, &clientII, &serializer, &msgHandler },
+		serverInteractorII{ &serverII, &serializer, &msgHandler }
 	{
-		auto res = numCalls == 1 ? Letter{ 'B' } : Letter{ 'C' };
-		++numCalls;
-		return res;
-	}
-	Letter GenerateUnusedLetter(const Letters& filter) override
-	{
-		auto res = numCalls == 1 ? Letter{ 'B' } : Letter{ 'C' };
-		++numCalls;
-		return res;
-	}
-private:
-	int numCalls = 0;
-};
+		clientInteractor.onStartServer = [this] {serverInteractor.StartServer(); };
+		clientInteractorII.onStartServer = [this] {serverInteractorII.StartServer(); };
 
-class FakeClient : public ClientSource
-{
-public:
-	MOCK_METHOD(std::string, GenerateLobbyCode, (), (override));
-	MOCK_METHOD(void, ConnectToServer, (const LobbyCode&), (override));
-	MOCK_METHOD(void, WriteToHost, (const ByteStream&), (override));
-};
+		clientInteractor.onPrepareLobby = [this](const GameStats& gs) { ui.PrepareLobby(gs); };
+		clientInteractor.onUpdateLobby = [this](const GameStats& gs) { ui.UpdateGameStats(gs); };
+		clientInteractor.onReceivedID = [this](int i) { auto some = i; };
 
-class TestClientInteractor : public Test
-{
-public:
-	TestClientInteractor() :
-		gameInteractor{ &fakeRandomLetterGenerator, &gameStatsOperations, &game, &parser, &fakeServer, &serializer, &msgHandler }
-	{}
+		clientInteractorII.onPrepareLobby = [this](const GameStats& gs) { ui.PrepareLobby(gs); };
+		clientInteractorII.onUpdateLobby = [this](const GameStats& gs) { ui.UpdateGameStats(gs); };
+		clientInteractorII.onReceivedID = [this](int i) { auto some = i; };
+	}
 protected:
 	virtual void SetUp()
 	{
@@ -65,30 +54,26 @@ protected:
 		Test::TearDown();
 	}
 
+	FakeUI ui{};
 	Game game{};
-	FakeRandomLetterGenerator fakeRandomLetterGenerator{};
-	::testing::NiceMock<FakeClient> fakeServer{};
+	RandomGenerator RandomLetterGenerator{};
+	Client client{};
+	Server server{};
+	Client clientII{};
+	Server serverII{};
 	GameStatsOperations gameStatsOperations{};
-	GameStats gameStats{};
-	PlayerStats playerStats{};
 	SLFParser parser;
 	GameStatsSerializer serializer{};
 	MessageHandler msgHandler{};
-	ClientInteractorImpl gameInteractor;
+	ClientInteractorImpl clientInteractor;
+	ServerInteractorImpl serverInteractor;
+	ClientInteractorImpl clientInteractorII;
+	ServerInteractorImpl serverInteractorII;
 };
 
-TEST_F(TestClientInteractor, Enjoy)
+TEST_F(Testy, DeepDebuggedBugs)
 {
-	auto actual = gameInteractor.PrepareLobby();
-
-	EXPECT_EQ(actual.second.answers.size(), 0);
-	EXPECT_EQ(actual.second.points, 0);
-
-	Categories cat{ {"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"} };
-	EXPECT_EQ(actual.first.categories, cat);
-	EXPECT_EQ(actual.first.currentLetter, Letter{});
-	EXPECT_EQ(actual.first.lettersUsed.size(), 0);
-	EXPECT_EQ(actual.first.currentRound, 0);
-	EXPECT_EQ(actual.first.maxRounds, 5);
-	EXPECT_EQ(actual.first.lobbyCode, "");
+	clientInteractor.HostLobby("Vision");
+	clientInteractorII.JoinLobby("192.168.0.80", "Wanda Maximov");
+	EXPECT_TRUE(false);
 }

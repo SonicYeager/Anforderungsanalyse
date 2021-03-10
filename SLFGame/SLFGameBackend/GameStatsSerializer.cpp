@@ -147,3 +147,25 @@ void GameStatsSerializer::Deserialize_impl(PlayerAnswers& msg, QDataStream& data
 	for (const QString& answer : answers)
 		msg.answers.push_back(answer.toStdString());
 }
+
+void GameStatsSerializer::Serialize_impl(const HandleGameSettings& msg, QDataStream& data)
+{
+	QStringList cats;
+	std::for_each(std::begin(msg.gs.cats), std::end(msg.gs.cats), [&cats](const std::string& str) {cats.push_back(str.c_str()); });
+	data << cats;
+	QString timeout{msg.gs.timeout.c_str()};
+	data << timeout;
+	data << msg.gs.maxRounds;
+}
+
+void GameStatsSerializer::Deserialize_impl(HandleGameSettings& msg, QDataStream& data)
+{
+	QStringList cats;
+	data >> cats;
+	for (const QString& cat : cats)
+		msg.gs.cats.push_back(cat.toStdString());
+	QString timeout{};
+	data << timeout;
+	msg.gs.timeout = timeout.toStdString();
+	data >> msg.gs.maxRounds;
+}

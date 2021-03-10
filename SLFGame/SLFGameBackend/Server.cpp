@@ -13,6 +13,8 @@ Server::Server()
 Server::~Server()
 {
 	serverThread.exit();
+	serverThread.quit();
+	serverThread.wait();
 }
 
 std::string Server::GenerateLobbyCode()

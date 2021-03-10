@@ -20,6 +20,7 @@ public:
 	void EndRound(const std::vector<DECISION>&) override;
 	void HostLobby(const std::string&) override;
 	void JoinLobby(const LobbyCode&, const std::string&) override;
+	void LobbyChanged(const std::string& cats, const std::string& timeout, const std::string& rounds) override;
 
 	int m_ID;
 	GameStats m_GameStats;
@@ -31,6 +32,7 @@ private:
 	//msg events
 	void OnMsgID(const PlayerID&);
 	void OnMsgGameStats(const HandleGameStats&);
+	void OnMsgHandleGameSettings(const HandleGameSettings&);
 
 	ClientSource* m_pClient;
 	MessageHandlerLogic* m_pMsgHandler;

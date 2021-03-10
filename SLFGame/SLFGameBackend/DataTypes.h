@@ -70,6 +70,15 @@ struct NetworkData
 	STATE state{};
 };
 
+struct LobbySettings
+{
+	int maxRounds{};
+	std::string timeout{};
+	std::vector<std::string> cats{};
+	std::string categories{};
+	std::string rounds{};
+};
+
 using HeaderType = int;
 const int HEADERSIZE = sizeof(HeaderType);
 const int PORT = 4242;

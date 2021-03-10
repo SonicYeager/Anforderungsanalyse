@@ -17,4 +17,6 @@ public:
 	void Deserialize_impl(PlayerID& msg, QDataStream& data);
 	void Serialize_impl(const PlayerAnswers& msg, QDataStream& data);
 	void Deserialize_impl(PlayerAnswers& msg, QDataStream& data);
+	void Serialize_impl(const HandleGameSettings& msg, QDataStream& data);
+	void Deserialize_impl(HandleGameSettings& msg, QDataStream& data);
 };

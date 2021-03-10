@@ -8,4 +8,5 @@ public:
 	void on(const Playername&) override;
 	void on(const PlayerID&) override;
 	void on(const PlayerAnswers&) override;
+	void on(const HandleGameSettings&) override;
 };
