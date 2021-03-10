@@ -143,8 +143,9 @@ void ClientInteractorImpl::OnMsgHandleGameSettings(const HandleGameSettings& set
 
 	std::string categories{};
 
-	for (auto str : settings.gs.cats)
-		categories += str + ",";
+	for (int i{}; i < m_GameStats.categories.size()-1; ++i)
+		categories += m_GameStats.categories[i] + ",";
+	categories += m_GameStats.categories[m_GameStats.categories.size() - 1];
 
 	auto maxRounds = std::to_string(settings.gs.maxRounds);
 
