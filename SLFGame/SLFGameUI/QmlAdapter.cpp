@@ -3,7 +3,13 @@
 QmlAdapter::QmlAdapter(QObject *parent) :
     QObject(parent)
 {}
+
 // ------------------------------------------ initializer function ------------------------------------------
+
+void QmlAdapter::ReceiveId(int id)
+{
+    setPlayerId(id);
+}
 
 void QmlAdapter::PrepareGame(const GameStats & gs)
 {

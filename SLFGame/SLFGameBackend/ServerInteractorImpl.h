@@ -4,13 +4,13 @@
 #include "SerializerSource.h"
 #include "MessageHandlerLogic.h"
 
-class ServerInteractorImpl
+class ServerInteractorImpl : public ServerInteractor
 {
 public:
 	ServerInteractorImpl(ServerSource*, SerializerSource*, MessageHandlerLogic*);
 	virtual ~ServerInteractorImpl();
 
-	void StartServer();
+	void StartServer() override;
 
 private:
 	//server events
