@@ -22,6 +22,9 @@ Controller::Controller(UI* ui, ClientInteractor* clientInter, ServerInteractor* 
     m_pUi->onJoinLobby                  = [this](const std::string& lobbyCode, const std::string& playerName)
                                           {m_pClientInter->JoinLobby(lobbyCode, playerName);};
 
+    m_pUi->onLobbySettingsChanged       = [this](const std::string& customCats,const std::string& timeLeft,const std::string& maxRounds)
+                                          {m_pClientInter->LobbyChanged(customCats, timeLeft, maxRounds);};
+
     m_pClientInter->onReceivedID        = [this](int id)
                                           {m_pUi->ReceiveID(id);};
 
@@ -42,6 +45,9 @@ Controller::Controller(UI* ui, ClientInteractor* clientInter, ServerInteractor* 
 
     m_pClientInter->onUpdateLobby       = [this](GameStats gs)
                                           {m_pUi->UpdateGameStats(gs);};
+
+    m_pClientInter->onUpdateLobbySettings  = [this](LobbySettings ls)
+                                          {m_pUi->UpdateLobby(ls);};
 
     m_pClientInter->onStartServer       = [this]()
                                           {m_pServerInter->StartServer();};

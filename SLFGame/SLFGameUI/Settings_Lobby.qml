@@ -49,6 +49,7 @@ Rectangle{
                 CheckBox {
                     id: chb_custom
                     text: "<font color=\"white\">custom</font>"
+                    visible: (qmlAdapter.playerId === 0) ? true: false
                     state: qmlAdapter.customChecked
                     onClicked: qmlAdapter.customChecked = checked
                     Component.onCompleted: checked = qmlAdapter.customChecked

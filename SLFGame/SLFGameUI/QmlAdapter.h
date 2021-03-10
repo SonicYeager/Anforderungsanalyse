@@ -43,6 +43,7 @@ public:
     void PrepareOverview    (const GameStats&) override;
     void PrepareLobby       (const GameStats&) override;
     void UpdateGameStats    (const GameStats&) override;
+    void UpdateLobby        (const LobbySettings&) override;
 
     QString getLetter();
     QString getLobbyCode();
@@ -96,6 +97,7 @@ public slots:
     void addPlayerAnswers(GameStats gs);
     void hostLobby();
     void joinLobby();
+    void LobbySettingsChanged();
 
 signals:
     void letterChanged();

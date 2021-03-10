@@ -60,11 +60,11 @@ void QmlAdapter::UpdateGameStats(const GameStats& gs)
     setView(gs.state);
 }
 
-void QmlAdapter::UpdateLobbySettings(const LobbySettings & ls)
+void QmlAdapter::UpdateLobby(const LobbySettings & ls)
 {
-    setMaxRounds(QString::number(ls.rounds));
+    setMaxRounds(ls.rounds.c_str());
     setTimeLeft(ls.timeout.c_str());
-    setCustomCategories(ls.categories.c.str());
+    setCustomCategories(ls.categories.c_str());
 }
 
 // ------------------------------------------ getter ------------------------------------------
