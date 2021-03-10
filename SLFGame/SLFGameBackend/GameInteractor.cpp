@@ -33,8 +33,8 @@ GameInteractor::GameInteractor(RandomGenRessource* gen,
 		onPrepareNextRound(m_GameStats);
 	};
 	m_pMsgHandler->onAddNewPlayer = [this](const AddNewPlayer& nPlayer) { m_newPlayer = nPlayer; };
-	m_pMsgHandler->onHandleGameStats = [this](const HandleGameStats& handlegs) { m_handleGS = handlegs; };
 	m_pHost->onNewConnection = [this]() {OnNewClientConnected(); };
+	m_pMsgHandler->onHandleGameStats = [this](const HandleGameStats& handlegs) { m_handleGS = handlegs; };
 	m_pHost->onDataReceived = [this](const ByteStream& stream) {OnDataReceived(stream); };
 	m_pClient->onDataReceived = [this](const ByteStream& stream) {OnDataReceived(stream); };
 }
