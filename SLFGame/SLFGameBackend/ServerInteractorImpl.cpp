@@ -18,6 +18,7 @@ ServerInteractorImpl::~ServerInteractorImpl()
 void ServerInteractorImpl::StartServer()
 {
 	m_pServer->StartServer();
+
 }
 
 void ServerInteractorImpl::OnNewConnection(int id)
@@ -45,11 +46,13 @@ void ServerInteractorImpl::OnLog(const std::string& text)
 
 void ServerInteractorImpl::OnMsgPlayerName(const Playername& playerName)
 {
+	m_GameStats.players.push_back({ playerName.playername, 0, {""} });
+
 	auto stats = CreateGameStatsMessage();
-	stats.gs.playerNames.push_back(playerName.playername);
-	stats.gs.points.emplace_back();
 	stats.gs.decisions.emplace_back();
-	stats.gs.answers.emplace_back();
+	//stats.gs.playerNames.push_back(playerName.playername);
+	//stats.gs.points.emplace_back();
+	//stats.gs.answers.emplace_back();
 
 	auto ser = m_pSerializer->Serialize(stats);
 	m_pServer->Broadcast(ser);
