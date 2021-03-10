@@ -8,6 +8,11 @@ ServerInteractor::ServerInteractor(Server* s) :
 	m_server->onClientData = [this](const ByteStream& stream, int id) { OnData(stream, id); };
 }
 
+ServerInteractor::~ServerInteractor()
+{
+	onLog = [](const std::string& text) { auto temp = text; temp.clear(); };
+}
+
 void ServerInteractor::StartServer()
 {
 	m_server->StartServer();
@@ -29,5 +34,6 @@ void ServerInteractor::OnData(const ByteStream& stream, int id)
 
 void ServerInteractor::OnLog(const std::string& text)
 {
-	onLog("Server: " + text);
+	if(onLog)
+		onLog("Server: " + text);
 }

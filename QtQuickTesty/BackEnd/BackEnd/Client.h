@@ -6,6 +6,7 @@ class Client : public QObject
 {
 public:
 	Client();
+	virtual ~Client();
 
 	std::string GenerateLobbyCode();
 	void ConnectToServer(const LobbyCode&);

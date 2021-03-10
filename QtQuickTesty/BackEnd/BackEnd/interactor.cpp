@@ -8,6 +8,11 @@ Interactor::Interactor(Client* c) :
 	m_client->onLog = [this](const std::string& log) { OnLog(log); };
 }
 
+Interactor::~Interactor()
+{
+	onLog = [](const std::string& text) { auto temp = text; temp.clear(); };
+}
+
 void Interactor::StartServer()
 {
 	onStartServer();
@@ -36,5 +41,6 @@ void Interactor::OnData(const ByteStream& stream)
 
 void Interactor::OnLog(const std::string& log)
 {
-	onLog("Client: " + log);
+	if(onLog)
+		onLog("Client: " + log);
 }

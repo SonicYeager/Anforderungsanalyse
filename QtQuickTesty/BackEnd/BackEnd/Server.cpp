@@ -113,6 +113,7 @@ void Server::OnClientConnected(int id)
 void Server::OnClientDisconnect(int id)
 {
 	onLog("Client: " + std::to_string(id) + " has disconnected from Host!");
+	m_sockets.erase(std::next(std::begin(m_sockets), id));
 }
 
 void Server::OnClientHostFound(int id)

@@ -7,6 +7,7 @@ class ServerInteractor
 {
 public:
 	ServerInteractor(Server*);
+	virtual ~ServerInteractor();
 
 	void StartServer();
 

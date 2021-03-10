@@ -13,6 +13,13 @@ Client::Client()
 	QObject::connect(&m_socket, &QTcpSocket::stateChanged, this, &Client::OnSelfStateChanged);
 }
 
+Client::~Client()
+{
+	onLog = [](const std::string& text) { auto temp = text; temp.clear(); };
+	m_socket.disconnectFromHost();
+	m_socket.close();
+}
+
 std::string Client::GenerateLobbyCode()
 {
 	const QHostAddress& localhost = QHostAddress(QHostAddress::LocalHost);

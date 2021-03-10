@@ -8,6 +8,7 @@ class Interactor
 {
 public:
     Interactor(Client*);
+	virtual ~Interactor();
 
 	void StartServer();
 	void JoinServer();
