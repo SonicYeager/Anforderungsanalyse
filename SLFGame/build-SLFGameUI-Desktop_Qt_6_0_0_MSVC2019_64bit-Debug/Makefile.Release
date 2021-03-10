@@ -406,7 +406,8 @@ release\QmlAdapter.obj: ..\SLFGameUI\QmlAdapter.cpp ..\SLFGameUI\QmlAdapter.h \
 release\controller.obj: ..\SLFGameUI\controller.cpp ..\SLFGameUI\controller.h \
 		..\SLFGameBackend\UI.h \
 		..\SLFGameBackend\DataTypes.h \
-		..\SLFGameBackend\Interactor.h
+		..\SLFGameBackend\ClientInteractor.h \
+		..\SLFGameBackend\ServerInteractor.h
 
 release\main.obj: ..\SLFGameUI\main.cpp D:\2_Programs\1_Editing_and_Coding\Qt6\6.0.0\msvc2019_64\include\QtGui\QGuiApplication \
 		D:\2_Programs\1_Editing_and_Coding\Qt6\6.0.0\msvc2019_64\include\QtGui\qguiapplication.h \
@@ -531,25 +532,17 @@ release\main.obj: ..\SLFGameUI\main.cpp D:\2_Programs\1_Editing_and_Coding\Qt6\6
 		..\SLFGameBackend\UI.h \
 		..\SLFGameBackend\DataTypes.h \
 		..\SLFGameUI\controller.h \
-		..\SLFGameBackend\Interactor.h \
-		..\SLFGameBackend\GameInteractor.h \
+		..\SLFGameBackend\ClientInteractor.h \
+		..\SLFGameBackend\ServerInteractor.h \
+		..\SLFGameBackend\GameStatsOperations.h \
 		..\SLFGameBackend\framework.h \
 		..\SLFGameBackend\DataOperationLogic.h \
-		..\SLFGameBackend\RandomGenRessource.h \
-		..\SLFGameBackend\NetworkSource.h \
-		..\SLFGameBackend\SLFParser.h \
-		..\SLFGameBackend\GameLogic.h \
-		..\SLFGameBackend\ClientLogic.h \
-		..\SLFGameBackend\HostLogic.h \
-		..\SLFGameBackend\SerializerSource.h \
-		..\SLFGameBackend\Messages.h \
-		..\SLFGameBackend\NetworkHandlerLogic.h \
-		..\SLFGameBackend\GameStatsOperations.h \
 		..\SLFGameBackend\RandomGenerator.h \
+		..\SLFGameBackend\RandomGenRessource.h \
+		..\SLFGameBackend\SLFParser.h \
 		..\SLFGameBackend\Game.h \
+		..\SLFGameBackend\GameLogic.h \
 		..\SLFGameBackend\Client.h \
-		..\SLFGameBackend\Host.h \
-		..\SLFGameBackend\Network.h \
 		..\SLFGameBackendQt\slfgamebackendqt_global.h \
 		D:\2_Programs\1_Editing_and_Coding\Qt6\6.0.0\msvc2019_64\include\QtCore\qtimer.h \
 		D:\2_Programs\1_Editing_and_Coding\Qt6\6.0.0\msvc2019_64\include\QtCore\qbasictimer.h \
@@ -560,8 +553,19 @@ release\main.obj: ..\SLFGameUI\main.cpp D:\2_Programs\1_Editing_and_Coding\Qt6\6
 		D:\2_Programs\1_Editing_and_Coding\Qt6\6.0.0\msvc2019_64\include\QtNetwork\qnetworkinterface.h \
 		D:\2_Programs\1_Editing_and_Coding\Qt6\6.0.0\msvc2019_64\include\QtNetwork\qtcpserver.h \
 		D:\2_Programs\1_Editing_and_Coding\Qt6\6.0.0\msvc2019_64\include\QtNetwork\qtcpsocket.h \
+		D:\2_Programs\1_Editing_and_Coding\Qt6\6.0.0\msvc2019_64\include\QtCore\qthread.h \
+		D:\2_Programs\1_Editing_and_Coding\Qt6\6.0.0\msvc2019_64\include\QtCore\qdeadlinetimer.h \
+		D:\2_Programs\1_Editing_and_Coding\Qt6\6.0.0\msvc2019_64\include\QtCore\qelapsedtimer.h \
+		..\SLFGameBackend\ClientSource.h \
 		..\SLFGameBackend\GameStatsSerializer.h \
-		..\SLFGameBackend\NetworkHandler.h
+		..\SLFGameBackend\SerializerSource.h \
+		..\SLFGameBackend\Messages.h \
+		..\SLFGameBackend\MessageHandler.h \
+		..\SLFGameBackend\MessageHandlerLogic.h \
+		..\SLFGameBackend\ClientInteractorImpl.h \
+		..\SLFGameBackend\ServerInteractorImpl.h \
+		..\SLFGameBackend\ServerSource.h \
+		..\SLFGameBackend\Server.h
 
 release\qrc_qml.obj: release\qrc_qml.cpp 
 

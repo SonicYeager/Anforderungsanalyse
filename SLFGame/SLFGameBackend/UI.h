@@ -4,6 +4,7 @@
 class UI
 {
 public:
+    virtual void ReceiveID(int) = 0;
 	virtual void PrepareGame(const GameStats&) = 0;
 	virtual void PrepareOverview(const GameStats&) = 0;
 	virtual void PrepareFinalScores(const GameStats&) = 0;

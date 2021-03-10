@@ -37,6 +37,7 @@ class QmlAdapter : public QObject, public UI
 public:
     explicit QmlAdapter     (QObject *parent = nullptr);
 
+    void ReceiveID          (int)              override;
     void PrepareGame        (const GameStats&) override;
     void PrepareFinalScores (const GameStats&) override;
     void PrepareOverview    (const GameStats&) override;

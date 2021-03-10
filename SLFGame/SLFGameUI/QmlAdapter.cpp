@@ -6,7 +6,7 @@ QmlAdapter::QmlAdapter(QObject *parent) :
 
 // ------------------------------------------ initializer function ------------------------------------------
 
-void QmlAdapter::ReceiveId(int id)
+void QmlAdapter::ReceiveID(int id)
 {
     setPlayerId(id);
 }
