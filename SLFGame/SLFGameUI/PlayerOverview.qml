@@ -15,6 +15,7 @@ ListView {
         width : 200
         height: 50
         radius: 90
+        color: (index === qmlAdapter.playerId) ? "#6fb1c9" : "white"
     }
     model: ListModel{
          id:list_model
