@@ -68,7 +68,7 @@ public:
     void setCustomCategories            (QString customCategories);
     void setTimeLeft                    (QString timeLeft);
     void setMaxRounds                   (QString maxRounds);
-    void setView                        (QString view);
+    void setView                        (STATE view);
     void setPlayerName                  (QString playerName);
     void setCategories                  (StrVector categories);
     void setAnswers                     (StrVector2D answers);
