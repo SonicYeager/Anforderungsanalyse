@@ -10,12 +10,17 @@ void MessageHandler::on(const HandleGameStats& msg)
 	onHandleGameStats(msg);
 }
 
-void MessageHandler::on(const AddNewPlayer& msg)
+void MessageHandler::on(const PlayerAnswers& msg)
 {
-	onAddNewPlayer(msg);
+	onPlayerAnswers(msg);
 }
 
 void MessageHandler::on(const Playername& msg)
 {
 	onPlayername(msg);
+}
+
+void MessageHandler::on(const PlayerID& msg)
+{
+	onPlayerID(msg);
 }

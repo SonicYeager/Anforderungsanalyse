@@ -37,7 +37,6 @@ Message GameStatsSerializer::Deserialize(const std::vector<char>& data)
 void GameStatsSerializer::Serialize_impl(const HandleGameStats& msg, QDataStream& data)
 {
 	data << msg.gs.currentLetter;
-	data << msg.gs.potentialId;
 	data << msg.gs.maxRounds;
 	QString timeout{ msg.gs.timeout.c_str() };
 	data << timeout;
@@ -68,12 +67,12 @@ void GameStatsSerializer::Serialize_impl(const HandleGameStats& msg, QDataStream
 		}
 	);
 	data << answers;
+	data << msg.gs.state;
 }
 
 void GameStatsSerializer::Deserialize_impl(HandleGameStats& msg, QDataStream& data)
 {
 	data >> msg.gs.currentLetter;
-	data >> msg.gs.potentialId;
 	data >> msg.gs.maxRounds;
 	QString timeout{};
 	data >> timeout;
@@ -108,30 +107,7 @@ void GameStatsSerializer::Deserialize_impl(HandleGameStats& msg, QDataStream& da
 			answ.push_back(str.toStdString());
 		msg.gs.answers.push_back(answ);
 	}
-}
-
-void GameStatsSerializer::Serialize_impl(const AddNewPlayer& msg, QDataStream& data)
-{
-	QString playername{ msg.player.playerName.c_str() };
-	data << playername;
-	data << msg.player.playerID;
-	data << msg.player.points;
-	QStringList answers;
-	std::for_each(std::begin(msg.player.answers), std::end(msg.player.answers), [&answers](const std::string& str) {answers.push_back(str.c_str()); });
-	data << answers;
-}
-
-void GameStatsSerializer::Deserialize_impl(AddNewPlayer& msg, QDataStream& data)
-{
-	QString playername{};
-	data >> playername;
-	msg.player.playerName = playername.toStdString();
-	data >> msg.player.playerID;
-	data >> msg.player.points;
-	QStringList answers{};
-	data >> answers;
-	for (const QString& answer : answers)
-		msg.player.answers.push_back(answer.toStdString());
+	data >> msg.gs.state;
 }
 
 void GameStatsSerializer::Serialize_impl(const Playername& msg, QDataStream& data)
@@ -145,4 +121,29 @@ void GameStatsSerializer::Deserialize_impl(Playername& msg, QDataStream& data)
 	QString playername{};
 	data >> playername;
 	msg.playername = playername.toStdString();
+}
+
+void GameStatsSerializer::Serialize_impl(const PlayerID& msg, QDataStream& data)
+{
+	data << msg.id;
+}
+
+void GameStatsSerializer::Deserialize_impl(PlayerID& msg, QDataStream& data)
+{
+	data >> msg.id;
+}
+
+void GameStatsSerializer::Serialize_impl(const PlayerAnswers& msg, QDataStream& data)
+{
+	QStringList answers;
+	std::for_each(std::begin(msg.answers), std::end(msg.answers), [&answers](const std::string& str) {answers.push_back(str.c_str()); });
+	data << answers;
+}
+
+void GameStatsSerializer::Deserialize_impl(PlayerAnswers& msg, QDataStream& data)
+{
+	QStringList answers{};
+	data >> answers;
+	for (const QString& answer : answers)
+		msg.answers.push_back(answer.toStdString());
 }

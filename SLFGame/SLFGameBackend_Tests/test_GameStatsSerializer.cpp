@@ -3,29 +3,6 @@
 #include "../SLFGameBackend/GameStatsSerializer.h"
 #include "../SLFGameBackend/MessageHandler.h"
 
-TEST(SerializerTest, SerializationAndDeserialization_AddNewPlayer)
-{
-	GameStatsSerializer serializer;
-	MessageHandler msgHandler;
-
-	Message resultingMsg;
-	AddNewPlayer result;
-	AddNewPlayer msg;
-
-	msg.player.playerName = "Klausi";
-	msg.player.playerID = 5;
-	msg.player.points = 100;
-	msg.player.answers = { "Mordor", "Mittelerde", "Mitheithel" };
-
-	ByteStream data = serializer.Serialize(msg);
-	resultingMsg = serializer.Deserialize(data);
-
-	msgHandler.onAddNewPlayer = [&result](const AddNewPlayer& anp) {result = anp; };
-	msgHandler.handleMessage(resultingMsg);
-
-	EXPECT_EQ(msg.player, result.player);
-}
-
 TEST(SerializerTest, SerializationAndDeserialization_HandleGameStats)
 {
 	GameStatsSerializer serializer;
@@ -42,8 +19,8 @@ TEST(SerializerTest, SerializationAndDeserialization_HandleGameStats)
 	msg.gs.maxRounds = 5;
 	msg.gs.playerNames = { "Klausi", "Peter" };
 	msg.gs.points = { 50, 100 };
-	msg.gs.potentialId = 3;
 	msg.gs.timeout = "jetzt";
+	msg.gs.state = STATE::LOBBY;
 
 	ByteStream data = serializer.Serialize(msg);
 	resultingMsg = serializer.Deserialize(data);
@@ -72,4 +49,44 @@ TEST(SerializerTest, SerializationAndDeserialization_Playername)
 	msgHandler.handleMessage(resultingMsg);
 
 	EXPECT_EQ(msg.playername, result.playername);
+}
+
+TEST(SerializerTest, SerializationAndDeserialization_PlayerID)
+{
+	GameStatsSerializer serializer;
+	MessageHandler msgHandler;
+
+	Message resultingMsg;
+	PlayerID result;
+	PlayerID msg;
+
+	msg.id = 6;
+
+	ByteStream data = serializer.Serialize(msg);
+	resultingMsg = serializer.Deserialize(data);
+
+	msgHandler.onPlayerID = [&result](const PlayerID& anp) {result = anp; };
+	msgHandler.handleMessage(resultingMsg);
+
+	EXPECT_EQ(msg.id, result.id);
+}
+
+TEST(SerializerTest, SerializationAndDeserialization_PlayerAnswers)
+{
+	GameStatsSerializer serializer;
+	MessageHandler msgHandler;
+
+	Message resultingMsg;
+	PlayerAnswers result;
+	PlayerAnswers msg;
+
+	msg.answers = { "Helms Klamm", "Hagsend" "Hurin der Lange" };
+
+	ByteStream data = serializer.Serialize(msg);
+	resultingMsg = serializer.Deserialize(data);
+
+	msgHandler.onPlayerAnswers = [&result](const PlayerAnswers& anp) {result = anp; };
+	msgHandler.handleMessage(resultingMsg);
+
+	EXPECT_EQ(msg.answers, result.answers);
 }

@@ -19,6 +19,16 @@ enum class DECISION : int
 	MULTIPLE = 3
 };
 
+enum class STATE : int
+{
+	MAINMENU = 0,
+	LOBBY = 1,
+	INGAME = 2,
+	OVERVIEW = 3,
+	INTERVENTION = 4,
+	FINALSCORES = 5
+};
+
 using Letter = char;
 using Letters = std::vector<Letter>;
 using Categories = std::vector<std::string>;
@@ -43,6 +53,7 @@ struct GameStats
 	std::string lobbyCode{};
 	std::string timeout{};
 	Players players{};
+	STATE state{};
 };
 
 using Stats = std::pair<GameStats, PlayerStats>;
@@ -50,7 +61,6 @@ using Stats = std::pair<GameStats, PlayerStats>;
 struct NetworkData
 {
 	char currentLetter{};
-	int potentialId{};
 	int maxRounds{};
 	std::string timeout{};
 	std::vector<int> points{};
@@ -58,6 +68,7 @@ struct NetworkData
 	std::vector<std::string> playerNames{};
 	std::vector<std::vector<DECISION>> decisions{};
 	std::vector<std::vector<std::string>> answers{};
+	STATE state{};
 };
 
 const int HEADERSIZE = sizeof(int);
@@ -65,14 +76,14 @@ const int HEADERSIZE = sizeof(int);
 inline bool operator==(const NetworkData& left, const NetworkData& right)
 {
 	return left.currentLetter == right.currentLetter &&
-		left.potentialId == right.potentialId &&
 		left.maxRounds == right.maxRounds &&
 		left.timeout == right.timeout &&
 		left.points == right.points &&
 		left.categories == right.categories &&
 		left.playerNames == right.playerNames &&
 		left.decisions == right.decisions &&
-		left.answers == right.answers;
+		left.answers == right.answers &&
+		left.state == right.state;
 }
 
 inline bool operator==(const GameStats& left, const GameStats& right)

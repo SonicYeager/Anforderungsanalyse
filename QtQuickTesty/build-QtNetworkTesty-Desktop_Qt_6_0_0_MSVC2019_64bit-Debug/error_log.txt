@@ -1,0 +1,53 @@
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Client Connection Error: 19
+Server Listens: false on: 10.197.4.142
+Client Connection Error: 19
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: false on: 10.197.4.142
+Client Connection Error: 19
+Client Connection Error: 19
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Client Connection Error: 19
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
+Server Listens: true on: 10.197.4.142
+Connection Succ
