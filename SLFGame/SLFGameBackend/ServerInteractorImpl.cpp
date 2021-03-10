@@ -10,6 +10,7 @@ ServerInteractorImpl::ServerInteractorImpl(ServerSource* s, SerializerSource* ss
 	m_pServer->onClientData = [this](const ByteStream& stream, int id) { OnData(stream, id); };
 
 	m_pMsgHandler->onPlayername = [this](const Playername& playerName) { OnMsgPlayerName(playerName); };
+	m_pMsgHandler->onHandleGameSettings = [this](const HandleGameSettings& gs) { OnMsgHandleGameSettings(gs); };
 }
 
 ServerInteractorImpl::~ServerInteractorImpl()

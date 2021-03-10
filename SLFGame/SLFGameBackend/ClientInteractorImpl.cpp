@@ -29,6 +29,7 @@ ClientInteractorImpl::ClientInteractorImpl(RandomGenRessource* gen,
 	
 	m_pMsgHandler->onPlayerID = [this](const PlayerID& id) { OnMsgID(id); };
 	m_pMsgHandler->onHandleGameStats = [this](const HandleGameStats& gs) { OnMsgGameStats(gs); };
+	m_pMsgHandler->onHandleGameSettings = [this](const HandleGameSettings& gs) { OnMsgHandleGameSettings(gs); };
 }
 
 void ClientInteractorImpl::PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount)
