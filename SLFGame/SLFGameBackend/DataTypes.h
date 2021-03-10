@@ -51,32 +51,20 @@ struct GameStats
 	int maxRounds = 5;
 	std::string lobbyCode{};
 	std::string timeout = "bis Stop";
+	std::string customCategoryString = "Stadt,Land,Fluss,Name,Tier,Beruf";
+	std::vector<std::string> playerNames;
 	Players players{};
 	STATE state{};
 };
 
 using Stats = std::pair<GameStats, PlayerStats>;
 
-struct NetworkData
-{
-	char currentLetter{};
-	int maxRounds{};
-	std::string timeout{};
-	std::vector<int> points{};
-	std::vector<std::string> categories{};
-	std::vector<std::string> playerNames{};
-	std::vector<std::vector<DECISION>> decisions{};
-	std::vector<std::vector<std::string>> answers{};
-	STATE state{};
-};
-
 struct LobbySettings
 {
 	std::string categories{};
 	std::string timeout{};
 	std::string rounds{};
-	int maxRounds{};
-	std::vector<std::string> cats{};
+	std::vector<std::string> playerNames{};
 };
 
 using HeaderType = int;
@@ -88,19 +76,6 @@ inline std::ostream& operator<<(std::ostream& out, const ByteStream& stream)
 	for (const char& c : stream)
 		out << c << ',';
 	return out;
-}
-
-inline bool operator==(const NetworkData& left, const NetworkData& right)
-{
-	return left.currentLetter == right.currentLetter &&
-		left.maxRounds == right.maxRounds &&
-		left.timeout == right.timeout &&
-		left.points == right.points &&
-		left.categories == right.categories &&
-		left.playerNames == right.playerNames &&
-		left.decisions == right.decisions &&
-		left.answers == right.answers &&
-		left.state == right.state;
 }
 
 inline bool operator==(const GameStats& left, const GameStats& right)

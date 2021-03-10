@@ -9,8 +9,6 @@ class GameStatsSerializer : public SerializerSource
 public:
 	std::vector<char> Serialize(const Message& msg) override;
 	Message Deserialize(const std::vector<char>& data) override;
-	void Serialize_impl(const HandleGameStats& msg, QDataStream& data);
-	void Deserialize_impl(HandleGameStats& msg, QDataStream& data);
 	void Serialize_impl(const Playername& msg, QDataStream& data);
 	void Deserialize_impl(Playername& msg, QDataStream& data);
 	void Serialize_impl(const PlayerID& msg, QDataStream& data);
@@ -19,4 +17,6 @@ public:
 	void Deserialize_impl(PlayerAnswers& msg, QDataStream& data);
 	void Serialize_impl(const HandleGameSettings& msg, QDataStream& data);
 	void Deserialize_impl(HandleGameSettings& msg, QDataStream& data);
+	void Serialize_impl(const GameState& msg, QDataStream& data);
+	void Deserialize_impl(GameState& msg, QDataStream& data);
 };

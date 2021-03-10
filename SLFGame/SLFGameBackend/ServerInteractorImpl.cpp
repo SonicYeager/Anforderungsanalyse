@@ -18,8 +18,7 @@ ServerInteractorImpl::~ServerInteractorImpl()
 
 void ServerInteractorImpl::StartServer()
 {
-	m_pServer->StartServer();
-
+	m_GameStats.lobbyCode = m_pServer->StartServer();
 }
 
 void ServerInteractorImpl::OnNewConnection(int id)
@@ -49,11 +48,7 @@ void ServerInteractorImpl::OnMsgPlayerName(const Playername& playerName)
 {
 	m_GameStats.players.push_back({ playerName.playername, 0, {""} });
 
-	auto stats = CreateGameStatsMessage();
-	stats.gs.decisions.emplace_back();
-	//stats.gs.playerNames.push_back(playerName.playername);
-	//stats.gs.points.emplace_back();
-	//stats.gs.answers.emplace_back();
+	auto stats = CreateHandleGameSettings();
 
 	auto ser = m_pSerializer->Serialize(stats);
 	m_pServer->Broadcast(ser);
@@ -61,26 +56,25 @@ void ServerInteractorImpl::OnMsgPlayerName(const Playername& playerName)
 
 void ServerInteractorImpl::OnMsgHandleGameSettings(const HandleGameSettings& settings)
 {
-	m_GameStats.categories = settings.ls.cats ;
+	m_GameStats.customCategoryString = settings.ls.categories;
 	m_GameStats.timeout = settings.ls.timeout ;
-	m_GameStats.maxRounds = settings.ls.maxRounds ;
+	m_GameStats.maxRounds = std::stoi(settings.ls.rounds);
 
-	auto ser = m_pSerializer->Serialize(settings);
+	auto msg = CreateHandleGameSettings();
+
+	auto ser = m_pSerializer->Serialize(msg);
 	m_pServer->Broadcast(ser);
 }
 
-HandleGameStats ServerInteractorImpl::CreateGameStatsMessage()
+HandleGameSettings ServerInteractorImpl::CreateHandleGameSettings()
 {
-	HandleGameStats result{};
-	result.gs.categories = m_GameStats.categories;
-	result.gs.maxRounds = m_GameStats.maxRounds;
-	result.gs.timeout = m_GameStats.timeout;
-	result.gs.state = STATE::LOBBY;
+	HandleGameSettings result{};
+	result.ls.categories = m_GameStats.customCategoryString;
+	result.ls.rounds = std::to_string(m_GameStats.maxRounds);
+	result.ls.timeout = m_GameStats.timeout;
 	for (int i{}; i < m_GameStats.players.size(); ++i)
 	{
-		result.gs.playerNames.push_back(m_GameStats.players[i].playerName);
-		result.gs.points.push_back(m_GameStats.players[i].points);
-		result.gs.answers.push_back(m_GameStats.players[i].answers);
+		result.ls.playerNames.push_back(m_GameStats.players[i].playerName);
 	}
 	return result;
 }

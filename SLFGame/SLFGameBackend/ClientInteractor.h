@@ -5,7 +5,6 @@ class ClientInteractor
 {
 public:
 	virtual void PrepareGame(const std::string&, const std::string&, const std::string&) = 0;
-	virtual std::pair<GameStats, PlayerStats> PrepareLobby(const std::string&) = 0;	//???
 	virtual void PrepareOverview(const std::vector<std::string>&) = 0;
 	virtual void EndRound(const std::vector<DECISION>& decisions) = 0;
 	virtual void HostLobby(const std::string&) = 0;
@@ -21,7 +20,9 @@ public:
 	Event<GameStats> onUpdateLobby;
 	Event<GameStats> onGameOver;
 	Event<int> onReceivedID;
+	Event<LobbyCode> onSetLobbyCode;
 	Event<LobbySettings> onUpdateLobbySettings;
+	Event<STATE> onGameState;
 
 	//server events
 	Event<> onStartServer;

@@ -25,11 +25,12 @@ int main(int argc, char *argv[])
     SLFParser parser;
     Server server;
     GameStatsSerializer serializer;
-    MessageHandler msgHandler;
+    MessageHandler clientMsgHandler;
+    MessageHandler serverMsgHandler;
     Game game;
     Client client;
-    ServerInteractorImpl serverInteractor(&server, &serializer, &msgHandler);
-    ClientInteractorImpl clientInteractor(&rndGen, &gsOperations, &game, &parser, &client, &serializer, &msgHandler);
+    ServerInteractorImpl serverInteractor(&server, &serializer, &serverMsgHandler);
+    ClientInteractorImpl clientInteractor(&rndGen, &gsOperations, &game, &parser, &client, &serializer, &clientMsgHandler);
     Controller controller{&qmlAdapter, &clientInteractor, &serverInteractor};
     controller.Run();
 

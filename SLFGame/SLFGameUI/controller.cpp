@@ -40,17 +40,17 @@ Controller::Controller(UI* ui, ClientInteractor* clientInter, ServerInteractor* 
     m_pClientInter->onGameOver          = [this](GameStats gs)
                                           {m_pUi->PrepareFinalScores(gs);};
 
-    m_pClientInter->onPrepareLobby      = [this](GameStats gs)
-                                          {m_pUi->PrepareLobby(gs);};
-
-    m_pClientInter->onUpdateLobby       = [this](GameStats gs)
-                                          {m_pUi->UpdateGameStats(gs);};
-
     m_pClientInter->onUpdateLobbySettings  = [this](LobbySettings ls)
                                           {m_pUi->UpdateLobby(ls);};
 
     m_pClientInter->onStartServer       = [this]()
                                           {m_pServerInter->StartServer();};
+
+    m_pClientInter->onSetLobbyCode      = [this](LobbyCode lobbyCode)
+                                          {m_pUi->SetLobbyCode(lobbyCode);};
+
+    m_pClientInter->onGameState         = [this](STATE state)
+                                          {m_pUi->UpdateGameState(state);};
 
 }
 

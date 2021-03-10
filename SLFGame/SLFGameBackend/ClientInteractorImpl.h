@@ -15,14 +15,12 @@ class ClientInteractorImpl : public ClientInteractor
 public:
 	explicit ClientInteractorImpl(RandomGenRessource*, DataOperationLogic*, GameLogic*, SLFParser*, ClientSource*, SerializerSource*, MessageHandlerLogic*);
 	void PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount) override;
-	std::pair<GameStats, PlayerStats> PrepareLobby(const std::string& lobbyCode = "") override;
 	void PrepareOverview(const std::vector<std::string>&) override;
 	void EndRound(const std::vector<DECISION>&) override;
 	void HostLobby(const std::string&) override;
 	void JoinLobby(const LobbyCode&, const std::string&) override;
 	void LobbyChanged(const std::string& cats, const std::string& timeout, const std::string& rounds) override;
 
-	int m_ID;
 	GameStats m_GameStats;
 
 private:
@@ -31,8 +29,8 @@ private:
 
 	//msg events
 	void OnMsgID(const PlayerID&);
-	void OnMsgGameStats(const HandleGameStats&);
 	void OnMsgHandleGameSettings(const HandleGameSettings&);
+	void OnMsgGameState(const GameState&);
 
 	ClientSource* m_pClient;
 	MessageHandlerLogic* m_pMsgHandler;

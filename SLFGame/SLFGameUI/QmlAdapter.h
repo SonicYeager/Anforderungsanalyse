@@ -41,9 +41,9 @@ public:
     void PrepareGame        (const GameStats&) override;
     void PrepareFinalScores (const GameStats&) override;
     void PrepareOverview    (const GameStats&) override;
-    void PrepareLobby       (const GameStats&) override;
-    void UpdateGameStats    (const GameStats&) override;
     void UpdateLobby        (const LobbySettings&) override;
+    void SetLobbyCode       (const LobbyCode&) override;
+    void UpdateGameState    (const STATE&) override;
 
     QString getLetter();
     QString getLobbyCode();

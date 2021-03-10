@@ -18,13 +18,11 @@ void QmlAdapter::PrepareGame(const GameStats & gs)
     setLetter(QChar(gs.currentLetter));
     setCategories(gs.categories);
     setPoints(gs.players[_playerId].points);
-    setView(getView());
 }
 
 void QmlAdapter::PrepareFinalScores(const GameStats & gs)
 {
     setPoints(gs.players[_playerId].points);
-    setView(GetViewFromState(STATE::FINALSCORES));
 }
 
 void QmlAdapter::PrepareOverview(const GameStats & gs)
@@ -34,37 +32,27 @@ void QmlAdapter::PrepareOverview(const GameStats & gs)
     emit answersChanged();
 }
 
-void QmlAdapter::PrepareLobby(const GameStats & gs)
-{
-    setLobbyCode(QString::fromLocal8Bit(gs.lobbyCode.c_str()));
-    _players.clear();
-    for(unsigned long long i{}; i < gs.players.size(); ++i)
-        _players.push_back(gs.players[i].playerName);
-    setPlayerCount(_players.size());
-    setTimeLeft(gs.timeout.c_str());
-    emit playerCountChanged();
-    emit playersChanged();
-    setView(GetViewFromState(gs.state));
-}
-
-void QmlAdapter::UpdateGameStats(const GameStats& gs)
-{
-    _players.clear();
-    for(unsigned long long i{}; i < gs.players.size(); ++i)
-        _players.push_back(gs.players[i].playerName);
-    setPlayerCount(_players.size());
-    setMaxRounds(QString::number(gs.maxRounds));
-    setTimeLeft(gs.timeout.c_str());
-    emit playerCountChanged();
-    emit playersChanged();
-    setView(GetViewFromState(gs.state));
-}
-
 void QmlAdapter::UpdateLobby(const LobbySettings & ls)
 {
     setCustomCategories(ls.categories.c_str());
     setTimeLeft(ls.timeout.c_str());
     setMaxRounds(ls.rounds.c_str());
+    _players.clear();
+    for(unsigned long long i{}; i < ls.playerNames.size(); ++i)
+        _players.push_back(ls.playerNames[i]);
+    setPlayerCount(_players.size());
+    emit playerCountChanged();
+    emit playersChanged();
+}
+
+void QmlAdapter::SetLobbyCode(const LobbyCode & lobbycode)
+{
+    setLobbyCode(lobbycode.c_str());
+}
+
+void QmlAdapter::UpdateGameState(const STATE & state)
+{
+    setView(GetViewFromState(state));
 }
 
 // ------------------------------------------ getter ------------------------------------------
@@ -180,6 +168,8 @@ void QmlAdapter::setCustomCategories(QString customCategories)
     if (customCategories == _customCategories)
         return;
     _customCategories = customCategories;
+    if(_playerId == 0)
+        lobbySettingsChanged();
     emit customCategoriesChanged();
 }
 

@@ -23,7 +23,7 @@ private:
 	void OnMsgHandleGameSettings(const HandleGameSettings&);
 
 	//helper funcs
-	HandleGameStats CreateGameStatsMessage();
+	HandleGameSettings CreateHandleGameSettings();
 
 	ServerSource* m_pServer{};
 	SerializerSource* m_pSerializer{};
