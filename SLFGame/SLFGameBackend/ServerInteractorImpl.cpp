@@ -49,6 +49,7 @@ void ServerInteractorImpl::OnMsgPlayerName(const Playername& playerName)
 	stats.gs.playerNames.push_back(playerName.playername);
 	stats.gs.points.emplace_back();
 	stats.gs.decisions.emplace_back();
+	stats.gs.answers.emplace_back();
 
 	auto ser = m_pSerializer->Serialize(stats);
 	m_pServer->Broadcast(ser);
@@ -60,6 +61,7 @@ HandleGameStats ServerInteractorImpl::CreateGameStatsMessage()
 	result.gs.categories = m_GameStats.categories;
 	result.gs.maxRounds = m_GameStats.maxRounds;
 	result.gs.timeout = m_GameStats.timeout;
+	result.gs.state = STATE::LOBBY;
 	for (int i{}; i < m_GameStats.players.size(); ++i)
 	{
 		result.gs.playerNames.push_back(m_GameStats.players[i].playerName);
