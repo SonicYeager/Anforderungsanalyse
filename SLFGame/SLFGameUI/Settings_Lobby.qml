@@ -38,17 +38,24 @@ Rectangle{
                         qmlAdapter.customCategories = text
                     }
                     Connections {
+                        target:qmlAdapter
+                        function onCustomCategoriesChanged()
+                        {
+                            eb_customCats.text = qmlAdapter.customCategories
+                        }
+                    }
+
+                    Connections {
                         target: chb_custom
                         onStateChanged:  {
                             eb_customCats.state = (chb_custom.state === "true") ? "active" : "inactive"
-                            if (chb_custom.state === "false")
-                                qmlAdapter.customCategories = "Stadt,Land,Fluss,Name,Tier,Beruf"
                         }
                     }
                 }
                 CheckBox {
                     id: chb_custom
                     text: "<font color=\"white\">custom</font>"
+                    visible: (qmlAdapter.playerId === 0) ? true: false
                     state: qmlAdapter.customChecked
                     onClicked: qmlAdapter.customChecked = checked
                     Component.onCompleted: checked = qmlAdapter.customChecked
@@ -84,6 +91,10 @@ Rectangle{
                     Layout.preferredWidth: 100
                     Layout.preferredHeight: 50
                     model: [ "bis Stop", "60", "80", "100", "120", "150", "180", "210" ]
+                    currentIndex: 0
+                    onCurrentTextChanged: {
+                        qmlAdapter.timeLeft = cb_roundTime.currentText
+                    }
                 }
             }
         }
@@ -107,6 +118,9 @@ Rectangle{
                     Layout.preferredWidth: 100
                     Layout.preferredHeight: 50
                     model: [ "5","6","7","8","9","10" ]
+                    onCurrentTextChanged: {
+                        qmlAdapter.maxRounds = cb_roundCount.currentText
+                    }
                 }
             }
         }

@@ -1,3 +1,4 @@
+#pragma once
 #include "RandomGenerator.h"
 #include <random>
 #include <map>
@@ -47,35 +48,35 @@ Letter RandomGenerator::GenerateUnusedLetter(const Letters& filter)
 {
 	std::set<Letter> alphabet
 	{
-		{{'A'}},
-		{{'B'}},
-		{{'C'}},
-		{{'D'}},
-		{{'E'}},
-		{{'F'}},
-		{{'G'}},
-		{{'H'}},
-		{{'I'}},
-		{{'J'}},
-		{{'K'}},
-		{{'L'}},
-		{{'M'}},
-		{{'N'}},
-		{{'O'}},
-		{{'P'}},
-		{{'Q'}},
-		{{'R'}},
-		{{'S'}},
-		{{'T'}},
-		{{'U'}},
-		{{'V'}},
-		{{'W'}},
-		{{'X'}},
-		{{'Y'}},
-		{{'Z'}}
+		{'A'},
+		{'B'},
+		{'C'},
+		{'D'},
+		{'E'},
+		{'F'},
+		{'G'},
+		{'H'},
+		{'I'},
+		{'J'},
+		{'K'},
+		{'L'},
+		{'M'},
+		{'N'},
+		{'O'},
+		{'P'},
+		{'Q'},
+		{'R'},
+		{'S'},
+		{'T'},
+		{'U'},
+		{'V'},
+		{'W'},
+		{'X'},
+		{'Y'},
+		{'Z'}
 	};
 
-	for (const auto& elem : filter.letters)
+	for (const auto& elem : filter)
 		alphabet.erase(elem);
 
 	std::random_device rd;

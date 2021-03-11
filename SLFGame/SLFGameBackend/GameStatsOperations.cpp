@@ -1,56 +1,52 @@
+#pragma once
 #include "GameStatsOperations.h"
 #include <algorithm>
 
 void GameStatsOperations::InkrementRound(GameStats& gameStats)
 {
-	gameStats.SetCurrentRound(gameStats.GetCurrentRound()+1);
+	gameStats.currentRound += 1;
 }
 
 void GameStatsOperations::AddPreviousLetter(GameStats& gameStats)
 {
-	auto curr = gameStats.GetCurrentLetter().letter;
+	auto curr = gameStats.currentLetter;
 	if(curr != '\0')
 	{
-		auto usedLetters = gameStats.GetUsedLetters();
-		usedLetters.letters.push_back(Letter{ curr });
-		gameStats.SetUsedLetters(usedLetters);
+		auto usedLetters = gameStats.lettersUsed;
+		usedLetters.push_back(curr);
+		gameStats.lettersUsed = usedLetters;
 	}
 }
 
 void GameStatsOperations::SetNewLetter(Letter letter, GameStats& gameStats)
 {
-	gameStats.SetCurrentLetter(letter);
+	gameStats.currentLetter = letter;
 }
 
 void GameStatsOperations::AddPoints(const int points, PlayerStats& ps)
 {
-	ps.SetPoints(ps.GetPoints() + points);
+	ps.points += points;
 }
 
 bool GameStatsOperations::LetterIsAlreadyUsed(Letter generated, Letters used)
 {
-	return std::find(std::begin(used.letters), std::end(used.letters), generated) != std::end(used.letters);
+	return std::find(std::begin(used), std::end(used), generated) != std::end(used);
 }
 
 void GameStatsOperations::SetAnswers(const std::vector<std::string>& answ, PlayerStats& ps)
 {
-	ps.SetAnswers(answ);
+	ps.answers = answ;
 }
 
-void GameStatsOperations::SetPlayerName(const std::string& name, int idx, GameStats& gs)
-{
-	 
-}
-
-GameStats GameStatsOperations::CreateStats(const std::string& code, const std::string& playerName)
+GameStats GameStatsOperations::CreateStats(const LobbyCode& code, const std::string& playerName)
 {
 	GameStats gs{};
-	gs.SetMaxRounds(5);
-	gs.SetCategories({ {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}} });
-	gs.SetLobbyCode(code);
+	gs.maxRounds = 5;
+	gs.categories = { {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}} };
+	gs.lobbyCode = code;
 	PlayerStats ps{};
-	ps.SetPlayerName(playerName);
-	ps.SetPlayerID(0);
-	gs.AddPlayer(ps);
-    return gs;
+	ps.playerName = playerName;
+	ps.answers = Categories{};
+	gs.players.push_back(ps);
+	return gs;
 }

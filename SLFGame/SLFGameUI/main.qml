@@ -9,13 +9,17 @@ Window{
     visibility: Window.Maximized
     title: "GameScreen_Input"
     color: "#1c2b1e"
-    Loader { id: pageLoader }
-    Component.onCompleted: pageLoader.source = "GameScreen_" + qmlAdapter.view + ".qml"
-    Connections {
-        target: qmlAdapter
-        function onViewChanged()
-        {
-            pageLoader.source = "GameScreen_" + qmlAdapter.view + ".qml";
-        }
+    Loader {
+        id: pageLoader
+        anchors.fill: parent
+        source: "GameScreen_" + qmlAdapter.view + ".qml"
     }
+    //Component.onCompleted: pageLoader.source = "GameScreen_" + qmlAdapter.view + ".qml"
+    //Connections {
+    //    target: qmlAdapter
+    //    function onViewChanged()
+    //    {
+    //        pageLoader.source = "GameScreen_" + qmlAdapter.view + ".qml";
+    //    }
+    //}
 }

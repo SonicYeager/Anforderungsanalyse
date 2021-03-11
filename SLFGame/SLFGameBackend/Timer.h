@@ -1,3 +1,4 @@
+#pragma once
 #include "TimerRessource.h"
 #include "../SLFGameBackendQt/slfgamebackendqt_global.h"
 

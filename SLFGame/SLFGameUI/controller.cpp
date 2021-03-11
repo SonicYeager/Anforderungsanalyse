@@ -1,46 +1,56 @@
 #include "controller.h"
 #include "DataTypes.h"
 
-Controller::Controller(UI* ui, Interactor* inter) :
+Controller::Controller(UI* ui, ClientInteractor* clientInter, ServerInteractor* serverInter) :
     m_pUi(ui),
-    m_pInter(inter)
+    m_pServerInter(serverInter),
+    m_pClientInter(clientInter)
 {
     //connect ui + inter
-    m_pUi->onPrepareGame         = [this](std::string customCats, std::string timeLeft, std::string maxRounds)
-                                    {m_pInter->PrepareGame(customCats, timeLeft, maxRounds);};
+    m_pUi->onPrepareGame                = [this](std::string customCats, std::string timeLeft, std::string maxRounds)
+                                          {m_pClientInter->PrepareGame(customCats, timeLeft, maxRounds);};
 
-    m_pUi->onPrepareOverview     = [this](Categories answers, int id)
-                                    {m_pInter->PrepareOverview(answers, id);};
+    m_pUi->onPrepareOverview            = [this](Categories answers)
+                                          {m_pClientInter->PrepareOverview(answers);};
 
-    m_pUi->onPrepareNextRound    = [this](std::vector<DECISION> decisions, int id)
-                                    {m_pInter->EndRound(decisions, id);};
+    m_pUi->onPrepareNextRound           = [this](std::vector<DECISION> decisions)
+                                          {m_pClientInter->EndRound(decisions);};
 
-    m_pUi->onHost                = [this](const std::string& playerName)
-                                    {m_pInter->HostGame(playerName);};
+    m_pUi->onHostLobby                  = [this](const std::string& playerName)
+                                          {m_pClientInter->HostLobby(playerName);};
 
-    m_pUi->onJoin                = [this](const std::string& lobbyCode, const std::string& playerName)
-                                    {m_pInter->JoinGame(lobbyCode, playerName);};
+    m_pUi->onJoinLobby                  = [this](const std::string& lobbyCode, const std::string& playerName)
+                                          {m_pClientInter->JoinLobby(lobbyCode, playerName);};
 
-    m_pInter->onPrepareGame =      [this](GameStats gs)
-                                    {m_pUi->PrepareGame(gs);};
+    m_pUi->onLobbySettingsChanged       = [this](const std::string& customCats,const std::string& timeLeft,const std::string& maxRounds)
+                                          {m_pClientInter->LobbyChanged(customCats, timeLeft, maxRounds);};
 
-    m_pInter->onPrepareOverview  = [this](GameStats gs)
-                                    {m_pUi->PrepareOverview(gs);};
+    m_pClientInter->onReceivedID        = [this](int id)
+                                          {m_pUi->ReceiveID(id);};
 
-    m_pInter->onPrepareNextRound = [this](GameStats gs)
-                                    {m_pUi->PrepareGame(gs);};
+    m_pClientInter->onPrepareGame       = [this](GameStats gs)
+                                          {m_pUi->PrepareGame(gs);};
 
-    m_pInter->onGameOver         = [this](GameStats gs)
-                                    {m_pUi->PrepareFinalScores(gs);};
+    m_pClientInter->onPrepareOverview   = [this](GameStats gs)
+                                          {m_pUi->PrepareOverview(gs);};
 
-    m_pInter->onGameHosted       = [this](GameStats gs)
-                                    {m_pUi->PrepareLobby(gs);};
+    m_pClientInter->onPrepareNextRound  = [this](GameStats gs)
+                                          {m_pUi->PrepareGame(gs);};
 
-    m_pInter->onGameJoined       = [this](GameStats gs)
-                                    {m_pUi->PrepareLobby(gs);};
+    m_pClientInter->onGameOver          = [this](GameStats gs)
+                                          {m_pUi->PrepareFinalScores(gs);};
 
-    m_pInter->onNewPlayerJoined  = [this](GameStats gs, int id)
-                                    {m_pUi->PlayerJoined(gs, id);};
+    m_pClientInter->onUpdateLobbySettings  = [this](LobbySettings ls)
+                                          {m_pUi->UpdateLobby(ls);};
+
+    m_pClientInter->onStartServer       = [this]()
+                                          {m_pServerInter->StartServer();};
+
+    m_pClientInter->onSetLobbyCode      = [this](LobbyCode lobbyCode)
+                                          {m_pUi->SetLobbyCode(lobbyCode);};
+
+    m_pClientInter->onGameState         = [this](STATE state)
+                                          {m_pUi->UpdateGameState(state);};
 
 }
 

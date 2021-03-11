@@ -3,13 +3,16 @@
 #include <QQmlContext>
 #include "QmlAdapter.h"
 #include "controller.h"
-#include "GameInteractor.h"
 #include "GameStatsOperations.h"
 #include "RandomGenerator.h"
-#include "GameNetwork.h"
 #include "SLFParser.h"
 #include "Game.h"
-#include "QDataSerializer.h"
+#include "Client.h"
+#include "GameStatsSerializer.h"
+#include "MessageHandler.h"
+#include "ClientInteractorImpl.h"
+#include "ServerInteractorImpl.h"
+#include "Server.h"
 
 int main(int argc, char *argv[])
 {
@@ -19,12 +22,16 @@ int main(int argc, char *argv[])
     QmlAdapter qmlAdapter;
     RandomGenerator rndGen{};
     GameStatsOperations gsOperations{};
-    GameNetwork network;
     SLFParser parser;
+    Server server;
+    GameStatsSerializer serializer;
+    MessageHandler clientMsgHandler;
+    MessageHandler serverMsgHandler;
     Game game;
-    QDataSerializer qdserializer;
-    GameInteractor gameInteractor{&rndGen, &gsOperations, &game, &network, &parser, &qdserializer};
-    Controller controller{&qmlAdapter, &gameInteractor};
+    Client client;
+    ServerInteractorImpl serverInteractor(&server, &serializer, &serverMsgHandler);
+    ClientInteractorImpl clientInteractor(&rndGen, &gsOperations, &game, &parser, &client, &serializer, &clientMsgHandler);
+    Controller controller{&qmlAdapter, &clientInteractor, &serverInteractor};
     controller.Run();
 
     QGuiApplication app(argc, argv);

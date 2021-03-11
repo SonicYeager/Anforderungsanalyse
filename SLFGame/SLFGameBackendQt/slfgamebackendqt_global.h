@@ -6,6 +6,7 @@
 #include <QtNetwork/qnetworkinterface.h>
 #include <QtNetwork/qtcpserver.h>
 #include <QtNetwork/qtcpsocket.h>
+#include <QtCore/qthread.h>
 
 //SLFGAMEBACKENDQT_EXPORT -> export 
 

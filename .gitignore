@@ -393,3 +393,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/QtQuickTesty/build-QtNetworkTesty-Desktop_Qt_6_0_1_MSVC2019_64bit-Debug

@@ -37,11 +37,13 @@ class QmlAdapter : public QObject, public UI
 public:
     explicit QmlAdapter     (QObject *parent = nullptr);
 
+    void ReceiveID          (int)              override;
     void PrepareGame        (const GameStats&) override;
     void PrepareFinalScores (const GameStats&) override;
     void PrepareOverview    (const GameStats&) override;
-    void PrepareLobby       (const GameStats&) override;
-    void PlayerJoined       (const GameStats&, int) override;
+    void UpdateLobby        (const LobbySettings&) override;
+    void SetLobbyCode       (const LobbyCode&) override;
+    void UpdateGameState    (const STATE&) override;
 
     QString getLetter();
     QString getLobbyCode();
@@ -95,6 +97,7 @@ public slots:
     void addPlayerAnswers(GameStats gs);
     void hostLobby();
     void joinLobby();
+    void lobbySettingsChanged();
 
 signals:
     void letterChanged();
@@ -117,6 +120,9 @@ signals:
     void playerNameChanged();
 
 private:
+
+    QString GetViewFromState(STATE);
+
     QString _letter             = "bad";
     QString _lobbyCode          = "";
     QString _customCategories   = "Stadt,Land,Fluss,Name,Tier,Beruf";

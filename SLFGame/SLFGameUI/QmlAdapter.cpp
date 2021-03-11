@@ -3,46 +3,56 @@
 QmlAdapter::QmlAdapter(QObject *parent) :
     QObject(parent)
 {}
+
 // ------------------------------------------ initializer function ------------------------------------------
+
+void QmlAdapter::ReceiveID(int id)
+{
+    setPlayerId(id);
+}
 
 void QmlAdapter::PrepareGame(const GameStats & gs)
 {
     _unhandledanswers = {};
-    setCurrentRound(gs.GetCurrentRound());
-    setLetter(QChar(gs.GetCurrentLetter().letter));
-    setCategories(gs.GetCategories());
-    setPoints(gs.GetPlayerStats(_playerId).GetPoints());
-    setView("Input");
+    setCurrentRound(gs.currentRound);
+    setLetter(QChar(gs.currentLetter));
+    setCategories(gs.categories);
+    setPoints(gs.players[_playerId].points);
 }
 
 void QmlAdapter::PrepareFinalScores(const GameStats & gs)
 {
-    setPoints(gs.GetPlayerStats(_playerId).GetPoints());
-    setView("FinalScores");
+    setPoints(gs.players[_playerId].points);
 }
 
 void QmlAdapter::PrepareOverview(const GameStats & gs)
 {
     addPlayerAnswers(gs);
-    setView("Overview");
+    setView(GetViewFromState(STATE::OVERVIEW));
     emit answersChanged();
 }
 
-void QmlAdapter::PrepareLobby(const GameStats & gs)
+void QmlAdapter::UpdateLobby(const LobbySettings & ls)
 {
-    setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
-    setView("Lobby");
-}
-
-void QmlAdapter::PlayerJoined(const GameStats & gs, int id)
-{
+    setCustomCategories(ls.categories.c_str());
+    setTimeLeft(ls.timeout.c_str());
+    setMaxRounds(ls.rounds.c_str());
     _players.clear();
-    for(int i{}; i < gs.GetPlayerCount(); ++i)
-        _players.push_back(gs.GetPlayerStats(i).GetPlayerName());
+    for(unsigned long long i{}; i < ls.playerNames.size(); ++i)
+        _players.push_back(ls.playerNames[i]);
     setPlayerCount(_players.size());
-    setLobbyCode(QString::fromLocal8Bit(gs.GetLobbyCode().c_str()));
     emit playerCountChanged();
     emit playersChanged();
+}
+
+void QmlAdapter::SetLobbyCode(const LobbyCode & lobbycode)
+{
+    setLobbyCode(lobbycode.c_str());
+}
+
+void QmlAdapter::UpdateGameState(const STATE & state)
+{
+    setView(GetViewFromState(state));
 }
 
 // ------------------------------------------ getter ------------------------------------------
@@ -158,6 +168,8 @@ void QmlAdapter::setCustomCategories(QString customCategories)
     if (customCategories == _customCategories)
         return;
     _customCategories = customCategories;
+    if(_playerId == 0)
+        lobbySettingsChanged();
     emit customCategoriesChanged();
 }
 
@@ -322,13 +334,13 @@ void QmlAdapter::prepareGame()
 
 void QmlAdapter::prepareOverview()
 {
-    onPrepareOverview(_unhandledanswers, _playerId);
+    onPrepareOverview(_unhandledanswers);
 }
 
 void QmlAdapter::prepareNextRound()
 {
     // CHANGE ME SOON ----------------------------------------------------------------------
-    onPrepareNextRound(_decisions[0], _playerId);
+    onPrepareNextRound(_decisions[0]);
 }
 
 void QmlAdapter::addAnswer(QString answer)
@@ -339,19 +351,37 @@ void QmlAdapter::addAnswer(QString answer)
 void QmlAdapter::addPlayerAnswers(GameStats gs)
 {
     StrVector2D result;
-    for (int i = 0; i < gs.GetPlayerCount(); i++)
-        result.push_back(gs.GetPlayerStats(i).GetAnswers());
+    for (unsigned long long i = 0; i < gs.players.size(); i++)
+           result.push_back(gs.players[i].answers);
     setAnswers(result);
 }
 
 void QmlAdapter::hostLobby()
 {
-    onHost(_playerName.toStdString());
+    onHostLobby(_playerName.toStdString());
 }
 
 void QmlAdapter::joinLobby()
 {
-    onJoin(_lobbyCode.toStdString(), _playerName.toStdString());
+    onJoinLobby(_lobbyCode.toStdString(), _playerName.toStdString());
+}
+
+void QmlAdapter::lobbySettingsChanged()
+{
+    onLobbySettingsChanged(_customCategories.toStdString(), _timeLeft.toStdString(), _maxRounds.toStdString());
+}
+
+QString QmlAdapter::GetViewFromState(STATE view)
+{
+    switch (view)
+    {
+        case STATE::MAINMENU :      return "MainMenu";
+        case STATE::LOBBY :         return "Lobby";
+        case STATE::INGAME :        return "Input";
+        case STATE::OVERVIEW :      return "Overview";
+        case STATE::INTERVENTION :  return (getPlayerId() == 0) ? "Intervention" : "Waiting";
+        case STATE::FINALSCORES :   return "FinalScores"; break;
+    }
 }
 
 #define slotFunctionsEnd }
