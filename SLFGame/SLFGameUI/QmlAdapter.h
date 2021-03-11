@@ -20,6 +20,7 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(QString lobbyCode           READ getLobbyCode             WRITE setLobbyCode             NOTIFY lobbyCodeChanged)
     Q_PROPERTY(QString customCategories    READ getCustomCategories      WRITE setCustomCategories      NOTIFY customCategoriesChanged)
     Q_PROPERTY(QString maxRounds           READ getMaxRounds             WRITE setMaxRounds             NOTIFY maxRoundsChanged)
+    Q_PROPERTY(QString roundTime           READ getRoundTime            WRITE setRoundTime              NOTIFY roundTimeChanged)
     Q_PROPERTY(QString timeLeft            READ getTimeLeft              WRITE setTimeLeft              NOTIFY timeLeftChanged)
     Q_PROPERTY(QString view                READ getView                  WRITE setView                  NOTIFY viewChanged)
     Q_PROPERTY(QString playerName          READ getPlayerName            WRITE setPlayerName            NOTIFY playerNameChanged)
@@ -47,6 +48,7 @@ public:
     QString getLobbyCode();
     QString getCustomCategories();
     QString getMaxRounds();
+    QString getRoundTime();
     QString getTimeLeft();
     QString getView();
     QString getPlayerName();
@@ -65,6 +67,7 @@ public:
     void setLetter                      (QString letter);
     void setLobbyCode                   (QString lobbyCode);
     void setCustomCategories            (QString customCategories);
+    void setRoundTime                   (QString customCategories);
     void setTimeLeft                    (QString timeLeft);
     void setMaxRounds                   (QString maxRounds);
     void setView                        (QString view);
@@ -116,6 +119,7 @@ signals:
     void viewChanged();
     void playerIdChanged();
     void playerNameChanged();
+    void roundTimeChanged();
 
 private:
 
@@ -125,6 +129,7 @@ private:
     QString _lobbyCode          = "";
     QString _customCategories   = "Stadt,Land,Fluss,Name,Tier,Beruf";
     QString _maxRounds          = "5";
+    QString _roundTime          = "bis Stop";
     QString _timeLeft           = "bis Stop";
     QString m_customCategories  = {};
     QString _view               = "MainMenu";

@@ -8,7 +8,7 @@ Rectangle{
     height: parent.height
     color: Qt.rgba(0,0,0,0)
     property var roundTime : cb_roundTime.currentText
-    property var roundCount : cb_roundCount.currentText
+    property var roundCount : cb_maxRounds.currentText
     ColumnLayout{
         anchors.fill: parent
         spacing: 0
@@ -47,7 +47,8 @@ Rectangle{
 
                     Connections {
                         target: chb_custom
-                        onStateChanged:  {
+                        function onStateChanged()
+                        {
                             eb_customCats.state = (chb_custom.state === "true") ? "active" : "inactive"
                         }
                     }
@@ -58,11 +59,14 @@ Rectangle{
                     visible: (qmlAdapter.playerId === 0) ? true: false
                     state: qmlAdapter.customChecked
                     onClicked: qmlAdapter.customChecked = checked
-                    Component.onCompleted: checked = qmlAdapter.customChecked
-                    Connections {
-                        target: qmlAdapter
-                        onCustomCheckedChanged: chb_custom.checked = qmlAdapter.customChecked
-                    }
+                    //Component.onCompleted: checked = qmlAdapter.customChecked
+                    //Connections {
+                    //    target: qmlAdapter
+                    //    function onCustomCheckedChanged()
+                    //    {
+                    //        chb_custom.checked = qmlAdapter.customChecked
+                    //    }
+                    //}
                 }
                 Rectangle {
                     Layout.fillWidth: true
@@ -86,15 +90,23 @@ Rectangle{
                     text: "Rundenzeit"
                     Layout.rightMargin: 20
                 }
-                ComboBox{
+                SLFComboBox{
                     id: cb_roundTime
                     Layout.preferredWidth: 100
                     Layout.preferredHeight: 50
                     model: [ "bis Stop", "60", "80", "100", "120", "150", "180", "210" ]
-                    currentIndex: 0
                     onCurrentTextChanged: {
-                        qmlAdapter.timeLeft = cb_roundTime.currentText
+                        qmlAdapter.roundTime = cb_roundTime.currentText
                     }
+                }
+                EntryBox {
+                    id: eb_roundTime
+                    visible: (qmlAdapter.playerId === 0)? false : true
+                    Layout.preferredWidth: 100
+                    Layout.preferredHeight: 50
+                    Layout.rightMargin: 20
+                    text: qmlAdapter.roundTime
+                    state: "inactive"
                 }
             }
         }
@@ -113,14 +125,24 @@ Rectangle{
                     text: "Rundenanzahl"
                     Layout.rightMargin: 20
                 }
-                ComboBox{
-                    id: cb_roundCount
+                SLFComboBox{
+                    id: cb_maxRounds
+                    visible: (qmlAdapter.playerId === 0) ? true : false
                     Layout.preferredWidth: 100
                     Layout.preferredHeight: 50
                     model: [ "5","6","7","8","9","10" ]
                     onCurrentTextChanged: {
-                        qmlAdapter.maxRounds = cb_roundCount.currentText
+                        qmlAdapter.maxRounds = cb_maxRounds.currentText
                     }
+                }
+                EntryBox {
+                    id: eb_maxRounds
+                    visible: (qmlAdapter.playerId === 0)? false : true
+                    Layout.preferredWidth: 100
+                    Layout.preferredHeight: 50
+                    Layout.rightMargin: 20
+                    text: qmlAdapter.maxRounds
+                    state: "inactive"
                 }
             }
         }
@@ -153,4 +175,16 @@ Rectangle{
             color: Qt.rgba(0,0,0,0)
         }
     }
+    Connections {
+        target:qmlAdapter
+        function onPlayerIdChanged()
+        {
+            eb_maxRounds.visible = true
+            eb_roundTime.visible = true
+            cb_maxRounds.visible = false
+            cb_roundTime.visible = false
+        }
+    }
 }
+
+
