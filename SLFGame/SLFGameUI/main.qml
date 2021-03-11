@@ -7,7 +7,7 @@ Window{
     height: Screen.height
     visible: true
     visibility: Window.Maximized
-    title: "GameScreen_Input"
+    title: "Stadt Land Fluss"
     color: "#1c2b1e"
     Loader {
         id: pageLoader
