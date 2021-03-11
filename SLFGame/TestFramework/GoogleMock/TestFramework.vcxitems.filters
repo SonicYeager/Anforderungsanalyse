@@ -4,9 +4,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)gmock-gtest-all.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)gmock\gmock.h">
-      <Filter>gmock</Filter>
-    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)gtest\gtest.h">
       <Filter>gtest</Filter>
     </ClInclude>
