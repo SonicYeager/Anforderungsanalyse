@@ -8,6 +8,7 @@ ServerInteractorImpl::ServerInteractorImpl(ServerSource* s, SerializerSource* ss
 	//m_server->onLog = [this](const std::string& text) {OnLog(text); };
 	m_pServer->onNewConnection = [this](int id) {OnNewConnection(id); };
 	m_pServer->onClientData = [this](const ByteStream& stream, int id) { OnData(stream, id); };
+	m_pServer->onClientDisconnect = [this](int id) { OnDisconnect(id); };
 
 	m_pMsgHandler->onPlayername = [this](const Playername& playerName) { OnMsgPlayerName(playerName); };
 	m_pMsgHandler->onHandleGameSettings = [this](const HandleGameSettings& gs) { OnMsgHandleGameSettings(gs); };
@@ -44,14 +45,27 @@ void ServerInteractorImpl::OnLog(const std::string& text)
 	//	onLog("Server: " + text);
 }
 
-void ServerInteractorImpl::OnMsgPlayerName(const Playername& playerName)
+void ServerInteractorImpl::OnDisconnect(int id)
 {
-	m_GameStats.players.push_back({ playerName.playername, 0, {""} });
+	m_GameStats.players.erase(id);
 
 	auto stats = CreateHandleGameSettings();
 
 	auto ser = m_pSerializer->Serialize(stats);
 	m_pServer->Broadcast(ser);
+}
+
+void ServerInteractorImpl::OnMsgPlayerName(const Playername& playerName)
+{
+
+	m_GameStats.players.emplace(m_GameStats.players.size(), PlayerStats{ playerName.playername, 0, {} });
+
+	auto stats = CreateHandleGameSettings();
+
+	auto ser = m_pSerializer->Serialize(stats);
+	m_pServer->Broadcast(ser);
+
+	//for schleife -> WriteTo (neue id)
 }
 
 void ServerInteractorImpl::OnMsgHandleGameSettings(const HandleGameSettings& settings)
@@ -72,9 +86,7 @@ HandleGameSettings ServerInteractorImpl::CreateHandleGameSettings()
 	result.ls.categories = m_GameStats.customCategoryString;
 	result.ls.rounds = std::to_string(m_GameStats.maxRounds);
 	result.ls.timeout = m_GameStats.timeout;
-	for (int i{}; i < m_GameStats.players.size(); ++i)
-	{
-		result.ls.playerNames.push_back(m_GameStats.players[i].playerName);
-	}
+	for (const auto& player : m_GameStats.players)
+		result.ls.playerNames.emplace(player.first, player.second.playerName);
 	return result;
 }

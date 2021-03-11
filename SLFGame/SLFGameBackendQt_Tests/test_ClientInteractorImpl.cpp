@@ -121,7 +121,7 @@ TEST_F(TestClientInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_R
 		actualPS = gs.players[0];
 	};
 
-	gameInteractor.m_GameStats.players.push_back({ "Name", {}, {} });
+	gameInteractor.m_GameStats.players.emplace(0, PlayerStats{ "Name", {}, {} });
 	gameInteractor.PrepareOverview({ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} });
 
 	std::vector<std::string> expected{ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} };
@@ -135,7 +135,7 @@ TEST_F(TestClientInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinal
 	expectedGS.maxRounds = 0;
 	PlayerStats expectedPS;
 	expectedPS.points = 40;
-	expectedGS.players.push_back(expectedPS);
+	expectedGS.players.emplace(0, expectedPS);
 	::testing::StrictMock<FakeUI> fui;
 	gameInteractor.onGameOver = [&fui](GameStats gs) 
 		{fui.PrepareFinalScores(gs); };
@@ -143,7 +143,7 @@ TEST_F(TestClientInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinal
 
 	EXPECT_CALL(fui, PrepareFinalScores(expectedGS));
 
-	gameInteractor.m_GameStats.players.push_back({ "", 0, {} });
+	gameInteractor.m_GameStats.players.emplace(0, PlayerStats{ "", 0, {} });
 	gameInteractor.m_GameStats.maxRounds = 0;
 	gameInteractor.EndRound(dec);
 }
@@ -157,7 +157,7 @@ TEST_F(TestClientInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGame
 	expectedGS.lettersUsed = {{'C'}};
 	PlayerStats expectedPS;
 	expectedPS.points = 40;
-	expectedGS.players.push_back(expectedPS);
+	expectedGS.players.emplace(0, expectedPS);
 	::testing::StrictMock<FakeUI> fui;
 	gameInteractor.onPrepareNextRound = [&fui](GameStats gs) {fui.PrepareGame(gs); };
 	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO };
@@ -165,7 +165,7 @@ TEST_F(TestClientInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGame
 
 	EXPECT_CALL(fui, PrepareGame(expectedGS));
 
-	gameInteractor.m_GameStats.players.push_back({ "", 0, {} });
+	gameInteractor.m_GameStats.players.emplace(0, PlayerStats{ "", 0, {} });
 	gameInteractor.EndRound(dec);
 }
 

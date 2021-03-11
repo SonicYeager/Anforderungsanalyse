@@ -31,9 +31,10 @@ public slots:
 	void OnClientHostFound(int);
 	void OnClientStateChanged(const QAbstractSocket::SocketState&, int);
 	void OnClientBytesWritten(int, int);
+	void OnDestroyed(QObject*, int);
 
 private:
 	QThread serverThread;
 	QTcpServer m_server;
-	std::vector<std::unique_ptr<QTcpSocket>> m_sockets;
+	std::map<int, QTcpSocket*> m_sockets;
 };

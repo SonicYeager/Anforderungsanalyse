@@ -11,35 +11,13 @@ void QmlAdapter::ReceiveID(int id)
     setPlayerId(id);
 }
 
-void QmlAdapter::PrepareGame(const GameStats & gs)
-{
-    _unhandledanswers = {};
-    setCurrentRound(gs.currentRound);
-    setLetter(QChar(gs.currentLetter));
-    setCategories(gs.categories);
-    setPoints(gs.players[_playerId].points);
-}
-
-void QmlAdapter::PrepareFinalScores(const GameStats & gs)
-{
-    setPoints(gs.players[_playerId].points);
-}
-
-void QmlAdapter::PrepareOverview(const GameStats & gs)
-{
-    addPlayerAnswers(gs);
-    setView(GetViewFromState(STATE::OVERVIEW));
-    emit answersChanged();
-}
-
 void QmlAdapter::UpdateLobby(const LobbySettings & ls)
 {
     setCustomCategories(ls.categories.c_str());
     setTimeLeft(ls.timeout.c_str());
     setMaxRounds(ls.rounds.c_str());
     _players.clear();
-    for(unsigned long long i{}; i < ls.playerNames.size(); ++i)
-        _players.push_back(ls.playerNames[i]);
+    _players = ls.playerNames;
     setPlayerCount(_players.size());
     emit playerCountChanged();
     emit playersChanged();
@@ -83,9 +61,12 @@ StrVector2D QmlAdapter::getAnswers()
     return _answers;
 }
 
-StrVector QmlAdapter::getPlayers()
+QList<QVariantMap> QmlAdapter::getPlayers()
 {
-    return _players;
+   QList<QVariantMap> res{};
+   for(const auto& player : _players)
+       res.append(QVariantMap({{"id", QVariant(player.first)}, {"name", QVariant(QString(player.second.c_str()))}}));
+    return res;
 }
 
 bool QmlAdapter::getCustomChecked()
@@ -198,11 +179,14 @@ void QmlAdapter::setAnswers(StrVector2D answers)
     emit decisionsChanged();
 }
 
-void QmlAdapter::setPlayers(StrVector players)
+void QmlAdapter::setPlayers(QList<QVariantMap> players)
 {
-    if (players == _players)
+    PlayerMap res{};
+    for(const auto& player : players)
+        res.emplace(player["id"].toInt(), player["name"].toString().toStdString());
+    if (res == _players)
         return;
-    _players = players;
+    _players = res;
     emit playersChanged();
 }
 

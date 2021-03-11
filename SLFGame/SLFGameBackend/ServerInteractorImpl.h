@@ -17,6 +17,7 @@ private:
 	void OnNewConnection(int);
 	void OnData(const ByteStream&, int);
 	void OnLog(const std::string&);
+	void OnDisconnect(int);
 
 	//msg events
 	void OnMsgPlayerName(const Playername&);

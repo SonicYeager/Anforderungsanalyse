@@ -14,8 +14,6 @@ class ClientInteractorImpl : public ClientInteractor
 {
 public:
 	explicit ClientInteractorImpl(RandomGenRessource*, DataOperationLogic*, GameLogic*, SLFParser*, ClientSource*, SerializerSource*, MessageHandlerLogic*);
-	void PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount) override;
-	void PrepareOverview(const std::vector<std::string>&) override;
 	void EndRound(const std::vector<DECISION>&) override;
 	void HostLobby(const std::string&) override;
 	void JoinLobby(const LobbyCode&, const std::string&) override;

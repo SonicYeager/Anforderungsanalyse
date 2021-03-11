@@ -1,5 +1,5 @@
 #pragma once
-#include "../SLFGameBackendQt/slfgamebackendqt_global.h"
+#include "slfgamebackendqt_global.h"
 #include "GameStatsSerializer.h"
 #include <algorithm>
 
@@ -77,8 +77,8 @@ void GameStatsSerializer::Serialize_impl(const HandleGameSettings& msg, QDataStr
 	QString timeout{msg.ls.timeout.c_str()};
 	QString catString{ msg.ls.categories.c_str() };
 	QString rounds{ msg.ls.rounds.c_str() };
-	QStringList playerNames;
-	std::for_each(std::begin(msg.ls.playerNames), std::end(msg.ls.playerNames), [&playerNames](const std::string& str) {playerNames.push_back(str.c_str()); });
+	QMap<int, QString> playerNames;
+	std::for_each(std::begin(msg.ls.playerNames), std::end(msg.ls.playerNames), [&playerNames](const std::pair<int, std::string>& str) {playerNames.insert(str.first, str.second.c_str()); });
 	data << catString;
 	data << timeout;
 	data << rounds;
@@ -90,7 +90,7 @@ void GameStatsSerializer::Deserialize_impl(HandleGameSettings& msg, QDataStream&
 	QString timeout{};
 	QString catString{};
 	QString rounds{};
-	QStringList playerNames;
+	QMap<int, QString> playerNames;
 
 	data >> catString;
 	data >> timeout;
@@ -100,8 +100,10 @@ void GameStatsSerializer::Deserialize_impl(HandleGameSettings& msg, QDataStream&
 	msg.ls.timeout = timeout.toStdString();
 	msg.ls.categories = catString.toStdString();
 	msg.ls.rounds = rounds.toStdString();
-	for (const QString& playerName : playerNames)
-		msg.ls.playerNames.push_back(playerName.toStdString());
+	auto qmKeys = playerNames.keys();
+	for (size_t i{}; i < qmKeys.size(); ++i)
+		msg.ls.playerNames.emplace(qmKeys[i], playerNames[qmKeys[i]].toStdString());
+
 }
 
 void GameStatsSerializer::Serialize_impl(const GameState& msg, QDataStream& data)

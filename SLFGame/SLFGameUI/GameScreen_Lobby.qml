@@ -99,22 +99,8 @@ Rectangle {
                             PlayerOverview {
                                 id:playersOverview
                                 Layout.preferredWidth: parent.width
-                                Layout.minimumHeight: listModel.count * 50
-                                Component.onCompleted: {
-                                    for (var i = 0; i < qmlAdapter.playerCount; i++)
-                                    {
-                                        listModel.append({"text": qmlAdapter.getPlayer(i)})
-                                    }
-                                }
-                                Connections {
-                                    target: qmlAdapter
-                                    function onPlayerCountChanged()
-                                    {
-                                        playersOverview.listModel.clear()
-                                        for (var i = 0; i < qmlAdapter.playerCount; i++)
-                                            playersOverview.listModel.append({"text": qmlAdapter.getPlayer(i)})
-                                    }
-                                }
+                                Layout.minimumHeight: count * 50
+                                model: qmlAdapter.players
                             }
                         }
                     }

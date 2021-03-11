@@ -74,7 +74,9 @@
     <ClCompile Include="test_RandomGenerator.cpp" />
     <ClCompile Include="test_ServerInteractorImpl.cpp" />
     <ClCompile Include="test_SLFParser.cpp" />
-    <ClCompile Include="test_TEMP.cpp" />
+    <ClCompile Include="test_TEMP.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SLFGameBackend\SLFGameBackendQt.vcxproj">

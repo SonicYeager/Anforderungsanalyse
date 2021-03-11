@@ -14,4 +14,5 @@ public:
 	//Event<std::string> onLog;
 	Event<int> onNewConnection;
 	Event<ByteStream, int> onClientData;
+	Event<int> onClientDisconnect;
 };

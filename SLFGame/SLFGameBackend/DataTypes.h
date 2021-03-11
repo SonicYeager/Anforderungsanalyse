@@ -4,6 +4,7 @@
 #include <functional>
 #include <iostream>
 #include <sstream>
+#include <map>
 
 template<typename ... Args>
 using Event = std::function<void(Args...)>;
@@ -40,7 +41,7 @@ struct PlayerStats
 	std::vector<std::string> answers;
 };
 
-using Players = std::vector<PlayerStats>;
+using Players = std::map<int, PlayerStats>;
 
 struct GameStats
 {
@@ -52,7 +53,6 @@ struct GameStats
 	std::string lobbyCode{};
 	std::string timeout = "bis Stop";
 	std::string customCategoryString = "Stadt,Land,Fluss,Name,Tier,Beruf";
-	std::vector<std::string> playerNames;
 	Players players{};
 	STATE state{};
 };
@@ -64,7 +64,7 @@ struct LobbySettings
 	std::string categories{};
 	std::string timeout{};
 	std::string rounds{};
-	std::vector<std::string> playerNames{};
+	std::map<int, std::string> playerNames{};
 };
 
 using HeaderType = int;

@@ -2,6 +2,7 @@
 #include <functional>
 #include <string>
 #include <vector>
+#include <map>
 
 template<typename ... Args>
 using Event = std::function<void(Args...)>;

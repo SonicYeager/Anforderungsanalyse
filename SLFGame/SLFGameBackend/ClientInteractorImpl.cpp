@@ -23,33 +23,13 @@ ClientInteractorImpl::ClientInteractorImpl(RandomGenRessource* gen,
 		Letter generated = m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.lettersUsed);
 		m_pDataOperation->SetNewLetter(generated, m_GameStats);
 		m_pDataOperation->AddPreviousLetter(m_GameStats);
-		onPrepareNextRound(m_GameStats);
+		//onPrepareNextRound(m_GameStats);
 	};
 	m_pClient->onData = [this](const ByteStream& stream) {OnDataReceived(stream); };
 	
 	m_pMsgHandler->onPlayerID = [this](const PlayerID& id) { OnMsgID(id); };
 	m_pMsgHandler->onHandleGameSettings = [this](const HandleGameSettings& gs) { OnMsgHandleGameSettings(gs); };
 	m_pMsgHandler->onGameState = [this](const GameState& gs) { OnMsgGameState(gs); };
-}
-
-void ClientInteractorImpl::PrepareGame(const std::string& cats, const std::string& roundTime, const std::string& roundCount)
-{
-	auto parsedCats = m_pParser->ParseCategories(cats);
-	auto parsedRound = m_pParser->ParseRoundCount(roundCount);
-	m_GameStats.categories = parsedCats;
-	m_GameStats.timeout = roundTime;
-	m_GameStats.currentRound = 0;
-	m_GameStats.maxRounds = parsedRound;
-	m_pDataOperation->InkrementRound(m_GameStats);
-	Letter generated = m_pRandomGenerator->GenerateLetter();
-	m_pDataOperation->SetNewLetter(generated, m_GameStats);
-	onPrepareGame(m_GameStats);
-}
-
-void ClientInteractorImpl::PrepareOverview(const std::vector<std::string>& answ)
-{
-	m_pDataOperation->SetAnswers(answ, m_GameStats.players[0]);
-	onPrepareOverview(m_GameStats);
 }
 
 void ClientInteractorImpl::EndRound(const std::vector<DECISION>& decisions)
@@ -85,7 +65,7 @@ void ClientInteractorImpl::JoinLobby(const LobbyCode& lobbyCode, const std::stri
 
 void ClientInteractorImpl::LobbyChanged(const std::string& cats, const std::string& timeout, const std::string& rounds)
 {
-	HandleGameSettings gs{ {cats, timeout, rounds, {"WRONG CONNECTION"}} };
+	HandleGameSettings gs{ {cats, timeout, rounds} };
 	auto ser = m_pSerializer->Serialize(gs);
 	m_pClient->WriteToHost(ser);
 }

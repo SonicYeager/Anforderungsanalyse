@@ -1,6 +1,6 @@
 #pragma once
 #include "TimerRessource.h"
-#include "../SLFGameBackendQt/slfgamebackendqt_global.h"
+#include "slfgamebackendqt_global.h"
 
 class Timer : public TimerRessource
 {

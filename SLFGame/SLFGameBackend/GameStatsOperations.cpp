@@ -38,15 +38,15 @@ void GameStatsOperations::SetAnswers(const std::vector<std::string>& answ, Playe
 	ps.answers = answ;
 }
 
-GameStats GameStatsOperations::CreateStats(const LobbyCode& code, const std::string& playerName)
-{
-	GameStats gs{};
-	gs.maxRounds = 5;
-	gs.categories = { {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}} };
-	gs.lobbyCode = code;
-	PlayerStats ps{};
-	ps.playerName = playerName;
-	ps.answers = Categories{};
-	gs.players.push_back(ps);
-	return gs;
-}
+//GameStats GameStatsOperations::CreateStats(const LobbyCode& code, const std::string& playerName)
+//{
+//	GameStats gs{};
+//	gs.maxRounds = 5;
+//	gs.categories = { {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}} };
+//	gs.lobbyCode = code;
+//	PlayerStats ps{};
+//	ps.playerName = playerName;
+//	ps.answers = Categories{};
+//	gs.players.emplace(ps);
+//	return gs;
+//}

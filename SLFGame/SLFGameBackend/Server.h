@@ -30,7 +30,8 @@ private slots:
 	void OnClientBytesWritten(int, int);
 
 private:
+	std::atomic<int> m_counter{};
 	QThread serverThread;
 	QTcpServer m_server;
-	std::vector<std::unique_ptr<QTcpSocket>> m_sockets;
+	std::map<int, std::shared_ptr<QTcpSocket>> m_sockets;
 };

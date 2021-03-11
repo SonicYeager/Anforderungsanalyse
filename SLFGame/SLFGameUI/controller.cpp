@@ -7,11 +7,6 @@ Controller::Controller(UI* ui, ClientInteractor* clientInter, ServerInteractor* 
     m_pClientInter(clientInter)
 {
     //connect ui + inter
-    m_pUi->onPrepareGame                = [this](std::string customCats, std::string timeLeft, std::string maxRounds)
-                                          {m_pClientInter->PrepareGame(customCats, timeLeft, maxRounds);};
-
-    m_pUi->onPrepareOverview            = [this](Categories answers)
-                                          {m_pClientInter->PrepareOverview(answers);};
 
     m_pUi->onPrepareNextRound           = [this](std::vector<DECISION> decisions)
                                           {m_pClientInter->EndRound(decisions);};
@@ -28,17 +23,8 @@ Controller::Controller(UI* ui, ClientInteractor* clientInter, ServerInteractor* 
     m_pClientInter->onReceivedID        = [this](int id)
                                           {m_pUi->ReceiveID(id);};
 
-    m_pClientInter->onPrepareGame       = [this](GameStats gs)
-                                          {m_pUi->PrepareGame(gs);};
-
-    m_pClientInter->onPrepareOverview   = [this](GameStats gs)
-                                          {m_pUi->PrepareOverview(gs);};
-
-    m_pClientInter->onPrepareNextRound  = [this](GameStats gs)
-                                          {m_pUi->PrepareGame(gs);};
-
     m_pClientInter->onGameOver          = [this](GameStats gs)
-                                          {m_pUi->PrepareFinalScores(gs);};
+                                          {/*m_pUi->PrepareFinalScores(gs);*/};
 
     m_pClientInter->onUpdateLobbySettings  = [this](LobbySettings ls)
                                           {m_pUi->UpdateLobby(ls);};

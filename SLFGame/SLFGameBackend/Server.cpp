@@ -54,23 +54,23 @@ void Server::Broadcast(const ByteStream& data)
 	QVector<char> datavec{ std::begin(data), std::end(data) };
 	sizestream << datavec;
 	for (const auto& socket : m_sockets)
-		socket->write(qdata);
+		socket.second->write(qdata);
 	//onLog("Data has been Broadcasted!");
 }
 
 void Server::OnNewConnection()
 {
 	auto conn = m_server.nextPendingConnection();
-	m_sockets.emplace_back(conn);
-	auto id = m_sockets.size() - 1;
+	auto id = m_counter.fetch_add(1);
+	m_sockets.emplace(id, std::shared_ptr<QTcpSocket>(conn, [](QTcpSocket* sock) { sock->deleteLater(); }));
 
-	QObject::connect(&*m_sockets[id], &QTcpSocket::connected, [this, id]() {OnClientConnected(id); });
-	QObject::connect(&*m_sockets[id], &QTcpSocket::disconnected, [this, id]() {OnClientDisconnect(id); });
-	QObject::connect(&*m_sockets[id], &QIODevice::readyRead, [this, id]() {OnClientReceivedData(id); });
-	QObject::connect(&*m_sockets[id], &QTcpSocket::errorOccurred, [this, id](const QAbstractSocket::SocketError& err) {OnClientClientConnectError(err, id); });
-	QObject::connect(&*m_sockets[id], &QTcpSocket::bytesWritten, [this, id](int written) {OnClientBytesWritten(written, id); });
-	QObject::connect(&*m_sockets[id], &QTcpSocket::hostFound, [this, id]() {OnClientHostFound(id); });
-	QObject::connect(&*m_sockets[id], &QTcpSocket::stateChanged, [this, id](const QAbstractSocket::SocketState& state) {OnClientStateChanged(state, id); });
+	QObject::connect(m_sockets[id].get(), &QTcpSocket::connected, [this, id]() {OnClientConnected(id); });
+	QObject::connect(m_sockets[id].get(), &QTcpSocket::disconnected, [this, id]() {OnClientDisconnect(id); });
+	QObject::connect(m_sockets[id].get(), &QIODevice::readyRead, [this, id]() {OnClientReceivedData(id); });
+	QObject::connect(m_sockets[id].get(), &QTcpSocket::errorOccurred, [this, id](const QAbstractSocket::SocketError& err) {OnClientClientConnectError(err, id); });
+	QObject::connect(m_sockets[id].get(), &QTcpSocket::bytesWritten, [this, id](int written) {OnClientBytesWritten(written, id); });
+	QObject::connect(m_sockets[id].get(), &QTcpSocket::hostFound, [this, id]() {OnClientHostFound(id); });
+	QObject::connect(m_sockets[id].get(), &QTcpSocket::stateChanged, [this, id](const QAbstractSocket::SocketState& state) {OnClientStateChanged(state, id); });
 
 	//onLog("New Connection of Client: " + std::to_string(id));
 	onNewConnection(id);
@@ -111,7 +111,12 @@ void Server::OnClientConnected(int id)
 void Server::OnClientDisconnect(int id)
 {
 	//onLog("Client: " + std::to_string(id) + " has disconnected from Host!");
-	m_sockets.erase(std::next(std::begin(m_sockets), id));
+
+	m_sockets.erase(id);
+
+	//for schleife -> discónenect, connect;
+
+	onClientDisconnect(id);
 }
 
 void Server::OnClientHostFound(int id)

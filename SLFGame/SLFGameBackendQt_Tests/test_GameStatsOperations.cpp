@@ -90,23 +90,23 @@ TEST(TestGameStatsOperations, LetterIsAlreadyUsed_IsUsed_ReturnTrue)
 
 }
 
-TEST(TestGameStatsOperations, CreateStats_LobbyCode0c346bv_ReturnConfiguredGameStatsAndPlayerStats)
-{
-
-	GameStatsOperations gso{};
-	GameStats gs{};
-
-	auto actual = gso.CreateStats("0c346bv", "");
-
-	GameStats expectedgs{};
-	PlayerStats expectedps{};
-	expectedgs.maxRounds = 5;
-	expectedgs.categories = {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}};
-	expectedgs.lobbyCode = "0c346bv";
-	EXPECT_EQ(actual, expectedgs);
-	EXPECT_EQ(actual.players[0], expectedps);
-
-}
+//TEST(TestGameStatsOperations, CreateStats_LobbyCode0c346bv_ReturnConfiguredGameStatsAndPlayerStats)
+//{
+//
+//	GameStatsOperations gso{};
+//	GameStats gs{};
+//
+//	auto actual = gso.CreateStats("0c346bv", "");
+//
+//	GameStats expectedgs{};
+//	PlayerStats expectedps{};
+//	expectedgs.maxRounds = 5;
+//	expectedgs.categories = {{"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"}};
+//	expectedgs.lobbyCode = "0c346bv";
+//	EXPECT_EQ(actual, expectedgs);
+//	EXPECT_EQ(actual.players[0], expectedps);
+//
+//}
 
 TEST(TestGameStatsOperations, SetAnswers_BaumBerlinBen_SetToBaumBerlinBen)
 {

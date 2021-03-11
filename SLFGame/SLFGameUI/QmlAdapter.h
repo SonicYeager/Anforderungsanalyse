@@ -9,6 +9,7 @@
 #include "UI.h"
 
 using StrVector = std::vector<std::string>;
+using PlayerMap = std::map<int, std::string>;
 using StrVector2D = std::vector<StrVector>;
 using DecVector = std::vector<DECISION>;
 using DecVector2D = std::vector<DecVector>;
@@ -24,7 +25,7 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(QString playerName          READ getPlayerName            WRITE setPlayerName            NOTIFY playerNameChanged)
     Q_PROPERTY(StrVector categories        READ getCategories            WRITE setCategories            NOTIFY categoriesChanged)
     Q_PROPERTY(StrVector2D answers         READ getAnswers               WRITE setAnswers               NOTIFY answersChanged)
-    Q_PROPERTY(StrVector players           READ getPlayers               WRITE setPlayers               NOTIFY playersChanged)
+    Q_PROPERTY(QList<QVariantMap> players  READ getPlayers               WRITE setPlayers               NOTIFY playersChanged)
     Q_PROPERTY(int categoryCount           READ getCategoryCount         WRITE setCategoryCount         NOTIFY categoryCountChanged)
     Q_PROPERTY(int currentRound            READ getCurrentRound          WRITE setCurrentRound          NOTIFY currentRoundChanged)
     Q_PROPERTY(int points                  READ getPoints                WRITE setPoints                NOTIFY pointsChanged)
@@ -38,9 +39,6 @@ public:
     explicit QmlAdapter     (QObject *parent = nullptr);
 
     void ReceiveID          (int)              override;
-    void PrepareGame        (const GameStats&) override;
-    void PrepareFinalScores (const GameStats&) override;
-    void PrepareOverview    (const GameStats&) override;
     void UpdateLobby        (const LobbySettings&) override;
     void SetLobbyCode       (const LobbyCode&) override;
     void UpdateGameState    (const STATE&) override;
@@ -54,7 +52,7 @@ public:
     QString getPlayerName();
     StrVector getCategories();
     StrVector2D getAnswers();
-    StrVector getPlayers();
+    QList<QVariantMap> getPlayers();
     int getCategoryCount();
     int getCurrentRound();
     int getPoints();
@@ -73,7 +71,7 @@ public:
     void setPlayerName                  (QString playerName);
     void setCategories                  (StrVector categories);
     void setAnswers                     (StrVector2D answers);
-    void setPlayers                     (StrVector players);
+    void setPlayers                     (QList<QVariantMap> players);
     void setCategoryCount               (int categoryCount);
     void setCurrentRound                (int currentRound);
     void setPoints                      (int points);
@@ -133,7 +131,7 @@ private:
     QString _playerName         = "";
     StrVector _categories       = {"Stadt", "Land", "Fluss", "Name", "Tier", "Beruf"};
     StrVector _unhandledanswers = {};
-    StrVector _players          = {};
+    PlayerMap _players          = {};
     StrVector2D _answers        = {};
     int _categoryCount          = 6;
     int _currentRound           = 0;
