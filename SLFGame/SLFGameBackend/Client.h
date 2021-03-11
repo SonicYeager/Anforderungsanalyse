@@ -1,5 +1,5 @@
 #pragma once
-#include "../SLFGameBackendQt/slfgamebackendqt_global.h"
+#include "slfgamebackendqt_global.h"
 #include "DataTypes.h"
 #include "ClientSource.h"
 

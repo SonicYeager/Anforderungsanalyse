@@ -12,9 +12,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test_GameInteractor.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="test_GameStatsOperations.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
@@ -25,6 +22,21 @@
       <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="test_Game.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test_ServerInteractorImpl.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test_TEMP.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test_ClientInteractorImpl.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test_GameStatsSerializer.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test_MessageHandler.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
   </ItemGroup>

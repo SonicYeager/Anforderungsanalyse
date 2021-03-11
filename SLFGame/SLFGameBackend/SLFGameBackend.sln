@@ -5,14 +5,14 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestFramework", "..\TestFramework\GoogleMock\TestFramework.vcxitems", "{AAC85E24-C2BD-4A83-9DD9-48C57441C065}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SLFGameBackend_Tests", "..\SLFGameBackend_Tests\SLFGameBackend_Tests.vcxproj", "{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SLFGameBackend", "SLFGameBackendQt.vcxproj", "{0C096FA7-8645-4407-A1EE-3CC26741EB10}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SLFGameBackend", "..\SLFGameBackendQt\SLFGameBackendQt.vcxproj", "{0C096FA7-8645-4407-A1EE-3CC26741EB10}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SLFGameBackendQt_Tests", "..\SLFGameBackendQt_Tests\SLFGameBackendQt_Tests.vcxproj", "{98E6384B-3B10-4214-96D7-6984FC2E5C3C}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		..\TestFramework\GoogleMock\TestFramework.vcxitems*{98e6384b-3b10-4214-96d7-6984fc2e5c3c}*SharedItemsImports = 4
 		..\TestFramework\GoogleMock\TestFramework.vcxitems*{aac85e24-c2bd-4a83-9dd9-48c57441c065}*SharedItemsImports = 9
-		..\TestFramework\GoogleMock\TestFramework.vcxitems*{b7ddb04c-7b2b-4b62-aa37-522f7f22fa98}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -23,15 +23,6 @@ Global
 		Tests|x86 = Tests|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Debug|x64.ActiveCfg = Debug|x64
-		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Debug|x86.ActiveCfg = Debug|Win32
-		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Debug|x86.Build.0 = Debug|Win32
-		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Release|x64.ActiveCfg = Release|x64
-		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Release|x86.ActiveCfg = Release|Win32
-		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Tests|x64.ActiveCfg = Tests|x64
-		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Tests|x64.Build.0 = Tests|x64
-		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Tests|x86.ActiveCfg = Tests|Win32
-		{B7DDB04C-7B2B-4B62-AA37-522F7F22FA98}.Tests|x86.Build.0 = Tests|Win32
 		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Debug|x64.ActiveCfg = Debug|x64
 		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Debug|x64.Build.0 = Debug|x64
 		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Debug|x86.ActiveCfg = Debug|x64
@@ -42,6 +33,17 @@ Global
 		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Tests|x64.Build.0 = Debug|x64
 		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Tests|x86.ActiveCfg = Debug|x64
 		{0C096FA7-8645-4407-A1EE-3CC26741EB10}.Tests|x86.Build.0 = Debug|x64
+		{98E6384B-3B10-4214-96D7-6984FC2E5C3C}.Debug|x64.ActiveCfg = Debug|x64
+		{98E6384B-3B10-4214-96D7-6984FC2E5C3C}.Debug|x64.Build.0 = Debug|x64
+		{98E6384B-3B10-4214-96D7-6984FC2E5C3C}.Debug|x86.ActiveCfg = Debug|x64
+		{98E6384B-3B10-4214-96D7-6984FC2E5C3C}.Release|x64.ActiveCfg = Debug|x64
+		{98E6384B-3B10-4214-96D7-6984FC2E5C3C}.Release|x64.Build.0 = Debug|x64
+		{98E6384B-3B10-4214-96D7-6984FC2E5C3C}.Release|x86.ActiveCfg = Debug|x64
+		{98E6384B-3B10-4214-96D7-6984FC2E5C3C}.Release|x86.Build.0 = Debug|x64
+		{98E6384B-3B10-4214-96D7-6984FC2E5C3C}.Tests|x64.ActiveCfg = Debug|x64
+		{98E6384B-3B10-4214-96D7-6984FC2E5C3C}.Tests|x64.Build.0 = Debug|x64
+		{98E6384B-3B10-4214-96D7-6984FC2E5C3C}.Tests|x86.ActiveCfg = Debug|x64
+		{98E6384B-3B10-4214-96D7-6984FC2E5C3C}.Tests|x86.Build.0 = Debug|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -66,16 +66,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\SLFGameBackendQt\SLFGameBackendQt.vcxproj">
-      <Project>{0c096fa7-8645-4407-a1ee-3cc26741eb10}</Project>
-    </ProjectReference>
+    <ClCompile Include="test_ClientInteractorImpl.cpp" />
+    <ClCompile Include="test_Game.cpp" />
+    <ClCompile Include="test_GameStatsOperations.cpp" />
+    <ClCompile Include="test_GameStatsSerializer.cpp" />
+    <ClCompile Include="test_MessageHandler.cpp" />
+    <ClCompile Include="test_RandomGenerator.cpp" />
+    <ClCompile Include="test_ServerInteractorImpl.cpp" />
+    <ClCompile Include="test_SLFParser.cpp" />
+    <ClCompile Include="test_TEMP.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="test_Game.cpp" />
-    <ClCompile Include="test_GameInteractor.cpp" />
-    <ClCompile Include="test_GameStatsOperations.cpp" />
-    <ClCompile Include="test_RandomGenerator.cpp" />
-    <ClCompile Include="test_SLFParser.cpp" />
+    <ProjectReference Include="..\SLFGameBackend\SLFGameBackendQt.vcxproj">
+      <Project>{0c096fa7-8645-4407-a1ee-3cc26741eb10}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
