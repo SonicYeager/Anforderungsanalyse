@@ -13,14 +13,20 @@ void QmlAdapter::ReceiveID(int id)
 
 void QmlAdapter::UpdateLobby(const LobbySettings & ls)
 {
-    setCustomCategories(ls.categories.c_str());
-    setRoundTime(ls.timeout.c_str());
-    setMaxRounds(ls.rounds.c_str());
+    //setCustomCategories(ls.categories.c_str());
+    //setRoundTime(ls.timeout.c_str());
+    //setMaxRounds(ls.rounds.c_str());
+    _customCategories = ls.categories.c_str();
+    _maxRounds = ls.rounds.c_str();
+    _roundTime = ls.timeout.c_str();
     _players.clear();
     _players = ls.playerNames;
     setPlayerCount(_players.size());
     emit playerCountChanged();
     emit playersChanged();
+    emit customCategoriesChanged();
+    emit maxRoundsChanged();
+    emit roundTimeChanged();
 }
 
 void QmlAdapter::SetLobbyCode(const LobbyCode & lobbycode)
