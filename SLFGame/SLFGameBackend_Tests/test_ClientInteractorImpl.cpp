@@ -15,11 +15,13 @@ using namespace ::testing;
 class FakeUI : public UI
 {
 public:
-	MOCK_METHOD(void, PrepareLobby, (const GameStats&), (override));
-	MOCK_METHOD(void, PrepareGame, (const GameStats&), (override));
-	MOCK_METHOD(void, PrepareOverview, (const GameStats&), (override));
-	MOCK_METHOD(void, PrepareFinalScores, (const GameStats&), (override));
-	MOCK_METHOD(void, UpdateGameStats, (const GameStats&), (override));
+	MOCK_METHOD(void, PrepareGame,			(const GameStats&),		(override));
+	MOCK_METHOD(void, PrepareOverview,		(const GameStats&),		(override));
+	MOCK_METHOD(void, PrepareFinalScores,	(const GameStats&),		(override));
+	MOCK_METHOD(void, ReceiveID,			(int),					(override));
+	MOCK_METHOD(void, UpdateLobby,			(const LobbySettings&),	(override));
+	MOCK_METHOD(void, SetLobbyCode,			(const LobbyCode&),		(override));
+	MOCK_METHOD(void, UpdateGameState,		(const STATE&),			(override));
 };
 
 class FakeRandomLetterGenerator : public RandomGenRessource
@@ -77,21 +79,21 @@ protected:
 	ClientInteractorImpl gameInteractor;
 };
 
-TEST_F(TestClientInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerStats)
-{
-	auto actual = gameInteractor.PrepareLobby();
-
-	EXPECT_EQ(actual.second.answers.size(), 0);
-	EXPECT_EQ(actual.second.points, 0);
-
-	Categories cat{ {"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"} };
-	EXPECT_EQ(actual.first.categories, cat);
-	EXPECT_EQ(actual.first.currentLetter, Letter{});
-	EXPECT_EQ(actual.first.lettersUsed.size(), 0);
-	EXPECT_EQ(actual.first.currentRound, 0);
-	EXPECT_EQ(actual.first.maxRounds, 5);
-	EXPECT_EQ(actual.first.lobbyCode, "");
-}
+//TEST_F(TestClientInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerStats)
+//{
+//	auto actual = gameInteractor.PrepareLobby();
+//
+//	EXPECT_EQ(actual.second.answers.size(), 0);
+//	EXPECT_EQ(actual.second.points, 0);
+//
+//	Categories cat{ {"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"} };
+//	EXPECT_EQ(actual.first.categories, cat);
+//	EXPECT_EQ(actual.first.currentLetter, Letter{});
+//	EXPECT_EQ(actual.first.lettersUsed.size(), 0);
+//	EXPECT_EQ(actual.first.currentRound, 0);
+//	EXPECT_EQ(actual.first.maxRounds, 5);
+//	EXPECT_EQ(actual.first.lobbyCode, "");
+//}
 
 TEST_F(TestClientInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStatsAndPlayerStatsFilledWithStdCatsRound0NoTimer)
 {
@@ -130,6 +132,7 @@ TEST_F(TestClientInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinal
 {
 	GameStats expectedGS;
 	expectedGS.currentRound = 1;
+	expectedGS.maxRounds = 0;
 	PlayerStats expectedPS;
 	expectedPS.points = 40;
 	expectedGS.players.push_back(expectedPS);
@@ -141,6 +144,7 @@ TEST_F(TestClientInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinal
 	EXPECT_CALL(fui, PrepareFinalScores(expectedGS));
 
 	gameInteractor.m_GameStats.players.push_back({ "", 0, {} });
+	gameInteractor.m_GameStats.maxRounds = 0;
 	gameInteractor.EndRound(dec);
 }
 
@@ -170,6 +174,7 @@ TEST_F(TestClientInteractor, HostLobby_StartServer_CallStartServer)
 	FakeUI fui{};
 	bool started = false;
 	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
+	gameInteractor.onSetLobbyCode = [&fui](const std::string& id) {fui.SetLobbyCode(id); };
 	gameInteractor.onStartServer = [&started]() { started = true; };
 
 	gameInteractor.HostLobby("T-3000");
@@ -182,14 +187,16 @@ TEST_F(TestClientInteractor, JoinLobby_ConnectToServer_CallConnectToServer)
 	EXPECT_CALL(fakeServer, ConnectToServer("CODE"));
 	FakeUI fui{};
 	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
+	gameInteractor.onSetLobbyCode = [&fui](const std::string& id) {fui.SetLobbyCode(id); };
 	gameInteractor.JoinLobby("CODE", "T-3000");
 }
 
 TEST_F(TestClientInteractor, JoinLobby_WriteToHost_CallConnectToServer)
 {
-	EXPECT_CALL(fakeServer, WriteToHost(ByteStream{ '\0', '\0', '\0', '\x2', '\0', '\0', '\0', '\f', '\0', 'T', '\0', '-','\0', '3','\0', '0','\0', '0','\0', '0'}));
+	EXPECT_CALL(fakeServer, WriteToHost(ByteStream{ '\0', '\0', '\0', '\x1', '\0', '\0', '\0', '\f', '\0', 'T', '\0', '-','\0', '3','\0', '0','\0', '0','\0', '0'}));
 	FakeUI fui{};
 	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
+	gameInteractor.onSetLobbyCode = [&fui](const std::string& id) {fui.SetLobbyCode(id); };
 
 	gameInteractor.JoinLobby("CODE", "T-3000");
 }
