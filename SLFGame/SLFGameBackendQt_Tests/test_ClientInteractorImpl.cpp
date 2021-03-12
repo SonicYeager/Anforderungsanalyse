@@ -19,6 +19,7 @@ public:
 	MOCK_METHOD(void, UpdateLobby,			(const LobbySettings&),	(override));
 	MOCK_METHOD(void, SetLobbyCode,			(const LobbyCode&),		(override));
 	MOCK_METHOD(void, UpdateGameState,		(const STATE&),			(override));
+	//virtual void ChatMessageReceived(const ChatMessage&) = 0;
 };
 
 class FakeRandomLetterGenerator : public RandomGenRessource

@@ -23,6 +23,7 @@ private:
 	void OnMsgPlayerName(const Playername&);
 	void OnMsgHandleGameSettings(const HandleGameSettings&);
 	void OnChatMessage(const ChatMessage&);
+	void OnPlayerAnswers(const PlayerAnswers&);
 
 	//helper funcs
 	HandleGameSettings CreateHandleGameSettings();
@@ -32,4 +33,6 @@ private:
 	MessageHandlerLogic* m_pMsgHandler{};
 
 	GameStats m_GameStats{};
+	int m_actualID{};	//temp solution -> ask if there are any better;
+	int m_dataGatherCounter{};
 };

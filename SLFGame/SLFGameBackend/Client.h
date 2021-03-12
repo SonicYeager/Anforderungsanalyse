@@ -9,9 +9,10 @@ public:
 	Client();
 	virtual ~Client();
 
-	std::string GenerateLobbyCode();
-	void ConnectToServer(const LobbyCode&);
-	void WriteToHost(const ByteStream&);
+	std::string GenerateLobbyCode() override;
+	void ConnectToServer(const LobbyCode&) override;
+	void DisconnectFromServer() override;
+	void WriteToHost(const ByteStream&) override;
 
 private slots:
 

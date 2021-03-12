@@ -35,6 +35,7 @@ void ServerInteractorImpl::OnNewConnection(int id)
 void ServerInteractorImpl::OnData(const ByteStream& stream, int id)
 {
 	auto des = m_pSerializer->Deserialize(stream);
+	m_actualID = id; //how to pass through the id to the event funcs
 	m_pMsgHandler->handleMessage(des);
 
 	//onLog("ServerInteractor: received data: " + text + " from client: " + std::to_string(id));
@@ -85,6 +86,30 @@ void ServerInteractorImpl::OnChatMessage(const ChatMessage& cm)
 {
 	auto ser = m_pSerializer->Serialize(cm);
 	m_pServer->Broadcast(ser);
+}
+
+void CheckAllAnswersRecived(int counter, int actualCount, Event<> onTrue)
+{
+	if (counter == actualCount)
+	{
+		onTrue();
+	}
+}
+
+void ServerInteractorImpl::OnPlayerAnswers(const PlayerAnswers& answers)
+{
+	m_GameStats.players[m_actualID].answers = answers.answers;
+	m_dataGatherCounter++;
+
+	auto broadcast = [this]()
+	{		
+		auto stats = CreateHandleGameSettings();
+
+		auto ser = m_pSerializer->Serialize(stats);
+		m_pServer->Broadcast(ser); 
+	};
+
+	CheckAllAnswersRecived(m_dataGatherCounter, m_GameStats.players.size(), broadcast);
 }
 
 HandleGameSettings ServerInteractorImpl::CreateHandleGameSettings()

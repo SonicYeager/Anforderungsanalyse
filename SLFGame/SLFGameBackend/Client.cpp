@@ -36,6 +36,12 @@ void Client::ConnectToServer(const LobbyCode& code)
 	//onLog("Attempting to connect to Host...");
 }
 
+void Client::DisconnectFromServer()
+{
+	m_socket.disconnectFromHost();
+	m_socket.close();
+}
+
 void Client::WriteToHost(const ByteStream& data)
 {
 	QByteArray qdata{};
