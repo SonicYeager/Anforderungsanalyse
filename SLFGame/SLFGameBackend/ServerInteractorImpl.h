@@ -12,18 +12,18 @@ public:
 
 	void StartServer() override;
 
+	//msg events
+	void OnMsgPlayerName(const Playername&);
+	void OnMsgHandleGameSettings(const HandleGameSettings&);
+	void OnChatMessage(const ChatMessage&);
+	void OnPlayerAnswers(const PlayerAnswers&);
+
 private:
 	//server events
 	void OnNewConnection(int);
 	void OnData(const ByteStream&, int);
 	void OnLog(const std::string&);
 	void OnDisconnect(int);
-
-	//msg events
-	void OnMsgPlayerName(const Playername&);
-	void OnMsgHandleGameSettings(const HandleGameSettings&);
-	void OnChatMessage(const ChatMessage&);
-	void OnPlayerAnswers(const PlayerAnswers&);
 
 	//helper funcs
 	HandleGameSettings CreateHandleGameSettings();
