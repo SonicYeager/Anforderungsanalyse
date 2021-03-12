@@ -136,3 +136,11 @@ void GameStatsSerializer::Deserialize_impl(ChatMessage& msg, QDataStream& data)
 	msg.sender = sender.toStdString();
 	msg.text = text.toStdString();
 }
+
+void GameStatsSerializer::Serialize_impl(const AllAnswers& msg, AllAnswers& data)
+{
+}
+
+void GameStatsSerializer::Deserialize_impl(AllAnswers& msg, AllAnswers& data)
+{
+}

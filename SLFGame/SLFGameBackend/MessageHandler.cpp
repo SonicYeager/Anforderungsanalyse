@@ -25,6 +25,11 @@ void MessageHandler::on(const ChatMessage& msg)
 	onChatMessage(msg);
 }
 
+void MessageHandler::on(const AllAnswers& msg)
+{
+	onAllAnswers(msg);
+}
+
 void MessageHandler::on(const Playername& msg)
 {
 	onPlayername(msg);

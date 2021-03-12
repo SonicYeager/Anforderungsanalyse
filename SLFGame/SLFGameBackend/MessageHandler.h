@@ -10,4 +10,5 @@ public:
 	void on(const HandleGameSettings&) override;
 	void on(const GameState&) override;
 	void on(const ChatMessage&) override;
+	void on(const AllAnswers&) override;
 };

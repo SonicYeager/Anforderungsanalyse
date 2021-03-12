@@ -66,10 +66,6 @@ void ServerInteractorImpl::OnMsgPlayerName(const Playername& playerName)
 	auto ser = m_pSerializer->Serialize(stats);
 	m_pServer->Broadcast(ser);
 
-	//ChatMessage cm{ "*Server", m_GameStats.players[m_GameStats.players.size()].playerName + " has connected to the Server." };
-	//auto serCM = m_pSerializer->Serialize(cm);
-	//m_pServer->Broadcast(serCM);
-
 	//for schleife -> WriteTo (neue id)
 }
 

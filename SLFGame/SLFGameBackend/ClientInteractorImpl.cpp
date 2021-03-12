@@ -61,7 +61,6 @@ void ClientInteractorImpl::JoinLobby(const LobbyCode& lobbyCode, const std::stri
 	Playername msg{playerName};
 	auto ser = m_pSerializer->Serialize(msg);
 	m_pClient->WriteToHost(ser);
-
 }
 
 void ClientInteractorImpl::LobbyChanged(const std::string& cats, const std::string& timeout, const std::string& rounds)
