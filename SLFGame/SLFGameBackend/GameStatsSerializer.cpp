@@ -137,10 +137,32 @@ void GameStatsSerializer::Deserialize_impl(ChatMessage& msg, QDataStream& data)
 	msg.text = text.toStdString();
 }
 
-void GameStatsSerializer::Serialize_impl(const AllAnswers& msg, AllAnswers& data)
+void GameStatsSerializer::Serialize_impl(const AllAnswers& msg, QDataStream& data)
 {
+	QVector<QStringList> qmsg{};
+
+	for (const auto& ansers : msg.ans)
+	{
+		QVector<QString> plansw{};
+		for (const auto& answ : ansers)
+			plansw.push_back(answ.c_str());
+		qmsg.push_back(plansw);
+	}
+
+	data << qmsg;
 }
 
-void GameStatsSerializer::Deserialize_impl(AllAnswers& msg, AllAnswers& data)
+void GameStatsSerializer::Deserialize_impl(AllAnswers& msg, QDataStream& data)
 {
+
+	QVector<QStringList> qmsg{};
+	data >> qmsg;
+
+	for (const auto& ansers : qmsg)
+	{
+		std::vector<std::string> plansw{};
+		for (const auto& answ : ansers)
+			plansw.push_back(answ.toStdString());
+		msg.ans.push_back(plansw);
+	}
 }

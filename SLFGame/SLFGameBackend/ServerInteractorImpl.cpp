@@ -103,9 +103,12 @@ void ServerInteractorImpl::OnPlayerAnswers(const PlayerAnswers& answers)
 
 	auto broadcast = [this]()
 	{		
-		auto stats = CreateHandleGameSettings();
+		AllAnswers allAnsw{};
 
-		auto ser = m_pSerializer->Serialize(stats);
+		for (const auto& player : m_GameStats.players)
+			allAnsw.ans.push_back(player.second.answers);
+
+		auto ser = m_pSerializer->Serialize(allAnsw);
 		m_pServer->Broadcast(ser); 
 	};
 
