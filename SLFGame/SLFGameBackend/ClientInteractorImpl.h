@@ -18,7 +18,7 @@ public:
 	void HostLobby(const std::string&) override;
 	void JoinLobby(const LobbyCode&, const std::string&) override;
 	void LobbyChanged(const std::string& cats, const std::string& timeout, const std::string& rounds) override;
-
+	void ChatMessageReceived(const std::string& sender, const std::string& text) override;
 	GameStats m_GameStats;
 
 private:
@@ -29,6 +29,7 @@ private:
 	void OnMsgID(const PlayerID&);
 	void OnMsgHandleGameSettings(const HandleGameSettings&);
 	void OnMsgGameState(const GameState&);
+	void OnChatMessage(const ChatMessage&);
 
 	ClientSource* m_pClient;
 	MessageHandlerLogic* m_pMsgHandler;

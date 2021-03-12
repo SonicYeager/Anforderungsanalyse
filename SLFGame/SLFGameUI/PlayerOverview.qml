@@ -11,8 +11,9 @@ ListView {
         id: player
         text: modelData.name
         width : 200
-        height: 50
-        radius: 90
+        height: 30
+        radius: 0
+        border.width: 3
         color: (modelData.id === qmlAdapter.playerId) ? "#6fb1c9" : "white"
     }
 }

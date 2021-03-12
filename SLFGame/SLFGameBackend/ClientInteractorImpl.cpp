@@ -30,6 +30,7 @@ ClientInteractorImpl::ClientInteractorImpl(RandomGenRessource* gen,
 	m_pMsgHandler->onPlayerID = [this](const PlayerID& id) { OnMsgID(id); };
 	m_pMsgHandler->onHandleGameSettings = [this](const HandleGameSettings& gs) { OnMsgHandleGameSettings(gs); };
 	m_pMsgHandler->onGameState = [this](const GameState& gs) { OnMsgGameState(gs); };
+	m_pMsgHandler->onChatMessage = [this](const ChatMessage& cm) { OnChatMessage(cm); };
 }
 
 void ClientInteractorImpl::EndRound(const std::vector<DECISION>& decisions)
@@ -70,6 +71,13 @@ void ClientInteractorImpl::LobbyChanged(const std::string& cats, const std::stri
 	m_pClient->WriteToHost(ser);
 }
 
+void ClientInteractorImpl::ChatMessageReceived(const std::string& sender, const std::string& text)
+{
+	ChatMessage cm{ sender, text };
+	auto ser = m_pSerializer->Serialize(cm);
+	m_pClient->WriteToHost(ser);
+}
+
 void ClientInteractorImpl::OnDataReceived(const ByteStream& stream)
 {
 	auto des = m_pSerializer->Deserialize(stream);
@@ -90,4 +98,9 @@ void ClientInteractorImpl::OnMsgHandleGameSettings(const HandleGameSettings& set
 void ClientInteractorImpl::OnMsgGameState(const GameState& gs)
 {
 	onGameState(gs.state);
+}
+
+void ClientInteractorImpl::OnChatMessage(const ChatMessage& cm)
+{
+	onChatMessage(cm);
 }

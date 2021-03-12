@@ -115,3 +115,24 @@ void GameStatsSerializer::Deserialize_impl(GameState& msg, QDataStream& data)
 {
 	data >> msg.state;
 }
+
+void GameStatsSerializer::Serialize_impl(const ChatMessage& msg, QDataStream& data)
+{
+	QString sender{ msg.sender.c_str()};
+	QString text{ msg.text.c_str()};
+
+	data << sender;
+	data << text;
+}
+
+void GameStatsSerializer::Deserialize_impl(ChatMessage& msg, QDataStream& data)
+{
+	QString sender;
+	QString text;
+
+	data >> sender;
+	data >> text;
+
+	msg.sender = sender.toStdString();
+	msg.text = text.toStdString();
+}

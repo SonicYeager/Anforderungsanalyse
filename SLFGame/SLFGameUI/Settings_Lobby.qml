@@ -16,6 +16,7 @@ Rectangle{
             Layout.preferredWidth: 800
             Layout.preferredHeight: 50
             color: Qt.rgba(0,0,0,0)
+            Layout.margins: 20
             Layout.bottomMargin: 5
             RowLayout {
                 anchors.fill: parent
@@ -59,14 +60,6 @@ Rectangle{
                     visible: (qmlAdapter.playerId === 0) ? true: false
                     state: qmlAdapter.customChecked
                     onClicked: qmlAdapter.customChecked = checked
-                    //Component.onCompleted: checked = qmlAdapter.customChecked
-                    //Connections {
-                    //    target: qmlAdapter
-                    //    function onCustomCheckedChanged()
-                    //    {
-                    //        chb_custom.checked = qmlAdapter.customChecked
-                    //    }
-                    //}
                 }
                 Rectangle {
                     Layout.fillWidth: true
@@ -78,7 +71,9 @@ Rectangle{
         Rectangle{
             Layout.preferredWidth: 320
             Layout.preferredHeight: 50
+            Layout.margins: 20
             Layout.bottomMargin: 5
+            Layout.topMargin: 5
             color: Qt.rgba(0,0,0,0)
             RowLayout {
                 anchors.fill: parent
@@ -114,7 +109,9 @@ Rectangle{
             Layout.preferredWidth: 320
             Layout.preferredHeight: 50
             color: Qt.rgba(0,0,0,0)
-            Layout.bottomMargin: 40
+            Layout.margins: 20
+            Layout.bottomMargin: 10
+            Layout.topMargin: 5
             RowLayout {
                 anchors.fill: parent
                 spacing: 0
@@ -147,10 +144,15 @@ Rectangle{
             }
         }
         Rectangle{
+            Layout.fillHeight: true
+            Layout.fillWidth: true
+            color: Qt.rgba(0,0,0,0)
+        }
+        Rectangle{
             Layout.preferredWidth: 320
             Layout.preferredHeight: 50
             color: Qt.rgba(0,0,0,0)
-            Layout.bottomMargin: 5
+            Layout.margins: 20
             RowLayout {
                 anchors.fill: parent
                 spacing: 0
@@ -162,17 +164,31 @@ Rectangle{
                     Layout.rightMargin: 20
                 }
                 TextBox{
+                    id: lobbycode
                     Layout.preferredWidth: 200
                     Layout.preferredHeight: 50
+                    Layout.rightMargin: 20
                     state: "desc"
                     text: qmlAdapter.lobbyCode
+                    function getLobbyCodeText ()
+                    {
+                        return lobbycode.text.toString()
+                    }
                 }
+                //GameButton {
+                //    textColor: "white"
+                //    text : "Copy"
+                //    Layout.preferredWidth: 50
+                //    Layout.preferredHeight: 50
+                //    state: "blackButton"
+                //    MouseArea {
+                //        anchors.fill: parent
+                //        onClicked: {
+                //            lobbycode.text.execCommand("copy");
+                //        }
+                //    }
+                //}
             }
-        }
-        Rectangle{
-            Layout.fillHeight: true
-            Layout.fillWidth: true
-            color: Qt.rgba(0,0,0,0)
         }
     }
     Connections {

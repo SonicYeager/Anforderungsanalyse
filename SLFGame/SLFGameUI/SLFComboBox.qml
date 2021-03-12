@@ -37,7 +37,7 @@ ComboBox {
             context.lineTo(width, 0);
             context.lineTo(width / 2, height);
             context.closePath();
-            context.fillStyle = control.pressed ? "gray" : "gray";
+            context.fillStyle = control.pressed ? "gray" : "black";
             context.fill();
         }
     }

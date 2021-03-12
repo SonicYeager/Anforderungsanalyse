@@ -39,6 +39,11 @@ void QmlAdapter::UpdateGameState(const STATE & state)
     setView(GetViewFromState(state));
 }
 
+void QmlAdapter::ChatMessageReceived(const ChatMessage & cm)
+{
+    AddChatMessage(cm.sender.c_str(), cm.text.c_str());
+}
+
 // ------------------------------------------ getter ------------------------------------------
 #define getterFunctions {
 
@@ -133,6 +138,11 @@ QString QmlAdapter::getView()
 QString QmlAdapter::getPlayerName()
 {
     return _playerName;
+}
+
+QString QmlAdapter::getChatLog()
+{
+    return _chatLog;
 }
 
 #define getterFunctionsEnd }
@@ -381,6 +391,11 @@ void QmlAdapter::lobbySettingsChanged()
     onLobbySettingsChanged(_customCategories.toStdString(), _roundTime.toStdString(), _maxRounds.toStdString());
 }
 
+void QmlAdapter::sendChatMessage(QString str)
+{
+    onChatMessage(_playerName.toStdString(), str.toStdString());
+}
+
 QString QmlAdapter::GetViewFromState(STATE view)
 {
     switch (view)
@@ -392,6 +407,13 @@ QString QmlAdapter::GetViewFromState(STATE view)
         case STATE::INTERVENTION :  return (getPlayerId() == 0) ? "Intervention" : "Waiting";
         case STATE::FINALSCORES :   return "FinalScores"; break;
     }
+}
+
+void QmlAdapter::AddChatMessage(const QString &sender, const QString &text)
+{
+    QString output = (sender == _playerName) ? "Du" : sender;
+    _chatLog += output + ": " + text + "\n";
+    emit chatLogChanged();
 }
 
 #define slotFunctionsEnd }

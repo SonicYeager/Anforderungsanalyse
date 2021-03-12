@@ -2,6 +2,8 @@
 #include "gmock/gmock.h"
 #include "../SLFGameBackend/MessageHandler.h"
 
+using namespace Messages;
+
 class FakeClass
 {
 public:

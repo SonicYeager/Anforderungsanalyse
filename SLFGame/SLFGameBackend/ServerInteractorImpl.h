@@ -22,6 +22,7 @@ private:
 	//msg events
 	void OnMsgPlayerName(const Playername&);
 	void OnMsgHandleGameSettings(const HandleGameSettings&);
+	void OnChatMessage(const ChatMessage&);
 
 	//helper funcs
 	HandleGameSettings CreateHandleGameSettings();

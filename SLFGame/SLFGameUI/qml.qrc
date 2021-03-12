@@ -19,5 +19,6 @@
         <file>GameScreen_MainMenu.qml</file>
         <file>PlayerOverview.qml</file>
         <file>SLFComboBox.qml</file>
+        <file>Chat.qml</file>
     </qresource>
 </RCC>

@@ -1,4 +1,4 @@
-#ifndef QMLADAPTER_H
+﻿#ifndef QMLADAPTER_H
 #define QMLADAPTER_H
 
 #endif // QMLADAPTER_H
@@ -20,10 +20,11 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(QString lobbyCode           READ getLobbyCode             WRITE setLobbyCode             NOTIFY lobbyCodeChanged)
     Q_PROPERTY(QString customCategories    READ getCustomCategories      WRITE setCustomCategories      NOTIFY customCategoriesChanged)
     Q_PROPERTY(QString maxRounds           READ getMaxRounds             WRITE setMaxRounds             NOTIFY maxRoundsChanged)
-    Q_PROPERTY(QString roundTime           READ getRoundTime            WRITE setRoundTime              NOTIFY roundTimeChanged)
+    Q_PROPERTY(QString roundTime           READ getRoundTime             WRITE setRoundTime             NOTIFY roundTimeChanged)
     Q_PROPERTY(QString timeLeft            READ getTimeLeft              WRITE setTimeLeft              NOTIFY timeLeftChanged)
     Q_PROPERTY(QString view                READ getView                  WRITE setView                  NOTIFY viewChanged)
     Q_PROPERTY(QString playerName          READ getPlayerName            WRITE setPlayerName            NOTIFY playerNameChanged)
+    Q_PROPERTY(QString chatLog             READ getChatLog               NOTIFY chatLogChanged)
     Q_PROPERTY(StrVector categories        READ getCategories            WRITE setCategories            NOTIFY categoriesChanged)
     Q_PROPERTY(StrVector2D answers         READ getAnswers               WRITE setAnswers               NOTIFY answersChanged)
     Q_PROPERTY(QList<QVariantMap> players  READ getPlayers               WRITE setPlayers               NOTIFY playersChanged)
@@ -43,6 +44,7 @@ public:
     void UpdateLobby        (const LobbySettings&) override;
     void SetLobbyCode       (const LobbyCode&) override;
     void UpdateGameState    (const STATE&) override;
+    void ChatMessageReceived (const ChatMessage&) override;
 
     QString getLetter();
     QString getLobbyCode();
@@ -52,6 +54,7 @@ public:
     QString getTimeLeft();
     QString getView();
     QString getPlayerName();
+    QString getChatLog();
     StrVector getCategories();
     StrVector2D getAnswers();
     QList<QVariantMap> getPlayers();
@@ -99,6 +102,7 @@ public slots:
     void hostLobby();
     void joinLobby();
     void lobbySettingsChanged();
+    void sendChatMessage(QString str);
 
 signals:
     void letterChanged();
@@ -120,10 +124,12 @@ signals:
     void playerIdChanged();
     void playerNameChanged();
     void roundTimeChanged();
+    void chatLogChanged();
 
 private:
 
     QString GetViewFromState(STATE);
+    void AddChatMessage(const QString& sender,const QString& text);
 
     QString _letter             = "bad";
     QString _lobbyCode          = "";
@@ -134,6 +140,7 @@ private:
     QString m_customCategories  = {};
     QString _view               = "MainMenu";
     QString _playerName         = "";
+    QString _chatLog            = "";
     StrVector _categories       = {"Stadt", "Land", "Fluss", "Name", "Tier", "Beruf"};
     StrVector _unhandledanswers = {};
     PlayerMap _players          = {};

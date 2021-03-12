@@ -41,50 +41,23 @@ Rectangle {
         }
         Rectangle {
             id:body
-            Layout.preferredWidth: parent.width - body.Layout.margins * 2
+            Layout.preferredWidth: parent.width
             Layout.fillHeight: true
-            color: "#000000"
-            border.color: "white"
-            border.width: 5
-            Layout.margins: 10
+            color: Qt.rgba(0,0,0,0)
             RowLayout{
                 anchors.fill: parent
                 spacing: 0
                 Rectangle{
-                    color: Qt.rgba(0,0,0,0)
-                    id: settingsContainer
-                    Layout.preferredWidth: parent.width * 0.4
-                    Layout.preferredHeight: parent.height
-                    Layout.margins: 20
-                    Rectangle{
-                        id: settingsPlaceholder_top
-                        Layout.fillHeight: true
-                        Layout.minimumHeight: 25
-                        Layout.preferredWidth: parent.width
-                        color: Qt.rgba(0,0,0,0)
-                    }
-                    Settings_Lobby {
-                        id:settings_lobby
-                        Layout.preferredWidth: parent.width
-                        Layout.preferredHeight: (parent.height - bottom.height - header.height) * 0.8
-                    }
-                    Rectangle{
-                        id: settingsPlaceholder_bottom
-                        Layout.fillHeight: true
-                        Layout.minimumHeight: 50
-                        Layout.preferredWidth: parent.width
-                        color: Qt.rgba(0,0,0,0)
-                    }
-                }
-                Rectangle{
-                    color: Qt.rgba(0,0,0,0)
                     id: playerOverviewContainer
-                    Layout.preferredWidth: parent.width * 0.4
-                    Layout.preferredHeight: parent.height
-                    Layout.margins: 20
+                    Layout.preferredWidth: 240
+                    Layout.preferredHeight: parent.height - 20
+                    Layout.leftMargin: 10
+                    color: "#000000"
+                    border.color: "white"
+                    border.width: 3
                     Rectangle{
                         Layout.preferredWidth: parent.width
-                        Layout.preferredHeight: parent.height*0.8
+                        Layout.preferredHeight: parent.height
                         color: Qt.rgba(0,0,0,0)
                         ColumnLayout{
                             anchors.fill: parent
@@ -94,21 +67,60 @@ Rectangle {
                                 state: "desc"
                                 Layout.preferredWidth: 200
                                 Layout.preferredHeight: 50
-                                Layout.bottomMargin: 5
+                                Layout.margins: 20
+                                Layout.bottomMargin: 10
                             }
                             PlayerOverview {
                                 id:playersOverview
                                 Layout.preferredWidth: parent.width
                                 Layout.minimumHeight: count * 50
+                                Layout.leftMargin: 20
                                 model: qmlAdapter.players
                             }
                         }
                     }
                 }
+                Rectangle{
+                    id: settingsContainer
+                    Layout.preferredWidth: parent.width * 0.45
+                    Layout.preferredHeight: parent.height - 20
+                    Layout.leftMargin: 20
+                    color: "#000000"
+                    border.color: "white"
+                    border.width: 3
+                    Rectangle{
+                        id: settingsPlaceholder_top
+                        Layout.fillHeight: true - 20
+                        Layout.minimumHeight: 25 - 20
+                        Layout.preferredWidth: parent.width
+                        color: Qt.rgba(0,0,0,0)
+                        Layout.margins: 10
+                    }
+                    Settings_Lobby {
+                        id:settings_lobby
+                        Layout.preferredWidth: parent.width - 20
+                        Layout.preferredHeight: (parent.height - bottom.height - header.height) * 0.8 - 20
+                        Layout.margins: 10
+                    }
+                    Rectangle{
+                        id: settingsPlaceholder_bottom
+                        Layout.fillHeight: true - 20
+                        Layout.minimumHeight: 50 - 20
+                        Layout.preferredWidth: parent.width
+                        color: Qt.rgba(0,0,0,0)
+                        Layout.margins: 10
+                    }
+                }
+                Chat {
+                    id: chatbox
+                    Layout.fillWidth: true
+                    Layout.leftMargin: 20
+                    Layout.rightMargin: 10
+                    Layout.preferredHeight: parent.height - 20
+                    color: Qt.rgba(0,0,0,0)
+                }
             }
         }
-
-
         Rectangle{
             id: bottom
             Layout.minimumHeight: 100

@@ -9,4 +9,5 @@ public:
 	void on(const PlayerAnswers&) override;
 	void on(const HandleGameSettings&) override;
 	void on(const GameState&) override;
+	void on(const ChatMessage&) override;
 };

@@ -3,8 +3,9 @@ import QtQuick.Controls 2.5
 
 TextField {
     id: entryBox
+    selectByMouse: true
     color:"black"
-    text: "_"
+    text: ""
     font.pixelSize: entryBox.height * 0.4
     implicitHeight : 50
     width: implicitWidth
@@ -24,6 +25,17 @@ TextField {
                 target:entryBox
                 activeFocusOnPress: true
                 background.color: entryBox.hovered? "#cccccc" : "white"
+            }
+        },
+        State {
+            name: "chatEntry"
+            PropertyChanges {
+                color:"black"
+                target:entryBox
+                activeFocusOnPress: true
+                background.color: entryBox.hovered? "#d4d6d5" : "white"
+                background.border.width: 2
+                background.border.color: "#d4d6d5"
             }
         },
         State {

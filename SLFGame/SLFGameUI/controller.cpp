@@ -19,12 +19,11 @@ Controller::Controller(UI* ui, ClientInteractor* clientInter, ServerInteractor* 
 
     m_pUi->onLobbySettingsChanged       = [this](const std::string& customCats,const std::string& timeLeft,const std::string& maxRounds)
                                           {m_pClientInter->LobbyChanged(customCats, timeLeft, maxRounds);};
+    m_pUi->onChatMessage                = [this](const std::string& sender, const std::string& text)
+                                          {m_pClientInter->ChatMessageReceived(sender,text);};
 
     m_pClientInter->onReceivedID        = [this](int id)
                                           {m_pUi->ReceiveID(id);};
-
-    m_pClientInter->onGameOver          = [this](GameStats gs)
-                                          {/*m_pUi->PrepareFinalScores(gs);*/};
 
     m_pClientInter->onUpdateLobbySettings  = [this](LobbySettings ls)
                                           {m_pUi->UpdateLobby(ls);};
@@ -37,6 +36,8 @@ Controller::Controller(UI* ui, ClientInteractor* clientInter, ServerInteractor* 
 
     m_pClientInter->onGameState         = [this](STATE state)
                                           {m_pUi->UpdateGameState(state);};
+    m_pClientInter->onChatMessage       = [this](ChatMessage cm)
+                                          {m_pUi->ChatMessageReceived(cm);};
 
 }
 

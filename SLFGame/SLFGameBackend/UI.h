@@ -1,5 +1,8 @@
 #pragma once
 #include "DataTypes.h"
+#include "Messages.h"
+
+using namespace Messages;
 
 class UI
 {
@@ -8,6 +11,7 @@ public:
     virtual void UpdateLobby(const LobbySettings&) = 0;
     virtual void SetLobbyCode(const LobbyCode&) = 0;
     virtual void UpdateGameState(const STATE&) = 0;
+    virtual void ChatMessageReceived(const ChatMessage&) = 0;
 	virtual ~UI() = default;
 
 	Event<const std::string&, const std::string&, const std::string&> onPrepareGame;
@@ -16,4 +20,5 @@ public:
 	Event<const std::string&> onHostLobby;
 	Event<const std::string&, const std::string&> onJoinLobby;
     Event<const std::string&, const std::string&, const std::string&> onLobbySettingsChanged;
+    Event<const std::string&, const std::string&> onChatMessage;
 };

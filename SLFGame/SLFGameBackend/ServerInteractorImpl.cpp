@@ -11,6 +11,7 @@ ServerInteractorImpl::ServerInteractorImpl(ServerSource* s, SerializerSource* ss
 	m_pServer->onClientDisconnect = [this](int id) { OnDisconnect(id); };
 
 	m_pMsgHandler->onPlayername = [this](const Playername& playerName) { OnMsgPlayerName(playerName); };
+	m_pMsgHandler->onChatMessage = [this](const ChatMessage& cm) { OnChatMessage(cm); };
 	m_pMsgHandler->onHandleGameSettings = [this](const HandleGameSettings& gs) { OnMsgHandleGameSettings(gs); };
 }
 
@@ -25,8 +26,8 @@ void ServerInteractorImpl::StartServer()
 void ServerInteractorImpl::OnNewConnection(int id)
 {
 	PlayerID ID{id};
-	auto ser = m_pSerializer->Serialize(ID);
-	m_pServer->WriteTo(ser, id);
+	auto serID = m_pSerializer->Serialize(ID);
+	m_pServer->WriteTo(serID, id);
 
 	//onLog("ServerInteractor: New Connection Handled; ID: " + std::to_string(id));
 }
@@ -65,6 +66,10 @@ void ServerInteractorImpl::OnMsgPlayerName(const Playername& playerName)
 	auto ser = m_pSerializer->Serialize(stats);
 	m_pServer->Broadcast(ser);
 
+	//ChatMessage cm{ "*Server", m_GameStats.players[m_GameStats.players.size()].playerName + " has connected to the Server." };
+	//auto serCM = m_pSerializer->Serialize(cm);
+	//m_pServer->Broadcast(serCM);
+
 	//for schleife -> WriteTo (neue id)
 }
 
@@ -77,6 +82,12 @@ void ServerInteractorImpl::OnMsgHandleGameSettings(const HandleGameSettings& set
 	auto msg = CreateHandleGameSettings();
 
 	auto ser = m_pSerializer->Serialize(msg);
+	m_pServer->Broadcast(ser);
+}
+
+void ServerInteractorImpl::OnChatMessage(const ChatMessage& cm)
+{
+	auto ser = m_pSerializer->Serialize(cm);
 	m_pServer->Broadcast(ser);
 }
 

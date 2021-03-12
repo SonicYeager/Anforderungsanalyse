@@ -41,6 +41,38 @@ Rectangle {
             }
         },
         State {
+            name: "blackButton"
+            PropertyChanges {
+                target: master
+                color: "black"
+            }
+            PropertyChanges {
+                target: ma
+                onEntered: {
+                    master.color = "#303030"
+                }
+                onExited: {
+                    master.color = "black"
+                }
+            }
+        },
+        State {
+            name: "whiteButton"
+            PropertyChanges {
+                target: master
+                color: "white"
+            }
+            PropertyChanges {
+                target: ma
+                onEntered: {
+                    master.color = "#d6d6d6"
+                }
+                onExited: {
+                    master.color = "white"
+                }
+            }
+        },
+        State {
             name: "redButton"
             PropertyChanges {
                 target: master
