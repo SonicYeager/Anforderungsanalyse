@@ -11,9 +11,6 @@ using namespace ::testing;
 class FakeUI : public UI
 {
 public:
-	MOCK_METHOD(void, PrepareGame, (const GameStats&), (override));
-	MOCK_METHOD(void, PrepareOverview, (const GameStats&), (override));
-	MOCK_METHOD(void, PrepareFinalScores, (const GameStats&), (override));
 	MOCK_METHOD(void, ReceiveID, (int), (override));
 	MOCK_METHOD(void, UpdateLobby, (const LobbySettings&), (override));
 	MOCK_METHOD(void, SetLobbyCode, (const LobbyCode&), (override));
