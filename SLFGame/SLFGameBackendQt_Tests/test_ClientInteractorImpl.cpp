@@ -19,7 +19,7 @@ public:
 	MOCK_METHOD(void, UpdateLobby,			(const LobbySettings&),	(override));
 	MOCK_METHOD(void, SetLobbyCode,			(const LobbyCode&),		(override));
 	MOCK_METHOD(void, UpdateGameState,		(const STATE&),			(override));
-	//virtual void ChatMessageReceived(const ChatMessage&) = 0;
+	MOCK_METHOD(void, ChatMessageReceived,	(const ChatMessage&),	(override));
 };
 
 class FakeRandomLetterGenerator : public RandomGenRessource
@@ -44,9 +44,10 @@ private:
 class FakeClient : public ClientSource
 {
 public:
-	MOCK_METHOD(std::string,	GenerateLobbyCode,	(),					(override));
-	MOCK_METHOD(void,			ConnectToServer,	(const LobbyCode&),	(override));
-	MOCK_METHOD(void,			WriteToHost,		(const ByteStream&),(override));
+	MOCK_METHOD(std::string,	GenerateLobbyCode,		(),					(override));
+	MOCK_METHOD(void,			ConnectToServer,		(const LobbyCode&),	(override));
+	MOCK_METHOD(void,			WriteToHost,			(const ByteStream&),(override));
+	MOCK_METHOD(void,			DisconnectFromServer,	(),					(override));
 };
 
 class TestClientInteractor : public Test
@@ -93,85 +94,84 @@ protected:
 //	EXPECT_EQ(actual.first.lobbyCode, "");
 //}
 
-TEST_F(TestClientInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStatsAndPlayerStatsFilledWithStdCatsRound0NoTimer)
-{
-	GameStats actualGS;
-	gameInteractor.onPrepareGame = [&actualGS](GameStats gs) 
-	{
-		actualGS = gs;
-	};
+//TEST_F(TestClientInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStatsAndPlayerStatsFilledWithStdCatsRound0NoTimer)
+//{
+//	GameStats actualGS;
+//	gameInteractor.onPrepareGame = [&actualGS](GameStats gs) 
+//	{
+//		actualGS = gs;
+//	};
+//
+//	gameInteractor.PrepareGame("Stadt,Land,Fluss,Name,Tier,Beruf", "", "0");
+//
+//	Categories cat{ {"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"} };
+//	EXPECT_EQ(actualGS.categories, cat);
+//	EXPECT_EQ(actualGS.timeout, "");
+//	EXPECT_EQ(actualGS.currentRound, 1);
+//}
 
-	gameInteractor.PrepareGame("Stadt,Land,Fluss,Name,Tier,Beruf", "", "0");
+//TEST_F(TestClientInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_ReturnPlayerStatsFilledWithBremenBulgarienBrahmaputra)
+//{
+//	GameStats actualGS;
+//	PlayerStats actualPS;
+//	gameInteractor.onPrepareOverview = [&actualGS, &actualPS](GameStats gs)
+//	{
+//		actualGS = gs;
+//		actualPS = gs.players[0];
+//	};
+//
+//	gameInteractor.m_GameStats.players.emplace(0, PlayerStats{ "Name", {}, {} });
+//	gameInteractor.PrepareOverview({ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} });
+//
+//	std::vector<std::string> expected{ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} };
+//	EXPECT_EQ(actualPS.answers, expected);
+//}
 
-	Categories cat{ {"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"} };
-	EXPECT_EQ(actualGS.categories, cat);
-	EXPECT_EQ(actualGS.timeout, "");
-	EXPECT_EQ(actualGS.currentRound, 1);
-}
+//TEST_F(TestClientInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinalScoresWithCalculatedScores)
+//{
+//	GameStats expectedGS;
+//	expectedGS.currentRound = 1;
+//	expectedGS.maxRounds = 0;
+//	PlayerStats expectedPS;
+//	expectedPS.points = 40;
+//	expectedGS.players.emplace(0, expectedPS);
+//	::testing::StrictMock<FakeUI> fui;
+//	gameInteractor.onGameOver = [&fui](GameStats gs) 
+//		{fui.PrepareFinalScores(gs); };
+//	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO};
+//
+//	EXPECT_CALL(fui, PrepareFinalScores(expectedGS));
+//
+//	gameInteractor.m_GameStats.players.emplace(0, PlayerStats{ "", 0, {} });
+//	gameInteractor.m_GameStats.maxRounds = 0;
+//	gameInteractor.EndRound(dec);
+//}
 
-TEST_F(TestClientInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_ReturnPlayerStatsFilledWithBremenBulgarienBrahmaputra)
-{
-	GameStats actualGS;
-	PlayerStats actualPS;
-	gameInteractor.onPrepareOverview = [&actualGS, &actualPS](GameStats gs)
-	{
-		actualGS = gs;
-		actualPS = gs.players[0];
-	};
-
-	gameInteractor.m_GameStats.players.emplace(0, PlayerStats{ "Name", {}, {} });
-	gameInteractor.PrepareOverview({ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} });
-
-	std::vector<std::string> expected{ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} };
-	EXPECT_EQ(actualPS.answers, expected);
-}
-
-TEST_F(TestClientInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinalScoresWithCalculatedScores)
-{
-	GameStats expectedGS;
-	expectedGS.currentRound = 1;
-	expectedGS.maxRounds = 0;
-	PlayerStats expectedPS;
-	expectedPS.points = 40;
-	expectedGS.players.emplace(0, expectedPS);
-	::testing::StrictMock<FakeUI> fui;
-	gameInteractor.onGameOver = [&fui](GameStats gs) 
-		{fui.PrepareFinalScores(gs); };
-	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO};
-
-	EXPECT_CALL(fui, PrepareFinalScores(expectedGS));
-
-	gameInteractor.m_GameStats.players.emplace(0, PlayerStats{ "", 0, {} });
-	gameInteractor.m_GameStats.maxRounds = 0;
-	gameInteractor.EndRound(dec);
-}
-
-TEST_F(TestClientInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGameWithScoresAndUsedLetters)
-{
-	GameStats expectedGS;
-	expectedGS.currentRound = 1;
-	expectedGS.currentLetter = {'C'};
-	expectedGS.maxRounds = 2;
-	expectedGS.lettersUsed = {{'C'}};
-	PlayerStats expectedPS;
-	expectedPS.points = 40;
-	expectedGS.players.emplace(0, expectedPS);
-	::testing::StrictMock<FakeUI> fui;
-	gameInteractor.onPrepareNextRound = [&fui](GameStats gs) {fui.PrepareGame(gs); };
-	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO };
-	gameInteractor.m_GameStats.maxRounds = 2;
-
-	EXPECT_CALL(fui, PrepareGame(expectedGS));
-
-	gameInteractor.m_GameStats.players.emplace(0, PlayerStats{ "", 0, {} });
-	gameInteractor.EndRound(dec);
-}
+//TEST_F(TestClientInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGameWithScoresAndUsedLetters)
+//{
+//	GameStats expectedGS;
+//	expectedGS.currentRound = 1;
+//	expectedGS.currentLetter = {'C'};
+//	expectedGS.maxRounds = 2;
+//	expectedGS.lettersUsed = {{'C'}};
+//	PlayerStats expectedPS;
+//	expectedPS.points = 40;
+//	expectedGS.players.emplace(0, expectedPS);
+//	::testing::StrictMock<FakeUI> fui;
+//	gameInteractor.onPrepareNextRound = [&fui](GameStats gs) {fui.PrepareGame(gs); };
+//	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO };
+//	gameInteractor.m_GameStats.maxRounds = 2;
+//
+//	EXPECT_CALL(fui, PrepareGame(expectedGS));
+//
+//	gameInteractor.m_GameStats.players.emplace(0, PlayerStats{ "", 0, {} });
+//	gameInteractor.EndRound(dec);
+//}
 
 TEST_F(TestClientInteractor, HostLobby_StartServer_CallStartServer)
 {
 	FakeUI fui{};
 	bool started = false;
-	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
 	gameInteractor.onSetLobbyCode = [&fui](const std::string& id) {fui.SetLobbyCode(id); };
 	gameInteractor.onStartServer = [&started]() { started = true; };
 
@@ -184,7 +184,6 @@ TEST_F(TestClientInteractor, JoinLobby_ConnectToServer_CallConnectToServer)
 {
 	EXPECT_CALL(fakeServer, ConnectToServer("CODE"));
 	FakeUI fui{};
-	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
 	gameInteractor.onSetLobbyCode = [&fui](const std::string& id) {fui.SetLobbyCode(id); };
 	gameInteractor.JoinLobby("CODE", "T-3000");
 }
@@ -193,7 +192,6 @@ TEST_F(TestClientInteractor, JoinLobby_WriteToHost_CallConnectToServer)
 {
 	EXPECT_CALL(fakeServer, WriteToHost(ByteStream{ '\0', '\0', '\0', '\x1', '\0', '\0', '\0', '\f', '\0', 'T', '\0', '-','\0', '3','\0', '0','\0', '0','\0', '0'}));
 	FakeUI fui{};
-	gameInteractor.onPrepareLobby = [&fui](const GameStats& stats) {fui.PrepareGame(stats); };
 	gameInteractor.onSetLobbyCode = [&fui](const std::string& id) {fui.SetLobbyCode(id); };
 
 	gameInteractor.JoinLobby("CODE", "T-3000");
