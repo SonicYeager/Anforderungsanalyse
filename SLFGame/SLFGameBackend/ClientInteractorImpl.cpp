@@ -12,14 +12,6 @@ ClientInteractorImpl::ClientInteractorImpl(
 	m_pSerializer(s),
 	m_pMsgHandler(n)
 {
-	//m_pGame->onGameOver = [this]() { onGameOver(m_GameStats); };
-	//m_pGame->onPrepareNextRound = [this]() 
-	//{
-	//	Letter generated = m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.lettersUsed);
-	//	m_pDataOperation->SetNewLetter(generated, m_GameStats);
-	//	m_pDataOperation->AddPreviousLetter(m_GameStats);
-	//	//onPrepareNextRound(m_GameStats);
-	//};
 	m_pClient->onData = [this](const ByteStream& stream) {OnDataReceived(stream); };
 	
 	m_pMsgHandler->onPlayerID = [this](const PlayerID& id) { OnMsgID(id); };
@@ -29,14 +21,6 @@ ClientInteractorImpl::ClientInteractorImpl(
 	m_pMsgHandler->onAllAnswers = [this](const AllAnswers& aans) { OnAllAnswers(aans); };
 	m_pMsgHandler->onRoundSetup = [this](const RoundSetup& msg) {OnRoundSetup(msg); };
 }
-
-//void ClientInteractorImpl::EndRound(const std::vector<DECISION>& decisions)
-//{
-//	auto points = m_pGame->CalculatePoints(decisions);
-//	m_pDataOperation->AddPoints(points, m_GameStats.players[0]);
-//	m_pDataOperation->InkrementRound(m_GameStats);
-//	m_pGame->CheckGameFinished(m_GameStats);
-//}
 
 void ClientInteractorImpl::HostLobby(const std::string& playerName)
 {

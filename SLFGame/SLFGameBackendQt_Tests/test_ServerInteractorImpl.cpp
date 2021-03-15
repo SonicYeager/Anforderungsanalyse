@@ -182,3 +182,12 @@ TEST_F(TestServerInteractor, OnGameState_SetupRound_WriteToAll)
 	EXPECT_CALL(fakeServer, WriteTo(expected, 0));
 	msgHandler.onGameState(msg);
 }
+
+//TEST_F(TestServerInteractor, OnNewConnection_ID_WriteToID)
+//{
+//	PlayerID ID{ 10 };
+//	auto expected = serializer.Serialize(ID);
+//	EXPECT_CALL(fakeServer, WriteTo(expected, ID.id));
+//
+//	gameInteractor.
+//}

@@ -22,7 +22,7 @@ namespace Messages
 	struct PlayerAnswers		{ std::vector<std::string> answers; };
 	struct GameState			{ STATE state; };
 	struct ChatMessage			{ std::string sender; std::string text; };
-	struct AllAnswers			{ std::vector<std::vector<std::string>> ans; };
+	struct AllAnswers			{ std::vector<std::vector<std::string>> ans{}; };
 	struct RoundSetup			{ RoundData data; };
 
 	using Message = std::variant<Playername, PlayerID, HandleGameSettings, GameState, ChatMessage, PlayerAnswers, AllAnswers, RoundSetup>;

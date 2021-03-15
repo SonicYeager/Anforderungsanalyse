@@ -17,6 +17,16 @@ inline bool operator==(const LobbySettings& left, const LobbySettings& right)
 		left.rounds == right.rounds;
 }
 
+inline bool operator==(const RoundData& left, const RoundData& right)
+{
+	return left.categories == right.categories &&
+		left.currentRound == right.currentRound &&
+		left.letter == right.letter &&
+		left.maxRounds == right.maxRounds &&
+		left.points == right.points &&
+		left.roundTime == right.roundTime;
+}
+
 inline bool operator==(const ChatMessage& left, const ChatMessage& right)
 {
 	return left.sender == right.sender &&
@@ -162,18 +172,6 @@ TEST_F(TestClientInteractor, OnMsgGameState_GameState_CallUpdateGameState)
 	msgHandler.onGameState(re);
 }
 
-//TEST_F(TestClientInteractor, OnChatMessage_ChatMsg_CallChatMessageReceived)
-//{
-//	::StrictMock<FakeUI> fui;
-//	ChatMessage msg{};
-//	msg.sender = "Sender";
-//	msg.text = "Message";
-//	EXPECT_CALL(fui, ChatMessageReceived(msg));
-//
-//	ChatMessage re{ "Sender", "Message" };
-//	msgHandler.onChatMessage(re);
-//}
-
 TEST_F(TestClientInteractor, OnAllAnswers_AllAnswers_CallReceiveAllAnswersAndUpdateGameState)
 {
 	AllAnswers answ{};
@@ -213,4 +211,34 @@ TEST_F(TestClientInteractor, StateChangeTriggered_ChatMessage_CallWriteToHost)
 	gameInteractor.StateChangeTriggered(STATE::LOBBY);
 }
 
-//void AnswersReceived(const std::vector<std::string>&) override;
+TEST_F(TestClientInteractor, AnswersReceived_Answers_CallWriteToHost)
+{
+	PlayerAnswers cm{};
+	cm.answers.push_back("Yeah");
+	cm.answers.push_back("Boi");
+	auto ser = serializer.Serialize(cm);
+	EXPECT_CALL(fakeServer, WriteToHost(ser));
+
+	gameInteractor.AnswersReceived({ "Yeah", "Boi" });
+}
+
+TEST_F(TestClientInteractor, OnChatMessage_ChatMessage_CallOnChatMessage)
+{
+	gameInteractor.onChatMessage = [this](const ChatMessage& msg) {fui.ChatMessageReceived(msg); };
+	ChatMessage msg{"Sender", "Text"};
+	EXPECT_CALL(fui, ChatMessageReceived(_));
+
+	gameInteractor.OnChatMessage({ "Sender", "Text" });
+}
+
+TEST_F(TestClientInteractor, OnRoundSetup_RoundSetup_CallUpdateGameStateAndOnRoundSetup)
+{
+	gameInteractor.onRoundData = [this](const RoundData& msg) {fui.ReceiveRoundData(msg); };
+	gameInteractor.onGameState = [this](const STATE& msg) {fui.UpdateGameState(msg); };
+
+	RoundData data{ {"some", "cats"}, "C", "bis Stop", 0, 5, 20 };
+	EXPECT_CALL(fui, ReceiveRoundData(data));
+	EXPECT_CALL(fui, UpdateGameState(STATE::INGAME));
+
+	gameInteractor.OnRoundSetup({ { {"some", "cats"}, "C", "bis Stop", 0, 5, 20 } });
+}
