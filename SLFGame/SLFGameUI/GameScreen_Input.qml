@@ -101,25 +101,6 @@ Rectangle{
                     listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
                 }
             }
-            //Connections {
-            //    target: qmlAdapter
-            //    function onCategoryCountChanged()
-            //    {
-            //        categories.listModel.clear()
-            //        for (var i = 0; i < qmlAdapter.categoryCount; i++)
-            //        {
-            //            categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
-            //        }
-            //    }
-            //    function onAnswersChanged()
-            //    {
-            //        categories.listModel.clear()
-            //        for (var i = 0; i < qmlAdapter.categoryCount; i++)
-            //        {
-            //            categories.listModel.append({"categoryName":qmlAdapter.getCategoryName(i), "categoryEntry":""})
-            //        }
-            //    }
-            //}
         }
         Rectangle{
             id: categoryPlaceholder_bottom
@@ -154,14 +135,7 @@ Rectangle{
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            for (var i = 0; i < categories.listModel.count; i++)
-                            {
-                                qmlAdapter.addAnswer(categories.listModel.get(i).categoryEntry)
-                            }
-
-                            qmlAdapter.prepareOverview();
-                            qmlAdapter.view = "Overview";
-
+                            qmlAdapter.triggerStateChange(4)
                         }
                     }
                 }
@@ -182,6 +156,17 @@ Rectangle{
                     }
                 }
             }
+        }
+    }
+    Connections {
+        target:qmlAdapter
+        function onAnswersRequest()
+        {
+            for (var i = 0; i < categories.listModel.count; i++)
+            {
+                qmlAdapter.addAnswer(categories.listModel.get(i).categoryEntry)
+            }
+            qmlAdapter.sendAnswers()
         }
     }
 }

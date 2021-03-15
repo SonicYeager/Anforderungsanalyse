@@ -13,9 +13,6 @@ void QmlAdapter::ReceiveID(int id)
 
 void QmlAdapter::UpdateLobby(const LobbySettings & ls)
 {
-    //setCustomCategories(ls.categories.c_str());
-    //setRoundTime(ls.timeout.c_str());
-    //setMaxRounds(ls.rounds.c_str());
     _customCategories = ls.categories.c_str();
     _maxRounds = ls.rounds.c_str();
     _roundTime = ls.timeout.c_str();
@@ -37,11 +34,22 @@ void QmlAdapter::SetLobbyCode(const LobbyCode & lobbycode)
 void QmlAdapter::UpdateGameState(const STATE & state)
 {
     setView(GetViewFromState(state));
+    triggerStateRelatedSignal(state);
 }
 
 void QmlAdapter::ChatMessageReceived(const ChatMessage & cm)
 {
     AddChatMessage(cm.sender.c_str(), cm.text.c_str());
+}
+
+void QmlAdapter::ReceiveCategories(const StrVector & categories)
+{
+    setCategories(categories);
+}
+
+void QmlAdapter::ReveiveAllAnswers(const std::vector<std::vector<std::string> > & answers)
+{
+    setAnswers(answers);
 }
 
 // ------------------------------------------ getter ------------------------------------------
@@ -201,10 +209,12 @@ void QmlAdapter::setAnswers(StrVector2D answers)
         return;
     _answers = answers;
     _decisions.clear();
-    for (int i = 0; i < _playerCount; i++)
+    for (unsigned int i = 0; i < _players.size(); i++)
+    {
         _decisions.emplace_back();
-    for (int i = 0; i < _categoryCount - 1; i++)
+        for (int j = 0; j < _categoryCount; j++)
         _decisions[i].emplace_back(DECISION::UNANSWERED);
+    }
 
     emit answersChanged();
     emit decisionsChanged();
@@ -396,23 +406,53 @@ void QmlAdapter::sendChatMessage(QString str)
     onChatMessage(_playerName.toStdString(), str.toStdString());
 }
 
+void QmlAdapter::triggerStateChange(int state)
+{
+    switch (state)
+    {
+        case 0:  { onState(STATE::MAINMENU          ); break; }
+        case 1:  { onState(STATE::LOBBY             ); break; }
+        case 2:  { onState(STATE::SETUPROUND        ); break; }
+        case 3:  { onState(STATE::INGAME            ); break; }
+        case 4:  { onState(STATE::ANSWERREQUEST     ); break; }
+        case 5:  { onState(STATE::OVERVIEW          ); break; }
+        case 6:  { onState(STATE::INTERVENTION      ); break; }
+        case 7:  { onState(STATE::FINALSCORES       ); break; }
+    }
+}
+
+void QmlAdapter::triggerStateRelatedSignal(STATE state)
+{
+    switch (state)
+    {
+    case STATE::ANSWERREQUEST: {emit answersRequest(); break;}
+    }
+}
+
+void QmlAdapter::sendAnswers()
+{
+   onSendAnswers(_unhandledanswers);
+}
+
 QString QmlAdapter::GetViewFromState(STATE view)
 {
     switch (view)
     {
         case STATE::MAINMENU :      return "MainMenu";
         case STATE::LOBBY :         return "Lobby";
+        case STATE::SETUPROUND :    return "Lobby";
         case STATE::INGAME :        return "Input";
+        case STATE::ANSWERREQUEST : return "Input";
         case STATE::OVERVIEW :      return "Overview";
         case STATE::INTERVENTION :  return (getPlayerId() == 0) ? "Intervention" : "Waiting";
-        case STATE::FINALSCORES :   return "FinalScores"; break;
+        case STATE::FINALSCORES :   return "FinalScores";
     }
 }
 
 void QmlAdapter::AddChatMessage(const QString &sender, const QString &text)
 {
     QString output = (sender == _playerName) ? "Du" : sender;
-    _chatLog += output + ": " + text + "\n";
+    _chatLog = output + ": " + text + "\n" + _chatLog;
     emit chatLogChanged();
 }
 

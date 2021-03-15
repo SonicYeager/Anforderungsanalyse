@@ -17,29 +17,30 @@ ClientInteractorImpl::ClientInteractorImpl(RandomGenRessource* gen,
 	m_pSerializer(s),
 	m_pMsgHandler(n)
 {
-	m_pGame->onGameOver = [this]() { onGameOver(m_GameStats); };
-	m_pGame->onPrepareNextRound = [this]() 
-	{
-		Letter generated = m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.lettersUsed);
-		m_pDataOperation->SetNewLetter(generated, m_GameStats);
-		m_pDataOperation->AddPreviousLetter(m_GameStats);
-		//onPrepareNextRound(m_GameStats);
-	};
+	//m_pGame->onGameOver = [this]() { onGameOver(m_GameStats); };
+	//m_pGame->onPrepareNextRound = [this]() 
+	//{
+	//	Letter generated = m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.lettersUsed);
+	//	m_pDataOperation->SetNewLetter(generated, m_GameStats);
+	//	m_pDataOperation->AddPreviousLetter(m_GameStats);
+	//	//onPrepareNextRound(m_GameStats);
+	//};
 	m_pClient->onData = [this](const ByteStream& stream) {OnDataReceived(stream); };
 	
 	m_pMsgHandler->onPlayerID = [this](const PlayerID& id) { OnMsgID(id); };
 	m_pMsgHandler->onHandleGameSettings = [this](const HandleGameSettings& gs) { OnMsgHandleGameSettings(gs); };
 	m_pMsgHandler->onGameState = [this](const GameState& gs) { OnMsgGameState(gs); };
 	m_pMsgHandler->onChatMessage = [this](const ChatMessage& cm) { OnChatMessage(cm); };
+	m_pMsgHandler->onAllAnswers = [this](const AllAnswers& aans) { OnAllAnswers(aans); };
 }
 
-void ClientInteractorImpl::EndRound(const std::vector<DECISION>& decisions)
-{
-	auto points = m_pGame->CalculatePoints(decisions);
-	m_pDataOperation->AddPoints(points, m_GameStats.players[0]);
-	m_pDataOperation->InkrementRound(m_GameStats);
-	m_pGame->CheckGameFinished(m_GameStats);
-}
+//void ClientInteractorImpl::EndRound(const std::vector<DECISION>& decisions)
+//{
+//	auto points = m_pGame->CalculatePoints(decisions);
+//	m_pDataOperation->AddPoints(points, m_GameStats.players[0]);
+//	m_pDataOperation->InkrementRound(m_GameStats);
+//	m_pGame->CheckGameFinished(m_GameStats);
+//}
 
 void ClientInteractorImpl::HostLobby(const std::string& playerName)
 {
@@ -83,6 +84,22 @@ void ClientInteractorImpl::OnDataReceived(const ByteStream& stream)
 	m_pMsgHandler->handleMessage(des);
 }
 
+void ClientInteractorImpl::StateChangeTriggered(const STATE& state)
+{
+	GameState gs;
+	gs.state = state;
+	auto ser = m_pSerializer->Serialize(gs);
+	m_pClient->WriteToHost(ser);
+}
+
+void ClientInteractorImpl::AnswersReceived(const std::vector<std::string>& answers)
+{
+	PlayerAnswers ans{answers};
+
+	auto ser = m_pSerializer->Serialize(ans);
+	m_pClient->WriteToHost(ser);
+}
+
 void ClientInteractorImpl::OnMsgID(const PlayerID& id)
 {
 	onReceivedID(id.id);
@@ -90,16 +107,26 @@ void ClientInteractorImpl::OnMsgID(const PlayerID& id)
 
 void ClientInteractorImpl::OnMsgHandleGameSettings(const HandleGameSettings& settings)
 {
+	m_customCategoryString = settings.ls.categories;
+
 	onUpdateLobbySettings(settings.ls);
 	onGameState(STATE::LOBBY);
 }
 
 void ClientInteractorImpl::OnMsgGameState(const GameState& gs)
 {
+	switch (gs.state)
+		case STATE::INGAME: { onCategories(m_pParser->ParseCategories(m_customCategoryString)); break; }
 	onGameState(gs.state);
 }
 
 void ClientInteractorImpl::OnChatMessage(const ChatMessage& cm)
 {
 	onChatMessage(cm);
+}
+
+void ClientInteractorImpl::OnAllAnswers(const AllAnswers& msg)
+{
+	onAllAnswers(msg.ans);
+	onGameState(STATE::OVERVIEW);
 }

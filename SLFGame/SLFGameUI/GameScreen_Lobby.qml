@@ -147,10 +147,7 @@ Rectangle {
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            qmlAdapter.maxRounds = settings_lobby.roundCount
-                            qmlAdapter.timeLeft = settings_lobby.roundTime
-                            qmlAdapter.prepareGame();
-                            qmlAdapter.view = "Input";
+                            qmlAdapter.triggerStateChange(3);
                         }
                     }
                 }

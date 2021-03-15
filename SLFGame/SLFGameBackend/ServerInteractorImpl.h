@@ -17,6 +17,7 @@ public:
 	void OnMsgHandleGameSettings(const HandleGameSettings&);
 	void OnChatMessage(const ChatMessage&);
 	void OnPlayerAnswers(const PlayerAnswers&);
+	void OnGameState(const GameState&);
 
 private:
 	//server events

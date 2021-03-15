@@ -167,7 +167,7 @@ Rectangle{
                     id: lobbycode
                     Layout.preferredWidth: 200
                     Layout.preferredHeight: 50
-                    Layout.rightMargin: 20
+                    Layout.rightMargin: 0
                     state: "desc"
                     text: qmlAdapter.lobbyCode
                     function getLobbyCodeText ()
@@ -175,19 +175,28 @@ Rectangle{
                         return lobbycode.text.toString()
                     }
                 }
-                //GameButton {
-                //    textColor: "white"
-                //    text : "Copy"
-                //    Layout.preferredWidth: 50
-                //    Layout.preferredHeight: 50
-                //    state: "blackButton"
-                //    MouseArea {
-                //        anchors.fill: parent
-                //        onClicked: {
-                //            lobbycode.text.execCommand("copy");
-                //        }
-                //    }
-                //}
+                GameButton {
+                    textColor: "white"
+                    text : "Copy"
+                    Layout.preferredWidth: 50
+                    Layout.preferredHeight: 50
+                    border.color: "white"
+                    border.width: 1
+                    state: "blackButton"
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            textEdit.text = qmlAdapter.lobbyCode
+                            textEdit.selectAll()
+                            textEdit.copy()
+                        }
+                    }
+                }
+                TextEdit
+                {
+                    id: textEdit
+                    visible: false
+                }
             }
         }
     }

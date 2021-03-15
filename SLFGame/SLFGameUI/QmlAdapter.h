@@ -38,13 +38,15 @@ class QmlAdapter : public QObject, public UI
 
 
 public:
-    explicit QmlAdapter     (QObject *parent = nullptr);
+    explicit QmlAdapter         (QObject *parent = nullptr);
 
-    void ReceiveID          (int)              override;
-    void UpdateLobby        (const LobbySettings&) override;
-    void SetLobbyCode       (const LobbyCode&) override;
-    void UpdateGameState    (const STATE&) override;
-    void ChatMessageReceived (const ChatMessage&) override;
+    void ReceiveID              (int)              override;
+    void UpdateLobby            (const LobbySettings&) override;
+    void SetLobbyCode           (const LobbyCode&) override;
+    void UpdateGameState        (const STATE&) override;
+    void ChatMessageReceived    (const ChatMessage&) override;
+    void ReceiveCategories      (const StrVector&) override;
+    void ReveiveAllAnswers      (const std::vector<std::vector<std::string>> &) override;
 
     QString getLetter();
     QString getLobbyCode();
@@ -103,6 +105,9 @@ public slots:
     void joinLobby();
     void lobbySettingsChanged();
     void sendChatMessage(QString str);
+    void triggerStateChange(int);
+    void triggerStateRelatedSignal(STATE);
+    void sendAnswers();
 
 signals:
     void letterChanged();
@@ -125,6 +130,7 @@ signals:
     void playerNameChanged();
     void roundTimeChanged();
     void chatLogChanged();
+    void answersRequest();
 
 private:
 

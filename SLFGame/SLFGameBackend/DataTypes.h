@@ -24,10 +24,12 @@ enum class STATE : int
 {
 	MAINMENU = 0,
 	LOBBY = 1,
-	INGAME = 2,
-	OVERVIEW = 3,
-	INTERVENTION = 4,
-	FINALSCORES = 5
+	SETUPROUND = 2,
+	INGAME = 3,
+	ANSWERREQUEST = 4,
+	OVERVIEW = 5,
+	INTERVENTION = 6,
+	FINALSCORES = 7
 };
 
 using Letter = char;

@@ -14,22 +14,27 @@ class ClientInteractorImpl : public ClientInteractor
 {
 public:
 	explicit ClientInteractorImpl(RandomGenRessource*, DataOperationLogic*, GameLogic*, SLFParser*, ClientSource*, SerializerSource*, MessageHandlerLogic*);
-	void EndRound(const std::vector<DECISION>&) override;
 	void HostLobby(const std::string&) override;
 	void JoinLobby(const LobbyCode&, const std::string&) override;
 	void LobbyChanged(const std::string& cats, const std::string& timeout, const std::string& rounds) override;
 	void ChatMessageReceived(const std::string& sender, const std::string& text) override;
-	GameStats m_GameStats;
+	void StateChangeTriggered(const STATE&) override;
+	void AnswersReceived(const std::vector<std::string>&) override;
+	// delete > void EndRound(const std::vector<DECISION>&) override;
+	//			GameStats m_GameStats;
 
 	//msg events
 	void OnMsgID(const PlayerID&);
 	void OnMsgHandleGameSettings(const HandleGameSettings&);
 	void OnMsgGameState(const GameState&);
 	void OnChatMessage(const ChatMessage&);
+	void OnAllAnswers(const AllAnswers&);
 
 private:
 	//client events
 	void OnDataReceived(const ByteStream&);
+
+	std::string m_customCategoryString;
 
 	ClientSource* m_pClient;
 	MessageHandlerLogic* m_pMsgHandler;
@@ -38,5 +43,7 @@ private:
 	DataOperationLogic* m_pDataOperation;
 	GameLogic* m_pGame;
 	SLFParser* m_pParser;
+
+	// Geerbt über ClientInteractor
 };
 

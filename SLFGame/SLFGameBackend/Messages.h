@@ -43,7 +43,7 @@ namespace Messages
 		case HEADER::HANDLEGAMESETTINGS: return HandleGameSettings{};
 		case HEADER::GAMESTATE: return GameState{};
 		case HEADER::CHATMESSAGE: return ChatMessage{};
-		case HEADER::ALLANSWERS: return GameState{};
+		case HEADER::ALLANSWERS: return AllAnswers{};
 		}
 		return HandleGameSettings{};
 	};

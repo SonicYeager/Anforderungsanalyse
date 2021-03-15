@@ -13,6 +13,8 @@ ServerInteractorImpl::ServerInteractorImpl(ServerSource* s, SerializerSource* ss
 	m_pMsgHandler->onPlayername = [this](const Playername& playerName) { OnMsgPlayerName(playerName); };
 	m_pMsgHandler->onChatMessage = [this](const ChatMessage& cm) { OnChatMessage(cm); };
 	m_pMsgHandler->onHandleGameSettings = [this](const HandleGameSettings& gs) { OnMsgHandleGameSettings(gs); };
+	m_pMsgHandler->onGameState = [this](const GameState& gs) { OnGameState(gs); };
+	m_pMsgHandler->onPlayerAnswers = [this](const PlayerAnswers& ans) { OnPlayerAnswers(ans); };
 }
 
 ServerInteractorImpl::~ServerInteractorImpl()
@@ -109,10 +111,16 @@ void ServerInteractorImpl::OnPlayerAnswers(const PlayerAnswers& answers)
 			allAnsw.ans.push_back(player.second.answers);
 
 		auto ser = m_pSerializer->Serialize(allAnsw);
-		m_pServer->Broadcast(ser); 
+		m_pServer->Broadcast(ser);
 	};
 
 	CheckAllAnswersRecived(m_dataGatherCounter, m_GameStats.players.size(), broadcast);
+}
+
+void ServerInteractorImpl::OnGameState(const GameState& gs)
+{
+	auto ser = m_pSerializer->Serialize(gs);
+	m_pServer->Broadcast(ser);
 }
 
 HandleGameSettings ServerInteractorImpl::CreateHandleGameSettings()

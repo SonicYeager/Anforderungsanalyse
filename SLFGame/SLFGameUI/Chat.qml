@@ -19,9 +19,12 @@ Rectangle {
             Flickable {
                 id: flickable
                 anchors.fill: parent
+                interactive: false
 
                 TextArea.flickable: TextArea {
-                    activeFocusOnPress: false
+                    readOnly: true
+                    selectByMouse: true
+                    activeFocusOnPress: true
                     text: qmlAdapter.chatLog
                     font.pointSize: 14
                     color:"#9fcce0"
@@ -49,6 +52,7 @@ Rectangle {
                     Layout.preferredHeight: parent.height - 10
                     Layout.alignment: Qt.AlignVCenter
                     Layout.rightMargin: parent.width * 0.02
+                    horizontalAlignment: TextEdit.AlignLeft
                     state: "chatEntry"
                 }
                 GameButton {

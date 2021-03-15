@@ -135,7 +135,7 @@ Rectangle{
                                     function onActiveOverviewItemChanged()
                                     {
                                         answerBlockList.listModel.clear()
-                                        for (var i = 0; i < qmlAdapter.playerCount; i++)
+                                        for (var i = 0; i < qmlAdapter.players.length; i++)
                                         {
                                             answerBlockList.listModel.append(
                                             {"answer":  qmlAdapter.getAnswer  (i,qmlAdapter.activeOverviewItem),
