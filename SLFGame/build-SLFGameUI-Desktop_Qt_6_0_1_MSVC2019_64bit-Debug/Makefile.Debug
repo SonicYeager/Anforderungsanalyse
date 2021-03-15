@@ -551,19 +551,18 @@ debug\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include\Q
 		..\SLFGameBackend\GameLogic.h \
 		..\SLFGameBackend\Client.h \
 		..\SLFGameBackend\slfgamebackendqt_global.h \
-		..\SLFGameBackend_Tests\Dependencys\QtCore\qglobal.h \
-		..\SLFGameBackend_Tests\Dependencys\QtNetwork\qhostinfo.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qtimer.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qbasictimer.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtNetwork\qhostinfo.h \
 		G:\Software\Qt\6.0.1\msvc2019_64\include\QtNetwork\qhostaddress.h \
 		G:\Software\Qt\6.0.1\msvc2019_64\include\QtNetwork\qabstractsocket.h \
 		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qiodevice.h \
-		..\SLFGameBackend_Tests\Dependencys\QtNetwork\qnetworkinterface.h \
-		..\SLFGameBackend_Tests\Dependencys\QtNetwork\qtcpserver.h \
-		..\SLFGameBackend_Tests\Dependencys\QtNetwork\qtcpsocket.h \
-		..\SLFGameBackend_Tests\Dependencys\QtCore\qthread.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtNetwork\qnetworkinterface.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtNetwork\qtcpserver.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtNetwork\qtcpsocket.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qthread.h \
 		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qdeadlinetimer.h \
 		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qelapsedtimer.h \
-		..\SLFGameBackend_Tests\Dependencys\QtCore\qtimer.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qbasictimer.h \
 		..\SLFGameBackend\ClientSource.h \
 		..\SLFGameBackend\GameStatsSerializer.h \
 		..\SLFGameBackend\SerializerSource.h \

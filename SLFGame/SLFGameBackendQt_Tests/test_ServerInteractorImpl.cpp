@@ -8,6 +8,20 @@
 
 using namespace ::testing;
 
+inline bool operator==(const LobbySettings& left, const LobbySettings& right)
+{
+	return left.timeout == right.timeout &&
+		left.categories == right.categories &&
+		left.playerNames == right.playerNames &&
+		left.rounds == right.rounds;
+}
+
+inline bool operator==(const ChatMessage& left, const ChatMessage& right)
+{
+	return left.sender == right.sender &&
+		left.text == right.text;
+}
+
 class FakeUI : public UI
 {
 public:
@@ -64,9 +78,9 @@ TEST_F(TestServerInteractor, OnMsgPlayerName_PlayerName_BroadcastToAll)
 {
 	HandleGameSettings hgs{};
 	hgs.ls.categories = "Stadt,Land,Fluss,Name,Tier,Beruf";
-	hgs.ls.playerNames = { {0, "Elysium"} };
-	hgs.ls.rounds = 5;
-	hgs.ls.timeout = "bis Ende";
+	hgs.ls.rounds = "5";
+	hgs.ls.timeout = "bis Stop";
+	hgs.ls.playerNames.emplace(0, "Elysium");
 	auto expected = serializer.Serialize(hgs);
 	EXPECT_CALL(fakeServer, Broadcast(expected));
 
@@ -78,21 +92,52 @@ TEST_F(TestServerInteractor, OnMsgHandleGameSettings_HandleGameSettings_Broadcas
 {
 	HandleGameSettings br{};
 	br.ls.categories = "Stadt,Land,Fluss,Name,Tier,Beruf";
-	br.ls.playerNames = { {0, "Elysium"} };
-	br.ls.rounds = 5;
-	br.ls.timeout = "bis Ende";
+	br.ls.rounds = "10";
+	br.ls.timeout = "20";
 	auto expected = serializer.Serialize(br);
 	EXPECT_CALL(fakeServer, Broadcast(expected));
 
 	HandleGameSettings re{};
 	re.ls.categories = "Stadt,Land,Fluss,Name,Tier,Beruf";
-	re.ls.playerNames = { {0, "Elysium"} };
-	re.ls.rounds = 5;
-	re.ls.timeout = "bis Ende";
+	re.ls.rounds = "10";
+	re.ls.timeout = "20";
 	msgHandler.onHandleGameSettings(re);
 }
 
-//void OnMsgHandleGameSettings(const HandleGameSettings&);
-//void OnChatMessage(const ChatMessage&);
-//void OnPlayerAnswers(const PlayerAnswers&);
-//void OnGameState(const GameState&);
+TEST_F(TestServerInteractor, OnChatMessage_ChatMsg_BroadcastToAll)
+{
+	ChatMessage br{};
+	br.sender = "Mar-Vell";
+	br.text = "True-Lies is a Hit!";
+	auto expected = serializer.Serialize(br);
+	EXPECT_CALL(fakeServer, Broadcast(expected));
+
+	ChatMessage re{};
+	re.sender = "Mar-Vell";
+	re.text = "True-Lies is a Hit!";
+	msgHandler.onChatMessage(re);
+}
+
+TEST_F(TestServerInteractor, OnPlayerAnswers_PlayerAnswer_BroadcastToAll)
+{
+	AllAnswers br{};
+	br.ans = { {"Kaminar", "KVN", "Keplar"} };
+	auto expected = serializer.Serialize(br);
+	EXPECT_CALL(fakeServer, Broadcast(expected));
+
+	PlayerAnswers re{};
+	re.answers = {"Kaminar", "KVN", "Keplar"};
+	msgHandler.onPlayerAnswers(re);
+}
+
+TEST_F(TestServerInteractor, OnGameState_GameState_BroadcastToAll)
+{
+	GameState br{};
+	br.state = STATE::INTERVENTION;
+	auto expected = serializer.Serialize(br);
+	EXPECT_CALL(fakeServer, Broadcast(expected));
+
+	GameState re{};
+	re.state = STATE::INTERVENTION;
+	msgHandler.onGameState(re);
+}

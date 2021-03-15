@@ -79,8 +79,6 @@ void ServerInteractorImpl::OnMsgPlayerName(const Playername& playerName)
 
 	auto ser = m_pSerializer->Serialize(stats);
 	m_pServer->Broadcast(ser);
-
-	//for schleife -> WriteTo (neue id)
 }
 
 void ServerInteractorImpl::OnMsgHandleGameSettings(const HandleGameSettings& settings)

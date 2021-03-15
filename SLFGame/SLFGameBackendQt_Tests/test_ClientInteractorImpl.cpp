@@ -12,6 +12,21 @@
 
 using namespace ::testing;
 
+inline bool operator==(const LobbySettings& left, const LobbySettings& right)
+{
+	return left.timeout == right.timeout &&
+		left.categories == right.categories &&
+		left.playerNames == right.playerNames &&
+		left.rounds == right.rounds;
+}
+
+inline bool operator==(const ChatMessage& left, const ChatMessage& right)
+{
+	return left.sender == right.sender &&
+		left.text == right.text;
+}
+
+
 class FakeUI : public UI
 {
 public:
@@ -57,7 +72,14 @@ class TestClientInteractor : public Test
 public:
 	TestClientInteractor() :
 		gameInteractor{&fakeRandomLetterGenerator, &gameStatsOperations, &game, &parser, &fakeServer, &serializer, &msgHandler}
-	{}
+	{
+		gameInteractor.onAllAnswers = [this](const std::vector<std::vector<std::string>>& ans) {fui.ReveiveAllAnswers(ans); };
+		gameInteractor.onChatMessage = [this](const ChatMessage& ans) {fui.ChatMessageReceived(ans); };
+		gameInteractor.onGameState = [this](const STATE& ans) {fui.UpdateGameState(ans); };
+		gameInteractor.onCategories = [this](const std::vector<std::string>& ans) {fui.ReceiveCategories(ans); };
+		gameInteractor.onReceivedID = [this](const int& ans) {fui.ReceiveID(ans); };
+		gameInteractor.onUpdateLobbySettings = [this](const LobbySettings& ans) {fui.UpdateLobby(ans); };
+	}
 protected:
 	virtual void SetUp()
 	{
@@ -78,97 +100,8 @@ protected:
 	GameStatsSerializer serializer{};
 	MessageHandler msgHandler{};
 	ClientInteractorImpl gameInteractor;
+	::StrictMock<FakeUI> fui;
 };
-
-//TEST_F(TestClientInteractor, PrepareLobby_EmptyLobbyCode_StandartGameStatsPlayerStats)
-//{
-//	auto actual = gameInteractor.PrepareLobby();
-//
-//	EXPECT_EQ(actual.second.answers.size(), 0);
-//	EXPECT_EQ(actual.second.points, 0);
-//
-//	Categories cat{ {"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"} };
-//	EXPECT_EQ(actual.first.categories, cat);
-//	EXPECT_EQ(actual.first.currentLetter, Letter{});
-//	EXPECT_EQ(actual.first.lettersUsed.size(), 0);
-//	EXPECT_EQ(actual.first.currentRound, 0);
-//	EXPECT_EQ(actual.first.maxRounds, 5);
-//	EXPECT_EQ(actual.first.lobbyCode, "");
-//}
-
-//TEST_F(TestClientInteractor, PrepareGame_StandartCatsRound0NoTimer_ReturnGameStatsAndPlayerStatsFilledWithStdCatsRound0NoTimer)
-//{
-//	GameStats actualGS;
-//	gameInteractor.onPrepareGame = [&actualGS](GameStats gs) 
-//	{
-//		actualGS = gs;
-//	};
-//
-//	gameInteractor.PrepareGame("Stadt,Land,Fluss,Name,Tier,Beruf", "", "0");
-//
-//	Categories cat{ {"Stadt"},{"Land"}, {"Fluss"}, {"Name"}, {"Tier"}, {"Beruf"} };
-//	EXPECT_EQ(actualGS.categories, cat);
-//	EXPECT_EQ(actualGS.timeout, "");
-//	EXPECT_EQ(actualGS.currentRound, 1);
-//}
-
-//TEST_F(TestClientInteractor, PrepareOverview_AnswersBremenBulgarienBrahmaputra_ReturnPlayerStatsFilledWithBremenBulgarienBrahmaputra)
-//{
-//	GameStats actualGS;
-//	PlayerStats actualPS;
-//	gameInteractor.onPrepareOverview = [&actualGS, &actualPS](GameStats gs)
-//	{
-//		actualGS = gs;
-//		actualPS = gs.players[0];
-//	};
-//
-//	gameInteractor.m_GameStats.players.emplace(0, PlayerStats{ "Name", {}, {} });
-//	gameInteractor.PrepareOverview({ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} });
-//
-//	std::vector<std::string> expected{ {"Bremen"}, {"Bulgarien"}, {"Brahmaputra"} };
-//	EXPECT_EQ(actualPS.answers, expected);
-//}
-
-//TEST_F(TestClientInteractor, EndRound_LastRoundThreeEvaluations_CallPrepareFinalScoresWithCalculatedScores)
-//{
-//	GameStats expectedGS;
-//	expectedGS.currentRound = 1;
-//	expectedGS.maxRounds = 0;
-//	PlayerStats expectedPS;
-//	expectedPS.points = 40;
-//	expectedGS.players.emplace(0, expectedPS);
-//	::testing::StrictMock<FakeUI> fui;
-//	gameInteractor.onGameOver = [&fui](GameStats gs) 
-//		{fui.PrepareFinalScores(gs); };
-//	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO};
-//
-//	EXPECT_CALL(fui, PrepareFinalScores(expectedGS));
-//
-//	gameInteractor.m_GameStats.players.emplace(0, PlayerStats{ "", 0, {} });
-//	gameInteractor.m_GameStats.maxRounds = 0;
-//	gameInteractor.EndRound(dec);
-//}
-
-//TEST_F(TestClientInteractor, EndRound_FirstRoundThreeEvaluations_CallPrepareGameWithScoresAndUsedLetters)
-//{
-//	GameStats expectedGS;
-//	expectedGS.currentRound = 1;
-//	expectedGS.currentLetter = {'C'};
-//	expectedGS.maxRounds = 2;
-//	expectedGS.lettersUsed = {{'C'}};
-//	PlayerStats expectedPS;
-//	expectedPS.points = 40;
-//	expectedGS.players.emplace(0, expectedPS);
-//	::testing::StrictMock<FakeUI> fui;
-//	gameInteractor.onPrepareNextRound = [&fui](GameStats gs) {fui.PrepareGame(gs); };
-//	std::vector<DECISION> dec{ DECISION::UNIQUE, DECISION::UNIQUE, DECISION::SOLO };
-//	gameInteractor.m_GameStats.maxRounds = 2;
-//
-//	EXPECT_CALL(fui, PrepareGame(expectedGS));
-//
-//	gameInteractor.m_GameStats.players.emplace(0, PlayerStats{ "", 0, {} });
-//	gameInteractor.EndRound(dec);
-//}
 
 TEST_F(TestClientInteractor, HostLobby_StartServer_CallStartServer)
 {
@@ -197,4 +130,63 @@ TEST_F(TestClientInteractor, JoinLobby_WriteToHost_CallConnectToServer)
 	gameInteractor.onSetLobbyCode = [&fui](const std::string& id) {fui.SetLobbyCode(id); };
 
 	gameInteractor.JoinLobby("CODE", "T-3000");
+}
+
+TEST_F(TestClientInteractor, OnMsgID_ID_CallReceiveID)
+{
+	EXPECT_CALL(fui, ReceiveID(10));
+
+	PlayerID re{};
+	re.id = 10;
+	msgHandler.onPlayerID(re);
+}
+
+TEST_F(TestClientInteractor, OnMsgHandleGameSettings_HandleGameSettings_CallUpdateLobbyAndUpdateGameState)
+{
+	LobbySettings ls;
+	ls.categories = { "Baum,Auto,NCC" };
+	ls.rounds = "10";
+	ls.timeout = "10";
+	ls.playerNames = { {0, "DU"} };
+	EXPECT_CALL(fui, UpdateLobby(ls));
+	EXPECT_CALL(fui, UpdateGameState(STATE::LOBBY));
+
+	HandleGameSettings re{};
+	re.ls.categories = {"Baum,Auto,NCC"};
+	re.ls.rounds = "10";
+	re.ls.timeout = "10";
+	re.ls.playerNames = { {0, "DU"} };
+	msgHandler.onHandleGameSettings(re);
+}
+
+TEST_F(TestClientInteractor, OnMsgGameState_GameState_CallUpdateGameState)
+{
+	EXPECT_CALL(fui, ReceiveCategories(std::vector<std::string>{"Junge", "Why"}));
+	EXPECT_CALL(fui, UpdateGameState(STATE::INTERVENTION));	
+	gameInteractor.m_customCategoryString = "Junge,Why" ;
+
+	GameState re{};
+	re.state = STATE::INTERVENTION;
+	msgHandler.onGameState(re);
+}
+
+//TEST_F(TestClientInteractor, OnChatMessage_ChatMsg_CallChatMessageReceived)
+//{
+//	::StrictMock<FakeUI> fui;
+//	ChatMessage msg{"Sender", "Message"};
+//	EXPECT_CALL(fui, ChatMessageReceived(msg));
+//
+//	ChatMessage re{ "Sender", "Message" };
+//	msgHandler.onChatMessage(re);
+//}
+
+TEST_F(TestClientInteractor, OnAllAnswers_AllAnswers_CallReceiveAllAnswersAndUpdateGameState)
+{
+	AllAnswers answ{ {"Wolverine", "Magneto"} };
+	EXPECT_CALL(fui, ReveiveAllAnswers(answ.ans));
+	EXPECT_CALL(fui, UpdateGameState(STATE::OVERVIEW));
+
+	AllAnswers ans;
+	ans.ans = { {"Wolverine", "Magneto"} };
+	msgHandler.onAllAnswers(ans);
 }

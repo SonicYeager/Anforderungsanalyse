@@ -28,9 +28,12 @@ public:
 	void OnAllAnswers(const AllAnswers&);
 	void OnRoundSetup(const RoundSetup&);
 
+	std::string m_customCategoryString;
+
 private:
 	//client events
 	void OnDataReceived(const ByteStream&);
+
 
 	ClientSource* m_pClient;
 	MessageHandlerLogic* m_pMsgHandler;
