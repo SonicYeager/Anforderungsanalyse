@@ -2,10 +2,7 @@
 #include "gtest/gtest.h"
 #include "../SLFGameBackend/ClientInteractorImpl.h"
 #include "../SLFGameBackend/RandomGenRessource.h"
-#include "../SLFGameBackend/GameStatsOperations.h"
 #include "../SLFGameBackend/ClientSource.h"
-#include "../SLFGameBackend/SLFParser.h"
-#include "../SLFGameBackend/Game.h"
 #include "../SLFGameBackend/UI.h"
 #include "../SLFGameBackend/GameStatsSerializer.h"
 #include "../SLFGameBackend/MessageHandler.h"
@@ -35,8 +32,8 @@ public:
 	MOCK_METHOD(void, SetLobbyCode,			(const LobbyCode&),								(override));
 	MOCK_METHOD(void, UpdateGameState,		(const STATE&),									(override));
 	MOCK_METHOD(void, ChatMessageReceived,	(const ChatMessage&),							(override));
-	MOCK_METHOD(void, ReceiveCategories,	(const std::vector<std::string>&),				(override));
 	MOCK_METHOD(void, ReveiveAllAnswers,	(const std::vector<std::vector<std::string>>&),	(override));
+	MOCK_METHOD(void, ReceiveRoundData,		(const RoundData&),								(override));
 };
 
 class FakeRandomLetterGenerator : public RandomGenRessource
@@ -71,12 +68,11 @@ class TestClientInteractor : public Test
 {
 public:
 	TestClientInteractor() :
-		gameInteractor{&fakeRandomLetterGenerator, &gameStatsOperations, &game, &parser, &fakeServer, &serializer, &msgHandler}
+		gameInteractor{&fakeRandomLetterGenerator, &fakeServer, &serializer, &msgHandler}
 	{
 		gameInteractor.onAllAnswers = [this](const std::vector<std::vector<std::string>>& ans) {fui.ReveiveAllAnswers(ans); };
 		gameInteractor.onChatMessage = [this](const ChatMessage& ans) {fui.ChatMessageReceived(ans); };
 		gameInteractor.onGameState = [this](const STATE& ans) {fui.UpdateGameState(ans); };
-		gameInteractor.onCategories = [this](const std::vector<std::string>& ans) {fui.ReceiveCategories(ans); };
 		gameInteractor.onReceivedID = [this](const int& ans) {fui.ReceiveID(ans); };
 		gameInteractor.onUpdateLobbySettings = [this](const LobbySettings& ans) {fui.UpdateLobby(ans); };
 	}
@@ -90,13 +86,10 @@ protected:
 		Test::TearDown();
 	}
 
-	Game game{};
 	FakeRandomLetterGenerator fakeRandomLetterGenerator{};
 	::testing::NiceMock<FakeClient> fakeServer{};
-	GameStatsOperations gameStatsOperations{};
 	GameStats gameStats{};
 	PlayerStats playerStats{};
-	SLFParser parser;
 	GameStatsSerializer serializer{};
 	MessageHandler msgHandler{};
 	ClientInteractorImpl gameInteractor;
@@ -161,7 +154,6 @@ TEST_F(TestClientInteractor, OnMsgHandleGameSettings_HandleGameSettings_CallUpda
 
 TEST_F(TestClientInteractor, OnMsgGameState_GameState_CallUpdateGameState)
 {
-	EXPECT_CALL(fui, ReceiveCategories(std::vector<std::string>{"Junge", "Why"}));
 	EXPECT_CALL(fui, UpdateGameState(STATE::INTERVENTION));	
 	gameInteractor.m_customCategoryString = "Junge,Why" ;
 
@@ -173,7 +165,9 @@ TEST_F(TestClientInteractor, OnMsgGameState_GameState_CallUpdateGameState)
 //TEST_F(TestClientInteractor, OnChatMessage_ChatMsg_CallChatMessageReceived)
 //{
 //	::StrictMock<FakeUI> fui;
-//	ChatMessage msg{"Sender", "Message"};
+//	ChatMessage msg{};
+//	msg.sender = "Sender";
+//	msg.text = "Message";
 //	EXPECT_CALL(fui, ChatMessageReceived(msg));
 //
 //	ChatMessage re{ "Sender", "Message" };
@@ -182,7 +176,8 @@ TEST_F(TestClientInteractor, OnMsgGameState_GameState_CallUpdateGameState)
 
 TEST_F(TestClientInteractor, OnAllAnswers_AllAnswers_CallReceiveAllAnswersAndUpdateGameState)
 {
-	AllAnswers answ{ {"Wolverine", "Magneto"} };
+	AllAnswers answ{};
+	answ.ans = { {"Wolverine", "Magneto"} };
 	EXPECT_CALL(fui, ReveiveAllAnswers(answ.ans));
 	EXPECT_CALL(fui, UpdateGameState(STATE::OVERVIEW));
 
