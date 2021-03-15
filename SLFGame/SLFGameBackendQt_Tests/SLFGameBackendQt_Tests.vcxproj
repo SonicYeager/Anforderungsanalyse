@@ -112,6 +112,7 @@
     <ClCompile Include="test_Game.cpp" />
     <ClCompile Include="test_GameStatsOperations.cpp" />
     <ClCompile Include="test_GameStatsSerializer.cpp" />
+    <ClCompile Include="test_LiveNetwork.cpp" />
     <ClCompile Include="test_MessageHandler.cpp" />
     <ClCompile Include="test_RandomGenerator.cpp" />
     <ClCompile Include="test_ServerInteractorImpl.cpp" />
