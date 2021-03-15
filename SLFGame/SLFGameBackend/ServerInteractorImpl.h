@@ -23,6 +23,7 @@ public:
 	void OnPlayerAnswers(const PlayerAnswers&);
 	void OnGameState(const GameState&);
 
+	GameStats m_GameStats{};
 private:
 	//server events
 	void OnNewConnection(int);
@@ -42,7 +43,6 @@ private:
 	GameLogic* m_pGame;
 	SLFParser* m_pParser;
 
-	GameStats m_GameStats{};
 	int m_actualID{};	//temp solution -> ask if there are any better;
 	int m_dataGatherCounter{};
 };

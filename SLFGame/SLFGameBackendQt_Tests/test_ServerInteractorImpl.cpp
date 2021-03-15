@@ -47,6 +47,13 @@ public:
 	MOCK_METHOD(void,		Broadcast,			(const ByteStream&),		(override));
 };
 
+class FakeRandomGenerator : public RandomGenerator
+{
+	Letter GenerateUnusedLetter(const Letters&) override
+	{
+		return 'A';
+	};
+};
 class TestServerInteractor : public Test
 {
 public:
@@ -71,7 +78,7 @@ protected:
 	ServerInteractorImpl gameInteractor;
 	SLFParser parser;
 	Game game;
-	RandomGenerator randgen;
+	FakeRandomGenerator randgen;
 	GameStatsOperations gsops;
 };
 
@@ -138,7 +145,7 @@ TEST_F(TestServerInteractor, OnPlayerAnswers_PlayerAnswer_BroadcastToAll)
 	msgHandler.onPlayerAnswers(re);
 }
 
-TEST_F(TestServerInteractor, OnGameState_GameState_BroadcastToAll)
+TEST_F(TestServerInteractor, OnGameState_GameStateANSWERREQUEST_BroadcastToAll)
 {
 	//GameState br{};
 	//br.state = STATE::INTERVENTION;
@@ -148,4 +155,30 @@ TEST_F(TestServerInteractor, OnGameState_GameState_BroadcastToAll)
 	//GameState re{};
 	//re.state = STATE::INTERVENTION;
 	//msgHandler.onGameState(re);
+
+	GameState msg;
+	msg.state = STATE::ANSWERREQUEST;
+	auto expected = serializer.Serialize(msg);
+	EXPECT_CALL(fakeServer, Broadcast(expected));
+	msgHandler.onGameState(msg);
+
+}
+
+TEST_F(TestServerInteractor, OnGameState_SetupRound_WriteToAll)
+{
+	PlayerStats playerPeter;
+	playerPeter.points = 10;
+	gameInteractor.m_GameStats.players.emplace(0, playerPeter);
+	GameState msg;
+	msg.state = STATE::SETUPROUND;
+	RoundSetup roundSetup;
+	roundSetup.data.maxRounds = 5;
+	roundSetup.data.currentRound = 1;
+	roundSetup.data.roundTime = "bis Stop";
+	roundSetup.data.categories = { "Stadt", "Land", "Fluss", "Name", "Tier", "Beruf" };
+	roundSetup.data.points = 10;
+	roundSetup.data.letter = "A";
+	auto expected = serializer.Serialize(roundSetup);
+	EXPECT_CALL(fakeServer, WriteTo(expected, 0));
+	msgHandler.onGameState(msg);
 }
