@@ -49,11 +49,11 @@ Controller::Controller(UI* ui, ClientInteractor* clientInter, ServerInteractor* 
     m_pClientInter->onChatMessage           = [this](ChatMessage cm)
                                                 {m_pUi->ChatMessageReceived(cm);};
 
-    m_pClientInter->onCategories            = [this](std::vector<std::string> categories)
-                                                {m_pUi->ReceiveCategories(categories);};
-
     m_pClientInter->onAllAnswers            = [this](std::vector<std::vector<std::string>> answers)
                                                 {m_pUi->ReveiveAllAnswers(answers);};
+
+    m_pClientInter->onRoundData             = [this](const RoundData& data)
+                                                {m_pUi->ReceiveRoundData(data);};
 }
 
 void Controller::Run()

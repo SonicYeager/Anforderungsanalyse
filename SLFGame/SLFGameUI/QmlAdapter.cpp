@@ -42,14 +42,19 @@ void QmlAdapter::ChatMessageReceived(const ChatMessage & cm)
     AddChatMessage(cm.sender.c_str(), cm.text.c_str());
 }
 
-void QmlAdapter::ReceiveCategories(const StrVector & categories)
-{
-    setCategories(categories);
-}
-
 void QmlAdapter::ReveiveAllAnswers(const std::vector<std::vector<std::string> > & answers)
 {
     setAnswers(answers);
+}
+
+void QmlAdapter::ReceiveRoundData(const RoundData & data)
+{
+    setCategories(data.categories);
+    setLetter(data.letter.c_str());
+    setRoundTime(data.roundTime.c_str());
+    setCurrentRound(data.currentRound);
+    setMaxRounds(QString::number(data.maxRounds));
+    setPoints(data.points);
 }
 
 // ------------------------------------------ getter ------------------------------------------

@@ -166,3 +166,36 @@ void GameStatsSerializer::Deserialize_impl(AllAnswers& msg, QDataStream& data)
 		msg.ans.push_back(plansw);
 	}
 }
+
+void GameStatsSerializer::Serialize_impl(const RoundSetup& msg, QDataStream& data)
+{
+	QStringList categories;
+	QString letter{ msg.data.letter.c_str() };
+	QString roundTime{ msg.data.roundTime.c_str() };
+	std::for_each(std::begin(msg.data.categories), std::end(msg.data.categories), [&categories](const std::string& str) {categories.push_back(str.c_str()); });
+	data << categories;
+	data << msg.data.currentRound;
+	data << letter;
+	data << msg.data.maxRounds;
+	data << roundTime;
+	data << msg.data.points;
+}
+
+void GameStatsSerializer::Deserialize_impl(RoundSetup& msg, QDataStream& data)
+{
+	QStringList categories{};
+	QString letter;
+	QString roundTime;
+
+	data >> categories;
+	for (const QString& cat : categories)
+		msg.data.categories.push_back(cat.toStdString());
+	data >> msg.data.currentRound;
+	data >> letter;
+	data >> msg.data.maxRounds;
+	data >> roundTime;
+	data >> msg.data.points;
+
+	msg.data.roundTime = roundTime.toStdString();
+	msg.data.letter = letter.toStdString();
+}

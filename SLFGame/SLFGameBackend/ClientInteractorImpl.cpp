@@ -1,18 +1,13 @@
 #pragma once
 #include "ClientInteractorImpl.h"
 
-ClientInteractorImpl::ClientInteractorImpl(RandomGenRessource* gen,
-	DataOperationLogic* op,
-	GameLogic* game,
-	SLFParser* p,
+ClientInteractorImpl::ClientInteractorImpl(
+	RandomGenRessource* gen,
 	ClientSource* cl,
 	SerializerSource* s,
 	MessageHandlerLogic* n)
 	:
 	m_pRandomGenerator(gen),
-	m_pDataOperation(op),
-	m_pGame(game),
-	m_pParser(p),
 	m_pClient(cl),
 	m_pSerializer(s),
 	m_pMsgHandler(n)
@@ -32,6 +27,7 @@ ClientInteractorImpl::ClientInteractorImpl(RandomGenRessource* gen,
 	m_pMsgHandler->onGameState = [this](const GameState& gs) { OnMsgGameState(gs); };
 	m_pMsgHandler->onChatMessage = [this](const ChatMessage& cm) { OnChatMessage(cm); };
 	m_pMsgHandler->onAllAnswers = [this](const AllAnswers& aans) { OnAllAnswers(aans); };
+	m_pMsgHandler->onRoundSetup = [this](const RoundSetup& msg) {OnRoundSetup(msg); };
 }
 
 //void ClientInteractorImpl::EndRound(const std::vector<DECISION>& decisions)
@@ -107,16 +103,12 @@ void ClientInteractorImpl::OnMsgID(const PlayerID& id)
 
 void ClientInteractorImpl::OnMsgHandleGameSettings(const HandleGameSettings& settings)
 {
-	m_customCategoryString = settings.ls.categories;
-
 	onUpdateLobbySettings(settings.ls);
 	onGameState(STATE::LOBBY);
 }
 
 void ClientInteractorImpl::OnMsgGameState(const GameState& gs)
 {
-	switch (gs.state)
-		case STATE::INGAME: { onCategories(m_pParser->ParseCategories(m_customCategoryString)); break; }
 	onGameState(gs.state);
 }
 
@@ -129,4 +121,10 @@ void ClientInteractorImpl::OnAllAnswers(const AllAnswers& msg)
 {
 	onAllAnswers(msg.ans);
 	onGameState(STATE::OVERVIEW);
+}
+
+void ClientInteractorImpl::OnRoundSetup(const RoundSetup& msg)
+{
+	onRoundData(msg.data);
+	onGameState(STATE::INGAME);
 }

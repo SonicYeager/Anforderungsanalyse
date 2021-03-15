@@ -30,6 +30,11 @@ void MessageHandler::on(const AllAnswers& msg)
 	onAllAnswers(msg);
 }
 
+void MessageHandler::on(const RoundSetup& msg)
+{
+	onRoundSetup(msg);
+}
+
 void MessageHandler::on(const Playername& msg)
 {
 	onPlayername(msg);

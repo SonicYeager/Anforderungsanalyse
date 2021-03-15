@@ -69,6 +69,16 @@ struct LobbySettings
 	std::map<int, std::string> playerNames{};
 };
 
+struct RoundData
+{
+	std::vector<std::string> categories; 
+	std::string letter; 
+	std::string roundTime; 
+	int currentRound;
+	int maxRounds;
+	int points;
+};
+
 using HeaderType = int;
 const int HEADERSIZE = sizeof(HeaderType);
 const int PORT = 4242;

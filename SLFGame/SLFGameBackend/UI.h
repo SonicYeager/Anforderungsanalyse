@@ -12,8 +12,8 @@ public:
     virtual void SetLobbyCode(const LobbyCode&) = 0;
     virtual void UpdateGameState(const STATE&) = 0;
     virtual void ChatMessageReceived(const ChatMessage&) = 0;
-    virtual void ReceiveCategories(const std::vector<std::string>&) = 0;
     virtual void ReveiveAllAnswers(const std::vector<std::vector<std::string>> &) = 0;
+    virtual void ReceiveRoundData(const RoundData&) = 0;
 	virtual ~UI() = default;
 
 	Event<const std::string&, const std::string&, const std::string&> onPrepareGame;

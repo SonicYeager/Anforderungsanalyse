@@ -1,9 +1,21 @@
 #include "ServerInteractorImpl.h"
 
-ServerInteractorImpl::ServerInteractorImpl(ServerSource* s, SerializerSource* ss, MessageHandlerLogic* msg) :
+ServerInteractorImpl::ServerInteractorImpl(
+	ServerSource* s, 
+	SerializerSource* ss, 
+	MessageHandlerLogic* msg,
+	RandomGenRessource* gen,
+	DataOperationLogic* op,
+	GameLogic* game,
+	SLFParser* p
+) :
 	m_pServer(s),
 	m_pSerializer(ss),
-	m_pMsgHandler(msg)
+	m_pMsgHandler(msg),
+	m_pRandomGenerator(gen),
+	m_pDataOperation(op),
+	m_pGame(game),
+	m_pParser(p)
 {
 	//m_server->onLog = [this](const std::string& text) {OnLog(text); };
 	m_pServer->onNewConnection = [this](int id) {OnNewConnection(id); };
@@ -61,7 +73,6 @@ void ServerInteractorImpl::OnDisconnect(int id)
 
 void ServerInteractorImpl::OnMsgPlayerName(const Playername& playerName)
 {
-
 	m_GameStats.players.emplace(m_GameStats.players.size(), PlayerStats{ playerName.playername, 0, {} });
 
 	auto stats = CreateHandleGameSettings();
@@ -119,8 +130,8 @@ void ServerInteractorImpl::OnPlayerAnswers(const PlayerAnswers& answers)
 
 void ServerInteractorImpl::OnGameState(const GameState& gs)
 {
-	auto ser = m_pSerializer->Serialize(gs);
-	m_pServer->Broadcast(ser);
+	m_GameStats.state = gs.state;
+	HandleGameState(gs);
 }
 
 HandleGameSettings ServerInteractorImpl::CreateHandleGameSettings()
@@ -132,4 +143,34 @@ HandleGameSettings ServerInteractorImpl::CreateHandleGameSettings()
 	for (const auto& player : m_GameStats.players)
 		result.ls.playerNames.emplace(player.first, player.second.playerName);
 	return result;
+}
+
+void ServerInteractorImpl::HandleGameState(const GameState& gs)
+{
+	if (gs.state == STATE::ANSWERREQUEST)
+	{
+		auto ser = m_pSerializer->Serialize(gs);
+		m_pServer->Broadcast(ser);
+	}
+	else if (gs.state == STATE::SETUPROUND)
+	{
+		m_pDataOperation->InkrementRound(m_GameStats);
+		m_pDataOperation->AddPreviousLetter(m_GameStats);
+		m_pDataOperation->SetNewLetter(m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.lettersUsed), m_GameStats);
+		m_GameStats.categories = m_pParser->ParseCategories(m_GameStats.customCategoryString);
+
+		RoundSetup msg;
+		msg.data.categories = m_GameStats.categories;
+		msg.data.currentRound = m_GameStats.currentRound;
+		msg.data.letter = m_GameStats.currentLetter;
+		msg.data.maxRounds = m_GameStats.maxRounds;
+		msg.data.roundTime = m_GameStats.timeout;
+		for (const auto& player : m_GameStats.players)
+		{
+			msg.data.points = player.second.points;
+			auto ser = m_pSerializer->Serialize(msg);
+			m_pServer->WriteTo(ser, player.first);
+		}
+		//m_pServer->WriteTo();
+	}
 }

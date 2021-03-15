@@ -45,8 +45,8 @@ public:
     void SetLobbyCode           (const LobbyCode&) override;
     void UpdateGameState        (const STATE&) override;
     void ChatMessageReceived    (const ChatMessage&) override;
-    void ReceiveCategories      (const StrVector&) override;
     void ReveiveAllAnswers      (const std::vector<std::vector<std::string>> &) override;
+    void ReceiveRoundData       (const RoundData&) override;
 
     QString getLetter();
     QString getLobbyCode();

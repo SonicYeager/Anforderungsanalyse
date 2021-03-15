@@ -12,7 +12,8 @@ namespace Messages
 		HANDLEGAMESETTINGS = 4,
 		GAMESTATE = 5,
 		CHATMESSAGE = 6,
-		ALLANSWERS = 7
+		ALLANSWERS = 7,
+		ROUNDSETUP = 8
 	};
 
 	struct HandleGameSettings	{ LobbySettings ls; };
@@ -22,8 +23,9 @@ namespace Messages
 	struct GameState			{ STATE state; };
 	struct ChatMessage			{ std::string sender; std::string text; };
 	struct AllAnswers			{ std::vector<std::vector<std::string>> ans; };
+	struct RoundSetup			{ RoundData data; };
 
-	using Message = std::variant<Playername, PlayerID, HandleGameSettings, GameState, ChatMessage, PlayerAnswers, AllAnswers>;
+	using Message = std::variant<Playername, PlayerID, HandleGameSettings, GameState, ChatMessage, PlayerAnswers, AllAnswers, RoundSetup>;
 
 	inline HEADER GetMessageID(const Playername&) { return HEADER::PLAYER_NAME; };
 	inline HEADER GetMessageID(const PlayerID&) { return HEADER::PLAYER_ID; };
@@ -32,6 +34,7 @@ namespace Messages
 	inline HEADER GetMessageID(const GameState&) { return HEADER::GAMESTATE; };
 	inline HEADER GetMessageID(const ChatMessage&) { return HEADER::CHATMESSAGE; };
 	inline HEADER GetMessageID(const AllAnswers&) { return HEADER::ALLANSWERS; };
+	inline HEADER GetMessageID(const RoundSetup&) { return HEADER::ROUNDSETUP; };
 
 	inline Message CreateMessage(HEADER header)
 	{
@@ -44,6 +47,7 @@ namespace Messages
 		case HEADER::GAMESTATE: return GameState{};
 		case HEADER::CHATMESSAGE: return ChatMessage{};
 		case HEADER::ALLANSWERS: return AllAnswers{};
+		case HEADER::ROUNDSETUP: return RoundSetup{};
 		}
 		return HandleGameSettings{};
 	};

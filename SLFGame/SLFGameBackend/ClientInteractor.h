@@ -24,8 +24,8 @@ public:
 	Event<LobbySettings> onUpdateLobbySettings;
 	Event<STATE> onGameState;
 	Event<ChatMessage> onChatMessage;
-	Event<std::vector<std::string>> onCategories;
 	Event<std::vector<std::vector<std::string>>> onAllAnswers;
+	Event<RoundData> onRoundData;
 
 	//server events
 	Event<> onStartServer;

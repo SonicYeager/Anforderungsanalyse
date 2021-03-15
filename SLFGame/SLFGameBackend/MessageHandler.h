@@ -11,4 +11,5 @@ public:
 	void on(const GameState&) override;
 	void on(const ChatMessage&) override;
 	void on(const AllAnswers&) override;
+	void on(const RoundSetup&) override;
 };

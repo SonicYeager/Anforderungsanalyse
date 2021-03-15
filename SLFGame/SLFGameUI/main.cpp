@@ -29,8 +29,8 @@ int main(int argc, char *argv[])
     MessageHandler serverMsgHandler;
     Game game;
     Client client;
-    ServerInteractorImpl serverInteractor(&server, &serializer, &serverMsgHandler);
-    ClientInteractorImpl clientInteractor(&rndGen, &gsOperations, &game, &parser, &client, &serializer, &clientMsgHandler);
+    ServerInteractorImpl serverInteractor(&server, &serializer, &serverMsgHandler, &rndGen, &gsOperations, &game, &parser);
+    ClientInteractorImpl clientInteractor(&rndGen, &client, &serializer, &clientMsgHandler);
     Controller controller{&qmlAdapter, &clientInteractor, &serverInteractor};
     controller.Run();
 

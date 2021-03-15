@@ -30,4 +30,7 @@ public:
 	
 	void Serialize_impl(const AllAnswers& msg, QDataStream& data);
 	void Deserialize_impl(AllAnswers& msg, QDataStream& data);
+
+	void Serialize_impl(const RoundSetup& msg, QDataStream& data);
+	void Deserialize_impl(RoundSetup& msg, QDataStream& data);
 };

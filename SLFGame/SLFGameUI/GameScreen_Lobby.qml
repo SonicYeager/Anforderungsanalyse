@@ -147,7 +147,7 @@ Rectangle {
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            qmlAdapter.triggerStateChange(3);
+                            qmlAdapter.triggerStateChange(2);
                         }
                     }
                 }
