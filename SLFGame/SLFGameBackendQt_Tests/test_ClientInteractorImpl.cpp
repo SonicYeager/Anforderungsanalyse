@@ -185,3 +185,32 @@ TEST_F(TestClientInteractor, OnAllAnswers_AllAnswers_CallReceiveAllAnswersAndUpd
 	ans.ans = { {"Wolverine", "Magneto"} };
 	msgHandler.onAllAnswers(ans);
 }
+
+TEST_F(TestClientInteractor, LobbyChanged_ChangedCategories_CallWriteToHost)
+{
+	HandleGameSettings gs{ {"NewCat", "NewTimeout", "NewRound"} };
+	auto ser = serializer.Serialize(gs);
+	EXPECT_CALL(fakeServer, WriteToHost(ser));
+
+	gameInteractor.LobbyChanged("NewCat", "NewTimeout", "NewRound");
+}
+
+TEST_F(TestClientInteractor, ChatMessageReceived_ChatMessage_CallWriteToHost)
+{
+	ChatMessage cm{ "Mel", "1034 Cars long" };
+	auto ser = serializer.Serialize(cm);
+	EXPECT_CALL(fakeServer, WriteToHost(ser));
+
+	gameInteractor.ChatMessageReceived("Mel", "1034 Cars long");
+}
+
+TEST_F(TestClientInteractor, StateChangeTriggered_ChatMessage_CallWriteToHost)
+{
+	GameState cm = {STATE::LOBBY};
+	auto ser = serializer.Serialize(cm);
+	EXPECT_CALL(fakeServer, WriteToHost(ser));
+
+	gameInteractor.StateChangeTriggered(STATE::LOBBY);
+}
+
+//void AnswersReceived(const std::vector<std::string>&) override;

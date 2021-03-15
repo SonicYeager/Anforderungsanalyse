@@ -3,6 +3,24 @@
 #include "../SLFGameBackend/GameStatsSerializer.h"
 #include "../SLFGameBackend/MessageHandler.h"
 
+inline bool operator==(const RoundData& left, const RoundData& right)
+{
+	return left.roundTime == right.roundTime &&
+		left.categories == right.categories &&
+		left.letter == right.letter &&
+		left.maxRounds == right.maxRounds  &&
+		left.currentRound == right.currentRound &&
+		left.points == right.points;
+}
+
+inline bool operator==(const LobbySettings& left, const LobbySettings& right)
+{
+	return left.timeout == right.timeout &&
+		left.categories == right.categories &&
+		left.playerNames == right.playerNames &&
+		left.rounds == right.rounds;
+}
+
 //TEST(SerializerTest, SerializationAndDeserialization_HandleGameStats)
 //{
 //	GameStatsSerializer serializer;
@@ -89,4 +107,111 @@ TEST(SerializerTest, SerializationAndDeserialization_PlayerAnswers)
 	msgHandler.handleMessage(resultingMsg);
 
 	EXPECT_EQ(msg.answers, result.answers);
+}
+
+TEST(SerializerTest, SerializationAndDeserialization_RoundSetup)
+{
+	GameStatsSerializer serializer;
+	MessageHandler msgHandler;
+
+	Message resultingMsg;
+	RoundSetup result;
+	RoundSetup msg;
+
+	msg.data = { {"Stadt", "Land" "Fluss" }, "C", "bis Stop", 0, 5, 10};
+
+	ByteStream data = serializer.Serialize(msg);
+	resultingMsg = serializer.Deserialize(data);
+
+	msgHandler.onRoundSetup = [&result](const RoundSetup& anp) {result = anp; };
+	msgHandler.handleMessage(resultingMsg);
+
+	EXPECT_EQ(msg.data, result.data);
+}
+
+TEST(SerializerTest, SerializationAndDeserialization_AllAnswers)
+{
+	GameStatsSerializer serializer;
+	MessageHandler msgHandler;
+
+	Message resultingMsg;
+	AllAnswers result;
+	AllAnswers msg;
+
+	msg.ans = { {"Jackpot", "Fortune", "Ace"} };
+
+	ByteStream data = serializer.Serialize(msg);
+	resultingMsg = serializer.Deserialize(data);
+
+	msgHandler.onAllAnswers = [&result](const AllAnswers& anp) {result = anp; };
+	msgHandler.handleMessage(resultingMsg);
+
+	EXPECT_EQ(msg.ans, result.ans);
+}
+
+TEST(SerializerTest, SerializationAndDeserialization_ChatMsg)
+{
+	GameStatsSerializer serializer;
+	MessageHandler msgHandler;
+
+	Message resultingMsg;
+	ChatMessage result;
+	ChatMessage msg;
+
+	msg.sender = "HanSolo";
+	msg.text = "Blast'em all";
+
+	ByteStream data = serializer.Serialize(msg);
+	resultingMsg = serializer.Deserialize(data);
+
+	msgHandler.onChatMessage = [&result](const ChatMessage& anp) {result = anp; };
+	msgHandler.handleMessage(resultingMsg);
+
+	EXPECT_EQ(msg.sender, result.sender);
+	EXPECT_EQ(msg.text, result.text);
+}
+
+TEST(SerializerTest, SerializationAndDeserialization_GameState)
+{
+	GameStatsSerializer serializer;
+	MessageHandler msgHandler;
+
+	Message resultingMsg;
+	GameState result;
+	GameState msg;
+
+	msg.state = STATE::MAINMENU;
+
+	ByteStream data = serializer.Serialize(msg);
+	resultingMsg = serializer.Deserialize(data);
+
+	msgHandler.onGameState = [&result](const GameState& anp) {result = anp; };
+	msgHandler.handleMessage(resultingMsg);
+
+	EXPECT_EQ(msg.state, result.state);
+}
+
+TEST(SerializerTest, SerializationAndDeserialization_HandleGameSettings)
+{
+	GameStatsSerializer serializer;
+	MessageHandler msgHandler;
+
+	Message resultingMsg;
+	HandleGameSettings result;
+	HandleGameSettings msg;
+
+	std::string categories{};
+	std::string timeout{};
+	std::string rounds{};
+	std::map<int, std::string> playerNames{};
+
+	msg.ls = { "Stadt,Land,Fluss", "bis Stop", "10", {{0, "IAMGROOT"}} };
+
+	ByteStream data = serializer.Serialize(msg);
+	resultingMsg = serializer.Deserialize(data);
+
+	msgHandler.onHandleGameSettings = [&result](const HandleGameSettings& anp) {result = anp; };
+	msgHandler.handleMessage(resultingMsg);
+
+	EXPECT_EQ(msg.ls, result.ls);
 }
