@@ -17,8 +17,6 @@ public:
 	virtual ~ClientInteractor() = default;
 
 	//ui events
-	Event<GameStats> onUpdateLobby;
-	Event<GameStats> onGameOver;
 	Event<int> onReceivedID;
 	Event<LobbyCode> onSetLobbyCode;
 	Event<LobbySettings> onUpdateLobbySettings;
