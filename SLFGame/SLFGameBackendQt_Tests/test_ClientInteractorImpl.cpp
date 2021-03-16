@@ -78,7 +78,7 @@ class TestClientInteractor : public Test
 {
 public:
 	TestClientInteractor() :
-		gameInteractor{&fakeRandomLetterGenerator, &fakeServer, &serializer, &msgHandler}
+		gameInteractor{&fakeServer, &serializer, &msgHandler}
 	{
 		gameInteractor.onAllAnswers = [this](const std::vector<std::vector<std::string>>& ans) {fui.ReveiveAllAnswers(ans); };
 		gameInteractor.onChatMessage = [this](const ChatMessage& ans) {fui.ChatMessageReceived(ans); };
@@ -96,10 +96,7 @@ protected:
 		Test::TearDown();
 	}
 
-	FakeRandomLetterGenerator fakeRandomLetterGenerator{};
 	::testing::NiceMock<FakeClient> fakeServer{};
-	GameStats gameStats{};
-	PlayerStats playerStats{};
 	GameStatsSerializer serializer{};
 	MessageHandler msgHandler{};
 	ClientInteractorImpl gameInteractor;

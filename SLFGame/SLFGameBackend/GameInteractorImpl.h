@@ -35,6 +35,8 @@ public:
 	void ChangeGameState(const STATE&) override;
 	void SetLobbyCode(const LobbyCode&) override;
 
+	GameStats m_GameStats;
+
 private:
 	//helper funcs
 	HandleGameSettings CreateHandleGameSettings();
@@ -48,7 +50,6 @@ private:
 	ServerInteractor* m_pServer;
 	SLFParser m_Parser;
 
-	GameStats m_GameStats;
 	int m_answerGatheredCounter{};
 };
 

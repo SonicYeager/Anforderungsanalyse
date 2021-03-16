@@ -58,7 +58,7 @@ class TestServerInteractor : public Test
 {
 public:
 	TestServerInteractor() :
-		gameInteractor{ &fakeServer, &serializer, &msgHandler, &randgen, &gsops, &game, &parser }
+		gameInteractor{ &fakeServer, &serializer, &msgHandler }
 	{}
 protected:
 	virtual void SetUp()
@@ -71,15 +71,9 @@ protected:
 	}
 
 	::testing::NiceMock<FakeServer> fakeServer{};
-	GameStats gameStats{};
-	PlayerStats playerStats{};
 	GameStatsSerializer serializer{};
 	MessageHandler msgHandler{};
 	ServerInteractorImpl gameInteractor;
-	SLFParser parser;
-	Game game;
-	FakeRandomGenerator randgen;
-	GameStatsOperations gsops;
 };
 
 TEST_F(TestServerInteractor, StartServer_StartServer_CallStartServer)
@@ -147,15 +141,6 @@ TEST_F(TestServerInteractor, OnPlayerAnswers_PlayerAnswer_BroadcastToAll)
 
 TEST_F(TestServerInteractor, OnGameState_GameStateANSWERREQUEST_BroadcastToAll)
 {
-	//GameState br{};
-	//br.state = STATE::INTERVENTION;
-	//auto expected = serializer.Serialize(br);
-	//EXPECT_CALL(fakeServer, Broadcast(expected));
-
-	//GameState re{};
-	//re.state = STATE::INTERVENTION;
-	//msgHandler.onGameState(re);
-
 	GameState msg;
 	msg.state = STATE::ANSWERREQUEST;
 	auto expected = serializer.Serialize(msg);
@@ -164,30 +149,21 @@ TEST_F(TestServerInteractor, OnGameState_GameStateANSWERREQUEST_BroadcastToAll)
 
 }
 
-TEST_F(TestServerInteractor, OnGameState_SetupRound_WriteToAll)
-{
-	PlayerStats playerPeter;
-	playerPeter.points = 10;
-	gameInteractor.m_GameStats.players.emplace(0, playerPeter);
-	GameState msg;
-	msg.state = STATE::SETUPROUND;
-	RoundSetup roundSetup;
-	roundSetup.data.maxRounds = 5;
-	roundSetup.data.currentRound = 1;
-	roundSetup.data.roundTime = "bis Stop";
-	roundSetup.data.categories = { "Stadt", "Land", "Fluss", "Name", "Tier", "Beruf" };
-	roundSetup.data.points = 10;
-	roundSetup.data.letter = "A";
-	auto expected = serializer.Serialize(roundSetup);
-	EXPECT_CALL(fakeServer, WriteTo(expected, 0));
-	msgHandler.onGameState(msg);
-}
-
-//TEST_F(TestServerInteractor, OnNewConnection_ID_WriteToID)
+//TEST_F(TestServerInteractor, OnGameState_SetupRound_WriteToAll)
 //{
-//	PlayerID ID{ 10 };
-//	auto expected = serializer.Serialize(ID);
-//	EXPECT_CALL(fakeServer, WriteTo(expected, ID.id));
-//
-//	gameInteractor.
+//	PlayerStats playerPeter;
+//	playerPeter.points = 10;
+//	gameInteractor.m_GameStats.players.emplace(0, playerPeter);
+//	GameState msg;
+//	msg.state = STATE::SETUPROUND;
+//	RoundSetup roundSetup;
+//	roundSetup.data.maxRounds = 5;
+//	roundSetup.data.currentRound = 1;
+//	roundSetup.data.roundTime = "bis Stop";
+//	roundSetup.data.categories = { "Stadt", "Land", "Fluss", "Name", "Tier", "Beruf" };
+//	roundSetup.data.points = 10;
+//	roundSetup.data.letter = "A";
+//	auto expected = serializer.Serialize(roundSetup);
+//	EXPECT_CALL(fakeServer, WriteTo(expected, 0));
+//	msgHandler.onGameState(msg);
 //}

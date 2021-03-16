@@ -2,6 +2,7 @@
 #include "gtest/gtest.h"
 #include "../SLFGameBackend/ServerInteractorImpl.h"
 #include "../SLFGameBackend/ClientInteractorImpl.h"
+#include "../SLFGameBackend/GameInteractorImpl.h"
 #include "../SLFGameBackend/Server.h"
 #include "../SLFGameBackend/Client.h"
 #include "../SLFGameBackend/UI.h"
@@ -12,7 +13,10 @@
 #include "../SLFGameBackend/RandomGenerator.h"
 #include "../SLFGameBackend/GameStatsOperations.h"
 
+#include <chrono>
+
 using namespace ::testing;
+using namespace std::chrono_literals;
 
 inline bool operator==(const LobbySettings& left, const LobbySettings& right)
 {
@@ -51,16 +55,17 @@ class Testy : public Test
 {
 public:
 	Testy() :
-		serverInteractor{ &server, &serializers, &msgHandlers, &randgen, &gsops, &games, &parsers },
-		clientInteractor{ &randgen, &client, &serializerc, &msgHandlerc }
+		serverInteractor{ &server, &serializers, &msgHandlers},
+		clientInteractor{ &client, &serializerc, &msgHandlerc },
+		gameInteractor{ &games, &randgen, &gsops, &clientInteractor, &serverInteractor }
 	{
-		clientInteractor.onAllAnswers = [this](const std::vector<std::vector<std::string>>& ans) {fui.ReveiveAllAnswers(ans); };
-		clientInteractor.onChatMessage = [this](const ChatMessage& ans) {fui.ChatMessageReceived(ans); };
-		clientInteractor.onGameState = [this](const STATE& ans) {fui.UpdateGameState(ans); };
-		clientInteractor.onReceivedID = [this](const int& ans) {fui.ReceiveID(ans); };
-		clientInteractor.onUpdateLobbySettings = [this](const LobbySettings& ans) {fui.UpdateLobby(ans); };
-		clientInteractor.onSetLobbyCode = [this](const LobbyCode& ans) {fui.SetLobbyCode(ans); };
-		clientInteractor.onRoundData = [this](const RoundData& ans) {fui.ReceiveRoundData(ans); };
+		gameInteractor.onAllAnswers = [this](const std::vector<std::vector<std::string>>& ans) {fui.ReveiveAllAnswers(ans); };
+		gameInteractor.onChatMessage = [this](const ChatMessage& ans) {fui.ChatMessageReceived(ans); };
+		gameInteractor.onGameState = [this](const STATE& ans) {fui.UpdateGameState(ans); };
+		gameInteractor.onReceivedID = [this](const int& ans) {fui.ReceiveID(ans); };
+		gameInteractor.onUpdateLobbySettings = [this](const LobbySettings& ans) {fui.UpdateLobby(ans); };
+		gameInteractor.onSetLobbyCode = [this](const LobbyCode& ans) {fui.SetLobbyCode(ans); };
+		gameInteractor.onRoundData = [this](const RoundData& ans) {fui.ReceiveRoundData(ans); };
 
 		clientInteractor.onStartServer = [this]() { serverInteractor.StartServer(); };
 	}
@@ -77,20 +82,21 @@ protected:
 	Server server{};
 	GameStatsSerializer serializers{};
 	MessageHandler msgHandlers{};
-	SLFParser parsers{};
-	Game games{};
-	GameStatsOperations gsops{};
 
 
 	Client client{};
 	GameStatsSerializer serializerc{};
 	MessageHandler msgHandlerc{};
 	SLFParser parserc{};
-	FakeRandomGenerator randgen{};
 
+	SLFParser parsers{};
+	Game games{};
+	GameStatsOperations gsops{};
+	FakeRandomGenerator randgen{};
 
 	ClientInteractorImpl clientInteractor;
 	ServerInteractorImpl serverInteractor;
+	GameInteractorImpl gameInteractor;
 
 	FakeUI fui{};
 };
@@ -99,6 +105,11 @@ protected:
 
 TEST_F(Testy, JustEnjoy)
 {
-	clientInteractor.HostLobby("Jeager");
+	EXPECT_CALL(fui, ReceiveID(0));	
+	EXPECT_CALL(fui, SetLobbyCode(std::string("192.168.0.80")));
+
+	gameInteractor.HostLobby("Jeager");
+	gameInteractor.
 	auto check = 0;
+	std::this_thread::sleep_for(1000ms);
 }
