@@ -95,6 +95,12 @@
     <ClInclude Include="..\SLFGameBackend\ServerInteractor.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="GameInteractor.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInteractorImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\SLFGameBackend\ClientInteractorImpl.cpp">
@@ -129,6 +135,9 @@
     </ClCompile>
     <ClCompile Include="..\SLFGameBackend\Client.cpp">
       <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="GameInteractorImpl.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

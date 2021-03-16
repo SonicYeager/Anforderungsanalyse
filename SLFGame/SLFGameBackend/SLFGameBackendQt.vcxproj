@@ -127,6 +127,7 @@
     <ClCompile Include="..\SLFGameBackend\ServerInteractorImpl.cpp" />
     <ClCompile Include="..\SLFGameBackend\SLFParser.cpp" />
     <ClCompile Include="..\SLFGameBackend\Timer.cpp" />
+    <ClCompile Include="GameInteractorImpl.cpp" />
     <ClInclude Include="..\SLFGameBackend\Client.h" />
     <ClInclude Include="..\SLFGameBackend\ClientSource.h" />
     <ClInclude Include="..\SLFGameBackend\DataOperationLogic.h" />
@@ -151,6 +152,8 @@
     <ClInclude Include="..\SLFGameBackend\Timer.h" />
     <ClInclude Include="..\SLFGameBackend\TimerRessource.h" />
     <ClInclude Include="..\SLFGameBackend\UI.h" />
+    <ClInclude Include="GameInteractor.h" />
+    <ClInclude Include="GameInteractorImpl.h" />
     <ClInclude Include="slfgamebackendqt_global.h" />
     <ClCompile Include="..\SLFGameBackend\ClientInteractorImpl.cpp" />
     <ClCompile Include="..\SLFGameBackend\GameStatsOperations.cpp" />
