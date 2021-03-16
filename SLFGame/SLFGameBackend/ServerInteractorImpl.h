@@ -11,10 +11,14 @@
 class ServerInteractorImpl : public ServerInteractor
 {
 public:
-	ServerInteractorImpl(ServerSource*, SerializerSource*, MessageHandlerLogic*, RandomGenRessource*, DataOperationLogic*, GameLogic*, SLFParser*);
+	ServerInteractorImpl(ServerSource*, SerializerSource*, MessageHandlerLogic*);
 	virtual ~ServerInteractorImpl();											
 		
-		void StartServer() override;												
+	void StartServer() override;
+	void Broadcast(const LobbySettings&) override;
+	void Broadcast(const AllAnswers&) override;
+	void Broadcast(const GameState&) override;
+	void WriteTo(int, const RoundSetup&) override;
 
 	//msg events
 	void OnMsgPlayerName(const Playername&);
@@ -23,7 +27,8 @@ public:
 	void OnPlayerAnswers(const PlayerAnswers&);
 	void OnGameState(const GameState&);
 
-	GameStats m_GameStats{};
+	//GameStats m_GameStats{};
+
 private:
 	//server events
 	void OnNewConnection(int);
@@ -31,17 +36,9 @@ private:
 	void OnLog(const std::string&);
 	void OnDisconnect(int);
 
-	//helper funcs
-	HandleGameSettings CreateHandleGameSettings();
-	void HandleGameState(const GameState&);
-
 	ServerSource* m_pServer{};
 	SerializerSource* m_pSerializer{};
 	MessageHandlerLogic* m_pMsgHandler{};
-	RandomGenRessource* m_pRandomGenerator;
-	DataOperationLogic* m_pDataOperation;
-	GameLogic* m_pGame;
-	SLFParser* m_pParser;
 
 	int m_actualID{};	//temp solution -> ask if there are any better;
 	int m_dataGatherCounter{};

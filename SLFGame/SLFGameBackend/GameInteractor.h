@@ -17,11 +17,12 @@ public:
 	virtual void AnswersReceived(const std::vector<std::string>&) = 0;
 
 	//server
-	virtual void AddAnswers(const PlayerAnswers&) = 0;
-	virtual void AddPlayer(const PlayerStats&) = 0;
-	virtual void SetGameSettings(const HandleGameSettings&) = 0;
 	virtual void RemovePlayer(const int&) = 0;
-	virtual void ChangeGameState(const GameState&) = 0;
+	virtual void AddAnswers(int, const std::vector<std::string>&) = 0;
+	virtual void AddPlayer(int, const PlayerStats&) = 0;
+	virtual void SetGameSettings(const LobbySettings&) = 0;
+	virtual void ChangeGameState(const STATE&) = 0;
+	virtual void SetLobbyCode(const LobbyCode&) = 0;
 
 	//ui events
 	Event<int> onReceivedID;

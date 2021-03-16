@@ -6,6 +6,7 @@
 #include "DataOperationLogic.h"
 #include "ClientInteractor.h"
 #include "ServerInteractor.h"
+#include "SLFParser.h"
 
 class GameInteractorImpl : public GameInteractor
 {
@@ -27,20 +28,27 @@ public:
 	void AnswersReceived(const std::vector<std::string>&) override;
 
 	//server
-	virtual void AddAnswers(const PlayerAnswers&) override;
-	virtual void AddPlayer(const PlayerStats&) override;
-	virtual void SetGameSettings(const HandleGameSettings&) override;
-	virtual void RemovePlayer(const int&) override;
-	virtual void ChangeGameState(const GameState&) override;
+	void RemovePlayer(const int&)override;
+	void AddAnswers(int, const std::vector<std::string>&)override;
+	void AddPlayer(int, const PlayerStats&) override;
+	void SetGameSettings(const LobbySettings&) override;
+	void ChangeGameState(const STATE&) override;
+	void SetLobbyCode(const LobbyCode&) override;
 
 private:
+	//helper funcs
+	HandleGameSettings CreateHandleGameSettings();
+	void HandleGameState(const STATE& state);
+	void SendUpdatedLobbySettings();
+
 	GameLogic* m_pGame;
-	RandomGenRessource* m_pRandGen;
-	DataOperationLogic* m_pGameStatsOperation;
+	RandomGenRessource* m_pRandomGenerator;
+	DataOperationLogic* m_pDataOperation;
 	ClientInteractor* m_pClient;
 	ServerInteractor* m_pServer;
+	SLFParser m_Parser;
 
 	GameStats m_GameStats;
-	int m_answerCount{};
+	int m_answerGatheredCounter{};
 };
 
