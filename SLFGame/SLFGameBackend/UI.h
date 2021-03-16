@@ -16,9 +16,6 @@ public:
     virtual void ReceiveRoundData(const RoundData&) = 0;
 	virtual ~UI() = default;
 
-	Event<const std::string&, const std::string&, const std::string&> onPrepareGame;
-	Event<const Categories&> onPrepareOverview;
-	Event<const std::vector<DECISION>&> onPrepareNextRound;
 	Event<const std::string&> onHostLobby;
 	Event<const std::string&, const std::string&> onJoinLobby;
     Event<const std::string&, const std::string&, const std::string&> onLobbySettingsChanged;
