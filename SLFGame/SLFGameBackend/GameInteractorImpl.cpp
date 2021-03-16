@@ -26,6 +26,12 @@ GameInteractorImpl::GameInteractorImpl(
 	m_pClient->onUpdateLobbySettings	= [this](const LobbySettings& answ)							{ onUpdateLobbySettings(answ); };
 
 	//link server to own data ops
+	m_pServer->onAddAnswers =		[this](const int id, const std::vector<std::string>& ans)		{ AddAnswers(id, ans); };
+	m_pServer->onAddPlayer =		[this](const int id, const PlayerStats& ans)					{ AddPlayer(id, ans); };
+	m_pServer->onChangeGameState =	[this](const STATE& ans)										{ ChangeGameState(ans); };
+	m_pServer->onRemovePlayer =		[this](const int id)											{ RemovePlayer(id); };
+	m_pServer->onSetGameSettings =	[this](const LobbySettings& ans)								{ SetGameSettings(ans); };
+	m_pServer->onSetLobbyCode =		[this](const LobbyCode& ans)									{ SetLobbyCode(ans); };
 }
 
 //ui
