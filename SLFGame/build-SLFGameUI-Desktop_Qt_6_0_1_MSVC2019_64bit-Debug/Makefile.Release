@@ -411,8 +411,7 @@ release\controller.obj: ..\SLFGameUI\controller.cpp ..\SLFGameUI\controller.h \
 		..\SLFGameBackend\UI.h \
 		..\SLFGameBackend\DataTypes.h \
 		..\SLFGameBackend\Messages.h \
-		..\SLFGameBackend\ClientInteractor.h \
-		..\SLFGameBackend\ServerInteractor.h
+		..\SLFGameBackend\GameInteractor.h
 
 release\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\QGuiApplication \
 		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qguiapplication.h \
@@ -538,8 +537,7 @@ release\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include
 		..\SLFGameBackend\DataTypes.h \
 		..\SLFGameBackend\Messages.h \
 		..\SLFGameUI\controller.h \
-		..\SLFGameBackend\ClientInteractor.h \
-		..\SLFGameBackend\ServerInteractor.h \
+		..\SLFGameBackend\GameInteractor.h \
 		..\SLFGameBackend\GameStatsOperations.h \
 		..\SLFGameBackend\framework.h \
 		..\SLFGameBackend\DataOperationLogic.h \
@@ -568,8 +566,11 @@ release\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include
 		..\SLFGameBackend\MessageHandler.h \
 		..\SLFGameBackend\MessageHandlerLogic.h \
 		..\SLFGameBackend\ClientInteractorImpl.h \
+		..\SLFGameBackend\ClientInteractor.h \
 		..\SLFGameBackend\ServerInteractorImpl.h \
 		..\SLFGameBackend\ServerSource.h \
+		..\SLFGameBackend\ServerInteractor.h \
+		..\SLFGameBackend\GameInteractorImpl.h \
 		..\SLFGameBackend\Server.h
 
 release\qrc_qml.obj: release\qrc_qml.cpp 

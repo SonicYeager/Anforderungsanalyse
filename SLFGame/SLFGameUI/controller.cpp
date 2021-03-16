@@ -1,9 +1,8 @@
 #include "controller.h"
 #include "DataTypes.h"
 
-Controller::Controller(UI* ui, ClientInteractor* clientInter, ServerInteractor* serverInter) :
+Controller::Controller(UI* ui, GameInteractor* clientInter) :
     m_pUi(ui),
-    m_pServerInter(serverInter),
     m_pClientInter(clientInter)
 {
     //UI EVENTS
@@ -36,9 +35,6 @@ Controller::Controller(UI* ui, ClientInteractor* clientInter, ServerInteractor* 
 
     m_pClientInter->onUpdateLobbySettings   = [this](LobbySettings ls)
                                                 {m_pUi->UpdateLobby(ls);};
-
-    m_pClientInter->onStartServer           = [this]()
-                                                {m_pServerInter->StartServer();};
 
     m_pClientInter->onSetLobbyCode          = [this](LobbyCode lobbyCode)
                                                 {m_pUi->SetLobbyCode(lobbyCode);};

@@ -362,21 +362,11 @@ void QmlAdapter::setDecision(int playerID, int categoryIDX, int newVal)
     emit decisionsChanged();
 }
 
-void QmlAdapter::prepareGame()
-{
-    onPrepareGame(_customCategories.toStdString(), _timeLeft.toStdString(), _maxRounds.toStdString());
-}
-
-void QmlAdapter::prepareOverview()
-{
-    onPrepareOverview(_unhandledanswers);
-}
-
-void QmlAdapter::prepareNextRound()
-{
-    // CHANGE ME SOON ----------------------------------------------------------------------
-    onPrepareNextRound(_decisions[0]);
-}
+//void QmlAdapter::prepareNextRound()
+//{
+//    // CHANGE ME SOON ----------------------------------------------------------------------
+//    onPrepareNextRound(_decisions[0]);
+//}
 
 void QmlAdapter::addAnswer(QString answer)
 {

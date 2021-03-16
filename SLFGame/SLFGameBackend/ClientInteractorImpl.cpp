@@ -2,12 +2,10 @@
 #include "ClientInteractorImpl.h"
 
 ClientInteractorImpl::ClientInteractorImpl(
-	RandomGenRessource* gen,
 	ClientSource* cl,
 	SerializerSource* s,
 	MessageHandlerLogic* n)
 	:
-	m_pRandomGenerator(gen),
 	m_pClient(cl),
 	m_pSerializer(s),
 	m_pMsgHandler(n)

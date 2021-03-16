@@ -1,6 +1,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
+
 #include "QmlAdapter.h"
 #include "controller.h"
 #include "GameStatsOperations.h"
@@ -12,6 +13,7 @@
 #include "MessageHandler.h"
 #include "ClientInteractorImpl.h"
 #include "ServerInteractorImpl.h"
+#include "GameInteractorImpl.h"
 #include "Server.h"
 
 int main(int argc, char *argv[])
@@ -30,8 +32,9 @@ int main(int argc, char *argv[])
     Game game;
     Client client;
     ServerInteractorImpl serverInteractor(&server, &serializer, &serverMsgHandler, &rndGen, &gsOperations, &game, &parser);
-    ClientInteractorImpl clientInteractor(&rndGen, &client, &serializer, &clientMsgHandler);
-    Controller controller{&qmlAdapter, &clientInteractor, &serverInteractor};
+    ClientInteractorImpl clientInteractor(&client, &serializer, &clientMsgHandler);
+    GameInteractorImpl gameInteractor(&game, &rndGen, &gsOperations, &clientInteractor, &serverInteractor);
+    Controller controller{&qmlAdapter, &gameInteractor};
     controller.Run();
 
     QGuiApplication app(argc, argv);

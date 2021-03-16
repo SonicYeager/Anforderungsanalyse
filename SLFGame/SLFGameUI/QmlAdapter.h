@@ -96,9 +96,7 @@ public slots:
     DECISION getDecision(int playerID, int categoryIDX);
     void setActiveItemIA(int idx);
     void setDecision(int playerID, int categoryIDX, int newVal);
-    void prepareGame();
-    void prepareOverview();
-    void prepareNextRound();
+    //void prepareNextRound();
     void addAnswer(QString answer);
     void addPlayerAnswers(GameStats gs);
     void hostLobby();

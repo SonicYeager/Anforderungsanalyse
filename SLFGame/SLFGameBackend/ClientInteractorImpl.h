@@ -1,8 +1,6 @@
 #pragma once
-#include "framework.h"
 #include "ClientInteractor.h"
 #include "DataTypes.h"
-#include "RandomGenRessource.h"
 #include "ClientSource.h"
 #include "SerializerSource.h"
 #include "MessageHandlerLogic.h"
@@ -10,7 +8,7 @@
 class ClientInteractorImpl : public ClientInteractor
 {
 public:
-	explicit ClientInteractorImpl(RandomGenRessource*, ClientSource*, SerializerSource*, MessageHandlerLogic*);
+	explicit ClientInteractorImpl(ClientSource*, SerializerSource*, MessageHandlerLogic*);
 	void HostLobby(const std::string&) override;
 	void JoinLobby(const LobbyCode&, const std::string&) override;
 	void LobbyChanged(const std::string& cats, const std::string& timeout, const std::string& rounds) override;
@@ -38,7 +36,6 @@ private:
 	ClientSource* m_pClient;
 	MessageHandlerLogic* m_pMsgHandler;
 	SerializerSource* m_pSerializer;
-	RandomGenRessource* m_pRandomGenerator;
 
 	// Geerbt über ClientInteractor
 };
