@@ -11,7 +11,7 @@
 class ServerInteractorImpl : public ServerInteractor
 {
 public:
-	ServerInteractorImpl(ServerSource*, SerializerSource*, MessageHandlerLogic*);
+	ServerInteractorImpl(ServerSource*, SerializerSource*, MessageHandlerLogic*);  //<-- GameServerInteractor
 	virtual ~ServerInteractorImpl();											
 		
 	void StartServer() override;

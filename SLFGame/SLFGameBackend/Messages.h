@@ -17,11 +17,11 @@ namespace Messages
 	};
 
 	struct HandleGameSettings	{ LobbySettings ls; };
-	struct Playername			{ std::string playername; };
+	struct Playername			{ std::string playername; }; //id
 	struct PlayerID				{ int id; };
-	struct PlayerAnswers		{ std::vector<std::string> answers; };
+	struct PlayerAnswers		{ std::vector<std::string> answers; }; //id
 	struct GameState			{ STATE state; };
-	struct ChatMessage			{ std::string sender; std::string text; };
+	struct ChatMessage			{ std::string sender; std::string text; }; 
 	struct AllAnswers			{ std::vector<std::vector<std::string>> ans{}; };
 	struct RoundSetup			{ RoundData data; };
 

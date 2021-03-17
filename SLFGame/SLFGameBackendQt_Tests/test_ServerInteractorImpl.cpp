@@ -59,7 +59,9 @@ class TestServerInteractor : public Test
 public:
 	TestServerInteractor() :
 		gameInteractor{ &fakeServer, &serializer, &msgHandler }
-	{}
+	{
+		
+	}
 protected:
 	virtual void SetUp()
 	{
@@ -82,6 +84,20 @@ TEST_F(TestServerInteractor, StartServer_StartServer_CallStartServer)
 
 	gameInteractor.StartServer();
 }
+
+//TEST_F(TestServerInteractor, Broadcast_WriteToOnAllSockets_CallWriteTo)
+//{
+//	EXPECT_CALL(fakeServer, StartServer());
+//
+//	gameInteractor.StartServer();
+//}
+//
+//TEST_F(TestServerInteractor, WriteTo_WriteTo_CallWriteTo)
+//{
+//	EXPECT_CALL(fakeServer, StartServer());
+//
+//	gameInteractor.StartServer();
+//}
 
 TEST_F(TestServerInteractor, OnMsgPlayerName_PlayerName_BroadcastToAll)
 {

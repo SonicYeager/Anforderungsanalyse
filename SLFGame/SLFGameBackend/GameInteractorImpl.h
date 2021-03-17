@@ -46,9 +46,9 @@ private:
 	GameLogic* m_pGame;
 	RandomGenRessource* m_pRandomGenerator;
 	DataOperationLogic* m_pDataOperation;
+	SLFParser m_Parser;
 	ClientInteractor* m_pClient;
 	ServerInteractor* m_pServer;
-	SLFParser m_Parser;
 
 	int m_answerGatheredCounter{};
 };
