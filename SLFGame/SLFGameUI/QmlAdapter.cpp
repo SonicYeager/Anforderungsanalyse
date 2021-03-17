@@ -18,7 +18,7 @@ void QmlAdapter::UpdateLobby(const LobbySettings & ls)
     _roundTime = ls.timeout.c_str();
     _players.clear();
     _players = ls.playerNames;
-    setPlayerCount(_players.size());
+    setPlayerCount(static_cast<int>(_players.size()));
     emit playerCountChanged();
     emit playersChanged();
     emit customCategoriesChanged();
@@ -42,7 +42,7 @@ void QmlAdapter::ChatMessageReceived(const ChatMessage & cm)
     AddChatMessage(cm.sender.c_str(), cm.text.c_str());
 }
 
-void QmlAdapter::ReveiveAllAnswers(const std::vector<std::vector<std::string> > & answers)
+void QmlAdapter::ReveiveAllAnswers(const StrVector2D & answers)
 {
     setAnswers(answers);
 }
@@ -203,7 +203,7 @@ void QmlAdapter::setCategories(StrVector categories)
     if (categories == _categories)
         return;
     _categories = categories;
-    _categoryCount = _categories.size();
+    _categoryCount = static_cast<int>(_categories.size());
     emit categoriesChanged();
     emit categoryCountChanged();
 }
@@ -218,7 +218,12 @@ void QmlAdapter::setAnswers(StrVector2D answers)
     {
         _decisions.emplace_back();
         for (int j = 0; j < _categoryCount; j++)
-        _decisions[i].emplace_back(DECISION::UNANSWERED);
+        {
+            if(_answers[i][j] == "")
+                _decisions[i].emplace_back(DECISION::INVALID);
+            else
+                _decisions[i].emplace_back(DECISION::UNANSWERED);
+        }
     }
 
     emit answersChanged();
@@ -362,23 +367,9 @@ void QmlAdapter::setDecision(int playerID, int categoryIDX, int newVal)
     emit decisionsChanged();
 }
 
-//void QmlAdapter::prepareNextRound()
-//{
-//    // CHANGE ME SOON ----------------------------------------------------------------------
-//    onPrepareNextRound(_decisions[0]);
-//}
-
 void QmlAdapter::addAnswer(QString answer)
 {
     _unhandledanswers.emplace_back(answer.toStdString());
-}
-
-void QmlAdapter::addPlayerAnswers(GameStats gs)
-{
-    StrVector2D result;
-    for (unsigned long long i = 0; i < gs.players.size(); i++)
-           result.push_back(gs.players[i].answers);
-    setAnswers(result);
 }
 
 void QmlAdapter::hostLobby()
@@ -421,6 +412,13 @@ void QmlAdapter::triggerStateRelatedSignal(STATE state)
     switch (state)
     {
     case STATE::ANSWERREQUEST: {emit answersRequest(); break;}
+    case STATE::MAINMENU     : break;
+    case STATE::LOBBY        : break;
+    case STATE::SETUPROUND   : break;
+    case STATE::INGAME       : break;
+    case STATE::OVERVIEW     : break;
+    case STATE::INTERVENTION : break;
+    case STATE::FINALSCORES  : break;
     }
 }
 
@@ -442,6 +440,7 @@ QString QmlAdapter::GetViewFromState(STATE view)
         case STATE::INTERVENTION :  return (getPlayerId() == 0) ? "Intervention" : "Waiting";
         case STATE::FINALSCORES :   return "FinalScores";
     }
+    return "MainMenu";
 }
 
 void QmlAdapter::AddChatMessage(const QString &sender, const QString &text)

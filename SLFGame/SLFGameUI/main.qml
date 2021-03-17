@@ -1,5 +1,6 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
+import "./Screens"
 
 Window{
     id: gameScreen_window
@@ -12,7 +13,7 @@ Window{
     Loader {
         id: pageLoader
         anchors.fill: parent
-        source: "GameScreen_" + qmlAdapter.view + ".qml"
+        source: "./Screens/GameScreen_" + qmlAdapter.view + ".qml"
     }
     //Component.onCompleted: pageLoader.source = "GameScreen_" + qmlAdapter.view + ".qml"
     //Connections {

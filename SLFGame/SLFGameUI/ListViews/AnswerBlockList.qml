@@ -6,18 +6,18 @@ ListView {
     id: list
     property alias count: list_model.count
     property alias listModel: list_model
-    property var spacingSum : spacing * 2
     spacing: 5
     interactive: false
 
     delegate: AnswerBlock {
         id: answerBlock
-        width : 200
-        height: 150
-        answer: model.answer
-        decision : (answer === "") ? "4" : qmlAdapter.getDecision(qmlAdapter.activeOverviewItem)
+        playerName: qmlAdapter.getPlayer(index)
+        width : 600
+        height: 30
+        answer: qmlAdapter.getAnswer(index, qmlAdapter.activeOverviewItem)
+        decision : qmlAdapter.getDecision(index, qmlAdapter.activeOverviewItem)
         onDecisionChanged: {
-            qmlAdapter.setDecision(qmlAdapter.activeOverviewItem, decision)
+            qmlAdapter.setDecision(index, qmlAdapter.activeOverviewItem, decision)
         }
     }
     model: ListModel{

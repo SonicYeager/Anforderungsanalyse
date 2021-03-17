@@ -46,6 +46,5 @@ TextField {
                 background.color: "gray"
             }
         }
-
     ]
 }

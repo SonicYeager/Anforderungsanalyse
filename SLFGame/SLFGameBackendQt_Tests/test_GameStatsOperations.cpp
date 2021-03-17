@@ -29,7 +29,6 @@ TEST(TestGameStatsOperations, AddPreviousLetter_GameStatsLettersUsedEmpty_GameSt
 
 TEST(TestGameStatsOperations, AddPreviousLetter_GameStatsLettersUsedFilledWithC_GameStatsLettersUsedFilledWithCD)
 {
-
 	GameStatsOperations gso{};
 	GameStats gs{};
 	gs.currentLetter = { 'D' };
@@ -39,7 +38,6 @@ TEST(TestGameStatsOperations, AddPreviousLetter_GameStatsLettersUsedFilledWithC_
 	gso.AddPreviousLetter(gs);
 
 	EXPECT_EQ(gs.lettersUsed[1], 'D');
-
 }
 
 TEST(TestGameStatsOperations, AddPreviousLetter_GameStatsLettersUsedEmptyCurrentLetterIsEmpty_GameStatsLettersUsedFilledWithNone)

@@ -17,7 +17,8 @@ enum class DECISION : int
 	UNANSWERED = 0,
 	SOLO = 1,
 	UNIQUE = 2,
-	MULTIPLE = 3
+	MULTIPLE = 3,
+	INVALID = 4
 };
 
 enum class STATE : int

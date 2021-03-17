@@ -1,24 +1,26 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
-        <file>GameScreen_Input.qml</file>
-        <file>Categories.qml</file>
-        <file>Category.qml</file>
-        <file>EntryBox.qml</file>
-        <file>TextBox.qml</file>
-        <file>InfoBox.qml</file>
-        <file>Banner.qml</file>
-        <file>GameButton.qml</file>
-        <file>GameScreen_Lobby.qml</file>
-        <file>Settings_Lobby.qml</file>
-        <file>GameScreen_Overview.qml</file>
-        <file>CategoryOverview.qml</file>
-        <file>AnswerBlock.qml</file>
-        <file>AnswerBlockList.qml</file>
-        <file>GameScreen_FinalScores.qml</file>
-        <file>GameScreen_MainMenu.qml</file>
-        <file>PlayerOverview.qml</file>
-        <file>SLFComboBox.qml</file>
-        <file>Chat.qml</file>
+        <file>Screens/GameScreen_FinalScores.qml</file>
+        <file>Screens/GameScreen_Input.qml</file>
+        <file>Screens/GameScreen_Lobby.qml</file>
+        <file>Screens/GameScreen_MainMenu.qml</file>
+        <file>Screens/GameScreen_Overview.qml</file>
+        <file>Components/EntryBox.qml</file>
+        <file>Components/GameButton.qml</file>
+        <file>Components/InfoBox.qml</file>
+        <file>Components/SLFComboBox.qml</file>
+        <file>Components/TextBox.qml</file>
+        <file>ListViews/AnswerBlock.qml</file>
+        <file>ListViews/AnswerBlockList.qml</file>
+        <file>ListViews/Categories.qml</file>
+        <file>ListViews/CategoryOverview.qml</file>
+        <file>ListViews/PlayerOverview.qml</file>
+        <file>Modules/Banner.qml</file>
+        <file>Modules/Category.qml</file>
+        <file>Modules/Chat.qml</file>
+        <file>Modules/Settings_Lobby.qml</file>
+        <file>Resources/banner (black bg).png</file>
+        <file>Resources/banner.png</file>
     </qresource>
 </RCC>

@@ -45,7 +45,7 @@ public:
     void SetLobbyCode           (const LobbyCode&) override;
     void UpdateGameState        (const STATE&) override;
     void ChatMessageReceived    (const ChatMessage&) override;
-    void ReveiveAllAnswers      (const std::vector<std::vector<std::string>> &) override;
+    void ReveiveAllAnswers      (const StrVector2D &) override;
     void ReceiveRoundData       (const RoundData&) override;
 
     QString getLetter();
@@ -90,22 +90,24 @@ public:
 
 public slots:
 
+// sending to external interfaces
+    void hostLobby();
+    void joinLobby();
+    void sendChatMessage(QString str);
+    void triggerStateChange(int);
+    void sendAnswers();
+    void lobbySettingsChanged();
+
+// internally used functions
+
     QString getCategoryName(int idx);
     QString getAnswer(int playerID, int categoryIDX);
     QString getPlayer(int idx);
     DECISION getDecision(int playerID, int categoryIDX);
     void setActiveItemIA(int idx);
     void setDecision(int playerID, int categoryIDX, int newVal);
-    //void prepareNextRound();
     void addAnswer(QString answer);
-    void addPlayerAnswers(GameStats gs);
-    void hostLobby();
-    void joinLobby();
-    void lobbySettingsChanged();
-    void sendChatMessage(QString str);
-    void triggerStateChange(int);
     void triggerStateRelatedSignal(STATE);
-    void sendAnswers();
 
 signals:
     void letterChanged();
