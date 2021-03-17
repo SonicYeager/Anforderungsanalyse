@@ -30,8 +30,10 @@ void ServerInteractorImpl::StartServer()
 	onSetLobbyCode(lobbyCode);
 }
 
-void ServerInteractorImpl::Broadcast(const LobbySettings&)
+void ServerInteractorImpl::Broadcast(const LobbySettings& ls)
 {
+	auto ser = m_pSerializer->Serialize(HandleGameSettings{ ls });
+	m_pServer->Broadcast(ser);
 }
 
 void ServerInteractorImpl::Broadcast(const AllAnswers& allAnsw)

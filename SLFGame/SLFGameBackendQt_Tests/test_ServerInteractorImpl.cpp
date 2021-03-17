@@ -169,22 +169,3 @@ TEST_F(TestServerInteractor, OnGameState_GameStateANSWERREQUEST_BroadcastToAll)
 
 	msgHandler.onGameState(msg);
 }
-
-//TEST_F(TestServerInteractor, OnGameState_SetupRound_WriteToAll)
-//{
-//	PlayerStats playerPeter;
-//	playerPeter.points = 10;
-//	gameInteractor.m_GameStats.players.emplace(0, playerPeter);
-//	GameState msg;
-//	msg.state = STATE::SETUPROUND;
-//	RoundSetup roundSetup;
-//	roundSetup.data.maxRounds = 5;
-//	roundSetup.data.currentRound = 1;
-//	roundSetup.data.roundTime = "bis Stop";
-//	roundSetup.data.categories = { "Stadt", "Land", "Fluss", "Name", "Tier", "Beruf" };
-//	roundSetup.data.points = 10;
-//	roundSetup.data.letter = "A";
-//	auto expected = serializer.Serialize(roundSetup);
-//	EXPECT_CALL(fakeServer, WriteTo(expected, 0));
-//	msgHandler.onGameState(msg);
-//}

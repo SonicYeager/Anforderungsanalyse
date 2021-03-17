@@ -97,7 +97,7 @@ public:
 		serverInteractor{ &fakeServer, &serializers, &msgHandlers },
 		gameInteractor{ &game, &randgen, &gsops, &serverInteractor }
 	{
-		a.exec();
+		//a.exec();
 	}
 protected:
 	virtual void SetUp()
@@ -131,67 +131,71 @@ protected:
 	QCoreApplication a{argc, argv};
 };
 
-//TEST_F(TestGameInteractor, OnMsgPlayerName_PlayerName_BroadcastToAll)
-//{
-//	HandleGameSettings hgs{};
-//	hgs.ls.categories = "Stadt,Land,Fluss,Name,Tier,Beruf";
-//	hgs.ls.rounds = "5";
-//	hgs.ls.timeout = "bis Stop";
-//	hgs.ls.playerNames.emplace(0, "Elysium");
-//	auto expected = serializer.Serialize(hgs);
-//	EXPECT_CALL(fakeServer, Broadcast(expected));
+TEST_F(TestGameInteractor, OnMsgPlayerName_PlayerName_CallBroadcastAndAdd)
+{
+	HandleGameSettings hgs{};
+	hgs.ls.categories = "Stadt,Land,Fluss,Name,Tier,Beruf";
+	hgs.ls.rounds = "5";
+	hgs.ls.timeout = "bis Stop";
+	hgs.ls.playerNames.emplace(0, "Elysium");
+	auto expected = serializers.Serialize(hgs);
+	EXPECT_CALL(fakeServer, Broadcast(expected));
+
+	PlayerStats name{};
+	name.playerName = "Elysium";
+	name.answers = {};
+	name.points = 0;
+	gameInteractor.AddPlayer(0, name);
+}
 //
-//	Playername name{ "Elysium" };
-//	msgHandler.onPlayername(name);
-//}
-//
-//TEST_F(TestGameInteractor, OnMsgHandleGameSettings_HandleGameSettings_BroadcastToAll)
-//{
-//	HandleGameSettings br{};
-//	br.ls.categories = "Stadt,Land,Fluss,Name,Tier,Beruf";
-//	br.ls.rounds = "10";
-//	br.ls.timeout = "20";
-//	auto expected = serializer.Serialize(br);
-//	EXPECT_CALL(fakeServer, Broadcast(expected));
-//
-//	HandleGameSettings re{};
-//	re.ls.categories = "Stadt,Land,Fluss,Name,Tier,Beruf";
-//	re.ls.rounds = "10";
-//	re.ls.timeout = "20";
-//	msgHandler.onHandleGameSettings(re);
-//}
-//
-//TEST_F(TestGameInteractor, OnChatMessage_ChatMsg_BroadcastToAll)
-//{
-//	ChatMessage br{};
-//	br.sender = "Mar-Vell";
-//	br.text = "True-Lies is a Hit!";
-//	auto expected = serializer.Serialize(br);
-//	EXPECT_CALL(fakeServer, Broadcast(expected));
-//
-//	ChatMessage re{};
-//	re.sender = "Mar-Vell";
-//	re.text = "True-Lies is a Hit!";
-//	msgHandler.onChatMessage(re);
-//}
-//
-//TEST_F(TestGameInteractor, OnPlayerAnswers_PlayerAnswer_BroadcastToAll)
-//{
-//	AllAnswers br{};
-//	br.ans = { {"Kaminar", "KVN", "Keplar"} };
-//	auto expected = serializer.Serialize(br);
-//	EXPECT_CALL(fakeServer, Broadcast(expected));
-//
-//	PlayerAnswers re{};
-//	re.answers = { "Kaminar", "KVN", "Keplar" };
-//	msgHandler.onPlayerAnswers(re);
-//}
-//
-//TEST_F(TestGameInteractor, OnGameState_GameStateANSWERREQUEST_BroadcastToAll)
-//{
-//	GameState msg;
-//	msg.state = STATE::ANSWERREQUEST;
-//	auto expected = serializer.Serialize(msg);
-//	EXPECT_CALL(fakeServer, Broadcast(expected));
-//	msgHandler.onGameState(msg);
-//}
+TEST_F(TestGameInteractor, OnMsgHandleGameSettings_HandleGameSettings_BroadcastToAll)
+{
+	HandleGameSettings br{};
+	br.ls.categories = "Stadt,Land,Fluss,Name,Tier,Beruf";
+	br.ls.rounds = "10";
+	br.ls.timeout = "20";
+	auto expected = serializers.Serialize(br);
+	EXPECT_CALL(fakeServer, Broadcast(expected));
+
+	gameInteractor.SetGameSettings(br.ls);
+}
+
+TEST_F(TestGameInteractor, OnPlayerAnswers_PlayerAnswer_BroadcastToAll)
+{
+	AllAnswers br{};
+	br.ans = { {"Kaminar", "KVN", "Keplar"} };
+	auto expected = serializers.Serialize(br);
+	EXPECT_CALL(fakeServer, Broadcast(expected));
+
+	gameInteractor.AddAnswers(0, { "Kaminar", "KVN", "Keplar" });
+}
+
+TEST_F(TestGameInteractor, OnGameState_GameStateANSWERREQUEST_BroadcastToAll)
+{
+	GameState msg;
+	msg.state = STATE::ANSWERREQUEST;
+	auto expected = serializers.Serialize(msg);
+	EXPECT_CALL(fakeServer, Broadcast(expected));
+
+	gameInteractor.ChangeGameState(STATE::ANSWERREQUEST);
+}
+
+TEST_F(TestGameInteractor, OnGameState_SetupRound_WriteToAll)
+{
+	PlayerStats playerPeter;
+	playerPeter.points = 10;
+	gameInteractor.m_GameStats.players.emplace(0, playerPeter);
+	GameState msg;
+	msg.state = STATE::SETUPROUND;
+	RoundSetup roundSetup;
+	roundSetup.data.maxRounds = 5;
+	roundSetup.data.currentRound = 1;
+	roundSetup.data.roundTime = "bis Stop";
+	roundSetup.data.categories = { "Stadt", "Land", "Fluss", "Name", "Tier", "Beruf" };
+	roundSetup.data.points = 10;
+	roundSetup.data.letter = "A";
+	auto expected = serializers.Serialize(roundSetup);
+	EXPECT_CALL(fakeServer, WriteTo(/*expected, 0*/_,_));
+
+	gameInteractor.ChangeGameState(STATE::SETUPROUND);
+}
