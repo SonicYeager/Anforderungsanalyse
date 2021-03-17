@@ -191,15 +191,19 @@ debug\qrc_qml.cpp: ..\SLFGameUI\qml.qrc \
 		..\SLFGameUI\Screens\GameScreen_Overview.qml \
 		"..\SLFGameUI\Resources\banner (black bg).png" \
 		..\SLFGameUI\Resources\banner.png \
+		..\SLFGameUI\Resources\cross.png \
+		..\SLFGameUI\Resources\tick.png \
 		..\SLFGameUI\ListViews\AnswerBlock.qml \
 		..\SLFGameUI\ListViews\CategoryOverview.qml \
 		..\SLFGameUI\ListViews\AnswerBlockList.qml \
 		..\SLFGameUI\ListViews\Categories.qml \
 		..\SLFGameUI\ListViews\PlayerOverview.qml \
+		..\SLFGameUI\ListViews\VoteList.qml \
 		..\SLFGameUI\Components\EntryBox.qml \
 		..\SLFGameUI\Components\InfoBox.qml \
 		..\SLFGameUI\Components\GameButton.qml \
 		..\SLFGameUI\Components\SLFComboBox.qml \
+		..\SLFGameUI\Components\Votebox.qml \
 		..\SLFGameUI\Components\TextBox.qml
 	G:\Software\Qt\6.0.1\msvc2019_64\bin\rcc.exe -name qml ..\SLFGameUI\qml.qrc -o debug\qrc_qml.cpp
 
@@ -414,7 +418,126 @@ debug\controller.obj: ..\SLFGameUI\controller.cpp ..\SLFGameUI\controller.h \
 		..\SLFGameBackend\UI.h \
 		..\SLFGameBackend\DataTypes.h \
 		..\SLFGameBackend\Messages.h \
-		..\SLFGameBackend\GameInteractor.h
+		..\SLFGameBackend\GameInteractor.h \
+		..\SLFGameBackend\ClientInteractor.h \
+		..\SLFGameBackend\ServerInteractor.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\QObject \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qobject.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qobjectdefs.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qnamespace.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qglobal.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qconfig-bootstrapped.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qconfig.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qtcore-config.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qsystemdetection.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qprocessordetection.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qcompilerdetection.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qtypeinfo.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qcontainerfwd.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qsysinfo.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qlogging.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qflags.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qatomic.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qbasicatomic.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qatomic_bootstrap.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qgenericatomic.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qatomic_cxx11.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qatomic_msvc.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qglobalstatic.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qmutex.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qnumeric.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qversiontagging.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qtmetamacros.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qobjectdefs_impl.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qstring.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qchar.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qstringview.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qbytearray.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qrefcount.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qarraydata.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qpair.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qarraydatapointer.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qarraydataops.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qcontainertools_impl.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qbytearrayalgorithms.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qbytearrayview.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qstringliteral.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qstringalgorithms.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qanystringview.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qutf8stringview.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qstringtokenizer.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qstringbuilder.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qlist.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qhashfunctions.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qiterator.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qbytearraylist.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qstringlist.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qalgorithms.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qstringmatcher.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qcoreevent.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qscopedpointer.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qmetatype.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qcompare.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qvarlengtharray.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qdatastream.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qiodevicebase.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qiterable.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qmetacontainer.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qcontainerinfo.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qtaggedpointer.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qmath.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qobject_impl.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qproperty.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qshareddata.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qpropertyprivate.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\QGuiApplication \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qguiapplication.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qtguiglobal.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qtgui-config.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qcoreapplication.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qeventloop.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qdebug.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qhash.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qmap.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qshareddata_impl.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qtextstream.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qstringconverter.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qset.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qcontiguouscache.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qsharedpointer.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qsharedpointer_impl.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qwindowdefs.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qwindowdefs_win.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qinputmethod.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qlocale.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qvariant.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qpoint.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qsize.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qmargins.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\QQmlApplicationEngine \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlapplicationengine.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlengine.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qurl.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qjsengine.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qjsvalue.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qtqmlglobal.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qtqml-config.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtNetwork\qtnetworkglobal.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtNetwork\qtnetwork-config.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmldebug.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqml.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlprivate.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlparserstatus.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmllist.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\QMetaType \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlpropertyvaluesource.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qpointer.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qversionnumber.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qmetaobject.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlerror.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlabstracturlinterceptor.h \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\QQmlContext \
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlcontext.h
 
 debug\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\QGuiApplication \
 		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qguiapplication.h \
@@ -541,6 +664,8 @@ debug\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include\Q
 		..\SLFGameBackend\Messages.h \
 		..\SLFGameUI\controller.h \
 		..\SLFGameBackend\GameInteractor.h \
+		..\SLFGameBackend\ClientInteractor.h \
+		..\SLFGameBackend\ServerInteractor.h \
 		..\SLFGameBackend\GameStatsOperations.h \
 		..\SLFGameBackend\framework.h \
 		..\SLFGameBackend\DataOperationLogic.h \
@@ -569,10 +694,8 @@ debug\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include\Q
 		..\SLFGameBackend\MessageHandler.h \
 		..\SLFGameBackend\MessageHandlerLogic.h \
 		..\SLFGameBackend\ClientInteractorImpl.h \
-		..\SLFGameBackend\ClientInteractor.h \
 		..\SLFGameBackend\ServerInteractorImpl.h \
 		..\SLFGameBackend\ServerSource.h \
-		..\SLFGameBackend\ServerInteractor.h \
 		..\SLFGameBackend\GameInteractorImpl.h \
 		..\SLFGameBackend\Server.h
 
