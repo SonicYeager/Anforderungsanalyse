@@ -11,7 +11,6 @@ GameInteractorImpl::GameInteractorImpl(
 	m_pDataOperation(dol),
 	m_pServer(si)
 {
-
 	//link server to own data ops
 	m_pServer->onAddAnswers =		[this](const int id, const std::vector<std::string>& ans)		{ AddAnswers(id, ans); };
 	m_pServer->onAddPlayer =		[this](const int id, const PlayerStats& ans)					{ AddPlayer(id, ans); };
@@ -110,7 +109,21 @@ void GameInteractorImpl::HandleGameState(const STATE& state) //bitte aufdröseln
 		m_pDataOperation->AddPreviousLetter(m_GameStats);
 		m_pDataOperation->SetNewLetter(m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.lettersUsed), m_GameStats);
 		m_GameStats.categories = m_Parser.ParseCategories(m_GameStats.customCategoryString);
-		//3dvector bool -> decisions
+
+		for (const auto& player : m_GameStats.players)
+		{
+			std::vector<std::vector<bool>> percat{};
+			for (const auto& cat : m_GameStats.categories)
+			{
+				std::vector<bool> peransw{};
+				for (const auto& answ : player.second.answers)
+				{
+					peransw.emplace_back(true);
+				}
+				percat.push_back(peransw);
+			}
+			m_GameStats.votes.push_back(percat);
+		}
 
 		RoundSetup msg;
 		msg.data.categories = m_GameStats.categories;
