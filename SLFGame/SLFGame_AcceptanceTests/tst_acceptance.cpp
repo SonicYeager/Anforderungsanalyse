@@ -16,6 +16,18 @@
 #include "GameInteractorImpl.h"
 #include "Server.h"
 
+inline bool operator==(const std::vector<std::string>& left, const std::vector<std::string>& right)
+{
+    if(left.size() != right.size())
+        return false;
+    for(int i{}; i < left.size(); ++i)
+    {
+        if(left[i] != right[i])
+            return false;
+    }
+    return true;
+}
+
 class Acceptance : public QObject
 {
     Q_OBJECT
@@ -30,6 +42,8 @@ private slots:
     void hostLobby_Jerk_ConnectionEstablishedGameStatsSet();
     void lobbySettingsChanged_ChangedTimeLeft_SettingsWithStandardCatAndRounds();
     void chatMsg_Message_ChatLogHoldsOneMessage();
+    void onePlayerAnswer_playerAnswer_playerAnswersSavedOnGameStats();
+    void stateChanged_stateLobby_stateChangedInGameStats();
 
 private:
     void Cleanup();
@@ -72,9 +86,6 @@ void Acceptance::hostLobby_Jerk_ConnectionEstablishedGameStatsSet()
 
     QCOMPARE(gameInteractor.m_GameStats.players.size(), 1);
     QCOMPARE(gameInteractor.m_GameStats.players[0].playerName, "Jerk");
-    QCOMPARE(qmlAdapter.getPlayerName(), "Jerk");
-    QCOMPARE(qmlAdapter.getPlayerId(), 0);
-    QCOMPARE(qmlAdapter.getLobbyCode(), "192.168.0.80");
 
     Cleanup();
 }
@@ -116,6 +127,39 @@ void Acceptance::chatMsg_Message_ChatLogHoldsOneMessage()
     auto actual = qmlAdapter.getChatLog();
     QString expected = "Sender: Message\n";
     QCOMPARE(actual, expected);
+
+    Cleanup();
+}
+
+void Acceptance::onePlayerAnswer_playerAnswer_playerAnswersSavedOnGameStats()
+{
+    qmlAdapter.setPlayerName("Jerk");
+
+    qmlAdapter.joinLobby();
+    QTest::qWait(50);
+    qmlAdapter.onSendAnswers({"Le","Mans","66"});
+    QTest::qWait(50);
+
+    auto id = qmlAdapter.getPlayerId();
+    auto actual = gameInteractor.m_GameStats.players[id].answers;
+    std::vector<std::string> expected = {"Le","Mans","66"};
+    QVERIFY(actual == expected);
+
+    Cleanup();
+}
+
+void Acceptance::stateChanged_stateLobby_stateChangedInGameStats()
+{
+    qmlAdapter.setPlayerName("Jerk");
+
+    qmlAdapter.joinLobby();
+    QTest::qWait(50);
+    qmlAdapter.onState(STATE::LOBBY);
+    QTest::qWait(50);
+
+    auto actual = gameInteractor.m_GameStats.state;
+    auto expected = STATE::LOBBY;
+    QVERIFY(actual == expected);
 
     Cleanup();
 }
