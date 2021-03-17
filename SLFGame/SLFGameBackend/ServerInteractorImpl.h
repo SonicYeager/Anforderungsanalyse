@@ -11,7 +11,7 @@
 class ServerInteractorImpl : public ServerInteractor
 {
 public:
-	ServerInteractorImpl(ServerSource*, SerializerSource*, MessageHandlerLogic*);  //<-- GameServerInteractor
+	ServerInteractorImpl(ServerSource*, SerializerSource*, MessageHandlerLogic*); 
 	virtual ~ServerInteractorImpl();											
 		
 	void StartServer() override;
@@ -40,6 +40,5 @@ private:
 	SerializerSource* m_pSerializer{};
 	MessageHandlerLogic* m_pMsgHandler{};
 
-	int m_actualID{};	//temp solution -> ask if there are any better;
 	int m_dataGatherCounter{};
 };

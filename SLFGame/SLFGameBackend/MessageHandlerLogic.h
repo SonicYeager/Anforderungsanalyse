@@ -14,6 +14,7 @@ public:
 	virtual void on(const ChatMessage&) = 0;
 	virtual void on(const AllAnswers&) = 0;
 	virtual void on(const RoundSetup&) = 0;
+	virtual void on(const AnswerIndex&) = 0;
 
 	Event<Playername> onPlayername;
 	Event<PlayerID> onPlayerID;
@@ -23,4 +24,5 @@ public:
 	Event<ChatMessage> onChatMessage;
 	Event<AllAnswers> onAllAnswers;
 	Event<RoundSetup> onRoundSetup;
+	Event<AnswerIndex> onAnswerIndex;
 };

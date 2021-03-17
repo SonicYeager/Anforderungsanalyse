@@ -10,13 +10,13 @@ public:
 	std::vector<char> Serialize(const Message& msg) override;
 	Message Deserialize(const std::vector<char>& data) override;
 
-	void Serialize_impl(const Playername& msg, QDataStream& data);
+	void Serialize_impl(const Playername& msg, QDataStream& data);	//id
 	void Deserialize_impl(Playername& msg, QDataStream& data);
 	
 	void Serialize_impl(const PlayerID& msg, QDataStream& data);
 	void Deserialize_impl(PlayerID& msg, QDataStream& data);
 	
-	void Serialize_impl(const PlayerAnswers& msg, QDataStream& data);
+	void Serialize_impl(const PlayerAnswers& msg, QDataStream& data);  //id
 	void Deserialize_impl(PlayerAnswers& msg, QDataStream& data);
 	
 	void Serialize_impl(const HandleGameSettings& msg, QDataStream& data);
@@ -33,4 +33,7 @@ public:
 
 	void Serialize_impl(const RoundSetup& msg, QDataStream& data);
 	void Deserialize_impl(RoundSetup& msg, QDataStream& data);
+
+	void Serialize_impl(const AnswerIndex& msg, QDataStream& data);
+	void Deserialize_impl(AnswerIndex& msg, QDataStream& data);
 };

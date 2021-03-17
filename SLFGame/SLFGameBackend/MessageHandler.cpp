@@ -35,6 +35,11 @@ void MessageHandler::on(const RoundSetup& msg)
 	onRoundSetup(msg);
 }
 
+void MessageHandler::on(const AnswerIndex& msg)
+{
+	onAnswerIndex(msg);
+}
+
 void MessageHandler::on(const Playername& msg)
 {
 	onPlayername(msg);

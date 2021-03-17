@@ -12,4 +12,5 @@ public:
 	void on(const ChatMessage&) override;
 	void on(const AllAnswers&) override;
 	void on(const RoundSetup&) override;
+	void on(const AnswerIndex&) override;
 };

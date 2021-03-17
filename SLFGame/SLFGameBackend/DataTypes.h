@@ -80,6 +80,13 @@ struct RoundData
 	int points;
 };
 
+struct Index
+{
+	int playerID;
+	int catIndex;
+	int voteIndex;
+};
+
 using HeaderType = int;
 const int HEADERSIZE = sizeof(HeaderType);
 const int PORT = 4242;

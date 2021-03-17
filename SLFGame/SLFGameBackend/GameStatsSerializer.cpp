@@ -38,6 +38,7 @@ void GameStatsSerializer::Serialize_impl(const Playername& msg, QDataStream& dat
 {
 	QString playername{ msg.playername.c_str() };
 	data << playername;
+	data << msg.id;
 }
 
 void GameStatsSerializer::Deserialize_impl(Playername& msg, QDataStream& data)
@@ -45,6 +46,7 @@ void GameStatsSerializer::Deserialize_impl(Playername& msg, QDataStream& data)
 	QString playername{};
 	data >> playername;
 	msg.playername = playername.toStdString();
+	data >> msg.id;
 }
 
 void GameStatsSerializer::Serialize_impl(const PlayerID& msg, QDataStream& data)
@@ -62,6 +64,7 @@ void GameStatsSerializer::Serialize_impl(const PlayerAnswers& msg, QDataStream& 
 	QStringList answers;
 	std::for_each(std::begin(msg.answers), std::end(msg.answers), [&answers](const std::string& str) {answers.push_back(str.c_str()); });
 	data << answers;
+	data << msg.id;
 }
 
 void GameStatsSerializer::Deserialize_impl(PlayerAnswers& msg, QDataStream& data)
@@ -70,6 +73,7 @@ void GameStatsSerializer::Deserialize_impl(PlayerAnswers& msg, QDataStream& data
 	data >> answers;
 	for (const QString& answer : answers)
 		msg.answers.push_back(answer.toStdString());
+	data >> msg.id;
 }
 
 void GameStatsSerializer::Serialize_impl(const HandleGameSettings& msg, QDataStream& data)
@@ -198,4 +202,18 @@ void GameStatsSerializer::Deserialize_impl(RoundSetup& msg, QDataStream& data)
 
 	msg.data.roundTime = roundTime.toStdString();
 	msg.data.letter = letter.toStdString();
+}
+
+void GameStatsSerializer::Serialize_impl(const AnswerIndex& msg, QDataStream& data)
+{
+	data << msg.indexes.playerID;
+	data << msg.indexes.catIndex;
+	data << msg.indexes.voteIndex;
+}
+
+void GameStatsSerializer::Deserialize_impl(AnswerIndex& msg, QDataStream& data)
+{
+	data >> msg.indexes.playerID;
+	data >> msg.indexes.catIndex;
+	data >> msg.indexes.voteIndex;
 }

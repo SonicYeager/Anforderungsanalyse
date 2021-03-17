@@ -104,6 +104,7 @@ void GameInteractorImpl::HandleGameState(const STATE& state) //bitte aufdröseln
 		m_pDataOperation->AddPreviousLetter(m_GameStats);
 		m_pDataOperation->SetNewLetter(m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.lettersUsed), m_GameStats);
 		m_GameStats.categories = m_Parser.ParseCategories(m_GameStats.customCategoryString);
+		//3dvector bool -> decisions
 
 		RoundSetup msg;
 		msg.data.categories = m_GameStats.categories;
@@ -117,6 +118,10 @@ void GameInteractorImpl::HandleGameState(const STATE& state) //bitte aufdröseln
 			msg.data.points = player.second.points;
 			m_pServer->WriteTo(player.first, msg);
 		}
+	}
+	else if (state == STATE::OVERVIEW)
+	{
+		m_pServer->Broadcast(GameState{ state });
 	}
 }
 
