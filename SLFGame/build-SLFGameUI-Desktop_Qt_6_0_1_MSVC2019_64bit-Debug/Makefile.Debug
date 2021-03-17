@@ -179,26 +179,28 @@ compiler_rcc_clean:
 	-$(DEL_FILE) debug\qrc_qml.cpp debug\qrc_qmake_qmake_immediate.cpp
 debug\qrc_qml.cpp: ..\SLFGameUI\qml.qrc \
 		G:\Software\Qt\6.0.1\msvc2019_64\bin\rcc.exe \
-		..\SLFGameUI\AnswerBlock.qml \
-		..\SLFGameUI\InfoBox.qml \
-		..\SLFGameUI\Chat.qml \
-		..\SLFGameUI\Category.qml \
-		..\SLFGameUI\Categories.qml \
-		..\SLFGameUI\TextBox.qml \
-		..\SLFGameUI\GameScreen_Input.qml \
-		..\SLFGameUI\EntryBox.qml \
-		..\SLFGameUI\GameScreen_MainMenu.qml \
-		..\SLFGameUI\GameButton.qml \
-		..\SLFGameUI\GameScreen_Lobby.qml \
-		..\SLFGameUI\AnswerBlockList.qml \
-		..\SLFGameUI\CategoryOverview.qml \
-		..\SLFGameUI\GameScreen_FinalScores.qml \
-		..\SLFGameUI\Settings_Lobby.qml \
 		..\SLFGameUI\main.qml \
-		..\SLFGameUI\SLFComboBox.qml \
-		..\SLFGameUI\GameScreen_Overview.qml \
-		..\SLFGameUI\PlayerOverview.qml \
-		..\SLFGameUI\Banner.qml
+		..\SLFGameUI\Modules\Settings_Lobby.qml \
+		..\SLFGameUI\Modules\Chat.qml \
+		..\SLFGameUI\Modules\Category.qml \
+		..\SLFGameUI\Modules\Banner.qml \
+		..\SLFGameUI\Screens\GameScreen_Input.qml \
+		..\SLFGameUI\Screens\GameScreen_MainMenu.qml \
+		..\SLFGameUI\Screens\GameScreen_FinalScores.qml \
+		..\SLFGameUI\Screens\GameScreen_Lobby.qml \
+		..\SLFGameUI\Screens\GameScreen_Overview.qml \
+		"..\SLFGameUI\Resources\banner (black bg).png" \
+		..\SLFGameUI\Resources\banner.png \
+		..\SLFGameUI\ListViews\AnswerBlock.qml \
+		..\SLFGameUI\ListViews\CategoryOverview.qml \
+		..\SLFGameUI\ListViews\AnswerBlockList.qml \
+		..\SLFGameUI\ListViews\Categories.qml \
+		..\SLFGameUI\ListViews\PlayerOverview.qml \
+		..\SLFGameUI\Components\EntryBox.qml \
+		..\SLFGameUI\Components\InfoBox.qml \
+		..\SLFGameUI\Components\GameButton.qml \
+		..\SLFGameUI\Components\SLFComboBox.qml \
+		..\SLFGameUI\Components\TextBox.qml
 	G:\Software\Qt\6.0.1\msvc2019_64\bin\rcc.exe -name qml ..\SLFGameUI\qml.qrc -o debug\qrc_qml.cpp
 
 debug\qrc_qmake_qmake_immediate.cpp: debug\qmake_qmake_immediate.qrc \

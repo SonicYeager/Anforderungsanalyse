@@ -4,7 +4,6 @@
 #include "GameLogic.h"
 #include "RandomGenRessource.h"
 #include "DataOperationLogic.h"
-#include "ClientInteractor.h"
 #include "ServerInteractor.h"
 #include "SLFParser.h"
 
@@ -15,17 +14,8 @@ public:
 		GameLogic*,
 		RandomGenRessource*,
 		DataOperationLogic*,
-		ClientInteractor*,
 		ServerInteractor*
 	);
-
-	//ui client
-	void HostLobby(const std::string&) override;
-	void JoinLobby(const LobbyCode&, const std::string&) override;
-	void LobbyChanged(const std::string& cats, const std::string& timeout, const std::string& rounds) override;
-	void ChatMessageReceived(const std::string& sender, const std::string& text)override;
-	void StateChangeTriggered(const STATE&) override;
-	void AnswersReceived(const std::vector<std::string>&) override;
 
 	//server
 	void RemovePlayer(const int&)override;
@@ -47,7 +37,6 @@ private:
 	RandomGenRessource* m_pRandomGenerator;
 	DataOperationLogic* m_pDataOperation;
 	SLFParser m_Parser;
-	ClientInteractor* m_pClient;
 	ServerInteractor* m_pServer;
 
 	int m_answerGatheredCounter{};

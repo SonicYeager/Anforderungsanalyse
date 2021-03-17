@@ -1,10 +1,21 @@
 #include "controller.h"
 #include "DataTypes.h"
 
-Controller::Controller(UI* ui, GameInteractor* clientInter) :
-    m_pUi(ui),
-    m_pClientInter(clientInter)
+#include <QGuiApplication>
+#include <QQmlApplicationEngine>
+#include <QQmlContext>
+
+Controller::Controller(UI* u, GameInteractor* gi,
+                       ClientInteractor* ci,
+                       ServerInteractor* si) :
+    m_pUi(u),
+    m_pGameInter(gi),
+    m_pClientInter(ci),
+    m_pServerInter(si)
 {
+
+    m_pClientInter->onStartServer = [this] {	m_pServerInter->StartServer(); };
+
     //UI EVENTS
 
     //m_pUi->onPrepareNextRound           = [this](std::vector<DECISION> decisions)
@@ -52,7 +63,19 @@ Controller::Controller(UI* ui, GameInteractor* clientInter) :
                                                 {m_pUi->ReceiveRoundData(data);};
 }
 
-void Controller::Run()
+int Controller::Run(int argc, char *argv[], QObject& obj)
 {
-    //init here
+    QGuiApplication app(argc, argv);
+    QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("qmlAdapter", &obj);
+    const QUrl url(QStringLiteral("qrc:/main.qml"));
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app,
+                     [url](QObject *obj, const QUrl &objUrl)
+    {
+        if (!obj && url == objUrl)
+            QCoreApplication::exit(-1);
+    },
+    Qt::QueuedConnection);
+    engine.load(url);
+    return app.exec();
 }

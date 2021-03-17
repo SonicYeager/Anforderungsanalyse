@@ -4,26 +4,15 @@ GameInteractorImpl::GameInteractorImpl(
 	GameLogic* gl,
 	RandomGenRessource* rgr,
 	DataOperationLogic* dol,
-	ClientInteractor* ci,
 	ServerInteractor* si)
 	:
 	m_pGame(gl),
 	m_pRandomGenerator(rgr),
 	m_pDataOperation(dol),
-	m_pClient(ci),
 	m_pServer(si)
 {
-	//link both inter to each other
-	m_pClient->onStartServer = [this] {	m_pServer->StartServer(); };
-
-	//relay client trgg to ui
-	m_pClient->onAllAnswers				= [this](const std::vector<std::vector<std::string>>& answ) { onAllAnswers(answ); };
-	m_pClient->onChatMessage			= [this](const ChatMessage& answ)							{ onChatMessage(answ); };
-	m_pClient->onGameState				= [this](const STATE& answ)									{ onGameState(answ); };
-	m_pClient->onReceivedID				= [this](const int& answ)									{ onReceivedID(answ); };
-	m_pClient->onRoundData				= [this](const RoundData& answ)								{ onRoundData(answ); };
-	m_pClient->onSetLobbyCode			= [this](const LobbyCode& answ)								{ onSetLobbyCode(answ); };
-	m_pClient->onUpdateLobbySettings	= [this](const LobbySettings& answ)							{ onUpdateLobbySettings(answ); };
+	////link both inter to each other
+	//m_pClient->onStartServer = [this] {	m_pServer->StartServer(); };
 
 	//link server to own data ops
 	m_pServer->onAddAnswers =		[this](const int id, const std::vector<std::string>& ans)		{ AddAnswers(id, ans); };
@@ -32,38 +21,6 @@ GameInteractorImpl::GameInteractorImpl(
 	m_pServer->onRemovePlayer =		[this](const int id)											{ RemovePlayer(id); };
 	m_pServer->onSetGameSettings =	[this](const LobbySettings& ans)								{ SetGameSettings(ans); };
 	m_pServer->onSetLobbyCode =		[this](const LobbyCode& ans)									{ SetLobbyCode(ans); };
-}
-
-//ui
-
-void GameInteractorImpl::HostLobby(const std::string& playerName)
-{
-	m_pClient->HostLobby(playerName);
-}
-
-void GameInteractorImpl::JoinLobby(const LobbyCode& lobbyCode, const std::string& playerName)
-{
-	m_pClient->JoinLobby(lobbyCode, playerName);
-}
-
-void GameInteractorImpl::LobbyChanged(const std::string& cats, const std::string& timeout, const std::string& rounds)
-{
-	m_pClient->LobbyChanged(cats, timeout, rounds);
-}
-
-void GameInteractorImpl::ChatMessageReceived(const std::string& sender, const std::string& text)
-{
-	m_pClient->ChatMessageReceived(sender, text);
-}
-
-void GameInteractorImpl::StateChangeTriggered(const STATE& state)
-{
-	m_pClient->StateChangeTriggered(state);
-}
-
-void GameInteractorImpl::AnswersReceived(const std::vector<std::string>& answers)
-{
-	m_pClient->AnswersReceived(answers);
 }
 
 //server
