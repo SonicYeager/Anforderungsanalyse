@@ -36,6 +36,7 @@ struct PlayerStats
 };
 
 using Players = std::map<int, PlayerStats>;
+using DDDVector = std::vector<std::vector<std::vector<bool>>>;
 
 struct GameStats
 {
@@ -49,6 +50,7 @@ struct GameStats
 	std::string customCategoryString = "Stadt,Land,Fluss,Name,Tier,Beruf";
 	Players players{};
 	STATE state{};
+	DDDVector votes{};
 };
 
 using Stats = std::pair<GameStats, PlayerStats>;

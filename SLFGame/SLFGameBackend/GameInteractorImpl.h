@@ -24,6 +24,7 @@ public:
 	void SetGameSettings(const LobbySettings&) override;
 	void ChangeGameState(const STATE&) override;
 	void SetLobbyCode(const LobbyCode&) override;
+	void ToggleVote(const Index&) override;
 
 	GameStats m_GameStats;
 

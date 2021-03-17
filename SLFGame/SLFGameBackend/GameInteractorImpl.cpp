@@ -79,6 +79,12 @@ void GameInteractorImpl::SetLobbyCode(const LobbyCode& lobbyCode)
 	m_GameStats.lobbyCode = lobbyCode;
 }
 
+void GameInteractorImpl::ToggleVote(const Index& index)
+{
+	m_GameStats.votes[index.playerID][index.catIndex][index.voteIndex] = !m_GameStats.votes[index.playerID][index.catIndex][index.voteIndex];
+	m_pServer->Broadcast(AnswerIndex{ index });
+}
+
 //helper
 
 HandleGameSettings GameInteractorImpl::CreateHandleGameSettings()
@@ -128,5 +134,5 @@ void GameInteractorImpl::HandleGameState(const STATE& state) //bitte aufdröseln
 void GameInteractorImpl::SendUpdatedLobbySettings()
 {
 	auto stats = CreateHandleGameSettings();
-	m_pServer->Broadcast(stats.ls);
+	m_pServer->Broadcast(stats);
 }

@@ -16,5 +16,6 @@ public:
 	virtual void SetGameSettings(const LobbySettings&) = 0;
 	virtual void ChangeGameState(const STATE&) = 0;
 	virtual void SetLobbyCode(const LobbyCode&) = 0;
+	virtual void ToggleVote(const Index&) = 0;
 
 };

@@ -12,12 +12,10 @@ class ServerInteractorImpl : public ServerInteractor
 {
 public:
 	ServerInteractorImpl(ServerSource*, SerializerSource*, MessageHandlerLogic*); 
-	virtual ~ServerInteractorImpl();											
+	virtual ~ServerInteractorImpl();
 		
 	void StartServer() override;
-	void Broadcast(const LobbySettings&) override;
-	void Broadcast(const AllAnswers&) override;
-	void Broadcast(const GameState&) override;
+	void Broadcast(const Message&) override;
 	void WriteTo(int, const RoundSetup&) override;
 
 	//msg events

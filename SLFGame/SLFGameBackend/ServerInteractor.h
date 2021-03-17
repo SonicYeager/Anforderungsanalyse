@@ -10,9 +10,7 @@ public:
 	virtual ~ServerInteractor() = default;
 
 	virtual void StartServer() = 0;
-	virtual void Broadcast(const LobbySettings&) = 0;
-	virtual void Broadcast(const AllAnswers&) = 0;
-	virtual void Broadcast(const GameState&) = 0;
+	virtual void Broadcast(const Message&) = 0;
 	virtual void WriteTo(int, const RoundSetup&) = 0;
 
 	//Event<const std::string> onLog;
