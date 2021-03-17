@@ -214,18 +214,21 @@ void QmlAdapter::setAnswers(StrVector2D answers)
         return;
     _answers = answers;
     _decisions.clear();
-    for (unsigned int i = 0; i < _players.size(); i++)
+    for (int i = 0; i < _playerCount; i++)
     {
         _decisions.emplace_back();
         for (int j = 0; j < _categoryCount; j++)
         {
-            if(_answers[i][j] == "")
-                _decisions[i].emplace_back(DECISION::INVALID);
-            else
-                _decisions[i].emplace_back(DECISION::UNANSWERED);
+            _decisions[i].emplace_back();
+            for (int k = 0; k < _playerCount; k++)
+            {
+                if(_answers[i][j] == "")
+                    _decisions[i][j].emplace_back(false);
+                else
+                    _decisions[i][j].emplace_back(true);
+            }
         }
     }
-
     emit answersChanged();
     emit decisionsChanged();
 }
@@ -350,9 +353,9 @@ QString QmlAdapter::getPlayer(int idx)
     return QString::fromUtf8(_players[idx].c_str());
 }
 
-DECISION QmlAdapter::getDecision(int playerID, int categoryIDX)
+bool QmlAdapter::getDecision(int playerID, int categoryIDX, int votingPlayerIDX)
 {
-    return _decisions[playerID][categoryIDX];
+    return _decisions[playerID][categoryIDX][votingPlayerIDX];
 }
 
 void QmlAdapter::setActiveItemIA(int idx)
@@ -360,11 +363,9 @@ void QmlAdapter::setActiveItemIA(int idx)
     setActiveOverviewItem(idx);
 }
 
-void QmlAdapter::setDecision(int playerID, int categoryIDX, int newVal)
+void QmlAdapter::setDecision(int playerID, int categoryIDX, int votingPlayerIDX)
 {
-    auto dec = static_cast<DECISION>(newVal);
-    _decisions[playerID][categoryIDX] = dec;
-    emit decisionsChanged();
+    _decisions[playerID][categoryIDX][votingPlayerIDX] = !_decisions[playerID][categoryIDX][votingPlayerIDX];
 }
 
 void QmlAdapter::addAnswer(QString answer)

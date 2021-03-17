@@ -4,12 +4,12 @@ import QtQuick.Controls 2.5
 import "../Components"
 
 Rectangle {
-    Layout.preferredWidth: 600
-    Layout.preferredHeight: 90
+    Layout.preferredWidth: 900
+    Layout.preferredHeight: 30
     property alias answer : answerTB.text
-    property alias decision : cb_decision.currentIndex
     property alias textColor : answerTB.textColor
     property alias playerName : player.text
+    property alias answerIDX : voteList.answerIDX
     color: Qt.rgba(0,0,0,0)
     RowLayout {
         anchors.fill:parent
@@ -29,15 +29,36 @@ Rectangle {
             color: "black"
             textColor: "white"
         }
-        SLFComboBox {
-            id: cb_decision
-            Layout.preferredWidth: 200
+        //--SLFComboBox {
+        //--    id: cb_decision
+        //--    Layout.preferredWidth: 200
+        //--    Layout.preferredHeight: 30
+        //--    model: [ "Unbearbeitet",
+        //--             "Solo",
+        //--             "Einfach",
+        //--             "Mehrfach",
+        //--             "Ungültig" ]
+        //--}
+        Rectangle {
+            Layout.preferredWidth: 300
             Layout.preferredHeight: 30
-            model: [ "Unbearbeitet",
-                     "Solo",
-                     "Einfach",
-                     "Mehrfach",
-                     "Ungültig" ]
+            border.color: "white"
+            border.width: 2
+            RowLayout {
+                anchors.fill: parent
+                spacing: 0
+                VoteList {
+                    id: voteList
+                    Layout.preferredWidth: listModel.count * 30
+                    Layout.minimumHeight: 30
+                    Component.onCompleted: {
+                        for (var i = 0; i < qmlAdapter.playerCount; i++)
+                        {
+                           listModel.append()
+                        }
+                    }
+                }
+            }
         }
     }
 }

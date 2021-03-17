@@ -22,5 +22,9 @@
         <file>Modules/Settings_Lobby.qml</file>
         <file>Resources/banner (black bg).png</file>
         <file>Resources/banner.png</file>
+        <file>Components/Votebox.qml</file>
+        <file>Resources/cross.png</file>
+        <file>Resources/tick.png</file>
+        <file>ListViews/VoteList.qml</file>
     </qresource>
 </RCC>

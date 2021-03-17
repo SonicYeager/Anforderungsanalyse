@@ -12,15 +12,6 @@ using Event = std::function<void(Args...)>;
 using LobbyCode = std::string;
 using ByteStream = std::vector<char>;
 
-enum class DECISION : int
-{
-	UNANSWERED = 0,
-	SOLO = 1,
-	UNIQUE = 2,
-	MULTIPLE = 3,
-	INVALID = 4
-};
-
 enum class STATE : int
 {
 	MAINMENU = 0,

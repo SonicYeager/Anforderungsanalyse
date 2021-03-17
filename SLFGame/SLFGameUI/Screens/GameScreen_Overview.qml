@@ -87,8 +87,7 @@ Rectangle{
                                 for (var i = 0; i < qmlAdapter.playerCount; i++)
                                 {
                                     answerBlockList.listModel.append(
-                                    {"answer"  :qmlAdapter.getAnswer  (i,qmlAdapter.activeOverviewItem),
-                                     "decision":qmlAdapter.getDecision(i,qmlAdapter.activeOverviewItem)})
+                                    {"answer":qmlAdapter.getAnswer(i,qmlAdapter.activeOverviewItem)})
                                 }
                             }
                         }

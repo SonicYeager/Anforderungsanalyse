@@ -11,8 +11,9 @@
 using StrVector = std::vector<std::string>;
 using PlayerMap = std::map<int, std::string>;
 using StrVector2D = std::vector<StrVector>;
-using DecVector = std::vector<DECISION>;
-using DecVector2D = std::vector<DecVector>;
+using BoolVector = std::vector<bool>;
+using BoolVector2D = std::vector<BoolVector>;
+using BoolVector3D = std::vector<BoolVector2D>;
 class QmlAdapter : public QObject, public UI
 {
     Q_OBJECT
@@ -103,7 +104,7 @@ public slots:
     QString getCategoryName(int idx);
     QString getAnswer(int playerID, int categoryIDX);
     QString getPlayer(int idx);
-    DECISION getDecision(int playerID, int categoryIDX);
+    bool getDecision(int playerID, int categoryIDX, int votingPlayerIDX);
     void setActiveItemIA(int idx);
     void setDecision(int playerID, int categoryIDX, int newVal);
     void addAnswer(QString answer);
@@ -157,7 +158,6 @@ private:
     int _playerCount            = 0;
     int _activeOverviewItem     = 0;
     int _playerId               = 0;
-    DecVector2D _decisions      = {};
+    BoolVector3D _decisions     = {};
     bool _customChecked         = false;
-
 };
