@@ -72,7 +72,7 @@ void ServerInteractorImpl::OnDisconnect(int id)
 
 void ServerInteractorImpl::OnMsgPlayerName(const Playername& playerName)
 {
-	onAddPlayer(playerName.id, PlayerStats{ playerName.playername, 0, {} });
+	onAddPlayer(playerName.id, playerName.playername);
 }
 
 void ServerInteractorImpl::OnMsgHandleGameSettings(const HandleGameSettings& settings)

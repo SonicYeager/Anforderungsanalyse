@@ -18,7 +18,7 @@ public:
 	//game inter
 	Event<int> onRemovePlayer;
 	Event<int, std::vector<std::string>> onAddAnswers;
-	Event<int, PlayerStats> onAddPlayer;
+	Event<int, std::string> onAddPlayer;
 	Event<LobbySettings> onSetGameSettings;
 	Event<STATE> onChangeGameState;
 	Event<LobbyCode> onSetLobbyCode;

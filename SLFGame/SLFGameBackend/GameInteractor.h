@@ -12,7 +12,7 @@ public:
 	//server
 	virtual void RemovePlayer(const int&) = 0;
 	virtual void AddAnswers(int, const std::vector<std::string>&) = 0;
-	virtual void AddPlayer(int, const PlayerStats&) = 0;
+	virtual void AddPlayer(int, const std::string&) = 0;
 	virtual void SetGameSettings(const LobbySettings&) = 0;
 	virtual void ChangeGameState(const STATE&) = 0;
 	virtual void SetLobbyCode(const LobbyCode&) = 0;

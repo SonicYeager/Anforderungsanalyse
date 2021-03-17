@@ -53,9 +53,9 @@ void GameInteractorImpl::AddAnswers(int id, const std::vector<std::string>& answ
 	CheckAllAnswersRecived(m_answerGatheredCounter, m_GameStats.players.size(), broadcast);
 }
 
-void GameInteractorImpl::AddPlayer(int id, const PlayerStats& playerName)
+void GameInteractorImpl::AddPlayer(int id, const std::string& playerName)
 {
-	m_GameStats.players.emplace(id, PlayerStats{ playerName.playerName, 0, {} });
+	m_GameStats.players.emplace(id, PlayerStats{ playerName, 0, {} });
 	SendUpdatedLobbySettings();
 }
 
