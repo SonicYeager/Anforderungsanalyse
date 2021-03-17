@@ -54,7 +54,6 @@ void ServerInteractorImpl::OnNewConnection(int id)
 void ServerInteractorImpl::OnData(const ByteStream& stream, int id)
 {
 	auto des = m_pSerializer->Deserialize(stream);
-	m_actualID = id; //how to pass through the id to the event funcs
 	m_pMsgHandler->handleMessage(des);
 
 	//onLog("ServerInteractor: received data: " + text + " from client: " + std::to_string(id));

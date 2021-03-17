@@ -42,6 +42,7 @@ Rectangle {
         Rectangle {
             Layout.preferredWidth: 300
             Layout.preferredHeight: 30
+            color: Qt.rgba(0,0,0,0)
             border.color: "white"
             border.width: 2
             RowLayout {
@@ -54,7 +55,7 @@ Rectangle {
                     Component.onCompleted: {
                         for (var i = 0; i < qmlAdapter.playerCount; i++)
                         {
-                           listModel.append()
+                           listModel.append({})
                         }
                     }
                 }

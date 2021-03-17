@@ -4,6 +4,6 @@
 class Game : public GameLogic
 {
 public:
-	int		CalculatePoints		(const std::vector<DECISION>&)	override;
+	int		CalculatePoints		(GameStats&)	override;
 	void	CheckGameFinished	(GameStats&)					override;
 };
