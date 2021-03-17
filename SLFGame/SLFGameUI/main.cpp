@@ -34,5 +34,19 @@ int main(int argc, char *argv[])
     ClientInteractorImpl clientInteractor(&client, &serializer, &clientMsgHandler);
     GameInteractorImpl gameInteractor(&game, &rndGen, &gsOperations, &serverInteractor);
     Controller controller{&qmlAdapter, &gameInteractor, &clientInteractor, &serverInteractor};
-    return controller.Run(argc, argv, qmlAdapter);
+    //controller.Run(argc, argv, qmlAdapter);
+
+    QGuiApplication app(argc, argv);
+    QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("qmlAdapter", &qmlAdapter);
+    const QUrl url(QStringLiteral("qrc:/main.qml"));
+    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app,
+                     [url](QObject *obj, const QUrl &objUrl)
+    {
+        if (!obj && url == objUrl)
+            QCoreApplication::exit(-1);
+    },
+    Qt::QueuedConnection);
+    engine.load(url);
+    return app.exec();
 }

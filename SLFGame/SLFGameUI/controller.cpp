@@ -1,10 +1,6 @@
 #include "controller.h"
 #include "DataTypes.h"
 
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
-#include <QQmlContext>
-
 Controller::Controller(UI* u, GameInteractor* gi,
                        ClientInteractor* ci,
                        ServerInteractor* si) :
@@ -65,17 +61,5 @@ Controller::Controller(UI* u, GameInteractor* gi,
 
 int Controller::Run(int argc, char *argv[], QObject& obj)
 {
-    QGuiApplication app(argc, argv);
-    QQmlApplicationEngine engine;
-    engine.rootContext()->setContextProperty("qmlAdapter", &obj);
-    const QUrl url(QStringLiteral("qrc:/main.qml"));
-    QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app,
-                     [url](QObject *obj, const QUrl &objUrl)
-    {
-        if (!obj && url == objUrl)
-            QCoreApplication::exit(-1);
-    },
-    Qt::QueuedConnection);
-    engine.load(url);
-    return app.exec();
+    return 0;
 }

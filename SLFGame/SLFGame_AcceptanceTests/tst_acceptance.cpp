@@ -44,6 +44,7 @@ private slots:
     void chatMsg_Message_ChatLogHoldsOneMessage();
     void onePlayerAnswer_playerAnswer_playerAnswersSavedOnGameStats();
     void stateChanged_stateLobby_stateChangedInGameStats();
+    void secondInstance_comm_todo();
 
 private:
     void Cleanup();
@@ -59,8 +60,30 @@ private:
     Client client;
     ServerInteractorImpl serverInteractor{&server, &serializer, &serverMsgHandler};
     ClientInteractorImpl clientInteractor{&client, &serializer, &clientMsgHandler};
-    GameInteractorImpl gameInteractor{&game, &rndGen, &gsOperations, &clientInteractor, &serverInteractor};
-    Controller controller{&qmlAdapter, &gameInteractor};
+    GameInteractorImpl gameInteractor{&game, &rndGen, &gsOperations, &serverInteractor};
+    Controller controller{&qmlAdapter, &gameInteractor, &clientInteractor, &serverInteractor};
+};
+
+class Second : public QObject
+{
+    Q_OBJECT
+
+public:
+    void Cleanup();
+
+    QmlAdapter qmlAdapter;
+    RandomGenerator rndGen{};
+    GameStatsOperations gsOperations{};
+    Server server;
+    GameStatsSerializer serializer;
+    MessageHandler clientMsgHandler;
+    MessageHandler serverMsgHandler;
+    Game game;
+    Client client;
+    ServerInteractorImpl serverInteractor{&server, &serializer, &serverMsgHandler};
+    ClientInteractorImpl clientInteractor{&client, &serializer, &clientMsgHandler};
+    GameInteractorImpl gameInteractor{&game, &rndGen, &gsOperations, &serverInteractor};
+    Controller controller{&qmlAdapter, &gameInteractor, &clientInteractor, &serverInteractor};
 };
 
 
@@ -92,7 +115,7 @@ void Acceptance::hostLobby_Jerk_ConnectionEstablishedGameStatsSet()
 
 void Acceptance::lobbySettingsChanged_ChangedTimeLeft_SettingsWithStandardCatAndRounds()
 {
-    qmlAdapter.setPlayerName("Jerk");
+    qmlAdapter.setPlayerName("Dork");
     qmlAdapter.setRoundTime("00:01:10");
     qmlAdapter.setCustomCategories("Stabby");
     qmlAdapter.setMaxRounds("100");
@@ -117,12 +140,12 @@ void Acceptance::lobbySettingsChanged_ChangedTimeLeft_SettingsWithStandardCatAnd
 
 void Acceptance::chatMsg_Message_ChatLogHoldsOneMessage()
 {
-    qmlAdapter.setPlayerName("Jerk");
+    qmlAdapter.setPlayerName("Mark");
 
     qmlAdapter.joinLobby();
     QTest::qWait(50);
     qmlAdapter.onChatMessage("Sender", "Message");
-    QTest::qWait(50);
+    QTest::qWait(100);
 
     auto actual = qmlAdapter.getChatLog();
     QString expected = "Sender: Message\n";
@@ -133,16 +156,16 @@ void Acceptance::chatMsg_Message_ChatLogHoldsOneMessage()
 
 void Acceptance::onePlayerAnswer_playerAnswer_playerAnswersSavedOnGameStats()
 {
-    qmlAdapter.setPlayerName("Jerk");
+    qmlAdapter.setPlayerName("Murk");
 
     qmlAdapter.joinLobby();
     QTest::qWait(50);
-    qmlAdapter.onSendAnswers({"Le","Mans","66"});
-    QTest::qWait(50);
+    qmlAdapter.onSendAnswers({"Le","Mans","66", "Le","Mans","66"});
+    QTest::qWait(100);
 
     auto id = qmlAdapter.getPlayerId();
     auto actual = gameInteractor.m_GameStats.players[id].answers;
-    std::vector<std::string> expected = {"Le","Mans","66"};
+    std::vector<std::string> expected = {"Le","Mans","66", "Le","Mans","66"};
     QVERIFY(actual == expected);
 
     Cleanup();
@@ -150,12 +173,12 @@ void Acceptance::onePlayerAnswer_playerAnswer_playerAnswersSavedOnGameStats()
 
 void Acceptance::stateChanged_stateLobby_stateChangedInGameStats()
 {
-    qmlAdapter.setPlayerName("Jerk");
+    qmlAdapter.setPlayerName("Klark1");
 
     qmlAdapter.joinLobby();
     QTest::qWait(50);
     qmlAdapter.onState(STATE::LOBBY);
-    QTest::qWait(50);
+    QTest::qWait(100);
 
     auto actual = gameInteractor.m_GameStats.state;
     auto expected = STATE::LOBBY;
@@ -164,9 +187,26 @@ void Acceptance::stateChanged_stateLobby_stateChangedInGameStats()
     Cleanup();
 }
 
+void Acceptance::secondInstance_comm_todo()
+{
+    Second sec{};
+
+    sec.qmlAdapter.setPlayerName("Klark2");
+    sec.qmlAdapter.setLobbyCode("192.168.0.80");
+
+    sec.qmlAdapter.joinLobby();
+    QTest::qWait(100);
+
+    QCOMPARE(gameInteractor.m_GameStats.players.size(), 2);
+    QCOMPARE(gameInteractor.m_GameStats.players[1].playerName, "Klark");
+
+    Cleanup();
+}
+
 void Acceptance::Cleanup()
 {
     client.DisconnectFromServer();
+    qmlAdapter.setPlayerCount(1);
 }
 
 QTEST_GUILESS_MAIN(Acceptance)
