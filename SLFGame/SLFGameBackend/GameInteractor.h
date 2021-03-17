@@ -9,7 +9,6 @@ class GameInteractor
 public:
 	~GameInteractor() = default;
 
-protected:
 	//server
 	virtual void RemovePlayer(const int&) = 0;
 	virtual void AddAnswers(int, const std::vector<std::string>&) = 0;

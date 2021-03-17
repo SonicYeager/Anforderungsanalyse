@@ -9,6 +9,7 @@
 #include "../SLFGameBackend/Game.h"
 #include "../SLFGameBackend/RandomGenerator.h"
 #include "../SLFGameBackend/GameStatsOperations.h"
+#include "../SLFGameBackend/GameInteractor.h"
 
 using namespace ::testing;
 
@@ -54,13 +55,30 @@ class FakeRandomGenerator : public RandomGenerator
 		return 'A';
 	};
 };
+
+class FakeGameInteractor : public GameInteractor
+{
+public:
+	MOCK_METHOD(void, RemovePlayer,		(const int&),							(override));
+	MOCK_METHOD(void, AddAnswers,		(int, const std::vector<std::string>&),	(override));
+	MOCK_METHOD(void, AddPlayer,		(int, const PlayerStats&),				(override));
+	MOCK_METHOD(void, SetGameSettings,	(const LobbySettings&),					(override));
+	MOCK_METHOD(void, ChangeGameState,	(const STATE&),							(override));
+	MOCK_METHOD(void, SetLobbyCode,		(const LobbyCode&),						(override));
+};
+
 class TestServerInteractor : public Test
 {
 public:
 	TestServerInteractor() :
 		gameInteractor{ &fakeServer, &serializer, &msgHandler }
 	{
-		
+		gameInteractor.onAddAnswers			= [this](int id, const std::vector<std::string>& msg) {fakeGI.AddAnswers(id, msg); };
+		gameInteractor.onRemovePlayer		= [this](int id) {fakeGI.RemovePlayer(id); };
+		gameInteractor.onAddPlayer			= [this](int id, const PlayerStats& msg) {fakeGI.AddPlayer(id, msg); };
+		gameInteractor.onSetGameSettings	= [this](const LobbySettings& msg) {fakeGI.SetGameSettings(msg); };
+		gameInteractor.onChangeGameState	= [this](const STATE& msg) {fakeGI.ChangeGameState(msg); };
+		gameInteractor.onSetLobbyCode		= [this](const LobbyCode& msg = "") {fakeGI.SetLobbyCode(msg); };
 	}
 protected:
 	virtual void SetUp()
@@ -72,6 +90,7 @@ protected:
 		Test::TearDown();
 	}
 
+	::testing::StrictMock<FakeGameInteractor> fakeGI{};
 	::testing::NiceMock<FakeServer> fakeServer{};
 	GameStatsSerializer serializer{};
 	MessageHandler msgHandler{};
@@ -81,6 +100,7 @@ protected:
 TEST_F(TestServerInteractor, StartServer_StartServer_CallStartServer)
 {
 	EXPECT_CALL(fakeServer, StartServer());
+	EXPECT_CALL(fakeGI, SetLobbyCode(_));
 
 	gameInteractor.StartServer();
 }
@@ -91,7 +111,7 @@ TEST_F(TestServerInteractor, StartServer_StartServer_CallStartServer)
 //
 //	gameInteractor.StartServer();
 //}
-//
+
 //TEST_F(TestServerInteractor, WriteTo_WriteTo_CallWriteTo)
 //{
 //	EXPECT_CALL(fakeServer, StartServer());
@@ -101,13 +121,7 @@ TEST_F(TestServerInteractor, StartServer_StartServer_CallStartServer)
 
 TEST_F(TestServerInteractor, OnMsgPlayerName_PlayerName_BroadcastToAll)
 {
-	HandleGameSettings hgs{};
-	hgs.ls.categories = "Stadt,Land,Fluss,Name,Tier,Beruf";
-	hgs.ls.rounds = "5";
-	hgs.ls.timeout = "bis Stop";
-	hgs.ls.playerNames.emplace(0, "Elysium");
-	auto expected = serializer.Serialize(hgs);
-	EXPECT_CALL(fakeServer, Broadcast(expected));
+	EXPECT_CALL(fakeGI, AddPlayer(_, _));
 
 	Playername name{"Elysium"};
 	msgHandler.onPlayername(name);
@@ -115,12 +129,7 @@ TEST_F(TestServerInteractor, OnMsgPlayerName_PlayerName_BroadcastToAll)
 
 TEST_F(TestServerInteractor, OnMsgHandleGameSettings_HandleGameSettings_BroadcastToAll)
 {
-	HandleGameSettings br{};
-	br.ls.categories = "Stadt,Land,Fluss,Name,Tier,Beruf";
-	br.ls.rounds = "10";
-	br.ls.timeout = "20";
-	auto expected = serializer.Serialize(br);
-	EXPECT_CALL(fakeServer, Broadcast(expected));
+	EXPECT_CALL(fakeGI, SetGameSettings(_));
 
 	HandleGameSettings re{};
 	re.ls.categories = "Stadt,Land,Fluss,Name,Tier,Beruf";
@@ -145,10 +154,7 @@ TEST_F(TestServerInteractor, OnChatMessage_ChatMsg_BroadcastToAll)
 
 TEST_F(TestServerInteractor, OnPlayerAnswers_PlayerAnswer_BroadcastToAll)
 {
-	AllAnswers br{};
-	br.ans = { {"Kaminar", "KVN", "Keplar"} };
-	auto expected = serializer.Serialize(br);
-	EXPECT_CALL(fakeServer, Broadcast(expected));
+	EXPECT_CALL(fakeGI, AddAnswers(_, _));
 
 	PlayerAnswers re{};
 	re.answers = {"Kaminar", "KVN", "Keplar"};
@@ -159,10 +165,9 @@ TEST_F(TestServerInteractor, OnGameState_GameStateANSWERREQUEST_BroadcastToAll)
 {
 	GameState msg;
 	msg.state = STATE::ANSWERREQUEST;
-	auto expected = serializer.Serialize(msg);
-	EXPECT_CALL(fakeServer, Broadcast(expected));
-	msgHandler.onGameState(msg);
+	EXPECT_CALL(fakeGI, ChangeGameState(_));
 
+	msgHandler.onGameState(msg);
 }
 
 //TEST_F(TestServerInteractor, OnGameState_SetupRound_WriteToAll)

@@ -95,14 +95,8 @@ public:
 	TestGameInteractor() :
 		clientInteractor{ &fakeClient, &serializerc, &msgHandlerc },
 		serverInteractor{ &fakeServer, &serializers, &msgHandlers },
-		gameInteractor{ &game, &randgen, &gsops, &clientInteractor, &serverInteractor }
+		gameInteractor{ &game, &randgen, &gsops, &serverInteractor }
 	{
-		gameInteractor.onAllAnswers = [this](const std::vector<std::vector<std::string>>& ans) {fui.ReveiveAllAnswers(ans); };
-		gameInteractor.onChatMessage = [this](const ChatMessage& ans) {fui.ChatMessageReceived(ans); };
-		gameInteractor.onGameState = [this](const STATE& ans) {fui.UpdateGameState(ans); };
-		gameInteractor.onReceivedID = [this](const int& ans) {fui.ReceiveID(ans); };
-		gameInteractor.onUpdateLobbySettings = [this](const LobbySettings& ans) {fui.UpdateLobby(ans); };
-
 		a.exec();
 	}
 protected:
@@ -134,7 +128,7 @@ protected:
 	std::string strargv{"empty"};
 	int argc = 0;
 	char** argv{};
-	QCoreApplication a{ argc, argv};
+	QCoreApplication a{argc, argv};
 };
 
 //TEST_F(TestGameInteractor, OnMsgPlayerName_PlayerName_BroadcastToAll)
@@ -200,4 +194,4 @@ protected:
 //	auto expected = serializer.Serialize(msg);
 //	EXPECT_CALL(fakeServer, Broadcast(expected));
 //	msgHandler.onGameState(msg);
-}
+//}

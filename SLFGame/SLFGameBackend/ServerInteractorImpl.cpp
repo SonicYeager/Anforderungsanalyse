@@ -26,7 +26,8 @@ ServerInteractorImpl::~ServerInteractorImpl()
 
 void ServerInteractorImpl::StartServer()
 {
-	onSetLobbyCode(m_pServer->StartServer());
+	auto lobbyCode = m_pServer->StartServer();
+	onSetLobbyCode(lobbyCode);
 }
 
 void ServerInteractorImpl::Broadcast(const LobbySettings&)

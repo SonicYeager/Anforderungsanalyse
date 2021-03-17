@@ -11,8 +11,6 @@ GameInteractorImpl::GameInteractorImpl(
 	m_pDataOperation(dol),
 	m_pServer(si)
 {
-	////link both inter to each other
-	//m_pClient->onStartServer = [this] {	m_pServer->StartServer(); };
 
 	//link server to own data ops
 	m_pServer->onAddAnswers =		[this](const int id, const std::vector<std::string>& ans)		{ AddAnswers(id, ans); };
