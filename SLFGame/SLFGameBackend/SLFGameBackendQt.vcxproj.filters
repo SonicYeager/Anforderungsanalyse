@@ -99,7 +99,7 @@
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="GameInteractorImpl.h">
-      <Filter>Header Files</Filter>
+      <Filter>Implementation</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -137,7 +137,7 @@
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="GameInteractorImpl.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Implementation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

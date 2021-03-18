@@ -17,7 +17,7 @@ ClientInteractorImpl::ClientInteractorImpl(
 	m_pMsgHandler->onGameState = [this](const GameState& gs) { OnMsgGameState(gs); };
 	m_pMsgHandler->onChatMessage = [this](const ChatMessage& cm) { OnChatMessage(cm); };
 	m_pMsgHandler->onAllAnswers = [this](const AllAnswers& aans) { OnAllAnswers(aans); };
-	m_pMsgHandler->onRoundSetup = [this](const RoundSetup& msg) {OnRoundSetup(msg); };
+	m_pMsgHandler->onRoundSetup = [this](const RoundSetup& msg) { OnRoundSetup(msg); };
 }
 
 void ClientInteractorImpl::HostLobby(const std::string& playerName)
@@ -37,7 +37,7 @@ void ClientInteractorImpl::JoinLobby(const LobbyCode& lobbyCode, const std::stri
 	onSetLobbyCode(lobbyCode);
 
 	//senden vom spielernamen
-	Playername msg{playerName};
+	Playername msg{playerName, m_clientID};
 	auto ser = m_pSerializer->Serialize(msg);
 	m_pClient->WriteToHost(ser);
 }
@@ -72,7 +72,7 @@ void ClientInteractorImpl::StateChangeTriggered(const STATE& state)
 
 void ClientInteractorImpl::AnswersReceived(const std::vector<std::string>& answers)
 {
-	PlayerAnswers ans{answers};
+	PlayerAnswers ans{answers, m_clientID};
 
 	auto ser = m_pSerializer->Serialize(ans);
 	m_pClient->WriteToHost(ser);
@@ -80,6 +80,7 @@ void ClientInteractorImpl::AnswersReceived(const std::vector<std::string>& answe
 
 void ClientInteractorImpl::OnMsgID(const PlayerID& id)
 {
+	m_clientID = id.id;
 	onReceivedID(id.id);
 }
 

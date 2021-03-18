@@ -32,7 +32,7 @@ private:
 	//client events
 	void OnDataReceived(const ByteStream&);
 
-
+	int m_clientID = 0;
 	ClientSource* m_pClient;
 	MessageHandlerLogic* m_pMsgHandler;
 	SerializerSource* m_pSerializer;
