@@ -61,10 +61,11 @@ class FakeGameInteractor : public GameInteractor
 public:
 	MOCK_METHOD(void, RemovePlayer,		(const int&),							(override));
 	MOCK_METHOD(void, AddAnswers,		(int, const std::vector<std::string>&),	(override));
-	MOCK_METHOD(void, AddPlayer,		(int, const PlayerStats&),				(override));
+	MOCK_METHOD(void, AddPlayer,		(int, const std::string&), (override));
 	MOCK_METHOD(void, SetGameSettings,	(const LobbySettings&),					(override));
 	MOCK_METHOD(void, ChangeGameState,	(const STATE&),							(override));
 	MOCK_METHOD(void, SetLobbyCode,		(const LobbyCode&),						(override));
+	MOCK_METHOD(void, ToggleVote,	    (const Index&),							(override));
 };
 
 class TestServerInteractor : public Test
@@ -75,7 +76,7 @@ public:
 	{
 		gameInteractor.onAddAnswers			= [this](int id, const std::vector<std::string>& msg) {fakeGI.AddAnswers(id, msg); };
 		gameInteractor.onRemovePlayer		= [this](int id) {fakeGI.RemovePlayer(id); };
-		gameInteractor.onAddPlayer			= [this](int id, const PlayerStats& msg) {fakeGI.AddPlayer(id, msg); };
+		gameInteractor.onAddPlayer			= [this](int id, const std::string& msg) {fakeGI.AddPlayer(id, msg); };
 		gameInteractor.onSetGameSettings	= [this](const LobbySettings& msg) {fakeGI.SetGameSettings(msg); };
 		gameInteractor.onChangeGameState	= [this](const STATE& msg) {fakeGI.ChangeGameState(msg); };
 		gameInteractor.onSetLobbyCode		= [this](const LobbyCode& msg = "") {fakeGI.SetLobbyCode(msg); };

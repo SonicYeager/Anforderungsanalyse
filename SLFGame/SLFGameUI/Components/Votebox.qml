@@ -1,9 +1,10 @@
-import QtQuick 2.12
-import QtQuick.Controls 2.12
+import QtQuick 2.0
+import QtQuick.Layouts 1.3
+import QtQuick.Controls 2.5
 import "../Resources"
 Rectangle {
-    width: 30
-    height: 30
+    Layout.preferredWidth: 30
+    Layout.preferredHeight: 30
     color:Qt.rgba(0,0,0,0)
     Image{
         id: image

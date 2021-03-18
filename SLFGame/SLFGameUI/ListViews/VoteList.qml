@@ -9,7 +9,7 @@ ListView {
     property var answerIDX : 0
     spacing: 5
     interactive: false
-
+    orientation: ListView.Horizontal
     delegate: Votebox {
         id: voteBox
         width : 30

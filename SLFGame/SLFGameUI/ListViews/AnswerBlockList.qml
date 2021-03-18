@@ -9,10 +9,11 @@ ListView {
     spacing: 5
     interactive: false
 
+
     delegate: AnswerBlock {
         id: answerBlock
         playerName: qmlAdapter.getPlayer(index)
-        width : 900
+        width : 820
         height: 30
         answer: qmlAdapter.getAnswer(index, qmlAdapter.activeOverviewItem)
         answerIDX: index

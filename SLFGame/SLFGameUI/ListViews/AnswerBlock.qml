@@ -4,7 +4,7 @@ import QtQuick.Controls 2.5
 import "../Components"
 
 Rectangle {
-    Layout.preferredWidth: 900
+    Layout.preferredWidth: 800
     Layout.preferredHeight: 30
     property alias answer : answerTB.text
     property alias textColor : answerTB.textColor
@@ -29,29 +29,18 @@ Rectangle {
             color: "black"
             textColor: "white"
         }
-        //--SLFComboBox {
-        //--    id: cb_decision
-        //--    Layout.preferredWidth: 200
-        //--    Layout.preferredHeight: 30
-        //--    model: [ "Unbearbeitet",
-        //--             "Solo",
-        //--             "Einfach",
-        //--             "Mehrfach",
-        //--             "Ungültig" ]
-        //--}
         Rectangle {
             Layout.preferredWidth: 300
             Layout.preferredHeight: 30
             color: Qt.rgba(0,0,0,0)
-            border.color: "white"
-            border.width: 2
             RowLayout {
                 anchors.fill: parent
                 spacing: 0
                 VoteList {
                     id: voteList
-                    Layout.preferredWidth: listModel.count * 30
+                    Layout.preferredWidth: 30 * list_model.count
                     Layout.minimumHeight: 30
+                    Layout.alignment: Qt.AlignHCenter
                     Component.onCompleted: {
                         for (var i = 0; i < qmlAdapter.playerCount; i++)
                         {
@@ -60,6 +49,12 @@ Rectangle {
                     }
                 }
             }
+        }
+        GameButton {
+            Layout.preferredHeight: 30
+            Layout.preferredWidth: 100
+            state: "whiteButton"
+            text: "Vote"
         }
     }
 }

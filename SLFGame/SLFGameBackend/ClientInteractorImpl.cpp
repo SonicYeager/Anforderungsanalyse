@@ -37,9 +37,7 @@ void ClientInteractorImpl::JoinLobby(const LobbyCode& lobbyCode, const std::stri
 	onSetLobbyCode(lobbyCode);
 
 	//senden vom spielernamen
-	Playername msg{playerName, m_clientID};
-	auto ser = m_pSerializer->Serialize(msg);
-	m_pClient->WriteToHost(ser);
+	m_clientName = playerName;
 }
 
 void ClientInteractorImpl::LobbyChanged(const std::string& cats, const std::string& timeout, const std::string& rounds)
@@ -82,6 +80,10 @@ void ClientInteractorImpl::OnMsgID(const PlayerID& id)
 {
 	m_clientID = id.id;
 	onReceivedID(id.id);
+
+	Playername msg{ m_clientName, m_clientID };
+	auto ser = m_pSerializer->Serialize(msg);
+	m_pClient->WriteToHost(ser);
 }
 
 void ClientInteractorImpl::OnMsgHandleGameSettings(const HandleGameSettings& settings)

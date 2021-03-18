@@ -141,11 +141,8 @@ TEST_F(TestGameInteractor, OnMsgPlayerName_PlayerName_CallBroadcastAndAdd)
 	auto expected = serializers.Serialize(hgs);
 	EXPECT_CALL(fakeServer, Broadcast(expected));
 
-	PlayerStats name{};
-	name.playerName = "Elysium";
-	name.answers = {};
-	name.points = 0;
-	gameInteractor.AddPlayer(0, name);
+	std::string playerName = "Elysium";
+	gameInteractor.AddPlayer(0, playerName);
 }
 //
 TEST_F(TestGameInteractor, OnMsgHandleGameSettings_HandleGameSettings_BroadcastToAll)

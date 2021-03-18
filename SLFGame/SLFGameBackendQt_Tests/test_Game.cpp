@@ -9,25 +9,25 @@ public:
 	MOCK_METHOD(void, End, ());
 };
 
-TEST(TestGame, CalculatePoints_2solo2multi2same_PointOutputEQ70)
-{
-	Game game{};
-	std::vector<DECISION> decisions = 
-	{ 
-		DECISION::SOLO,
-		DECISION::SOLO,
-		DECISION::UNIQUE,
-		DECISION::UNIQUE,
-		DECISION::MULTIPLE,
-		DECISION::MULTIPLE
-	};
-
-	int actual = game.CalculatePoints(decisions);
-	int expected = 70;
-
-
-	EXPECT_EQ(expected, actual);
-}
+//TEST(TestGame, CalculatePoints_2solo2multi2same_PointOutputEQ70)
+//{
+//	Game game{};
+//	//std::vector<DECISION> decisions = 
+//	//{ 
+//	//	DECISION::SOLO,
+//	//	DECISION::SOLO,
+//	//	DECISION::UNIQUE,
+//	//	DECISION::UNIQUE,
+//	//	DECISION::MULTIPLE,
+//	//	DECISION::MULTIPLE
+//	//};
+//	//
+//	//int actual = game.CalculatePoints(decisions);
+//	//int expected = 70;
+//	//
+//	//
+//	//EXPECT_EQ(expected, actual);
+//}
 
 TEST(TestGame, CheckGameFinished_3currentRound5MaxRound_ExpectCallPrepare)
 {
