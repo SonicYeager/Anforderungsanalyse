@@ -206,14 +206,14 @@ void GameStatsSerializer::Deserialize_impl(RoundSetup& msg, QDataStream& data)
 
 void GameStatsSerializer::Serialize_impl(const AnswerIndex& msg, QDataStream& data)
 {
-	data << msg.indexes.playerID;
-	data << msg.indexes.catIndex;
-	data << msg.indexes.voteIndex;
+	data << msg.index.categoryIDX;
+	data << msg.index.answerIDX;
+	data << msg.index.voterIDX;
 }
 
 void GameStatsSerializer::Deserialize_impl(AnswerIndex& msg, QDataStream& data)
 {
-	data >> msg.indexes.playerID;
-	data >> msg.indexes.catIndex;
-	data >> msg.indexes.voteIndex;
+	data >> msg.index.categoryIDX;
+	data >> msg.index.answerIDX;
+	data >> msg.index.voterIDX;
 }

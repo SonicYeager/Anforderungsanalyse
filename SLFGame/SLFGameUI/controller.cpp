@@ -34,6 +34,8 @@ Controller::Controller(UI* u, GameInteractor* gi,
 
     m_pUi->onSendAnswers                = [this](const std::vector<std::string> answers)
                                             {m_pClientInter->AnswersReceived(answers);};
+    m_pUi->onChangeVoteState            = [this](int playerID, int categoryIDX, int voterIDX)
+                                            {m_pClientInter->ChangeVoteStateTriggered(playerID, categoryIDX, voterIDX);};
 
     //CLIENT EVENTS
 
@@ -57,6 +59,9 @@ Controller::Controller(UI* u, GameInteractor* gi,
 
     m_pClientInter->onRoundData             = [this](const RoundData& data)
                                                 {m_pUi->ReceiveRoundData(data);};
+
+    m_pClientInter->onVoteChange            = [this](const Index idx)
+                                                {m_pUi->ReceiveVoteChange(idx);};
 }
 
 int Controller::Run(int argc, char *argv[], QObject& obj)

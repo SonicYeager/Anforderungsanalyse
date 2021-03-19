@@ -19,6 +19,7 @@ ServerInteractorImpl::ServerInteractorImpl(
 	m_pMsgHandler->onHandleGameSettings = [this](const HandleGameSettings& gs) { OnMsgHandleGameSettings(gs); };
 	m_pMsgHandler->onGameState = [this](const GameState& gs) { OnGameState(gs); };
 	m_pMsgHandler->onPlayerAnswers = [this](const PlayerAnswers& ans) { OnPlayerAnswers(ans); };
+	m_pMsgHandler->onAnswerIndex = [this](const AnswerIndex& idx) { OnAnswerIndex(idx); };
 }
 
 ServerInteractorImpl::~ServerInteractorImpl()
@@ -47,7 +48,6 @@ void ServerInteractorImpl::OnNewConnection(int id)
 	PlayerID ID{id};
 	auto serID = m_pSerializer->Serialize(ID);
 	m_pServer->WriteTo(serID, id);
-
 	//onLog("ServerInteractor: New Connection Handled; ID: " + std::to_string(id));
 }
 
@@ -94,4 +94,9 @@ void ServerInteractorImpl::OnPlayerAnswers(const PlayerAnswers& answers)
 void ServerInteractorImpl::OnGameState(const GameState& gs)
 {
 	onChangeGameState(gs.state);
+}
+
+void ServerInteractorImpl::OnAnswerIndex(const AnswerIndex& answerIndex)
+{
+	onAnswerIndex(answerIndex.index);
 }

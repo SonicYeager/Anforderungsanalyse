@@ -75,9 +75,9 @@ struct RoundData
 
 struct Index
 {
-	int playerID;
-	int catIndex;
-	int voteIndex;
+	int categoryIDX;
+	int answerIDX;
+	int voterIDX;
 };
 
 using HeaderType = int;

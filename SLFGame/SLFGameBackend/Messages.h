@@ -25,7 +25,7 @@ namespace Messages
 	struct ChatMessage			{ std::string sender; std::string text; }; 
 	struct AllAnswers			{ std::vector<std::vector<std::string>> ans{}; };
 	struct RoundSetup			{ RoundData data; };
-	struct AnswerIndex			{ Index indexes; };
+	struct AnswerIndex			{ Index index; };
 
 	using Message = std::variant<Playername, PlayerID, HandleGameSettings, GameState, ChatMessage, PlayerAnswers, AllAnswers, RoundSetup, AnswerIndex>;
 

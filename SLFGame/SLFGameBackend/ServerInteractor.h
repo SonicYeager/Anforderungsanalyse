@@ -22,4 +22,5 @@ public:
 	Event<LobbySettings> onSetGameSettings;
 	Event<STATE> onChangeGameState;
 	Event<LobbyCode> onSetLobbyCode;
+	Event<Index> onAnswerIndex;
 };

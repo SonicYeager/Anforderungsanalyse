@@ -14,6 +14,7 @@ public:
 	virtual void ChatMessageReceived(const std::string& sender, const std::string& text) = 0;
 	virtual void StateChangeTriggered(const STATE&) = 0;
 	virtual void AnswersReceived(const std::vector<std::string>&) = 0;
+	virtual void ChangeVoteStateTriggered(int, int, int) = 0;
 	virtual ~ClientInteractor() = default;
 
 	//ui events
@@ -24,6 +25,7 @@ public:
 	Event<ChatMessage> onChatMessage;
 	Event<std::vector<std::vector<std::string>>> onAllAnswers;
 	Event<RoundData> onRoundData;
+	Event<Index> onVoteChange;
 
 	//server events
 	Event<> onStartServer;

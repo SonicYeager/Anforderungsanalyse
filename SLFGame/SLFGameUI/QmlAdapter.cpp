@@ -57,6 +57,11 @@ void QmlAdapter::ReceiveRoundData(const RoundData & data)
     setPoints(data.points);
 }
 
+void QmlAdapter::ReceiveVoteChange(const Index & index)
+{
+    setDecision(index.categoryIDX, index.answerIDX, index.voterIDX);
+}
+
 // ------------------------------------------ getter ------------------------------------------
 #define getterFunctions {
 
@@ -214,15 +219,15 @@ void QmlAdapter::setAnswers(StrVector2D answers)
         return;
     _answers = answers;
     _decisions.clear();
-    for (int i = 0; i < _playerCount; i++)
+    for (int i = 0; i < _categoryCount; i++)
     {
         _decisions.emplace_back();
-        for (int j = 0; j < _categoryCount; j++)
+        for (int j = 0; j < _playerCount; j++)
         {
             _decisions[i].emplace_back();
             for (int k = 0; k < _playerCount; k++)
             {
-                if(_answers[i][j] == "")
+                if(_answers[j][i] == "")
                     _decisions[i][j].emplace_back(false);
                 else
                     _decisions[i][j].emplace_back(true);
@@ -353,9 +358,9 @@ QString QmlAdapter::getPlayer(int idx)
     return QString::fromUtf8(_players[idx].c_str());
 }
 
-bool QmlAdapter::getDecision(int playerID, int categoryIDX, int votingPlayerIDX)
+bool QmlAdapter::getDecision(int categoryIDX, int answerIDX, int voterIDX)
 {
-    return _decisions[playerID][categoryIDX][votingPlayerIDX];
+    return _decisions[categoryIDX][answerIDX][voterIDX];
 }
 
 void QmlAdapter::setActiveItemIA(int idx)
@@ -363,9 +368,10 @@ void QmlAdapter::setActiveItemIA(int idx)
     setActiveOverviewItem(idx);
 }
 
-void QmlAdapter::setDecision(int playerID, int categoryIDX, int votingPlayerIDX)
+void QmlAdapter::setDecision(int categoryIDX, int answerIDX, int voterIDX)
 {
-    _decisions[playerID][categoryIDX][votingPlayerIDX] = !_decisions[playerID][categoryIDX][votingPlayerIDX];
+    _decisions[categoryIDX][answerIDX][voterIDX] = !_decisions[categoryIDX][answerIDX][voterIDX];
+    emit activeOverviewItemChanged(); //<- intentional! forces redraw
 }
 
 void QmlAdapter::addAnswer(QString answer)
@@ -421,6 +427,11 @@ void QmlAdapter::triggerStateRelatedSignal(STATE state)
     case STATE::INTERVENTION : break;
     case STATE::FINALSCORES  : break;
     }
+}
+
+void QmlAdapter::changeVoteState(int answerIDX)
+{
+    onChangeVoteState(_activeOverviewItem, answerIDX, _playerId);
 }
 
 void QmlAdapter::sendAnswers()

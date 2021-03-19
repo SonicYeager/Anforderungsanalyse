@@ -18,6 +18,7 @@ GameInteractorImpl::GameInteractorImpl(
 	m_pServer->onRemovePlayer =		[this](const int id)											{ RemovePlayer(id); };
 	m_pServer->onSetGameSettings =	[this](const LobbySettings& ans)								{ SetGameSettings(ans); };
 	m_pServer->onSetLobbyCode =		[this](const LobbyCode& ans)									{ SetLobbyCode(ans); };
+	m_pServer->onAnswerIndex =		[this](const Index& idx)										{ ToggleVote(idx); };
 }
 
 //server
@@ -80,7 +81,7 @@ void GameInteractorImpl::SetLobbyCode(const LobbyCode& lobbyCode)
 
 void GameInteractorImpl::ToggleVote(const Index& index)
 {
-	m_GameStats.votes[index.playerID][index.catIndex][index.voteIndex] = !m_GameStats.votes[index.playerID][index.catIndex][index.voteIndex];
+	m_GameStats.votes[index.categoryIDX][index.answerIDX][index.voterIDX] = !m_GameStats.votes[index.categoryIDX][index.answerIDX][index.voterIDX];
 	m_pServer->Broadcast(AnswerIndex{ index });
 }
 
@@ -110,20 +111,21 @@ void GameInteractorImpl::HandleGameState(const STATE& state) //bitte aufdröseln
 		m_pDataOperation->SetNewLetter(m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.lettersUsed), m_GameStats);
 		m_GameStats.categories = m_Parser.ParseCategories(m_GameStats.customCategoryString);
 
-		for (const auto& player : m_GameStats.players)
-		{
-			std::vector<std::vector<bool>> percat{};
-			for (const auto& cat : m_GameStats.categories)
-			{
-				std::vector<bool> peransw{};
-				for (const auto& answ : player.second.answers)
-				{
-					peransw.emplace_back(true);
-				}
-				percat.push_back(peransw);
-			}
-			m_GameStats.votes.push_back(percat);
-		}
+		m_GameStats.votes = std::vector<std::vector<std::vector<bool>>>(m_GameStats.categories.size(), std::vector<std::vector<bool>>(m_GameStats.players.size(), std::vector<bool>(m_GameStats.players.size(), false)));
+		//for (const auto& player : m_GameStats.players)
+		//{
+		//	std::vector<std::vector<bool>> percat{};
+		//	for (const auto& cat : m_GameStats.categories)
+		//	{
+		//		std::vector<bool> peransw{};
+		//		for (const auto& answ : player.second.answers)
+		//		{
+		//			peransw.emplace_back(false);
+		//		}
+		//		percat.push_back(peransw);
+		//	}
+		//	m_GameStats.votes.push_back(percat);
+		//}
 
 		RoundSetup msg;
 		msg.data.categories = m_GameStats.categories;

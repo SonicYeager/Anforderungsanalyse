@@ -14,7 +14,8 @@ ListView {
         id: voteBox
         width : 30
         height: 30
-        state: (qmlAdapter.getDecision(answerIDX, qmlAdapter.activeOverviewItem, index) === false)? "invalid" : "valid"
+        property bool valid: qmlAdapter.getDecision(qmlAdapter.activeOverviewItem, answerIDX, index)
+        state: valid? "valid": "invalid"
     }
     model: ListModel{
          id:list_model

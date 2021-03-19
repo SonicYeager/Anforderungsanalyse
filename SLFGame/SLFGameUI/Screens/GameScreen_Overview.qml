@@ -114,7 +114,7 @@ Rectangle{
                     Layout.preferredWidth: parent.width * 0.25
                     text : "CONFIRM"
                     textColor: "white"
-                    state: "inactive"
+                    state: "blueButton"
                     fontSize: height * 0.05 + width * 0.05
                     border.width: 3
                     border.color: "white"
@@ -126,20 +126,20 @@ Rectangle{
                             qmlAdapter.prepareNextRound();
                         }
                     }
-                    Connections {
-                        target: qmlAdapter
-                        function onDecisionsChanged()
-                        {
-                            confirmButton.state = "inactive"
-                            var allset = 1
-                            for (var i = 0; i < qmlAdapter.playerCount; i++)
-                                for (var j = 0; j < qmlAdapter.categoryCount; j++)
-                                    if (qmlAdapter.getDecision(i,j) === 0)
-                                        allset = 0
-                            if (allset === 1)
-                                confirmButton.state = "blueButton"
-                        }
-                    }
+                    //Connections {
+                    //    target: qmlAdapter
+                    //    function onDecisionsChanged()
+                    //    {
+                    //        confirmButton.state = "inactive"
+                    //        var allset = 1
+                    //        for (var i = 0; i < qmlAdapter.playerCount; i++)
+                    //            for (var j = 0; j < qmlAdapter.categoryCount; j++)
+                    //                if (qmlAdapter.getDecision(i,j) === 0)
+                    //                    allset = 0
+                    //        if (allset === 1)
+                    //            confirmButton.state = "blueButton"
+                    //    }
+                    //}
                 }
                 GameButton
                 {

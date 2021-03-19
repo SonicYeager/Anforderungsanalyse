@@ -15,6 +15,7 @@ public:
 	void ChatMessageReceived(const std::string& sender, const std::string& text) override;
 	void StateChangeTriggered(const STATE&) override;
 	void AnswersReceived(const std::vector<std::string>&) override;
+	void ChangeVoteStateTriggered(int, int, int) override;
 	// delete > void EndRound(const std::vector<DECISION>&) override;
 	//			GameStats m_GameStats;
 
@@ -25,6 +26,7 @@ public:
 	void OnChatMessage(const ChatMessage&);
 	void OnAllAnswers(const AllAnswers&);
 	void OnRoundSetup(const RoundSetup&);
+	void OnAnswerIndex(const AnswerIndex&);
 
 	std::string m_customCategoryString;
 

@@ -14,6 +14,7 @@ public:
     virtual void ChatMessageReceived(const ChatMessage&) = 0;
     virtual void ReveiveAllAnswers(const std::vector<std::vector<std::string>> &) = 0;
     virtual void ReceiveRoundData(const RoundData&) = 0;
+    virtual void ReceiveVoteChange(const Index&) = 0;
 	virtual ~UI() = default;
 
 	Event<const std::string&> onHostLobby;
@@ -22,4 +23,5 @@ public:
     Event<const std::string&, const std::string&> onChatMessage;
     Event<const std::vector<std::string>&>  onSendAnswers;
     Event<const STATE&> onState;
+    Event<int, int, int> onChangeVoteState;
 };

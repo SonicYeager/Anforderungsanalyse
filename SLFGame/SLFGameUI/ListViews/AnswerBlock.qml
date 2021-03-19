@@ -38,7 +38,7 @@ Rectangle {
                 spacing: 0
                 VoteList {
                     id: voteList
-                    Layout.preferredWidth: 30 * list_model.count
+                    Layout.preferredWidth: 30 * count
                     Layout.minimumHeight: 30
                     Layout.alignment: Qt.AlignHCenter
                     Component.onCompleted: {
@@ -55,6 +55,12 @@ Rectangle {
             Layout.preferredWidth: 100
             state: "whiteButton"
             text: "Vote"
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    qmlAdapter.changeVoteState(answerIDX)
+                }
+            }
         }
     }
 }

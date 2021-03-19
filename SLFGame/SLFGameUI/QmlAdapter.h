@@ -48,6 +48,7 @@ public:
     void ChatMessageReceived    (const ChatMessage&) override;
     void ReveiveAllAnswers      (const StrVector2D &) override;
     void ReceiveRoundData       (const RoundData&) override;
+    void ReceiveVoteChange      (const Index&) override;
 
     QString getLetter();
     QString getLobbyCode();
@@ -109,6 +110,7 @@ public slots:
     void setDecision(int playerID, int categoryIDX, int newVal);
     void addAnswer(QString answer);
     void triggerStateRelatedSignal(STATE);
+    void changeVoteState(int);
 
 signals:
     void letterChanged();

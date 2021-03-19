@@ -41,3 +41,8 @@ win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../SLFGameBack
 else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/libSLFGameBackend.a
 else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Release/SLFGameBackend.lib
 else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/../SLFGameBackend/x64/Debug/SLFGameBackend.lib
+
+DISTFILES += \
+    resources/banner (black bg).png \
+    resources/cross.png \
+    resources/tick.png

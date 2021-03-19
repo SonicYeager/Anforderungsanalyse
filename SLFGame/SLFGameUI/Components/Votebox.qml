@@ -18,8 +18,8 @@ Rectangle {
             PropertyChanges {
                 target: image
                 source: "../Resources/cross.png"
-                sourceSize.width: 1230
-                sourceSize.height: 1280
+                sourceSize.width: 30
+                sourceSize.height: 30
             }
         },
         State {
@@ -27,8 +27,8 @@ Rectangle {
             PropertyChanges {
                 target: image
                 source: "../Resources/tick.png"
-                sourceSize.width: 800
-                sourceSize.height: 800
+                sourceSize.width: 30
+                sourceSize.height: 30
             }
         }
     ]

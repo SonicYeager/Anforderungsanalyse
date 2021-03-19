@@ -18,6 +18,7 @@ ClientInteractorImpl::ClientInteractorImpl(
 	m_pMsgHandler->onChatMessage = [this](const ChatMessage& cm) { OnChatMessage(cm); };
 	m_pMsgHandler->onAllAnswers = [this](const AllAnswers& aans) { OnAllAnswers(aans); };
 	m_pMsgHandler->onRoundSetup = [this](const RoundSetup& msg) { OnRoundSetup(msg); };
+	m_pMsgHandler->onAnswerIndex = [this](const AnswerIndex& idx) { OnAnswerIndex(idx); };
 }
 
 void ClientInteractorImpl::HostLobby(const std::string& playerName)
@@ -76,6 +77,14 @@ void ClientInteractorImpl::AnswersReceived(const std::vector<std::string>& answe
 	m_pClient->WriteToHost(ser);
 }
 
+void ClientInteractorImpl::ChangeVoteStateTriggered(int categoryIDX, int answerIDX, int voterIDX)
+{
+	AnswerIndex msg{ categoryIDX, answerIDX, voterIDX };
+	auto ser = m_pSerializer->Serialize(msg);
+	m_pClient->WriteToHost(ser);
+	//onVoteChange(answerIDX, categoryIDX, playerID)
+}
+
 void ClientInteractorImpl::OnMsgID(const PlayerID& id)
 {
 	m_clientID = id.id;
@@ -112,4 +121,9 @@ void ClientInteractorImpl::OnRoundSetup(const RoundSetup& msg)
 {
 	onRoundData(msg.data);
 	onGameState(STATE::INGAME);
+}
+
+void ClientInteractorImpl::OnAnswerIndex(const AnswerIndex& msg)
+{
+	onVoteChange(Index{msg.index});
 }

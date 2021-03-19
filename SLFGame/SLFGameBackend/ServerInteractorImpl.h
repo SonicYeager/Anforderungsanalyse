@@ -24,6 +24,7 @@ public:
 	void OnChatMessage(const ChatMessage&);
 	void OnPlayerAnswers(const PlayerAnswers&);
 	void OnGameState(const GameState&);
+	void OnAnswerIndex(const AnswerIndex&);
 
 	//GameStats m_GameStats{};
 
