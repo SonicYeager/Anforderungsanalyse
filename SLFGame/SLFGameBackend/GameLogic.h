@@ -10,7 +10,7 @@ class GameLogic
 public:
 	virtual			~GameLogic() = default;
 
-	virtual int		CalculatePoints		(GameStats&) = 0;
+	virtual void	CalculatePoints		(const DDDVector&) = 0;
 	virtual void	CheckGameFinished	(GameStats&) = 0;
 	virtual void	HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<GameState> onStandart) = 0;
 	virtual HandleGameSettings CreateHandleGameSettings() = 0;

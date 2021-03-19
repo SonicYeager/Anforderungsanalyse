@@ -4,9 +4,9 @@
 class Game : public GameLogic
 {
 public:
-	void		CalculatePoints		(const DDDVector&)	override;
+	void	CalculatePoints		(const DDDVector&)	override;
 	void	CheckGameFinished	(GameStats&)					override;
-	void HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<GameState> onStandart) override;
+	void    HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<GameState> onStandart) override;
 	HandleGameSettings CreateHandleGameSettings() override;
 
 	GameStats& GetGameStats() override;
@@ -23,11 +23,9 @@ public:
 	GameStats m_GameStats;
 private:
 
-	void CheckAllAnswersRecived(Event<GameStats> onTrue);
 	int m_answerGatheredCounter{};
 
-	GameStats m_GameStats;
-private:
+	void CheckAllAnswersRecived(Event<GameStats> onTrue);
 	void HandOutPointsForCategory(int, int, std::vector<bool>);
 	void setVotesFalseForEmptyAnswers();
 };
