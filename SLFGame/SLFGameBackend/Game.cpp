@@ -1,21 +1,36 @@
 #pragma once
 #include "Game.h"
 
-int Game::CalculatePoints(GameStats& decisions)
+void Game::CalculatePoints(const DDDVector& decisions)
 {
-	int result = 0;
+	int validVoteCount = 0;
+	int validAnswers = 0;
 
-	//for (unsigned int i = 0; i < decisions.size(); i++)
-	//{
-	//	if (decisions[i] == DECISION::SOLO)
-	//		result += 20;
-	//	else if (decisions[i] == DECISION::UNIQUE)
-	//		result += 10;
-	//	else if (decisions[i] == DECISION::MULTIPLE)
-	//		result += 5;
-	//}
+	std::vector<bool> answersValid{ std::vector(m_GameStats.players.size() , false) };
 
-	return result;
+	for (int categoryIDX = 0; categoryIDX < decisions.size(); categoryIDX++)
+	{
+		validAnswers = 0;
+		answersValid = std::vector(m_GameStats.players.size(), false);
+
+		for (int answerIDX = 0; answerIDX < decisions[categoryIDX].size(); answerIDX++)
+		{
+			validVoteCount = 0;
+			for (int voterIDX = 0; voterIDX < decisions[categoryIDX][answerIDX].size(); voterIDX++)
+			{
+				if (decisions[categoryIDX][answerIDX][voterIDX] == true)
+					validVoteCount += 1;
+
+				if (validVoteCount >= decisions[categoryIDX][answerIDX].size() / 2)
+				{
+					validAnswers += 1;
+					answersValid[answerIDX] = true;
+					break;
+				}
+			}
+		}
+		HandOutPointsForCategory(categoryIDX, validAnswers, answersValid);
+	}
 }
 
 void Game::CheckGameFinished(GameStats& gs)
@@ -136,4 +151,60 @@ HandleGameSettings Game::CreateHandleGameSettings()
 GameStats& Game::GetGameStats()
 {
 	return m_GameStats;
+}
+
+void Game::HandOutPointsForCategory(int categoryIDX, int validAnswers, std::vector<bool> answersValid)
+{
+	bool sameAnswer = false;
+	if (validAnswers > 0)
+	{
+		if (validAnswers > 1)
+		{
+			for (int i = 0; i < m_GameStats.players.size(); i++)
+			{
+				if (answersValid[i] = true)
+				{
+					sameAnswer = false;
+					for (int j = 0; j < m_GameStats.players.size(); j++)
+					{
+						if (i != j)
+						{
+							if (m_GameStats.players[i].answers[categoryIDX] == m_GameStats.players[j].answers[categoryIDX])
+							{
+								sameAnswer = true;
+								break;
+							}
+						}
+					}
+					if (sameAnswer == true)
+						m_GameStats.players[i].points += 5;
+					else
+						m_GameStats.players[i].points += 10;
+				}
+			}
+		}
+		else
+		{
+			for (int i = 0; i < m_GameStats.players.size(); i++)
+				if (answersValid[i] == true)
+					m_GameStats.players[i].points += 20;
+		}
+	}
+}
+
+void Game::setVotesFalseForEmptyAnswers()
+{
+	for (int i = 0; i < m_GameStats.categories.size(); i++)
+	{
+		for (int j = 0; j < m_GameStats.players.size(); j++)
+		{
+			if (m_GameStats.players[j].answers[i] == "")
+			{
+				for (int k = 0; k < m_GameStats.players.size(); k++)
+				{
+					m_GameStats.votes[i][j][k] = false;
+				}
+			}
+		}
+	}
 }

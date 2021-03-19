@@ -108,9 +108,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="test_ClientInteractorImpl.cpp" />
+    <ClCompile Include="test_ClientInteractorImpl.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="test_Game.cpp" />
-    <ClCompile Include="test_GameInteractor.cpp" />
+    <ClCompile Include="test_GameInteractor.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="test_GameStatsOperations.cpp" />
     <ClCompile Include="test_GameStatsSerializer.cpp" />
     <ClCompile Include="test_LiveNetwork.cpp">

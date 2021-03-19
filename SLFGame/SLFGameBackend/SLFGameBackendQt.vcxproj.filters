@@ -68,9 +68,6 @@
     <ClInclude Include="..\SLFGameBackend\GameStatsSerializer.h">
       <Filter>Implementation</Filter>
     </ClInclude>
-    <ClInclude Include="..\SLFGameBackend\Messages.h">
-      <Filter>Data</Filter>
-    </ClInclude>
     <ClInclude Include="..\SLFGameBackend\MessageHandlerLogic.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
@@ -100,6 +97,9 @@
     </ClInclude>
     <ClInclude Include="GameInteractorImpl.h">
       <Filter>Implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\SLFGameBackend\Messages.h">
+      <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

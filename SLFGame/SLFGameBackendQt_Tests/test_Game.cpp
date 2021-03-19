@@ -9,25 +9,24 @@ public:
 	MOCK_METHOD(void, End, ());
 };
 
-//TEST(TestGame, CalculatePoints_2solo2multi2same_PointOutputEQ70)
-//{
-//	Game game{};
-//	//std::vector<DECISION> decisions = 
-//	//{ 
-//	//	DECISION::SOLO,
-//	//	DECISION::SOLO,
-//	//	DECISION::UNIQUE,
-//	//	DECISION::UNIQUE,
-//	//	DECISION::MULTIPLE,
-//	//	DECISION::MULTIPLE
-//	//};
-//	//
-//	//int actual = game.CalculatePoints(decisions);
-//	//int expected = 70;
-//	//
-//	//
-//	//EXPECT_EQ(expected, actual);
-//}
+TEST(TestGame, CalculatePoints_2players)
+{
+	Game game{};
+	Game expect{};
+
+	game.m_GameStats.categories.push_back("Stadt");
+	game.m_GameStats.categories.push_back("Land");
+	game.m_GameStats.categories.push_back("Fluss");
+	game.m_GameStats.players.emplace(0, PlayerStats{ "Klaus", 0, {"Arnsberg","Argentinien","Amsel"} });
+	game.m_GameStats.players.emplace(1, PlayerStats{ "Peter", 0, {"Arnsberg","Armenien",""} });
+	game.m_GameStats.votes = { DDDVector{  {  {true,true},{true,true}  },{ {true,true},{true,true} }, { {true,true},{false,false} } } };
+	game.CalculatePoints(game.m_GameStats.votes);
+
+	expect.m_GameStats.players.emplace(0, PlayerStats{ "Klaus", 35, {"Arnsberg","Argentinien","Amsel"} });
+	expect.m_GameStats.players.emplace(1, PlayerStats{ "Peter", 15, {"Arnsberg","Armenien",""} });
+
+	EXPECT_EQ(game.m_GameStats.players, expect.m_GameStats.players);
+}
 
 TEST(TestGame, CheckGameFinished_3currentRound5MaxRound_ExpectCallPrepare)
 {
