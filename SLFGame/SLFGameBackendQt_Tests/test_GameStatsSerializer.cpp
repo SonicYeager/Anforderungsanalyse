@@ -21,6 +21,13 @@ inline bool operator==(const LobbySettings& left, const LobbySettings& right)
 		left.rounds == right.rounds;
 }
 
+inline bool operator==(const Index& left, const Index& right)
+{
+	return left.answerIDX == right.answerIDX &&
+		left.categoryIDX == right.categoryIDX &&
+		left.voterIDX == right.voterIDX;
+}
+
 //TEST(SerializerTest, SerializationAndDeserialization_HandleGameStats)
 //{
 //	GameStatsSerializer serializer;
@@ -214,4 +221,26 @@ TEST(SerializerTest, SerializationAndDeserialization_HandleGameSettings)
 	msgHandler.handleMessage(resultingMsg);
 
 	EXPECT_EQ(msg.ls, result.ls);
+}
+
+TEST(SerializerTest, SerializationAndDeserialization_AnswerIndex)
+{
+	GameStatsSerializer serializer;
+	MessageHandler msgHandler;
+
+	Message resultingMsg;
+	AnswerIndex result;
+	AnswerIndex msg;
+
+	msg.index.answerIDX = 1;
+	msg.index.categoryIDX = 2;
+	msg.index.voterIDX = 3;
+
+	ByteStream data = serializer.Serialize(msg);
+	resultingMsg = serializer.Deserialize(data);
+
+	msgHandler.onAnswerIndex = [&result](const AnswerIndex& anp) {result = anp; };
+	msgHandler.handleMessage(resultingMsg);
+
+	EXPECT_EQ(msg.index, result.index);
 }

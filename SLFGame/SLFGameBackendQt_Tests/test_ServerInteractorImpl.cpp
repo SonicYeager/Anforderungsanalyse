@@ -27,6 +27,13 @@ inline bool operator==(const ChatMessage& left, const ChatMessage& right)
 		left.text == right.text;
 }
 
+inline bool operator==(const Index& left, const Index& right)
+{
+	return left.answerIDX == right.answerIDX &&
+		left.categoryIDX == right.categoryIDX &&
+		left.voterIDX == right.voterIDX;
+}
+
 class FakeUI : public UI
 {
 public:
@@ -81,6 +88,7 @@ public:
 		gameInteractor.onSetGameSettings	= [this](const LobbySettings& msg) {fakeGI.SetGameSettings(msg); };
 		gameInteractor.onChangeGameState	= [this](const STATE& msg) {fakeGI.ChangeGameState(msg); };
 		gameInteractor.onSetLobbyCode		= [this](const LobbyCode& msg = "") {fakeGI.SetLobbyCode(msg); };
+		gameInteractor.onAnswerIndex = [this](const Index& msg) {fakeGI.ToggleVote(msg); };
 	}
 protected:
 	virtual void SetUp()
@@ -170,4 +178,12 @@ TEST_F(TestServerInteractor, OnGameState_GameStateANSWERREQUEST_BroadcastToAll)
 	EXPECT_CALL(fakeGI, ChangeGameState(_));
 
 	msgHandler.onGameState(msg);
+}
+
+TEST_F(TestServerInteractor, OnAnswerIndex_AnswerIndex_CallonVoteChange)
+{
+	Index data{ 1,1,1 };
+	EXPECT_CALL(fakeGI, ToggleVote(data));
+
+	gameInteractor.OnAnswerIndex(AnswerIndex{ data });
 }

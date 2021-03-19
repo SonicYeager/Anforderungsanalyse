@@ -61,5 +61,3 @@ TEST(TestGame, CheckGameFinished_6currentRound5MaxRound_ExpectCallEnd)
 
 	game.CheckGameFinished(gs);
 }
-
-//extend pls

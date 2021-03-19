@@ -122,7 +122,7 @@ protected:
 	ServerInteractorImpl serverInteractor;
 	
 	Game game{};
-	RandomGenerator randgen{};
+	FakeRandomLetterGenerator randgen{};
 	GameStatsOperations gsops{};
 	GameInteractorImpl gameInteractor;
 
@@ -197,3 +197,47 @@ TEST_F(TestGameInteractor, OnGameState_GameStateANSWERREQUEST_BroadcastToAll)
 //
 //	gameInteractor.ChangeGameState(STATE::SETUPROUND);
 //}
+
+
+TEST_F(TestGameInteractor, RemovePlayer_PlayerOneRemoved_PlayerRemoved)
+{
+	gameInteractor.AddPlayer(0, "AmIAJokeToYou");
+	gameInteractor.RemovePlayer(0);
+	EXPECT_EQ(game.m_GameStats.players.size(), 0);
+}
+
+TEST_F(TestGameInteractor, SetLobbyCode_LobbyCode_LobbyCodeSet)
+{
+	gameInteractor.SetLobbyCode("LOBBYCODE");
+	EXPECT_EQ(game.m_GameStats.lobbyCode, "LOBBYCODE");
+}
+
+TEST_F(TestGameInteractor, ToggleVote_Index_VoteToggledOnIndex)
+{
+	game.m_GameStats.votes.emplace_back();
+	game.m_GameStats.votes[0].emplace_back();
+	game.m_GameStats.votes[0][0].emplace_back(false);
+	gameInteractor.ToggleVote(Index{0,0,0});
+	EXPECT_EQ(game.m_GameStats.votes[0][0][0], true);
+}
+
+TEST_F(TestGameInteractor, HandleGameState_SetupRound_CallWriteTo)
+{
+	game.m_GameStats.customCategoryString = "Stadt";
+	game.m_GameStats.currentRound = 0;
+	game.m_GameStats.maxRounds = 1;
+	game.m_GameStats.players.emplace(0, PlayerStats{ "Disgust", 10, {} });
+	game.m_GameStats.timeout = "bis Stop";
+
+	RoundSetup msg;
+	msg.data.categories = {"Stadt"};
+	msg.data.currentRound = 1;
+	msg.data.letter = "C";
+	msg.data.maxRounds = 1;
+	msg.data.points = 10;
+	msg.data.roundTime = "bis Stop";
+	auto expected = serializers.Serialize(msg);
+	EXPECT_CALL(fakeServer, WriteTo(expected, 0));
+
+	gameInteractor.ChangeGameState(STATE::SETUPROUND);
+}

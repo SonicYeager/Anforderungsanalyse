@@ -16,6 +16,7 @@ public:
 	int ChatMessageCalled(const ChatMessage& hgs) { return 7; }
 	int AllAnswersCalled(const AllAnswers& hgs) { return 8; }
 	int RoundSetupCalled(const RoundSetup& hgs) { return 9; }
+	int AnswerIndexCalled(const AnswerIndex& hgs) { return 10; }
 };
 
 //TEST(MessageHandlerTest, RightEventCalled_onHandleGameStats)
@@ -146,4 +147,17 @@ TEST(MessageHandlerTest, handleMessage_onRoundSetup)
 	msgHandler.handleMessage(hgs);
 
 	EXPECT_EQ(9, result);
+}
+
+TEST(MessageHandlerTest, handleMessage_onAnswerIndex)
+{
+	MessageHandler msgHandler;
+	FakeClass fc{};
+	Message hgs = AnswerIndex();
+	int result = 0;
+
+	msgHandler.onAnswerIndex = [&fc, &result](const AnswerIndex& msg) {result = fc.AnswerIndexCalled(msg); };
+	msgHandler.handleMessage(hgs);
+
+	EXPECT_EQ(10, result);
 }
