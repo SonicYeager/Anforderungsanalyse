@@ -14,6 +14,7 @@ public:
 	virtual void	CheckGameFinished	(Event<const std::string&, const Letters&>) = 0;
 	virtual void	HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<GameState> onStandart) = 0;
 	virtual HandleGameSettings CreateHandleGameSettings() = 0;
+	virtual void	SetVotesFalseForEmptyAnswers() = 0;
 
 	virtual GameStats& GetGameStats() = 0;
 

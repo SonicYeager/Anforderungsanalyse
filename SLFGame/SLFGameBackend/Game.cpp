@@ -48,7 +48,6 @@ void Game::CheckAllAnswersRecived(Event<GameStats> onTrue)
 	if (m_answerGatheredCounter == m_GameStats.players.size())
 	{
 		m_answerGatheredCounter = 0;
-		SetVotesFalseForEmptyAnswers();
 		onTrue(m_GameStats);
 	}
 }
@@ -62,7 +61,7 @@ void Game::HandleGameState(const STATE& state, Event<const std::string&, const L
 		break;
 	case STATE::ROUNDOVER:
 		CheckGameFinished(onSetupRound);
-		break;		
+		break;
 	default:
 		onStandart(GameState{ state });
 		break;

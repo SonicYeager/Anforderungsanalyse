@@ -19,6 +19,7 @@ public:
 	void SetLobbyCode(const LobbyCode&) override;
 	void ToggleVote(const Index& index) override;
 	void SetupRound(const Categories&, const Letter&, Event<RoundSetup, const GameStats&> onBroadcast) override;
+	void SetVotesFalseForEmptyAnswers() override;
 
 	GameStats m_GameStats;
 private:
@@ -27,5 +28,4 @@ private:
 
 	void CheckAllAnswersRecived(Event<GameStats> onTrue);
 	void HandOutPointsForCategory(int, int, std::vector<bool>);
-	void SetVotesFalseForEmptyAnswers();
 };

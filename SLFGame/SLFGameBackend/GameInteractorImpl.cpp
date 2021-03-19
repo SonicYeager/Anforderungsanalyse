@@ -37,6 +37,7 @@ void GameInteractorImpl::AddAnswers(int id, const std::vector<std::string>& answ
 		
 		for (const auto& player : gameStats.players)
 			allAnsw.ans.push_back(player.second.answers);
+		m_pGame->SetVotesFalseForEmptyAnswers();
 		m_pServer->Broadcast(allAnsw);
 	};
 	
