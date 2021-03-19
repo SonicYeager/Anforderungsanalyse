@@ -168,15 +168,15 @@ TEST_F(TestClientInteractor, OnMsgHandleGameSettings_HandleGameSettings_CallUpda
 	msgHandler.onHandleGameSettings(re);
 }
 
-TEST_F(TestClientInteractor, OnMsgGameState_GameState_CallUpdateGameState)
-{
-	EXPECT_CALL(fui, UpdateGameState(STATE::INTERVENTION));	
-	gameInteractor.m_customCategoryString = "Junge,Why" ;
-
-	GameState re{};
-	re.state = STATE::INTERVENTION;
-	msgHandler.onGameState(re);
-}
+//TEST_F(TestClientInteractor, OnMsgGameState_GameState_CallUpdateGameState)
+//{
+//	EXPECT_CALL(fui, UpdateGameState(STATE::INTERVENTION));	
+//	gameInteractor.m_customCategoryString = "Junge,Why" ;
+//
+//	GameState re{};
+//	re.state = STATE::INTERVENTION;
+//	msgHandler.onGameState(re);
+//}
 
 TEST_F(TestClientInteractor, OnAllAnswers_AllAnswers_CallReceiveAllAnswersAndUpdateGameState)
 {
