@@ -109,7 +109,7 @@ protected:
 	GameStatsSerializer serializer{};
 	MessageHandler msgHandler{};
 	ClientInteractorImpl gameInteractor;
-	::StrictMock<FakeUI> fui;
+	::NiceMock<FakeUI> fui;
 };
 
 TEST_F(TestClientInteractor, HostLobby_StartServer_CallStartServer)
@@ -158,7 +158,6 @@ TEST_F(TestClientInteractor, OnMsgHandleGameSettings_HandleGameSettings_CallUpda
 	ls.timeout = "10";
 	ls.playerNames = { {0, "DU"} };
 	EXPECT_CALL(fui, UpdateLobby(ls));
-	EXPECT_CALL(fui, UpdateGameState(STATE::LOBBY));
 
 	HandleGameSettings re{};
 	re.ls.categories = {"Baum,Auto,NCC"};

@@ -34,17 +34,22 @@ TEST(TestGame, CheckGameFinished_3currentRound5MaxRound_ExpectCallPrepare)
 	game.m_GameStats.maxRounds = 5;
 	game.m_GameStats.currentRound = 0;
 
-	::testing::StrictMock<FakeClass> fc{};
+	::testing::NiceMock<FakeClass> fc{};
 	::testing::InSequence sq;
 
 
-	std::string _s;
-	Letters _l;
+	std::string _s = { "Stadt,Land,Fluss,Name,Tier,Beruf" };
+	Letters _l{};
 
 	//game.onPrepareNextRound = [&fc]() {fc.Prepare(); };
 	//game.onGameOver = [&fc]() {fc.End(); };
 
-	auto onprepround = [&](const std::string& s, const Letters& l) {fc.Prepare(s, l); _s = s; _l = l; };
+	auto onprepround = [&](const std::string& s, const Letters& l) 
+	{
+		_s = s; 
+		_l = l; 
+		fc.Prepare(s, l);
+	};
 	EXPECT_CALL(fc, Prepare(_s, _l));
 
 	game.CheckGameFinished(onprepround);
