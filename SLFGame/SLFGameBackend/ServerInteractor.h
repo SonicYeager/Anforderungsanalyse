@@ -11,7 +11,7 @@ public:
 
 	virtual void StartServer() = 0;
 	virtual void Broadcast(const Message&) = 0;
-	virtual void WriteTo(int, const RoundSetup&) = 0;
+	virtual void WriteTo(int, const Message&) = 0;
 
 	//Event<const std::string> onLog;
 

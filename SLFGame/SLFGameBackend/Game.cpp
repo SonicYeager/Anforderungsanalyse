@@ -33,12 +33,13 @@ void Game::CalculatePoints(const DDDVector& decisions)
 	}
 }
 
-void Game::CheckGameFinished(GameStats& gs)
+void Game::CheckGameFinished(Event<const std::string&, const Letters&> setUpNextRound)
 {
-	if (gs.currentRound > gs.maxRounds)
-		onGameOver();
+	if (m_GameStats.currentRound > m_GameStats.maxRounds)
+		int gameover = 1; // change NextIncrement
 	else
-		onPrepareNextRound();
+		CalculatePoints(m_GameStats.votes);
+		setUpNextRound(m_GameStats.customCategoryString, m_GameStats.lettersUsed);
 }
 
 void Game::CheckAllAnswersRecived(Event<GameStats> onTrue)
@@ -46,6 +47,8 @@ void Game::CheckAllAnswersRecived(Event<GameStats> onTrue)
 	++m_answerGatheredCounter;
 	if (m_answerGatheredCounter == m_GameStats.players.size())
 	{
+		m_answerGatheredCounter = 0;
+		SetVotesFalseForEmptyAnswers();
 		onTrue(m_GameStats);
 	}
 }
@@ -57,6 +60,9 @@ void Game::HandleGameState(const STATE& state, Event<const std::string&, const L
 	case STATE::SETUPROUND:
 		onSetupRound(m_GameStats.customCategoryString, m_GameStats.lettersUsed);
 		break;
+	case STATE::ROUNDOVER:
+		CheckGameFinished(onSetupRound);
+		break;		
 	default:
 		onStandart(GameState{ state });
 		break;
@@ -113,21 +119,8 @@ void Game::SetupRound(const Categories& categories, const Letter& letter, Event<
 	}
 	m_GameStats.currentLetter = letter;
 	m_GameStats.categories = categories;
-	m_GameStats.votes = std::vector<std::vector<std::vector<bool>>>(m_GameStats.categories.size(), std::vector<std::vector<bool>>(m_GameStats.players.size(), std::vector<bool>(m_GameStats.players.size(), false)));
-	//for (const auto& player : m_GameStats.players)
-	//{
-	//	std::vector<std::vector<bool>> percat{};
-	//	for (const auto& cat : m_GameStats.categories)
-	//	{
-	//		std::vector<bool> peransw{};
-	//		for (const auto& answ : player.second.answers)
-	//		{
-	//			peransw.emplace_back(false);
-	//		}
-	//		percat.push_back(peransw);
-	//	}
-	//	m_GameStats.votes.push_back(percat);
-	//}
+	m_GameStats.votes = std::vector<std::vector<std::vector<bool>>>(m_GameStats.categories.size(), std::vector<std::vector<bool>>(m_GameStats.players.size(), std::vector<bool>(m_GameStats.players.size(), true)));
+
 	RoundSetup msg;
 	msg.data.categories = m_GameStats.categories;
 	msg.data.currentRound = m_GameStats.currentRound;
@@ -192,7 +185,7 @@ void Game::HandOutPointsForCategory(int categoryIDX, int validAnswers, std::vect
 	}
 }
 
-void Game::setVotesFalseForEmptyAnswers()
+void Game::SetVotesFalseForEmptyAnswers()
 {
 	for (int i = 0; i < m_GameStats.categories.size(); i++)
 	{

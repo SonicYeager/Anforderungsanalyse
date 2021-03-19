@@ -37,7 +37,7 @@ void ServerInteractorImpl::Broadcast(const Message& msg)
 	m_pServer->Broadcast(ser);
 }
 
-void ServerInteractorImpl::WriteTo(int id, const RoundSetup& msg)
+void ServerInteractorImpl::WriteTo(int id, const Message& msg)
 {
 	auto ser = m_pSerializer->Serialize(msg);
 	m_pServer->WriteTo(ser, id);

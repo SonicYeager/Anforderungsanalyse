@@ -5,7 +5,7 @@ class Game : public GameLogic
 {
 public:
 	void	CalculatePoints		(const DDDVector&)	override;
-	void	CheckGameFinished	(GameStats&)					override;
+	void	CheckGameFinished	(Event<const std::string&, const Letters&>)		override;
 	void    HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<GameState> onStandart) override;
 	HandleGameSettings CreateHandleGameSettings() override;
 
@@ -27,5 +27,5 @@ private:
 
 	void CheckAllAnswersRecived(Event<GameStats> onTrue);
 	void HandOutPointsForCategory(int, int, std::vector<bool>);
-	void setVotesFalseForEmptyAnswers();
+	void SetVotesFalseForEmptyAnswers();
 };

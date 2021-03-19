@@ -20,7 +20,7 @@ enum class STATE : int
 	INGAME = 3,
 	ANSWERREQUEST = 4,
 	OVERVIEW = 5,
-	INTERVENTION = 6,
+	ROUNDOVER = 6,
 	FINALSCORES = 7
 };
 

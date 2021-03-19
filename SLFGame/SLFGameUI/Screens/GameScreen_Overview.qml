@@ -114,7 +114,7 @@ Rectangle{
                     Layout.preferredWidth: parent.width * 0.25
                     text : "CONFIRM"
                     textColor: "white"
-                    state: "blueButton"
+                    state: (qmlAdapter.playerId === 0)? "blueButton" : "inactive"
                     fontSize: height * 0.05 + width * 0.05
                     border.width: 3
                     border.color: "white"
@@ -122,8 +122,8 @@ Rectangle{
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            //if (confirmButton.state === "blueButton")
-                            qmlAdapter.prepareNextRound();
+                            if (qmlAdapter.playerId === 0)
+                                qmlAdapter.triggerStateChange(6);
                         }
                     }
                     //Connections {

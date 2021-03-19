@@ -16,7 +16,7 @@ public:
 		
 	void StartServer() override;
 	void Broadcast(const Message&) override;
-	void WriteTo(int, const RoundSetup&) override;
+	void WriteTo(int, const Message&) override;
 
 	//msg events
 	void OnMsgPlayerName(const Playername&);

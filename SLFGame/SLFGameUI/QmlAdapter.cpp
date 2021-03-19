@@ -409,7 +409,7 @@ void QmlAdapter::triggerStateChange(int state)
         case 3:  { onState(STATE::INGAME            ); break; }
         case 4:  { onState(STATE::ANSWERREQUEST     ); break; }
         case 5:  { onState(STATE::OVERVIEW          ); break; }
-        case 6:  { onState(STATE::INTERVENTION      ); break; }
+        case 6:  { onState(STATE::ROUNDOVER         ); break; }
         case 7:  { onState(STATE::FINALSCORES       ); break; }
     }
 }
@@ -424,7 +424,7 @@ void QmlAdapter::triggerStateRelatedSignal(STATE state)
     case STATE::SETUPROUND   : break;
     case STATE::INGAME       : break;
     case STATE::OVERVIEW     : break;
-    case STATE::INTERVENTION : break;
+    case STATE::ROUNDOVER    : break;
     case STATE::FINALSCORES  : break;
     }
 }
@@ -449,7 +449,7 @@ QString QmlAdapter::GetViewFromState(STATE view)
         case STATE::INGAME :        return "Input";
         case STATE::ANSWERREQUEST : return "Input";
         case STATE::OVERVIEW :      return "Overview";
-        case STATE::INTERVENTION :  return (getPlayerId() == 0) ? "Intervention" : "Waiting";
+        case STATE::ROUNDOVER :     return (getPlayerId() == 0) ? "Intervention" : "Waiting";
         case STATE::FINALSCORES :   return "FinalScores";
     }
     return "MainMenu";

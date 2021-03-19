@@ -89,6 +89,7 @@ void GameInteractorImpl::HandleGameState(const STATE& state)
 		};
 		m_pGame->SetupRound(m_Parser.ParseCategories(customcats), m_pRandomGenerator->GenerateUnusedLetter(usedLetters), broadcast);
 	};
+
 	auto onbroadcast = [this](GameState state) {m_pServer->Broadcast(state); };
 
 	m_pGame->HandleGameState(state, onsetupround, onbroadcast);

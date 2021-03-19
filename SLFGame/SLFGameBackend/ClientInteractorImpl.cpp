@@ -93,12 +93,13 @@ void ClientInteractorImpl::OnMsgID(const PlayerID& id)
 	Playername msg{ m_clientName, m_clientID };
 	auto ser = m_pSerializer->Serialize(msg);
 	m_pClient->WriteToHost(ser);
+
+	onGameState(STATE::LOBBY);
 }
 
 void ClientInteractorImpl::OnMsgHandleGameSettings(const HandleGameSettings& settings)
 {
 	onUpdateLobbySettings(settings.ls);
-	onGameState(STATE::LOBBY);
 }
 
 void ClientInteractorImpl::OnMsgGameState(const GameState& gs)
