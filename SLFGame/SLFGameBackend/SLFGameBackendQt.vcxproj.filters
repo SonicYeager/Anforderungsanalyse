@@ -139,6 +139,9 @@
     <ClCompile Include="GameInteractorImpl.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
+    <ClCompile Include="GameLogic.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="..\ressources\categories.txt">

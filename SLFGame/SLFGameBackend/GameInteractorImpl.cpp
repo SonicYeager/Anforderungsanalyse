@@ -25,109 +25,69 @@ GameInteractorImpl::GameInteractorImpl(
 
 void GameInteractorImpl::RemovePlayer(const int& id)
 {
-	m_GameStats.players.erase(id);
+	m_pGame->RemovePlayer(id);
 	SendUpdatedLobbySettings();
 }
 
 void GameInteractorImpl::AddAnswers(int id, const std::vector<std::string>& answers)
 {
-	m_GameStats.players[id].answers = answers;
-	m_answerGatheredCounter++;
-	
-	auto broadcast = [this]()
+	auto broadcast = [this](const GameStats& gameStats)
 	{		
 		AllAnswers allAnsw{};
 		
-		for (const auto& player : m_GameStats.players)
+		for (const auto& player : gameStats.players)
 			allAnsw.ans.push_back(player.second.answers);
 		m_pServer->Broadcast(allAnsw);
 	};
 	
-	m_pGame->CheckAllAnswersRecived(m_answerGatheredCounter, m_GameStats.players.size(), broadcast);
+	m_pGame->AddAnswers(id, answers, broadcast);
 }
 
 void GameInteractorImpl::AddPlayer(int id, const std::string& playerName)
 {
-	m_GameStats.players.emplace(id, PlayerStats{ playerName, 0, {} });
+	m_pGame->AddPlayer(id, playerName);
 	SendUpdatedLobbySettings();
 }
 
 void GameInteractorImpl::SetGameSettings(const LobbySettings& settings)
 {
-	m_GameStats.customCategoryString = settings.categories;
-	m_GameStats.timeout = settings.timeout ;
-	m_GameStats.maxRounds = std::stoi(settings.rounds);
+	m_pGame->SetGameSettings(settings.categories, settings.timeout, std::stoi(settings.rounds));
 	SendUpdatedLobbySettings();
 }
 
 void GameInteractorImpl::ChangeGameState(const STATE& state)
 {
-	m_GameStats.state = state;
+	m_pGame->SetGameState(state);
 	HandleGameState(state);
 }
 
 void GameInteractorImpl::SetLobbyCode(const LobbyCode& lobbyCode)
 {
-	m_GameStats.lobbyCode = lobbyCode;
+	m_pGame->SetLobbyCode(lobbyCode);
 }
 
 void GameInteractorImpl::ToggleVote(const Index& index)
 {
-	m_GameStats.votes[index.categoryIDX][index.answerIDX][index.voterIDX] = !m_GameStats.votes[index.categoryIDX][index.answerIDX][index.voterIDX];
+	m_pGame->ToggleVote(index);
 	m_pServer->Broadcast(AnswerIndex{ index });
 }
 
 //helper
 
-HandleGameSettings GameInteractorImpl::CreateHandleGameSettings()
-{
-	HandleGameSettings result{};
-	result.ls.categories = m_GameStats.customCategoryString;
-	result.ls.rounds = std::to_string(m_GameStats.maxRounds);
-	result.ls.timeout = m_GameStats.timeout;
-	for (const auto& player : m_GameStats.players)
-		result.ls.playerNames.emplace(player.first, player.second.playerName);
-	return result;
-}
-
-void GameInteractorImpl::HandleGameState(const STATE& state) //bitte aufdröseln
+void GameInteractorImpl::HandleGameState(const STATE& state)
 {
 
-	auto onsetupround = [this]() 
+	auto onsetupround = [this](const std::string& customcats, const Letters& usedLetters) 
 	{
-		m_pDataOperation->InkrementRound(m_GameStats);
-		m_pDataOperation->AddPreviousLetter(m_GameStats);
-		m_pDataOperation->SetNewLetter(m_pRandomGenerator->GenerateUnusedLetter(m_GameStats.lettersUsed), m_GameStats);
-		m_GameStats.categories = m_Parser.ParseCategories(m_GameStats.customCategoryString);
-
-		m_GameStats.votes = std::vector<std::vector<std::vector<bool>>>(m_GameStats.categories.size(), std::vector<std::vector<bool>>(m_GameStats.players.size(), std::vector<bool>(m_GameStats.players.size(), false)));
-		//for (const auto& player : m_GameStats.players)
-		//{
-		//	std::vector<std::vector<bool>> percat{};
-		//	for (const auto& cat : m_GameStats.categories)
-		//	{
-		//		std::vector<bool> peransw{};
-		//		for (const auto& answ : player.second.answers)
-		//		{
-		//			peransw.emplace_back(false);
-		//		}
-		//		percat.push_back(peransw);
-		//	}
-		//	m_GameStats.votes.push_back(percat);
-		//}
-
-		RoundSetup msg;
-		msg.data.categories = m_GameStats.categories;
-		msg.data.currentRound = m_GameStats.currentRound;
-		msg.data.letter = m_GameStats.currentLetter;
-		msg.data.maxRounds = m_GameStats.maxRounds;
-		msg.data.roundTime = m_GameStats.timeout;
-
-		for (const auto& player : m_GameStats.players)
+		auto broadcast = [this](RoundSetup roundsetup, const GameStats& gameStats)
 		{
-			msg.data.points = player.second.points;
-			m_pServer->WriteTo(player.first, msg);
-		}
+			for (const auto& player : gameStats.players)
+			{
+				roundsetup.data.points = player.second.points;
+				m_pServer->WriteTo(player.first, roundsetup);
+			}
+		};
+		m_pGame->SetupRound(m_Parser.ParseCategories(customcats), m_pRandomGenerator->GenerateUnusedLetter(usedLetters), broadcast);
 	};
 	auto onbroadcast = [this](GameState state) {m_pServer->Broadcast(state); };
 
@@ -136,6 +96,6 @@ void GameInteractorImpl::HandleGameState(const STATE& state) //bitte aufdröseln
 
 void GameInteractorImpl::SendUpdatedLobbySettings()
 {
-	auto stats = CreateHandleGameSettings();
+	auto stats = m_pGame->CreateHandleGameSettings();
 	m_pServer->Broadcast(stats);
 }

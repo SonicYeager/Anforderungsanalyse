@@ -6,6 +6,23 @@ class Game : public GameLogic
 public:
 	int		CalculatePoints		(GameStats&)	override;
 	void	CheckGameFinished	(GameStats&)					override;
-	void CheckAllAnswersRecived(int counter, int actualCount, Event<> onTrue) override;
-	void HandleGameState(const STATE& state, Event<>, Event<GameState>) override;
+	void HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<GameState> onStandart) override;
+	HandleGameSettings CreateHandleGameSettings() override;
+
+	GameStats& GetGameStats() override;
+
+	void AddPlayer(int, const std::string&) override;
+	void AddAnswers(int id, const std::vector<std::string>& answers, Event<GameStats>) override;
+	void RemovePlayer(int id) override;
+	void SetGameSettings(const std::string& cat, const std::string& timeout, int maxRound) override;
+	void SetGameState(STATE) override;
+	void SetLobbyCode(const LobbyCode&) override;
+	void ToggleVote(const Index& index) override;
+	void SetupRound(const Categories&, const Letter&, Event<RoundSetup, const GameStats&> onBroadcast) override;
+
+	GameStats m_GameStats;
+private:
+
+	void CheckAllAnswersRecived(Event<GameStats> onTrue);
+	int m_answerGatheredCounter{};
 };

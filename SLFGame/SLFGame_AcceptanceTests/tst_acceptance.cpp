@@ -143,9 +143,7 @@ Acceptance::~Acceptance()
 
 void Acceptance::hostLobby_Jerk_ConnectionEstablishedGameStatsSet()
 {
-    //qmlAdapter.setPlayerName("Jerk");
-
-    //qmlAdapter.hostLobby();
+    clientInteractor.HostLobby("Jerk");
     QTest::qWait(50);
 
     QCOMPARE(gameInteractor.m_GameStats.players.size(), 1);
@@ -156,14 +154,9 @@ void Acceptance::hostLobby_Jerk_ConnectionEstablishedGameStatsSet()
 
 void Acceptance::lobbySettingsChanged_ChangedTimeLeft_SettingsWithStandardCatAndRounds()
 {
-    //qmlAdapter.setPlayerName("Dork");
-    //qmlAdapter.setRoundTime("00:01:10");
-    //qmlAdapter.setCustomCategories("Stabby");
-    //qmlAdapter.setMaxRounds("100");
-
-    //qmlAdapter.joinLobby();
+    clientInteractor.JoinLobby("192.168.0.80", "Dork"); //consider finding it automatically
     QTest::qWait(50);
-    //qmlAdapter.lobbySettingsChanged();
+    clientInteractor.LobbyChanged("Stabby", "00:01:10", "100");
     QTest::qWait(50);
 
     std::string actual = gameInteractor.m_GameStats.timeout;
@@ -181,47 +174,39 @@ void Acceptance::lobbySettingsChanged_ChangedTimeLeft_SettingsWithStandardCatAnd
 
 void Acceptance::chatMsg_Message_ChatLogHoldsOneMessage()
 {
-    //qmlAdapter.setPlayerName("Mark");
-
-    //qmlAdapter.joinLobby();
+    clientInteractor.JoinLobby("192.168.0.80", "Mark");
     QTest::qWait(50);
-    //qmlAdapter.onChatMessage("Sender", "Message");
+    clientInteractor.ChatMessageReceived("Sender", "Message");
     QTest::qWait(100);
 
-    //auto actual = qmlAdapter.getChatLog();
-    QString expected = "Sender: Message\n";
-    //QCOMPARE(actual, expected);
+    auto msg = resultChatMsg;
+    QCOMPARE(msg.sender.c_str(), "Sender");
+    QCOMPARE(msg.text.c_str(), "Message");
 
     Cleanup();
 }
 
 void Acceptance::onePlayerAnswer_playerAnswer_playerAnswersSavedOnGameStats()
 {
-    //qmlAdapter.setPlayerName("Murk");
-
-    //qmlAdapter.joinLobby();
+    clientInteractor.JoinLobby("192.168.0.80", "Murk");
     QTest::qWait(50);
-    //qmlAdapter.onSendAnswers({"Le","Mans","66", "Le","Mans","66"});
+    clientInteractor.AnswersReceived({"Le","Mans","66", "Le","Mans","66"});
     QTest::qWait(100);
 
-    //auto id = qmlAdapter.getPlayerId();
-    //auto actual = gameInteractor.m_GameStats.players[id].answers;
     std::vector<std::string> expected = {"Le","Mans","66", "Le","Mans","66"};
-    //QVERIFY(actual == expected);
+    QVERIFY(resultanswers[resutltID] == expected);
 
     Cleanup();
 }
 
 void Acceptance::stateChanged_stateLobby_stateChangedInGameStats()
 {
-    //qmlAdapter.setPlayerName("Klark1");
-
-    //qmlAdapter.joinLobby();
+    clientInteractor.JoinLobby("192.168.0.80", "Klark1");
     QTest::qWait(50);
-    //qmlAdapter.onState(STATE::LOBBY);
+    clientInteractor.StateChangeTriggered(STATE::LOBBY);
     QTest::qWait(100);
 
-    auto actual = gameInteractor.m_GameStats.state;
+    auto actual = resultState;
     auto expected = STATE::LOBBY;
     QVERIFY(actual == expected);
 
@@ -232,14 +217,11 @@ void Acceptance::secondInstance_comm_todo()
 {
     Second sec{};
 
-    //sec.qmlAdapter.setPlayerName("Klark2");
-    //sec.qmlAdapter.setLobbyCode("192.168.0.80");
-
-    //sec.qmlAdapter.joinLobby();
+    sec.clientInteractor.JoinLobby("192.168.0.80", "Klark2");
     QTest::qWait(100);
 
     QCOMPARE(gameInteractor.m_GameStats.players.size(), 2);
-    QCOMPARE(gameInteractor.m_GameStats.players[1].playerName, "Klark");
+    QCOMPARE(gameInteractor.m_GameStats.players[resutltID].playerName, "Klark2");
 
     Cleanup();
 }

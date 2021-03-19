@@ -26,8 +26,6 @@ public:
 	void SetLobbyCode(const LobbyCode&) override;
 	void ToggleVote(const Index&) override;
 
-	GameStats m_GameStats;
-
 private:
 	//helper funcs
 	HandleGameSettings CreateHandleGameSettings();
@@ -39,7 +37,5 @@ private:
 	DataOperationLogic* m_pDataOperation;
 	SLFParser m_Parser;
 	ServerInteractor* m_pServer;
-
-	int m_answerGatheredCounter{};
 };
 
