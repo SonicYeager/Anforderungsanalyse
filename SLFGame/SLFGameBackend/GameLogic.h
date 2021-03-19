@@ -25,7 +25,6 @@ public:
 	virtual void SetGameState(STATE) = 0;
 	virtual void SetLobbyCode(const LobbyCode&) = 0;
 	virtual void ToggleVote(const Index& index) = 0;
-	virtual void ToggleVote(const Index& index) = 0;
 	virtual void SetupRound(const Categories&, const Letter&, Event<RoundSetup, const GameStats&> onBroadcast) = 0;
 
 
