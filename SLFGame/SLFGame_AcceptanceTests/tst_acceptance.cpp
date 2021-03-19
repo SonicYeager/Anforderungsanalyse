@@ -49,7 +49,6 @@ private slots:
 private:
     void Cleanup();
 
-    QmlAdapter qmlAdapter;
     RandomGenerator rndGen{};
     GameStatsOperations gsOperations{};
     Server server;
@@ -61,7 +60,15 @@ private:
     ServerInteractorImpl serverInteractor{&server, &serializer, &serverMsgHandler};
     ClientInteractorImpl clientInteractor{&client, &serializer, &clientMsgHandler};
     GameInteractorImpl gameInteractor{&game, &rndGen, &gsOperations, &serverInteractor};
-    Controller controller{&qmlAdapter, &gameInteractor, &clientInteractor, &serverInteractor};
+
+    int resutltID{};
+    LobbySettings resutltLS{};
+    LobbyCode resutltLC{};
+    STATE resultState{};
+    ChatMessage resultChatMsg{};
+    std::vector<std::vector<std::string>> resultanswers{};
+    RoundData resultRD{};
+    Index resultIndex{};
 };
 
 class Second : public QObject
@@ -69,9 +76,9 @@ class Second : public QObject
     Q_OBJECT
 
 public:
+    Second();
     void Cleanup();
 
-    QmlAdapter qmlAdapter;
     RandomGenerator rndGen{};
     GameStatsOperations gsOperations{};
     Server server;
@@ -83,13 +90,47 @@ public:
     ServerInteractorImpl serverInteractor{&server, &serializer, &serverMsgHandler};
     ClientInteractorImpl clientInteractor{&client, &serializer, &clientMsgHandler};
     GameInteractorImpl gameInteractor{&game, &rndGen, &gsOperations, &serverInteractor};
-    Controller controller{&qmlAdapter, &gameInteractor, &clientInteractor, &serverInteractor};
+
+    int resutltID{};
+    LobbySettings resutltLS{};
+    LobbyCode resutltLC{};
+    STATE resultState{};
+    ChatMessage resultChatMsg{};
+    std::vector<std::vector<std::string>> resultanswers{};
+    RoundData resultRD{};
+    Index resultIndex{};
 };
 
 
 
 Acceptance::Acceptance()
-{}
+{
+    clientInteractor.onReceivedID            = [this](int id)
+                                                {resutltID = id;};
+
+    clientInteractor.onUpdateLobbySettings   = [this](LobbySettings ls)
+                                               {resutltLS = ls;};
+
+    clientInteractor.onSetLobbyCode          = [this](LobbyCode lobbyCode)
+                                               {resutltLC = lobbyCode;};
+
+    clientInteractor.onGameState             = [this](STATE state)
+                                               {resultState = state;};
+
+    clientInteractor.onChatMessage           = [this](ChatMessage cm)
+                                               {resultChatMsg = cm;};
+
+    clientInteractor.onAllAnswers            = [this](std::vector<std::vector<std::string>> answers)
+                                               {resultanswers = answers;};
+
+    clientInteractor.onRoundData             = [this](const RoundData& data)
+                                               {resultRD = data;};
+
+    clientInteractor.onVoteChange            = [this](const Index idx)
+                                                {resultIndex = idx;};
+
+    clientInteractor.onStartServer = [this] {	serverInteractor.StartServer(); };
+}
 
 Acceptance::~Acceptance()
 {}
@@ -102,9 +143,9 @@ Acceptance::~Acceptance()
 
 void Acceptance::hostLobby_Jerk_ConnectionEstablishedGameStatsSet()
 {
-    qmlAdapter.setPlayerName("Jerk");
+    //qmlAdapter.setPlayerName("Jerk");
 
-    qmlAdapter.hostLobby();
+    //qmlAdapter.hostLobby();
     QTest::qWait(50);
 
     QCOMPARE(gameInteractor.m_GameStats.players.size(), 1);
@@ -115,14 +156,14 @@ void Acceptance::hostLobby_Jerk_ConnectionEstablishedGameStatsSet()
 
 void Acceptance::lobbySettingsChanged_ChangedTimeLeft_SettingsWithStandardCatAndRounds()
 {
-    qmlAdapter.setPlayerName("Dork");
-    qmlAdapter.setRoundTime("00:01:10");
-    qmlAdapter.setCustomCategories("Stabby");
-    qmlAdapter.setMaxRounds("100");
+    //qmlAdapter.setPlayerName("Dork");
+    //qmlAdapter.setRoundTime("00:01:10");
+    //qmlAdapter.setCustomCategories("Stabby");
+    //qmlAdapter.setMaxRounds("100");
 
-    qmlAdapter.joinLobby();
+    //qmlAdapter.joinLobby();
     QTest::qWait(50);
-    qmlAdapter.lobbySettingsChanged();
+    //qmlAdapter.lobbySettingsChanged();
     QTest::qWait(50);
 
     std::string actual = gameInteractor.m_GameStats.timeout;
@@ -140,44 +181,44 @@ void Acceptance::lobbySettingsChanged_ChangedTimeLeft_SettingsWithStandardCatAnd
 
 void Acceptance::chatMsg_Message_ChatLogHoldsOneMessage()
 {
-    qmlAdapter.setPlayerName("Mark");
+    //qmlAdapter.setPlayerName("Mark");
 
-    qmlAdapter.joinLobby();
+    //qmlAdapter.joinLobby();
     QTest::qWait(50);
-    qmlAdapter.onChatMessage("Sender", "Message");
+    //qmlAdapter.onChatMessage("Sender", "Message");
     QTest::qWait(100);
 
-    auto actual = qmlAdapter.getChatLog();
+    //auto actual = qmlAdapter.getChatLog();
     QString expected = "Sender: Message\n";
-    QCOMPARE(actual, expected);
+    //QCOMPARE(actual, expected);
 
     Cleanup();
 }
 
 void Acceptance::onePlayerAnswer_playerAnswer_playerAnswersSavedOnGameStats()
 {
-    qmlAdapter.setPlayerName("Murk");
+    //qmlAdapter.setPlayerName("Murk");
 
-    qmlAdapter.joinLobby();
+    //qmlAdapter.joinLobby();
     QTest::qWait(50);
-    qmlAdapter.onSendAnswers({"Le","Mans","66", "Le","Mans","66"});
+    //qmlAdapter.onSendAnswers({"Le","Mans","66", "Le","Mans","66"});
     QTest::qWait(100);
 
-    auto id = qmlAdapter.getPlayerId();
-    auto actual = gameInteractor.m_GameStats.players[id].answers;
+    //auto id = qmlAdapter.getPlayerId();
+    //auto actual = gameInteractor.m_GameStats.players[id].answers;
     std::vector<std::string> expected = {"Le","Mans","66", "Le","Mans","66"};
-    QVERIFY(actual == expected);
+    //QVERIFY(actual == expected);
 
     Cleanup();
 }
 
 void Acceptance::stateChanged_stateLobby_stateChangedInGameStats()
 {
-    qmlAdapter.setPlayerName("Klark1");
+    //qmlAdapter.setPlayerName("Klark1");
 
-    qmlAdapter.joinLobby();
+    //qmlAdapter.joinLobby();
     QTest::qWait(50);
-    qmlAdapter.onState(STATE::LOBBY);
+    //qmlAdapter.onState(STATE::LOBBY);
     QTest::qWait(100);
 
     auto actual = gameInteractor.m_GameStats.state;
@@ -191,10 +232,10 @@ void Acceptance::secondInstance_comm_todo()
 {
     Second sec{};
 
-    sec.qmlAdapter.setPlayerName("Klark2");
-    sec.qmlAdapter.setLobbyCode("192.168.0.80");
+    //sec.qmlAdapter.setPlayerName("Klark2");
+    //sec.qmlAdapter.setLobbyCode("192.168.0.80");
 
-    sec.qmlAdapter.joinLobby();
+    //sec.qmlAdapter.joinLobby();
     QTest::qWait(100);
 
     QCOMPARE(gameInteractor.m_GameStats.players.size(), 2);
@@ -206,7 +247,58 @@ void Acceptance::secondInstance_comm_todo()
 void Acceptance::Cleanup()
 {
     client.DisconnectFromServer();
-    qmlAdapter.setPlayerCount(1);
+    resutltID = {};
+    resutltLS= {};
+    resutltLC = {};
+    resultState = {};
+    resultChatMsg = {};
+    resultanswers = {};
+    resultRD = {};
+    resultIndex = {};
+}
+
+
+
+Second::Second()
+{
+    clientInteractor.onReceivedID            = [this](int id)
+                                                {resutltID = id;};
+
+    clientInteractor.onUpdateLobbySettings   = [this](LobbySettings ls)
+                                               {resutltLS = ls;};
+
+    clientInteractor.onSetLobbyCode          = [this](LobbyCode lobbyCode)
+                                               {resutltLC = lobbyCode;};
+
+    clientInteractor.onGameState             = [this](STATE state)
+                                               {resultState = state;};
+
+    clientInteractor.onChatMessage           = [this](ChatMessage cm)
+                                               {resultChatMsg = cm;};
+
+    clientInteractor.onAllAnswers            = [this](std::vector<std::vector<std::string>> answers)
+                                               {resultanswers = answers;};
+
+    clientInteractor.onRoundData             = [this](const RoundData& data)
+                                               {resultRD = data;};
+
+    clientInteractor.onVoteChange            = [this](const Index idx)
+                                                {resultIndex = idx;};
+
+    clientInteractor.onStartServer = [this] {	serverInteractor.StartServer(); };
+}
+
+void Second::Cleanup()
+{
+    client.DisconnectFromServer();
+    resutltID = {};
+    resutltLS= {};
+    resutltLC = {};
+    resultState = {};
+    resultChatMsg = {};
+    resultanswers = {};
+    resultRD = {};
+    resultIndex = {};
 }
 
 QTEST_GUILESS_MAIN(Acceptance)

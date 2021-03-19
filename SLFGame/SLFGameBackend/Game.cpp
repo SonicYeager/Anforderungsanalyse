@@ -1,5 +1,9 @@
 #pragma once
 #include "Game.h"
+#include "DataTypes.h"
+#include "Messages.h"
+
+using namespace Messages;
 
 int Game::CalculatePoints(GameStats& decisions)
 {
@@ -24,4 +28,25 @@ void Game::CheckGameFinished(GameStats& gs)
 		onGameOver();
 	else
 		onPrepareNextRound();
+}
+
+void Game::CheckAllAnswersRecived(int counter, int actualCount, Event<> onTrue)
+{
+	if (counter == actualCount)
+	{
+		onTrue();
+	}
+}
+
+void Game::HandleGameState(const STATE& state, Event<> onSetupRound, Event<GameState> onStandart)
+{
+	switch (state)
+	{
+	case STATE::SETUPROUND:
+		onSetupRound();
+		break;
+	default:
+		onStandart(GameState{ state });
+		break;
+	}
 }

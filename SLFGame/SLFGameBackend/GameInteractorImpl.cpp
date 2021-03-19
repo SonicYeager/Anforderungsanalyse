@@ -29,14 +29,6 @@ void GameInteractorImpl::RemovePlayer(const int& id)
 	SendUpdatedLobbySettings();
 }
 
-void CheckAllAnswersRecived(int counter, int actualCount, Event<> onTrue)
-{
-	if (counter == actualCount)
-	{
-		onTrue();
-	}
-}
-
 void GameInteractorImpl::AddAnswers(int id, const std::vector<std::string>& answers)
 {
 	m_GameStats.players[id].answers = answers;
@@ -51,7 +43,7 @@ void GameInteractorImpl::AddAnswers(int id, const std::vector<std::string>& answ
 		m_pServer->Broadcast(allAnsw);
 	};
 	
-	CheckAllAnswersRecived(m_answerGatheredCounter, m_GameStats.players.size(), broadcast);
+	m_pGame->CheckAllAnswersRecived(m_answerGatheredCounter, m_GameStats.players.size(), broadcast);
 }
 
 void GameInteractorImpl::AddPlayer(int id, const std::string& playerName)
@@ -100,11 +92,8 @@ HandleGameSettings GameInteractorImpl::CreateHandleGameSettings()
 
 void GameInteractorImpl::HandleGameState(const STATE& state) //bitte aufdröseln
 {
-	if (state == STATE::ANSWERREQUEST)
-	{
-		m_pServer->Broadcast(GameState{ state });
-	}
-	else if (state == STATE::SETUPROUND)
+
+	auto onsetupround = [this]() 
 	{
 		m_pDataOperation->InkrementRound(m_GameStats);
 		m_pDataOperation->AddPreviousLetter(m_GameStats);
@@ -139,11 +128,10 @@ void GameInteractorImpl::HandleGameState(const STATE& state) //bitte aufdröseln
 			msg.data.points = player.second.points;
 			m_pServer->WriteTo(player.first, msg);
 		}
-	}
-	else if (state == STATE::OVERVIEW)
-	{
-		m_pServer->Broadcast(GameState{ state });
-	}
+	};
+	auto onbroadcast = [this](GameState state) {m_pServer->Broadcast(state); };
+
+	m_pGame->HandleGameState(state, onsetupround, onbroadcast);
 }
 
 void GameInteractorImpl::SendUpdatedLobbySettings()

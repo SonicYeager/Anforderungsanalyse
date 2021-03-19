@@ -19,7 +19,7 @@ CXXFLAGS      = -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStri
 INCPATH       = -I..\SLFGameUI -I. -I..\SLFGameBackend -IG:\Software\Qt\6.0.1\msvc2019_64\include -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtQuick -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtOpenGL -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtGui -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtQmlModels -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtQml -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtNetwork -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtCore -Irelease -I/include -IG:\Software\Qt\6.0.1\msvc2019_64\mkspecs\win32-msvc 
 LINKER        = link
 LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /OPT:REF /OPT:ICF /INCREMENTAL:NO /SUBSYSTEM:WINDOWS "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
-LIBS          = /LIBPATH:H:\Repositories\Anforderungsanalyse\SLFGame\SLFGameBackend\x64\Release H:\Repositories\Anforderungsanalyse\SLFGame\SLFGameBackend\x64\Release\SLFGameBackend.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Quick.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6OpenGL.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Gui.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6QmlModels.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Qml.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Network.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Core.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPoint.lib shell32.lib  
+LIBS          = /LIBPATH:I:\Repositories\Anforderungsanalyse\SLFGame\SLFGameBackend\x64\Release SLFGameBackend.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Quick.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6OpenGL.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Gui.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6QmlModels.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Qml.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Network.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Core.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPoint.lib shell32.lib  
 QMAKE         = G:\Software\Qt\6.0.1\msvc2019_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -62,7 +62,11 @@ OBJECTS       = release\QmlAdapter.obj \
 		release\qrc_qmake_qmake_immediate.obj \
 		release\moc_QmlAdapter.obj
 
-DIST          =  ..\SLFGameBackend\UI.h \
+DIST          = resources/banner \
+		(black \
+		bg).png \
+		resources/cross.png \
+		resources/tick.png ..\SLFGameBackend\UI.h \
 		..\SLFGameUI\QmlAdapter.h \
 		..\SLFGameUI\controller.h ..\SLFGameUI\QmlAdapter.cpp \
 		..\SLFGameUI\controller.cpp \
@@ -141,7 +145,7 @@ DESTDIR_TARGET = release\SLFGameUI.exe
 first: all
 all: Makefile.Release  release\SLFGameUI.exe
 
-release\SLFGameUI.exe: H:\Repositories\Anforderungsanalyse\SLFGame\SLFGameUI\..\SLFGameBackend\x64\Release\SLFGameBackend.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Quick.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6OpenGL.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Gui.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6QmlModels.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Qml.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Network.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Core.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPoint.lib $(OBJECTS) 
+release\SLFGameUI.exe: I:\Repositories\Anforderungsanalyse\SLFGame\SLFGameUI\..\SLFGameBackend\x64\Release\SLFGameBackend.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Quick.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6OpenGL.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Gui.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6QmlModels.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Qml.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Network.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Core.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPoint.lib $(OBJECTS) 
 	$(LINKER) $(LFLAGS) /MANIFEST:embed /OUT:$(DESTDIR_TARGET) @<<
 release\QmlAdapter.obj release\controller.obj release\main.obj release\qrc_qml.obj release\qrc_qmake_qmake_immediate.obj release\moc_QmlAdapter.obj
 $(LIBS)
@@ -308,7 +312,7 @@ release\moc_QmlAdapter.cpp: ..\SLFGameUI\QmlAdapter.h \
 		..\SLFGameBackend\Messages.h \
 		release\moc_predefs.h \
 		G:\Software\Qt\6.0.1\msvc2019_64\bin\moc.exe
-	G:\Software\Qt\6.0.1\msvc2019_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include H:/Repositories/Anforderungsanalyse/SLFGame/build-SLFGameUI-Desktop_Qt_6_0_1_MSVC2019_64bit-Debug/release/moc_predefs.h -IG:/Software/Qt/6.0.1/msvc2019_64/mkspecs/win32-msvc -IH:/Repositories/Anforderungsanalyse/SLFGame/SLFGameUI -IH:/Repositories/Anforderungsanalyse/SLFGame/SLFGameBackend -IG:/Software/Qt/6.0.1/msvc2019_64/include -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtQuick -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtOpenGL -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtGui -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtQmlModels -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtQml -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtNetwork -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtCore -I. -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include" -I"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\cppwinrt" ..\SLFGameUI\QmlAdapter.h -o release\moc_QmlAdapter.cpp
+	G:\Software\Qt\6.0.1\msvc2019_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include I:/Repositories/Anforderungsanalyse/SLFGame/build-SLFGameUI-Desktop_Qt_6_0_1_MSVC2019_64bit-Debug/release/moc_predefs.h -IG:/Software/Qt/6.0.1/msvc2019_64/mkspecs/win32-msvc -II:/Repositories/Anforderungsanalyse/SLFGame/SLFGameUI -II:/Repositories/Anforderungsanalyse/SLFGame/SLFGameBackend -IG:/Software/Qt/6.0.1/msvc2019_64/include -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtQuick -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtOpenGL -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtGui -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtQmlModels -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtQml -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtNetwork -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtCore -I. -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include" -I"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\cppwinrt" ..\SLFGameUI\QmlAdapter.h -o release\moc_QmlAdapter.cpp
 
 compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
@@ -488,55 +492,7 @@ release\controller.obj: ..\SLFGameUI\controller.cpp ..\SLFGameUI\controller.h \
 		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qobject_impl.h \
 		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qproperty.h \
 		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qshareddata.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qpropertyprivate.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\QGuiApplication \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qguiapplication.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qtguiglobal.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qtgui-config.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qcoreapplication.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qeventloop.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qdebug.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qhash.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qmap.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qshareddata_impl.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qtextstream.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qstringconverter.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qset.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qcontiguouscache.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qsharedpointer.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qsharedpointer_impl.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qwindowdefs.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qwindowdefs_win.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qinputmethod.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qlocale.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qvariant.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qpoint.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qsize.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qmargins.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\QQmlApplicationEngine \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlapplicationengine.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlengine.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qurl.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qjsengine.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qjsvalue.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qtqmlglobal.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qtqml-config.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtNetwork\qtnetworkglobal.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtNetwork\qtnetwork-config.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmldebug.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqml.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlprivate.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlparserstatus.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmllist.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\QMetaType \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlpropertyvaluesource.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qpointer.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qversionnumber.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qmetaobject.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlerror.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlabstracturlinterceptor.h \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\QQmlContext \
-		G:\Software\Qt\6.0.1\msvc2019_64\include\QtQml\qqmlcontext.h
+		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qpropertyprivate.h
 
 release\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\QGuiApplication \
 		G:\Software\Qt\6.0.1\msvc2019_64\include\QtGui\qguiapplication.h \
