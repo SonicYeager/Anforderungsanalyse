@@ -50,6 +50,7 @@ public:
 	MOCK_METHOD(void, ChatMessageReceived, (const ChatMessage&), (override));
 	MOCK_METHOD(void, ReveiveAllAnswers, (const std::vector<std::vector<std::string>>&), (override));
 	MOCK_METHOD(void, ReceiveRoundData, (const RoundData&), (override));
+	MOCK_METHOD(void, ReceiveVoteChange, (const Index&), (override));
 };
 
 class FakeRandomLetterGenerator : public RandomGenRessource
@@ -177,22 +178,22 @@ TEST_F(TestGameInteractor, OnGameState_GameStateANSWERREQUEST_BroadcastToAll)
 	gameInteractor.ChangeGameState(STATE::ANSWERREQUEST);
 }
 
-TEST_F(TestGameInteractor, OnGameState_SetupRound_WriteToAll)
-{
-	PlayerStats playerPeter;
-	playerPeter.points = 10;
-	gameInteractor.m_GameStats.players.emplace(0, playerPeter);
-	GameState msg;
-	msg.state = STATE::SETUPROUND;
-	RoundSetup roundSetup;
-	roundSetup.data.maxRounds = 5;
-	roundSetup.data.currentRound = 1;
-	roundSetup.data.roundTime = "bis Stop";
-	roundSetup.data.categories = { "Stadt", "Land", "Fluss", "Name", "Tier", "Beruf" };
-	roundSetup.data.points = 10;
-	roundSetup.data.letter = "A";
-	auto expected = serializers.Serialize(roundSetup);
-	EXPECT_CALL(fakeServer, WriteTo(/*expected, 0*/_,_));
-
-	gameInteractor.ChangeGameState(STATE::SETUPROUND);
-}
+//TEST_F(TestGameInteractor, OnGameState_SetupRound_WriteToAll)
+//{
+//	PlayerStats playerPeter;
+//	playerPeter.points = 10;
+//	gameInteractor.m_GameStats.players.emplace(0, playerPeter);
+//	GameState msg;
+//	msg.state = STATE::SETUPROUND;
+//	RoundSetup roundSetup;
+//	roundSetup.data.maxRounds = 5;
+//	roundSetup.data.currentRound = 1;
+//	roundSetup.data.roundTime = "bis Stop";
+//	roundSetup.data.categories = { "Stadt", "Land", "Fluss", "Name", "Tier", "Beruf" };
+//	roundSetup.data.points = 10;
+//	roundSetup.data.letter = "A";
+//	auto expected = serializers.Serialize(roundSetup);
+//	EXPECT_CALL(fakeServer, WriteTo(/*expected, 0*/_,_));
+//
+//	gameInteractor.ChangeGameState(STATE::SETUPROUND);
+//}

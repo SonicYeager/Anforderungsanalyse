@@ -113,9 +113,6 @@ void Server::OnClientDisconnect(int id)
 	//onLog("Client: " + std::to_string(id) + " has disconnected from Host!");
 
 	m_sockets.erase(id);
-
-	//for schleife -> discónenect, connect;
-
 	onClientDisconnect(id);
 }
 

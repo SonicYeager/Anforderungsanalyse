@@ -44,6 +44,7 @@ public:
 	MOCK_METHOD(void, ChatMessageReceived,	(const ChatMessage&),							(override));
 	MOCK_METHOD(void, ReveiveAllAnswers,	(const std::vector<std::vector<std::string>>&),	(override));
 	MOCK_METHOD(void, ReceiveRoundData,		(const RoundData&),								(override));
+	MOCK_METHOD(void, ReceiveVoteChange,	(const Index&),									(override));
 };
 
 class FakeRandomLetterGenerator : public RandomGenRessource

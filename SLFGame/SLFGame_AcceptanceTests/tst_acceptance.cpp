@@ -146,8 +146,7 @@ void Acceptance::hostLobby_Jerk_ConnectionEstablishedGameStatsSet()
     clientInteractor.HostLobby("Jerk");
     QTest::qWait(50);
 
-    QCOMPARE(gameInteractor.m_GameStats.players.size(), 1);
-    QCOMPARE(gameInteractor.m_GameStats.players[0].playerName, "Jerk");
+    QCOMPARE(resutltID, 0);
 
     Cleanup();
 }
@@ -159,13 +158,13 @@ void Acceptance::lobbySettingsChanged_ChangedTimeLeft_SettingsWithStandardCatAnd
     clientInteractor.LobbyChanged("Stabby", "00:01:10", "100");
     QTest::qWait(50);
 
-    std::string actual = gameInteractor.m_GameStats.timeout;
+    std::string actual = resutltLS.timeout;
     std::string expected = "00:01:10";
     QCOMPARE(actual, expected);
-    actual = gameInteractor.m_GameStats.customCategoryString;
+    actual = resutltLS.categories;
     expected = "Stabby";
     QCOMPARE(actual, expected);
-    actual = std::to_string(gameInteractor.m_GameStats.maxRounds);
+    actual = resutltLS.rounds;
     expected = "100";
     QCOMPARE(actual, expected);
 
@@ -194,7 +193,7 @@ void Acceptance::onePlayerAnswer_playerAnswer_playerAnswersSavedOnGameStats()
     QTest::qWait(100);
 
     std::vector<std::string> expected = {"Le","Mans","66", "Le","Mans","66"};
-    QVERIFY(resultanswers[resutltID] == expected);
+    QVERIFY(resultanswers[0] == expected);
 
     Cleanup();
 }
@@ -220,8 +219,9 @@ void Acceptance::secondInstance_comm_todo()
     sec.clientInteractor.JoinLobby("192.168.0.80", "Klark2");
     QTest::qWait(100);
 
-    QCOMPARE(gameInteractor.m_GameStats.players.size(), 2);
-    QCOMPARE(gameInteractor.m_GameStats.players[resutltID].playerName, "Klark2");
+    QCOMPARE(sec.resutltID, 5);
+    QCOMPARE(sec.resutltLS.playerNames.size(), 1);
+
 
     Cleanup();
 }

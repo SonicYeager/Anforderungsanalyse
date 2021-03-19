@@ -17,7 +17,7 @@ public:
 
 	virtual GameStats& GetGameStats() = 0;
 
-	//datamods -_-
+	//datamods
 	virtual void AddPlayer(int, const std::string&) = 0;
 	virtual void AddAnswers(int id, const std::vector<std::string>& answers, Event<GameStats>) = 0;
 	virtual void RemovePlayer(int id) = 0;

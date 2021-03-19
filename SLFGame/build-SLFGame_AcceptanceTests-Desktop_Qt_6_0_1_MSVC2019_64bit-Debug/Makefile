@@ -176,6 +176,7 @@ Makefile: ..\SLFGame_AcceptanceTests\SLFGame_AcceptanceTests.pro G:\Software\Qt\
 		G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\qt_config.prf \
 		G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\win32-msvc\qmake.conf \
 		G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\spec_post.prf \
+		.qmake.stash \
 		G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\exclusive_builds.prf \
 		G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\common\msvc-version.conf \
 		G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\toolchain.prf \
@@ -205,7 +206,6 @@ Makefile: ..\SLFGame_AcceptanceTests\SLFGame_AcceptanceTests.pro G:\Software\Qt\
 		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Test.prl \
 		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Network.prl \
 		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Core.prl \
-		.qmake.stash \
 		G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\build_pass.prf \
 		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Testd.prl \
 		G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Networkd.prl \
@@ -303,6 +303,7 @@ G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\qt_functions.prf:
 G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\qt_config.prf:
 G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\win32-msvc\qmake.conf:
 G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\spec_post.prf:
+.qmake.stash:
 G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\exclusive_builds.prf:
 G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\common\msvc-version.conf:
 G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\toolchain.prf:
@@ -332,7 +333,6 @@ G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\lex.prf:
 G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Test.prl:
 G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Network.prl:
 G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Core.prl:
-.qmake.stash:
 G:\Software\Qt\6.0.1\msvc2019_64\mkspecs\features\build_pass.prf:
 G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Testd.prl:
 G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Networkd.prl:
