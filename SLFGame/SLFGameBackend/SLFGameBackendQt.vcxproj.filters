@@ -101,6 +101,9 @@
     <ClInclude Include="..\SLFGameBackend\Messages.h">
       <Filter>Data</Filter>
     </ClInclude>
+    <ClInclude Include="HelpfulMacros.h">
+      <Filter>Data</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\SLFGameBackend\ClientInteractorImpl.cpp">

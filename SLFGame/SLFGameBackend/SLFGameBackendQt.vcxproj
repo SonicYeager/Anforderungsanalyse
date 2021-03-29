@@ -155,6 +155,7 @@
     <ClInclude Include="..\SLFGameBackend\UI.h" />
     <ClInclude Include="GameInteractor.h" />
     <ClInclude Include="GameInteractorImpl.h" />
+    <ClInclude Include="HelpfulMacros.h" />
     <ClInclude Include="slfgamebackendqt_global.h" />
     <ClCompile Include="..\SLFGameBackend\ClientInteractorImpl.cpp" />
     <ClCompile Include="..\SLFGameBackend\GameStatsOperations.cpp" />

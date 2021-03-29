@@ -98,10 +98,10 @@ QList<QVariantMap> QmlAdapter::getPlayers()
     return res;
 }
 
-bool QmlAdapter::getCustomChecked()
-{
-    return _customChecked;
-}
+//bool QmlAdapter::getCustomChecked()
+//{
+//    return _customChecked;
+//}
 
 int QmlAdapter::getCategoryCount()
 {
@@ -247,13 +247,13 @@ void QmlAdapter::setPlayers(QList<QVariantMap> players)
     emit playersChanged();
 }
 
-void QmlAdapter::setCustomChecked(bool checked)
-{
-    if (checked == _customChecked)
-        return;
-    _customChecked = checked;
-    emit customCheckedChanged();
-}
+//void QmlAdapter::setCustomChecked(bool checked)
+//{
+//    if (checked == _customChecked)
+//        return;
+//    _customChecked = checked;
+//    emit customCheckedChanged();
+//}
 
 void QmlAdapter::setCategoryCount(int categoryCount)
 {

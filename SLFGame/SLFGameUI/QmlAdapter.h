@@ -7,6 +7,7 @@
 #include <string>
 #include <QAbstractListModel>
 #include "UI.h"
+#include "HelpfulMacros.h"
 
 using StrVector = std::vector<std::string>;
 using PlayerMap = std::map<int, std::string>;
@@ -35,7 +36,8 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(int activeOverviewItem      READ getActiveOverviewItem    WRITE setActiveOverviewItem    NOTIFY activeOverviewItemChanged)
     Q_PROPERTY(int playerCount             READ getPlayerCount           WRITE setPlayerCount           NOTIFY playerCountChanged)
     Q_PROPERTY(int playerId                READ getPlayerId              WRITE setPlayerId              NOTIFY playerIdChanged)
-    Q_PROPERTY(bool customChecked          READ getCustomChecked         WRITE setCustomChecked         NOTIFY customCheckedChanged)
+    //Q_PROPERTY(bool customChecked          READ getCustomChecked         WRITE setCustomChecked         NOTIFY customCheckedChanged)
+    QPROPERTY_AUTO(bool, customChecked);
 
 
 public:
@@ -68,7 +70,8 @@ public:
     int getActiveOverviewItem();
     int getPlayerCount();
     int getPlayerId();
-    bool getCustomChecked();
+    //bool getCustomChecked();
+    //QPROPERTY_GETTER(bool, customChecked)
 
 
     void setLetter                      (QString letter);
@@ -88,7 +91,8 @@ public:
     void setActiveOverviewItem          (int activeOverviewItem);
     void setPlayerCount                 (int playerCount);
     void setPlayerId                    (int playerId);
-    void setCustomChecked               (bool checked);
+    //void setCustomChecked               (bool checked);
+    //QPROPERTY_SETTER(bool, customChecked)
 
 public slots:
 
@@ -118,7 +122,8 @@ signals:
     void customCategoriesChanged();
     void answersChanged();
     void categoryCountChanged();
-    void customCheckedChanged();
+    //void customCheckedChanged();
+    QPROPERTY_SIGNAL(bool, customChecked)
     void currentRoundChanged();
     void maxRoundsChanged();
     void pointsChanged();
