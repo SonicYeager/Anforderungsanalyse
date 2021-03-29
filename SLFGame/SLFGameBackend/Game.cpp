@@ -4,7 +4,7 @@
 void Game::CalculatePoints(const DDDVector& decisions)
 {
 	int validVoteCount = 0;
-	int validAnswers = 0;
+	double validAnswers = 0;
 
 	std::vector<bool> answersValid{ std::vector(m_GameStats.players.size() , false) };
 
@@ -21,7 +21,7 @@ void Game::CalculatePoints(const DDDVector& decisions)
 				if (decisions[categoryIDX][answerIDX][voterIDX] == true)
 					validVoteCount += 1;
 
-				if (validVoteCount >= decisions[categoryIDX][answerIDX].size() / 2)
+				if (validVoteCount >= static_cast<double>(decisions[categoryIDX][answerIDX].size()) / 2.0f)
 				{
 					validAnswers += 1;
 					answersValid[answerIDX] = true;
