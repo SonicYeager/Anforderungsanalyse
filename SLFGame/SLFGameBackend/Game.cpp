@@ -45,12 +45,8 @@ void Game::CheckGameFinished(Event<const std::string&, const Letters&> setUpNext
 
 void Game::ClearPlayerAnswers()
 {
-	//for (int i = 0; i < m_GameStats.players.size(); i++)
-	//	m_GameStats.players[i].answers = {};
-
 	for (auto& player : m_GameStats.players)
 		player.second.answers = {};
-
 }
 
 void Game::CheckAllAnswersRecived(Event<GameStats> onTrue)
