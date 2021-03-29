@@ -215,8 +215,6 @@ void QmlAdapter::setCategories(StrVector categories)
 
 void QmlAdapter::setAnswers(StrVector2D answers)
 {
-    if (answers == _answers)
-        return;
     _answers = answers;
     _decisions.clear();
     for (int i = 0; i < _categoryCount; i++)

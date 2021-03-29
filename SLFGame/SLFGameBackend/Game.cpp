@@ -8,15 +8,15 @@ void Game::CalculatePoints(const DDDVector& decisions)
 
 	std::vector<bool> answersValid{ std::vector(m_GameStats.players.size() , false) };
 
-	for (int categoryIDX = 0; categoryIDX < decisions.size(); categoryIDX++)
+	for (int categoryIDX = 0; categoryIDX < m_GameStats.categories.size(); categoryIDX++)
 	{
 		validAnswers = 0;
 		answersValid = std::vector(m_GameStats.players.size(), false);
 
-		for (int answerIDX = 0; answerIDX < decisions[categoryIDX].size(); answerIDX++)
+		for (int answerIDX = 0; answerIDX < m_GameStats.players.size(); answerIDX++)
 		{
 			validVoteCount = 0;
-			for (int voterIDX = 0; voterIDX < decisions[categoryIDX][answerIDX].size(); voterIDX++)
+			for (int voterIDX = 0; voterIDX < m_GameStats.players.size(); voterIDX++)
 			{
 				if (decisions[categoryIDX][answerIDX][voterIDX] == true)
 					validVoteCount += 1;
@@ -35,11 +35,18 @@ void Game::CalculatePoints(const DDDVector& decisions)
 
 void Game::CheckGameFinished(Event<const std::string&, const Letters&> setUpNextRound)
 {
-	if (m_GameStats.currentRound > m_GameStats.maxRounds)
+	if (m_GameStats.currentRound >= m_GameStats.maxRounds)
 		int gameover = 1; // change NextIncrement
 	else
-		CalculatePoints(m_GameStats.votes);
+	{
 		setUpNextRound(m_GameStats.customCategoryString, m_GameStats.lettersUsed);
+	}
+}
+
+void Game::ClearPlayerAnswers()
+{
+	for (int i = 0; i < m_GameStats.players.size(); i++)
+		m_GameStats.players[i].answers = {};
 }
 
 void Game::CheckAllAnswersRecived(Event<GameStats> onTrue)
@@ -60,6 +67,8 @@ void Game::HandleGameState(const STATE& state, Event<const std::string&, const L
 		onSetupRound(m_GameStats.customCategoryString, m_GameStats.lettersUsed);
 		break;
 	case STATE::ROUNDOVER:
+		CalculatePoints(m_GameStats.votes);
+		ClearPlayerAnswers();
 		CheckGameFinished(onSetupRound);
 		break;
 	default:
@@ -154,7 +163,7 @@ void Game::HandOutPointsForCategory(int categoryIDX, int validAnswers, std::vect
 		{
 			for (int i = 0; i < m_GameStats.players.size(); i++)
 			{
-				if (answersValid[i] = true)
+				if (answersValid[i] == true)
 				{
 					sameAnswer = false;
 					for (int j = 0; j < m_GameStats.players.size(); j++)
