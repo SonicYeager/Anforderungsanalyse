@@ -58,6 +58,7 @@ void Game::CheckAllAnswersRecived(Event<GameStats> onTrue)
 	++m_answerGatheredCounter;
 	if (m_answerGatheredCounter == m_GameStats.players.size())
 	{
+		SetVotesFalseForEmptyAnswers();
 		m_answerGatheredCounter = 0;
 		onTrue(m_GameStats);
 	}

@@ -435,6 +435,7 @@ void QmlAdapter::changeVoteState(int answerIDX)
 void QmlAdapter::sendAnswers()
 {
    onSendAnswers(_unhandledanswers);
+   _unhandledanswers.clear();
 }
 
 QString QmlAdapter::GetViewFromState(STATE view)
