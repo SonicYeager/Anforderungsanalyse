@@ -55,6 +55,21 @@ TEST(TestGame, CheckGameFinished_3currentRound5MaxRound_ExpectCallPrepare)
 	game.CheckGameFinished(onprepround);
 }
 
+TEST(TestGame, ClearPlayerAnswers_ThreePlayersWithAnswers_NoAnswers)
+{
+	Game game{};
+	PlayerStats ps{ "Checker", 0, {"Some", "Answers", "Given"} };
+	game.m_GameStats.players.emplace(0, ps);
+	game.m_GameStats.players.emplace(1, ps);
+	game.m_GameStats.players.emplace(3, ps);
+
+	game.ClearPlayerAnswers();
+
+	EXPECT_EQ(game.m_GameStats.players[0].answers, Categories{});
+	EXPECT_EQ(game.m_GameStats.players[1].answers, Categories{});
+	EXPECT_EQ(game.m_GameStats.players[3].answers, Categories{});
+}
+
 //TEST(TestGame, CheckGameFinished_6currentRound5MaxRound_ExpectCallEnd)
 //{
 //	GameStats gs;

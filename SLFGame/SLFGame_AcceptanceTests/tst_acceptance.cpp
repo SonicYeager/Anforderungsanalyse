@@ -154,9 +154,9 @@ void Acceptance::hostLobby_Jerk_ConnectionEstablishedGameStatsSet()
 void Acceptance::lobbySettingsChanged_ChangedTimeLeft_SettingsWithStandardCatAndRounds()
 {
     clientInteractor.JoinLobby("192.168.0.80", "Dork"); //consider finding it automatically
-    QTest::qWait(50);
+    QTest::qWait(100);
     clientInteractor.LobbyChanged("Stabby", "00:01:10", "100");
-    QTest::qWait(50);
+    QTest::qWait(100);
 
     std::string actual = resutltLS.timeout;
     std::string expected = "00:01:10";

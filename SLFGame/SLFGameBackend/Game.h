@@ -22,11 +22,11 @@ public:
 	void SetVotesFalseForEmptyAnswers() override;
 
 	GameStats m_GameStats;
+	void ClearPlayerAnswers();
 private:
 
 	int m_answerGatheredCounter{};
 
-	void ClearPlayerAnswers();
 	void CheckAllAnswersRecived(Event<GameStats> onTrue);
 	void HandOutPointsForCategory(int, int, std::vector<bool>);
 };
