@@ -15,7 +15,8 @@ namespace Messages
 		ALLANSWERS = 7,
 		ROUNDSETUP = 8,
 		ANSWERINDEX = 9,
-		FINALSCORES = 10
+		FINALSCORES = 10,
+		PLAYER_DISC = 11
 	};
 
 	struct HandleGameSettings	{ LobbySettings ls; };
@@ -28,8 +29,9 @@ namespace Messages
 	struct RoundSetup			{ RoundData data; };
 	struct AnswerIndex			{ Index index; };
 	struct FinalScores		    { Scores scores; };
+	struct PlayerDisc			{ int id; };
 
-	using Message = std::variant<Playername, PlayerID, HandleGameSettings, GameState, ChatMessage, PlayerAnswers, AllAnswers, RoundSetup, AnswerIndex, FinalScores>;
+	using Message = std::variant<Playername, PlayerID, HandleGameSettings, GameState, ChatMessage, PlayerAnswers, AllAnswers, RoundSetup, AnswerIndex, FinalScores, PlayerDisc>;
 
 	inline HEADER GetMessageID(const Playername&) { return HEADER::PLAYER_NAME; };
 	inline HEADER GetMessageID(const PlayerID&) { return HEADER::PLAYER_ID; };
@@ -41,6 +43,7 @@ namespace Messages
 	inline HEADER GetMessageID(const RoundSetup&) { return HEADER::ROUNDSETUP; };
 	inline HEADER GetMessageID(const AnswerIndex&) { return HEADER::ANSWERINDEX; };
 	inline HEADER GetMessageID(const FinalScores&) { return HEADER::FINALSCORES; };
+	inline HEADER GetMessageID(const PlayerDisc&) { return HEADER::PLAYER_DISC; };
 
 	inline Message CreateMessage(HEADER header)
 	{
@@ -56,6 +59,7 @@ namespace Messages
 		case HEADER::ROUNDSETUP: return RoundSetup{};
 		case HEADER::ANSWERINDEX: return AnswerIndex{};
 		case HEADER::FINALSCORES: return FinalScores{};
+		case HEADER::PLAYER_DISC: return PlayerDisc{};
 		}
 		return HandleGameSettings{};
 	};

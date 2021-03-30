@@ -39,4 +39,7 @@ public:
 
 	void Serialize_impl(const FinalScores& msg, QDataStream& data);
 	void Deserialize_impl(FinalScores& msg, QDataStream& data);
+
+	void Serialize_impl(const PlayerDisc& msg, QDataStream& data);
+	void Deserialize_impl(PlayerDisc& msg, QDataStream& data);
 };

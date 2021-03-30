@@ -232,3 +232,13 @@ void GameStatsSerializer::Deserialize_impl(FinalScores& msg, QDataStream& data)
 	for (const QPair<int, int>& score : scores)
 		msg.scores.push_back(score);
 }
+
+void GameStatsSerializer::Serialize_impl(const PlayerDisc& msg, QDataStream& data)
+{
+	data << msg.id;
+}
+
+void GameStatsSerializer::Deserialize_impl(PlayerDisc& msg, QDataStream& data)
+{
+	data >> msg.id;
+}

@@ -45,6 +45,11 @@ void MessageHandler::on(const FinalScores& msg)
 	onFinalScores(msg);
 }
 
+void MessageHandler::on(const PlayerDisc& msg)
+{
+	onPlayerDisc(msg);
+}
+
 void MessageHandler::on(const Playername& msg)
 {
 	onPlayername(msg);
