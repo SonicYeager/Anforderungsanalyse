@@ -7,6 +7,8 @@ Window{
     id: errorWindow
     width: 500
     height: 300
+    x: Screen.width / 2 - width/2
+    y: Screen.height /2 - height/2
     minimumWidth: 500
     minimumHeight: 300
     visible: true
@@ -16,7 +18,7 @@ Window{
         anchors.fill: parent
         spacing: 0
         TextBox {
-            Layout.preferredHeight: 50
+            Layout.preferredHeight: 100
             Layout.preferredWidth: 400
             Layout.alignment: Qt.AlignHCenter
             Layout.bottomMargin: 20
@@ -24,6 +26,9 @@ Window{
             text: "Verbindung zum Host verloren."
         }
         GameButton{
+            Layout.preferredWidth: 100
+            Layout.preferredHeight: 50
+            Layout.alignment: Qt.AlignHCenter
             state: "whiteButton"
             text: "Okay :("
             MouseArea {
