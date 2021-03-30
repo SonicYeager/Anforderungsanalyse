@@ -71,6 +71,8 @@ void QmlAdapter::ReceiveFinalScores(const Scores & scores)
 
 void QmlAdapter::PlayerLeft(int id)
 {
+    QString msg = _players[id].c_str();
+    AddChatMessage("*Server", msg + " hat das Spiel verlassen.");
     _players.erase(id);
     setPlayerCount(static_cast<int>(_players.size()));
     emit playerCountChanged();
@@ -407,7 +409,7 @@ void QmlAdapter::lobbySettingsChanged()
     onLobbySettingsChanged(_customCategories.toStdString(), _roundTime.toStdString(), _maxRounds.toStdString());
 }
 
-void QmlAdapter::Disconnect()
+void QmlAdapter::disconnect()
 {
     onDisconnect();
     setView(GetViewFromState(STATE::MAINMENU));

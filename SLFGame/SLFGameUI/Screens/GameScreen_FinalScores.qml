@@ -131,7 +131,7 @@ Rectangle{
                     MouseArea {
                         anchors.fill: parent
                         onClicked: {
-                            qmlAdapter.view = "MainMenu";
+                            qmlAdapter.disconnect()
                         }
                     }
                 }

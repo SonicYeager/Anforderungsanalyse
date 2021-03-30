@@ -20,6 +20,7 @@ ClientInteractorImpl::ClientInteractorImpl(
 	m_pMsgHandler->onRoundSetup = [this](const RoundSetup& msg) { OnRoundSetup(msg); };
 	m_pMsgHandler->onAnswerIndex = [this](const AnswerIndex& idx) { OnAnswerIndex(idx); };
 	m_pMsgHandler->onFinalScores = [this](const FinalScores& msg) { OnFinalScores(msg); };
+	m_pMsgHandler->onPlayerDisc = [this](const PlayerDisc& msg) { OnPlayerDisc(msg); };
 }
 
 void ClientInteractorImpl::HostLobby(const std::string& playerName)

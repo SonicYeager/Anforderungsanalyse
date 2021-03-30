@@ -107,7 +107,7 @@ public slots:
     void triggerStateChange(int);
     void sendAnswers();
     void lobbySettingsChanged();
-    void Disconnect();
+    void disconnect();
 
 // internally used functions
 
