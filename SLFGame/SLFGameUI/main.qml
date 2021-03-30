@@ -6,6 +6,8 @@ Window{
     id: gameScreen_window
     width: Screen.width
     height: Screen.height
+    minimumWidth: Screen.width
+    minimumHeight: Screen.height
     visible: true
     visibility: Window.Maximized
     title: "Stadt Land Fluss"
@@ -15,12 +17,4 @@ Window{
         anchors.fill: parent
         source: "./Screens/GameScreen_" + qmlAdapter.view + ".qml"
     }
-    //Component.onCompleted: pageLoader.source = "GameScreen_" + qmlAdapter.view + ".qml"
-    //Connections {
-    //    target: qmlAdapter
-    //    function onViewChanged()
-    //    {
-    //        pageLoader.source = "GameScreen_" + qmlAdapter.view + ".qml";
-    //    }
-    //}
 }

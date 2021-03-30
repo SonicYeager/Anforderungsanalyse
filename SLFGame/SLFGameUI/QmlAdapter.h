@@ -115,6 +115,7 @@ public slots:
     void addAnswer(QString answer);
     void triggerStateRelatedSignal(STATE);
     void changeVoteState(int);
+    void clearChat();
 
 signals:
     void letterChanged();

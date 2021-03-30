@@ -35,6 +35,7 @@ void QmlAdapter::UpdateGameState(const STATE & state)
 {
     setView(GetViewFromState(state));
     triggerStateRelatedSignal(state);
+    clearChat();
 }
 
 void QmlAdapter::ChatMessageReceived(const ChatMessage & cm)
@@ -430,6 +431,11 @@ void QmlAdapter::triggerStateRelatedSignal(STATE state)
 void QmlAdapter::changeVoteState(int answerIDX)
 {
     onChangeVoteState(_activeOverviewItem, answerIDX, _playerId);
+}
+
+void QmlAdapter::clearChat()
+{
+    _chatLog.clear();
 }
 
 void QmlAdapter::sendAnswers()

@@ -32,15 +32,17 @@ Rectangle {
         Rectangle {
             Layout.preferredWidth: 300
             Layout.preferredHeight: 30
+            border.color:"#CCCCCC"
+            border.width: 0.5
             color: Qt.rgba(0,0,0,0)
             RowLayout {
                 anchors.fill: parent
                 spacing: 0
                 VoteList {
                     id: voteList
-                    Layout.preferredWidth: 30 * count
-                    Layout.minimumHeight: 30
-                    Layout.alignment: Qt.AlignHCenter
+                    Layout.preferredWidth: 25 * count
+                    Layout.minimumHeight: 25
+                    Layout.alignment: Qt.AlignCenter
                     Component.onCompleted: {
                         for (var i = 0; i < qmlAdapter.playerCount; i++)
                         {
@@ -51,15 +53,19 @@ Rectangle {
             }
         }
         GameButton {
+            id: voteBtn
             Layout.preferredHeight: 30
             Layout.preferredWidth: 100
             state: "whiteButton"
-            text: "Vote"
+            text: "Vote ändern"
             MouseArea {
+                id: voteMA
                 anchors.fill: parent
                 onClicked: {
                     qmlAdapter.changeVoteState(answerIDX)
                 }
+                onPressed: voteBtn.color = "#8c8b8b"
+                onReleased: voteBtn.color = "#d6d6d6"
             }
         }
     }

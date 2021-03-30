@@ -20,7 +20,7 @@ Rectangle{
             Layout.minimumWidth: parent.width - header.Layout.margins * 2
             color: "#000000"
             border.color: "white"
-            border.width: 5
+            border.width: 3
             Layout.margins: 10
             RowLayout {
                 anchors.fill: parent
@@ -34,28 +34,29 @@ Rectangle{
             id:body
             Layout.preferredWidth: parent.width - body.Layout.margins * 2
             Layout.fillHeight: true
-            color: "#000000"
-            border.color: "white"
-            border.width: 5
+            color: Qt.rgba(0,0,0,0)
             Layout.margins: 10
             RowLayout{
                 anchors.fill: parent
                 spacing: 0
                 Rectangle{
                     id: categoryOverviewContainer
-                    Layout.preferredWidth: parent.width * 0.1
-                    Layout.preferredHeight: parent.height - 20
-                    Layout.leftMargin: 20
-                    Layout.topMargin: 20
-                    color: Qt.rgba(0,0,0,0)
+                    Layout.preferredWidth: 240
+                    Layout.preferredHeight: parent.height
+                    color: "#000000"
+                    border.color: "white"
+                    border.width: 3
+                    Layout.alignment: Qt.AlignLeft
                     ColumnLayout{
                         anchors.fill: parent
                         spacing:0
                         CategoryOverview {
                             id:categoryOverview
                             Layout.preferredWidth: 200
-                            Layout.minimumHeight: listModel.count * 50
+                            Layout.minimumHeight: listModel.count * 50 + headerHeight
                             Layout.alignment: Qt.AlignTop
+                            Layout.topMargin: 20
+                            Layout.leftMargin: 20
                             Component.onCompleted: {
                                 for (var i = 0; i < qmlAdapter.categoryCount; i++)
                                 {
@@ -70,19 +71,23 @@ Rectangle{
                 }
                 Rectangle{
                     id: answerBlockContainer
-                    Layout.preferredWidth: parent.width * 0.5
-                    Layout.preferredHeight: parent.height - 20
+                    Layout.preferredWidth: 840
+                    Layout.preferredHeight: parent.height
+                    color: "#000000"
+                    border.color: "white"
+                    border.width: 3
+                    Layout.alignment: Qt.AlignLeft
                     Layout.leftMargin: 20
-                    Layout.topMargin: 20
-                    color: Qt.rgba(0,0,0,0)
                     ColumnLayout{
                         anchors.fill: parent
                         spacing:0
                         AnswerBlockList {
                             id: answerBlockList
-                            Layout.preferredWidth: parent.width
-                            Layout.minimumHeight: count * 50
+                            Layout.preferredWidth: 800
+                            Layout.minimumHeight: count * 50 + headerHeight
                             Layout.alignment: Qt.AlignTop
+                            Layout.leftMargin: 20
+                            Layout.topMargin: 20
                             Component.onCompleted: {
                                 for (var i = 0; i < qmlAdapter.playerCount; i++)
                                 {
@@ -93,6 +98,13 @@ Rectangle{
                         }
                     }
                 }
+                Chat {
+                    id: chatbox
+                    Layout.fillWidth: true
+                    Layout.preferredHeight: parent.height
+                    Layout.leftMargin: 20
+                    color: Qt.rgba(0,0,0,0)
+                }
             }
         }
         Rectangle{
@@ -102,7 +114,7 @@ Rectangle{
             Layout.alignment: Qt.AlignHCenter
             color: "black"
             border.color: "white"
-            border.width: 5
+            border.width: 3
             Layout.margins: 10
             Layout.bottomMargin: 30
             RowLayout{
@@ -112,7 +124,7 @@ Rectangle{
                 {
                     id: confirmButton
                     Layout.preferredWidth: parent.width * 0.25
-                    text : "CONFIRM"
+                    text : "BESTÄTIGEN"
                     textColor: "white"
                     state: (qmlAdapter.playerId === 0)? "blueButton" : "inactive"
                     fontSize: height * 0.05 + width * 0.05
@@ -144,7 +156,7 @@ Rectangle{
                 GameButton
                 {
                     Layout.preferredWidth: parent.width * 0.25
-                    text : "LEAVE LOBBY"
+                    text : "LOBBY VERLASSEN"
                     textColor: "white"
                     state: "blueButton"
                     fontSize: height * 0.05 + width * 0.05

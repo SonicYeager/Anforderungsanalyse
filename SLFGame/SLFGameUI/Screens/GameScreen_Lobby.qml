@@ -20,7 +20,7 @@ Rectangle {
             Layout.minimumWidth: parent.width - header.Layout.margins * 2
             color: "#000000"
             border.color: "white"
-            border.width: 5
+            border.width: 3
             Layout.margins: 10
             RowLayout {
                 anchors.fill: parent
@@ -66,7 +66,7 @@ Rectangle {
                             anchors.fill: parent
                             spacing:0
                             TextBox {
-                                text: "Players"
+                                text: "Spieler"
                                 state: "desc"
                                 Layout.preferredWidth: 200
                                 Layout.preferredHeight: 50
@@ -131,7 +131,7 @@ Rectangle {
             Layout.alignment: Qt.AlignHCenter
             color: "black"
             border.color: "white"
-            border.width: 5
+            border.width: 3
             Layout.margins: 10
             Layout.bottomMargin: 30
             RowLayout{
@@ -140,9 +140,9 @@ Rectangle {
                 GameButton
                 {
                     Layout.preferredWidth: parent.width * 0.25
-                    text : "START GAME"
+                    text : "SPIEL STARTEN"
                     textColor: "white"
-                    state: "blueButton"
+                    state: (qmlAdapter.playerId === 0)? "blueButton" : "inactive"
                     fontSize: height * 0.05 + width * 0.05
                     border.width: 3
                     border.color: "white"
@@ -150,14 +150,15 @@ Rectangle {
                     MouseArea{
                         anchors.fill: parent
                         onClicked: {
-                            qmlAdapter.triggerStateChange(2);
+                            if (qmlAdapter.playerId === 0)
+                                qmlAdapter.triggerStateChange(2);
                         }
                     }
                 }
                 GameButton
                 {
                     Layout.preferredWidth: parent.width * 0.25
-                    text : "LEAVE LOBBY"
+                    text : "LOBBY VERLASSEN"
                     textColor: "white"
                     state: "blueButton"
                     fontSize: height * 0.05 + width * 0.05

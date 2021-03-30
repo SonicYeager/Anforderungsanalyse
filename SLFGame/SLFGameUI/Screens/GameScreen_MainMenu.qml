@@ -19,7 +19,7 @@ Rectangle{
             Layout.minimumWidth: parent.width - header.Layout.margins * 2
             color: "#000000"
             border.color: "white"
-            border.width: 5
+            border.width: 3
             Layout.margins: 10
             RowLayout {
                 anchors.fill: parent
@@ -42,14 +42,14 @@ Rectangle{
                 height: 500
                 color: "#000000"
                 border.color: "white"
-                border.width: 5
+                border.width: 3
                 Layout.margins: 10
                 ColumnLayout {
                     spacing: 0
                     anchors.fill: parent
                     TextBox{
                         id: tb_nameDesc
-                        text: "Playername"
+                        text: "Spielername"
                         state: "desc"
                         Layout.preferredWidth: 200
                         Layout.preferredHeight: 50
@@ -79,7 +79,7 @@ Rectangle{
                     {
                         Layout.preferredWidth: 200
                         Layout.preferredHeight: 50
-                        text : "HOST GAME"
+                        text : "SPIEL HOSTEN"
                         textColor: "white"
                         state: "blueButton"
                         fontSize: height * 0.05 + width * 0.05
@@ -105,7 +105,7 @@ Rectangle{
                     {
                         Layout.preferredWidth: 200
                         Layout.preferredHeight: 50
-                        text : "JOIN GAME"
+                        text : "SPIEL BEITRETEN"
                         textColor: "white"
                         state: "blueButton"
                         fontSize: height * 0.05 + width * 0.05
@@ -125,7 +125,7 @@ Rectangle{
                     EntryBox {
                         id: lobbyCode
                         text: qmlAdapter.lobbyCode
-                        placeholderText: "Lobby ID"
+                        placeholderText: "Lobby IP"
                         Layout.preferredWidth: 200
                         Layout.preferredHeight: 50
                         Layout.alignment: Qt.AlignCenter
@@ -151,7 +151,7 @@ Rectangle{
             Layout.alignment: Qt.AlignHCenter
             color: "black"
             border.color: "white"
-            border.width: 5
+            border.width: 3
             Layout.margins: 10
             RowLayout{
                 spacing: 0
@@ -160,7 +160,7 @@ Rectangle{
                 {
                     Layout.preferredHeight: 50
                     Layout.preferredWidth: parent.width * 0.25
-                    text : "LEAVE GAME"
+                    text : "SPIEL VERLASSEN"
                     textColor: "white"
                     state: "blueButton"
                     fontSize: height * 0.05 + width * 0.05

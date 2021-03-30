@@ -12,8 +12,8 @@ ListView {
     orientation: ListView.Horizontal
     delegate: Votebox {
         id: voteBox
-        width : 30
-        height: 30
+        width : 25
+        height: 25
         property bool valid: qmlAdapter.getDecision(qmlAdapter.activeOverviewItem, answerIDX, index)
         state: valid? "valid": "invalid"
     }

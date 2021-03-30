@@ -161,7 +161,7 @@ Rectangle{
                     Layout.preferredWidth: 200
                     Layout.preferredHeight: 50
                     state: "desc"
-                    text: "Lobby ID"
+                    text: "Lobby IP"
                     Layout.rightMargin: 20
                 }
                 TextBox{

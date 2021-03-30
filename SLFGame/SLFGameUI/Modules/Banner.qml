@@ -10,5 +10,6 @@ Rectangle {
         source: "../Resources/banner.png"
         sourceSize.width: 400
         sourceSize.height: 250
+        fillMode: Image.PreserveAspectFit
     }
 }

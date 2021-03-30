@@ -55,9 +55,15 @@ Rectangle {
                     Layout.rightMargin: parent.width * 0.02
                     horizontalAlignment: TextEdit.AlignLeft
                     state: "chatEntry"
+                    focus: true
+                    onAccepted: {
+                        qmlAdapter.sendChatMessage(entryBox.text)
+                        entryBox.text = ""
+                    }
+
                 }
                 GameButton {
-                    text: "SEND"
+                    text: "SENDEN"
                     textColor: "black"
                     Layout.preferredWidth: parent.width * 0.18
                     Layout.preferredHeight: parent.height - 10

@@ -64,12 +64,8 @@ Rectangle {
             }
             PropertyChanges {
                 target: ma
-                onEntered: {
-                    master.color = "#d6d6d6"
-                }
-                onExited: {
-                    master.color = "white"
-                }
+                onEntered: master.color = "#d6d6d6"
+                onExited: master.color = "white"
             }
         },
         State {
