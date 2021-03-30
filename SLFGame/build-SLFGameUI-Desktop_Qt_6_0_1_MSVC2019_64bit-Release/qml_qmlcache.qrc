@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<RCC>
+    <qresource prefix="/">
+        <file alias="main.qml">../SLFGameUI/main.qml</file>
+        <file alias="Screens/GameScreen_FinalScores.qml">../SLFGameUI/Screens/GameScreen_FinalScores.qml</file>
+        <file alias="Screens/GameScreen_Input.qml">../SLFGameUI/Screens/GameScreen_Input.qml</file>
+        <file alias="Screens/GameScreen_Lobby.qml">../SLFGameUI/Screens/GameScreen_Lobby.qml</file>
+        <file alias="Screens/GameScreen_MainMenu.qml">../SLFGameUI/Screens/GameScreen_MainMenu.qml</file>
+        <file alias="Screens/GameScreen_Overview.qml">../SLFGameUI/Screens/GameScreen_Overview.qml</file>
+        <file alias="Components/EntryBox.qml">../SLFGameUI/Components/EntryBox.qml</file>
+        <file alias="Components/GameButton.qml">../SLFGameUI/Components/GameButton.qml</file>
+        <file alias="Components/InfoBox.qml">../SLFGameUI/Components/InfoBox.qml</file>
+        <file alias="Components/SLFComboBox.qml">../SLFGameUI/Components/SLFComboBox.qml</file>
+        <file alias="Components/TextBox.qml">../SLFGameUI/Components/TextBox.qml</file>
+        <file alias="ListViews/AnswerBlock.qml">../SLFGameUI/ListViews/AnswerBlock.qml</file>
+        <file alias="ListViews/AnswerBlockList.qml">../SLFGameUI/ListViews/AnswerBlockList.qml</file>
+        <file alias="ListViews/Categories.qml">../SLFGameUI/ListViews/Categories.qml</file>
+        <file alias="ListViews/CategoryOverview.qml">../SLFGameUI/ListViews/CategoryOverview.qml</file>
+        <file alias="ListViews/PlayerOverview.qml">../SLFGameUI/ListViews/PlayerOverview.qml</file>
+        <file alias="Modules/Banner.qml">../SLFGameUI/Modules/Banner.qml</file>
+        <file alias="Modules/Category.qml">../SLFGameUI/Modules/Category.qml</file>
+        <file alias="Modules/Chat.qml">../SLFGameUI/Modules/Chat.qml</file>
+        <file alias="Modules/Settings_Lobby.qml">../SLFGameUI/Modules/Settings_Lobby.qml</file>
+        <file alias="Resources/banner (black bg).png">../SLFGameUI/Resources/banner (black bg).png</file>
+        <file alias="Resources/banner.png">../SLFGameUI/Resources/banner.png</file>
+        <file alias="Components/Votebox.qml">../SLFGameUI/Components/Votebox.qml</file>
+        <file alias="Resources/cross.png">../SLFGameUI/Resources/cross.png</file>
+        <file alias="Resources/tick.png">../SLFGameUI/Resources/tick.png</file>
+        <file alias="ListViews/VoteList.qml">../SLFGameUI/ListViews/VoteList.qml</file>
+    </qresource>
+</RCC>

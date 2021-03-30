@@ -12,5 +12,6 @@ public:
 	bool LetterIsAlreadyUsed(Letter, Letters) override;
 	void SetAnswers(const std::vector<std::string>&, PlayerStats&) override;
 	//GameStats CreateStats(const LobbyCode&, const std::string&) override;
+	std::vector<std::pair<int, int>> SortPlayerByPoints(const std::map<int, PlayerStats>&) override;
 };
 

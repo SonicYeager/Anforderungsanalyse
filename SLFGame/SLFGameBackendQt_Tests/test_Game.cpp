@@ -52,7 +52,7 @@ TEST(TestGame, CheckGameFinished_3currentRound5MaxRound_ExpectCallPrepare)
 	};
 	EXPECT_CALL(fc, Prepare(_s, _l));
 
-	game.CheckGameFinished(onprepround);
+	game.CheckGameFinished(onprepround, [](const std::map<int, PlayerStats>&) {});
 }
 
 TEST(TestGame, ClearPlayerAnswers_ThreePlayersWithAnswers_NoAnswers)
@@ -86,3 +86,17 @@ TEST(TestGame, ClearPlayerAnswers_ThreePlayersWithAnswers_NoAnswers)
 //
 //	game.CheckGameFinished(gs);
 //}
+
+TEST(TestGame, HandleGameStats_FINALSCORES_CallOnFinalScores)
+{
+	Game game{};
+	bool actual = false;
+
+	auto onSetupRound = [](const std::string&, const Letters&) {};
+	auto onStandart = [](GameState) {};
+	auto onFinalRound = [&actual](const std::map<int, PlayerStats>&) {actual = true; };
+
+	game.HandleGameState(STATE::FINALSCORES, onSetupRound, onFinalRound ,onStandart);
+
+	EXPECT_TRUE(actual);
+}

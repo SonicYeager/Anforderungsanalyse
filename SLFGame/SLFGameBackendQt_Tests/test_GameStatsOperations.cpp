@@ -132,3 +132,15 @@ TEST(TestGameStatsOperations, AddPoints_65_SetTo65)
 
 }
 
+TEST(TestGameStatsOperations, SortPlayerByPoints_ThreePlayersWithDiffPoints_SortedFromHighToLow)
+{
+	GameStatsOperations gso{};
+	std::map<int, PlayerStats> players{ {1, {"Ninja", 100, {}}}, {3, {"Yo-Lan-Di", 230, {}}},{5, {"Amerika", 50, {}}} };
+
+	auto actual = gso.SortPlayerByPoints(players);
+
+	std::vector<std::pair<int, int>> expected{ {3, 230}, {1, 100}, {5, 50} };
+	EXPECT_EQ(actual, expected);
+
+}
+

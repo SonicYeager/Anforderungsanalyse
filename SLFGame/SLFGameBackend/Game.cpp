@@ -33,10 +33,10 @@ void Game::CalculatePoints(const DDDVector& decisions)
 	}
 }
 
-void Game::CheckGameFinished(Event<const std::string&, const Letters&> setUpNextRound)
+void Game::CheckGameFinished(Event<const std::string&, const Letters&> setUpNextRound, Event<const std::map<int, PlayerStats>&> onFinalScores)
 {
 	if (m_GameStats.currentRound >= m_GameStats.maxRounds)
-		int gameover = 1; // change NextIncrement
+		onFinalScores(m_GameStats.players);
 	else
 	{
 		setUpNextRound(m_GameStats.customCategoryString, m_GameStats.lettersUsed);
@@ -60,7 +60,7 @@ void Game::CheckAllAnswersRecived(Event<GameStats> onTrue)
 	}
 }
 
-void Game::HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<GameState> onStandart)
+void Game::HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<const std::map<int, PlayerStats>&> onFinalScores, Event<GameState> onStandart)
 {
 	switch (state)
 	{
@@ -70,7 +70,10 @@ void Game::HandleGameState(const STATE& state, Event<const std::string&, const L
 	case STATE::ROUNDOVER:
 		CalculatePoints(m_GameStats.votes);
 		ClearPlayerAnswers();
-		CheckGameFinished(onSetupRound);
+		CheckGameFinished(onSetupRound, onFinalScores);
+		break;
+	case STATE::FINALSCORES:
+		onFinalScores(m_GameStats.players);
 		break;
 	default:
 		onStandart(GameState{ state });

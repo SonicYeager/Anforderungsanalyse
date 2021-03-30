@@ -241,3 +241,24 @@ TEST_F(TestGameInteractor, HandleGameState_SetupRound_CallWriteTo)
 
 	gameInteractor.ChangeGameState(STATE::SETUPROUND);
 }
+
+TEST_F(TestGameInteractor, HandleGameState_onEndRound_CallWriteTo)
+{
+	//game.m_GameStats.customCategoryString = "Stadt";
+	//game.m_GameStats.currentRound = 0;
+	//game.m_GameStats.maxRounds = 1;
+	//game.m_GameStats.players.emplace(0, PlayerStats{ "Disgust", 10, {} });
+	//game.m_GameStats.timeout = "bis Stop";
+
+	//RoundSetup msg;
+	//msg.data.categories = { "Stadt" };
+	//msg.data.currentRound = 1;
+	//msg.data.letter = "C";
+	//msg.data.maxRounds = 1;
+	//msg.data.points = 10;
+	//msg.data.roundTime = "bis Stop";
+	//auto expected = serializers.Serialize(msg);
+	//EXPECT_CALL(fakeServer, WriteTo(expected, 0));
+
+	gameInteractor.ChangeGameState(STATE::FINALSCORES);
+}

@@ -91,8 +91,9 @@ void GameInteractorImpl::HandleGameState(const STATE& state)
 	};
 
 	auto onbroadcast = [this](GameState state) {m_pServer->Broadcast(state); };
+	auto onFinalScores = [this](const std::map<int, PlayerStats>& players) { auto sorted = m_pDataOperation->SortPlayerByPoints(players); /*m_pServer->Broadcast(sorted);*/ };
 
-	m_pGame->HandleGameState(state, onsetupround, onbroadcast);
+	m_pGame->HandleGameState(state, onsetupround, onFinalScores, onbroadcast);
 }
 
 void GameInteractorImpl::SendUpdatedLobbySettings()

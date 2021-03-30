@@ -11,8 +11,8 @@ public:
 	virtual			~GameLogic() = default;
 
 	virtual void	CalculatePoints		(const DDDVector&) = 0;
-	virtual void	CheckGameFinished	(Event<const std::string&, const Letters&>) = 0;
-	virtual void	HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<GameState> onStandart) = 0;
+	virtual void	CheckGameFinished	(Event<const std::string&, const Letters&> onNextRound, Event<const std::map<int, PlayerStats>&> onFinalScores) = 0;
+	virtual void	HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<const std::map<int, PlayerStats>&> onFinalScores,Event<GameState> onStandart) = 0;
 	virtual HandleGameSettings CreateHandleGameSettings() = 0;
 	virtual void	SetVotesFalseForEmptyAnswers() = 0;
 

@@ -11,5 +11,6 @@ public:
 	virtual void AddPoints(const int, PlayerStats&) = 0;
 	virtual void SetAnswers(const std::vector<std::string>&, PlayerStats&) = 0;
 	//virtual GameStats CreateStats(const LobbyCode&, const std::string&) = 0;
+	virtual std::vector<std::pair<int, int>> SortPlayerByPoints(const std::map<int, PlayerStats>&) = 0;
 	virtual ~DataOperationLogic() = default;
 };

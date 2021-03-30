@@ -38,3 +38,14 @@ void GameStatsOperations::SetAnswers(const std::vector<std::string>& answ, Playe
 	ps.answers = answ;
 }
 
+std::vector<std::pair<int, int>> GameStatsOperations::SortPlayerByPoints(const std::map<int, PlayerStats>& players)
+{
+	std::vector<std::pair<int, int>> sorted{};
+	for (const auto& player : players)
+		sorted.push_back({player.first, player.second.points});
+	
+	std::sort(std::begin(sorted), std::end(sorted), [](const std::pair<int, int>& left, const std::pair<int, int>& right) -> bool {return left.second > right.second; });
+
+	return sorted;
+}
+
