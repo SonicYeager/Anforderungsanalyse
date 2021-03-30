@@ -54,6 +54,7 @@ public:
     void ReceiveRoundData       (const RoundData&) override;
     void ReceiveVoteChange      (const Index&) override;
     void ReceiveFinalScores     (const Scores&) override;
+    void PlayerLeft             (int) override;
 
     QString getLetter();
     QString getLobbyCode();
@@ -106,6 +107,7 @@ public slots:
     void triggerStateChange(int);
     void sendAnswers();
     void lobbySettingsChanged();
+    void Disconnect();
 
 // internally used functions
 

@@ -86,6 +86,11 @@ void ClientInteractorImpl::ChangeVoteStateTriggered(int categoryIDX, int answerI
 	//onVoteChange(answerIDX, categoryIDX, playerID)
 }
 
+void ClientInteractorImpl::Disconnect()
+{
+	m_pClient->DisconnectFromServer();
+}
+
 void ClientInteractorImpl::OnMsgID(const PlayerID& id)
 {
 	m_clientID = id.id;
@@ -133,4 +138,9 @@ void ClientInteractorImpl::OnAnswerIndex(const AnswerIndex& msg)
 void ClientInteractorImpl::OnFinalScores(const FinalScores& msg)
 {
 	onFinalScores(msg.scores);
+}
+
+void ClientInteractorImpl::OnPlayerDisc(const PlayerDisc& msg)
+{
+	onPlayerLeft(msg.id);
 }

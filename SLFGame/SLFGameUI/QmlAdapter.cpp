@@ -69,6 +69,14 @@ void QmlAdapter::ReceiveFinalScores(const Scores & scores)
     setView(GetViewFromState(STATE::FINALSCORES));
 }
 
+void QmlAdapter::PlayerLeft(int id)
+{
+    _players.erase(id);
+    setPlayerCount(static_cast<int>(_players.size()));
+    emit playerCountChanged();
+    emit playersChanged();
+}
+
 // ------------------------------------------ getter ------------------------------------------
 #define getterFunctions {
 
@@ -397,6 +405,12 @@ void QmlAdapter::joinLobby()
 void QmlAdapter::lobbySettingsChanged()
 {
     onLobbySettingsChanged(_customCategories.toStdString(), _roundTime.toStdString(), _maxRounds.toStdString());
+}
+
+void QmlAdapter::Disconnect()
+{
+    onDisconnect();
+    setView(GetViewFromState(STATE::MAINMENU));
 }
 
 void QmlAdapter::sendChatMessage(QString str)

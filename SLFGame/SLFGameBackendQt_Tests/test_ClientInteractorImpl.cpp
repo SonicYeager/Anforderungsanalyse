@@ -267,10 +267,17 @@ TEST_F(TestClientInteractor, OnAnswerIndex_AnswerIndex_CallonVoteChange)
 	clientInteractor.OnAnswerIndex(AnswerIndex{ data });
 }
 
-TEST_F(TestClientInteractor, OnAnswerIndex_FinalScores_CallonFinalScores)
+TEST_F(TestClientInteractor, OnFinalScores_FinalScores_CallonFinalScores)
 {
 	Scores data{ {0,10} };
 	EXPECT_CALL(fui, ReceiveFinalScores(data));
 
 	clientInteractor.OnFinalScores(FinalScores{ data });
+}
+
+TEST_F(TestClientInteractor, Disconnect_CallDisconnectFromServer)
+{
+	EXPECT_CALL(fakeServer, DisconnectFromServer());
+
+	clientInteractor.Disconnect();
 }

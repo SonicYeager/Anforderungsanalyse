@@ -16,6 +16,7 @@ public:
     virtual void ReceiveRoundData(const RoundData&) = 0;
     virtual void ReceiveVoteChange(const Index&) = 0;
     virtual void ReceiveFinalScores(const Scores&) = 0;
+    virtual void PlayerLeft(int) = 0;
 	virtual ~UI() = default;
 
 	Event<const std::string&> onHostLobby;
@@ -25,4 +26,5 @@ public:
     Event<const std::vector<std::string>&>  onSendAnswers;
     Event<const STATE&> onState;
     Event<int, int, int> onChangeVoteState;
+    Event<> onDisconnect;
 };

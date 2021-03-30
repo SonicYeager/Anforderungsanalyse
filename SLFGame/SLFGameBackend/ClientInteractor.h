@@ -15,6 +15,7 @@ public:
 	virtual void StateChangeTriggered(const STATE&) = 0;
 	virtual void AnswersReceived(const std::vector<std::string>&) = 0;
 	virtual void ChangeVoteStateTriggered(int, int, int) = 0;
+	virtual void Disconnect() = 0;
 	virtual ~ClientInteractor() = default;
 
 	//ui events
@@ -27,6 +28,7 @@ public:
 	Event<RoundData> onRoundData;
 	Event<Index> onVoteChange;
 	Event<Scores> onFinalScores;
+	Event<int> onPlayerLeft;
 
 	//server events
 	Event<> onStartServer;

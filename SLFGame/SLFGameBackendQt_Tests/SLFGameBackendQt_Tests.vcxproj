@@ -120,7 +120,7 @@
     <ClCompile Include="test_GameStatsOperations.cpp" />
     <ClCompile Include="test_GameStatsSerializer.cpp" />
     <ClCompile Include="test_LiveNetwork.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="test_MessageHandler.cpp" />
