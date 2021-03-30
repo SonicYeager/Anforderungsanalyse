@@ -56,6 +56,7 @@ Rectangle{
                     id: firstPlace
                     Layout.preferredWidth: 200
                     Layout.minimumHeight: 100
+                    Layout.alignment: Qt.AlignHCenter
                     Component.onCompleted: {
                         listModel.append({"playername":qmlAdapter.players(qmlAdapter.finalScores_placements(0)).second,
                                          "score":qmlAdapter.finalScores_scores(0),
@@ -64,21 +65,26 @@ Rectangle{
                 }
                 ScoreList{
                     id: secondPlace_and_thirdPlace
-                    Layout.preferredWidth: 200
+                    Layout.preferredWidth: 410
                     Layout.minimumHeight: 100
+                    Layout.alignment: Qt.AlignHCenter
                     Component.onCompleted: {
                         for (var i = 1; i < qmlAdapter.finalScores_placements.length && i < 3; i++)
-                        listModel.append({"playername":qmlAdapter.players(qmlAdapter.finalScores_placements(0)).second,
-                                          "score":qmlAdapter.finalScores_scores(0),
-                                          "color": (i === 1) ? "#abadb0" : "#b07230"})
+                        listModel.append({"playername":qmlAdapter.players(qmlAdapter.finalScores_placements(i)).second,
+                                          "score":qmlAdapter.finalScores_scores(i),
+                                          "color": (i === 1) ? "#abadb0" : "#b05930"})
                     }
                 }
                 ScoreList{
                     id: otherPlaces
-                    Layout.preferredWidth: 200
+                    Layout.preferredWidth: 1250
                     Layout.minimumHeight: 100
+                    Layout.alignment: Qt.AlignHCenter
                     Component.onCompleted: {
-                        listModel.append({"playername":qmlAdapter.players(qmlAdapter.finalScores_placements(0)).second})
+                        for (var i = 3; i < qmlAdapter.finalScores_placements.length; i++)
+                        listModel.append({"playername":qmlAdapter.players(qmlAdapter.finalScores_placements(i)).second,
+                                          "score":qmlAdapter.finalScores_scores(i),
+                                          "color": "#c4c3c2"})
                     }
                 }
             }

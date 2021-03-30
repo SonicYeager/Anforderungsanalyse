@@ -52,6 +52,7 @@ public:
 	MOCK_METHOD(void, ReveiveAllAnswers,	(const std::vector<std::vector<std::string>>&),	(override));
 	MOCK_METHOD(void, ReceiveRoundData,		(const RoundData&),								(override));
 	MOCK_METHOD(void, ReceiveVoteChange,	(const Index&),									(override));
+	MOCK_METHOD(void, ReceiveFinalScores,	(const Scores&),								(override));
 };
 
 class FakeRandomLetterGenerator : public RandomGenRessource
@@ -86,14 +87,15 @@ class TestClientInteractor : public Test
 {
 public:
 	TestClientInteractor() :
-		gameInteractor{&fakeServer, &serializer, &msgHandler}
+		clientInteractor{&fakeServer, &serializer, &msgHandler}
 	{
-		gameInteractor.onAllAnswers = [this](const std::vector<std::vector<std::string>>& ans) {fui.ReveiveAllAnswers(ans); };
-		gameInteractor.onChatMessage = [this](const ChatMessage& ans) {fui.ChatMessageReceived(ans); };
-		gameInteractor.onGameState = [this](const STATE& ans) {fui.UpdateGameState(ans); };
-		gameInteractor.onReceivedID = [this](const int& ans) {fui.ReceiveID(ans); };
-		gameInteractor.onUpdateLobbySettings = [this](const LobbySettings& ans) {fui.UpdateLobby(ans); };
-		gameInteractor.onVoteChange = [this](const Index& ans) {fui.ReceiveVoteChange(ans); };
+		clientInteractor.onAllAnswers = [this](const std::vector<std::vector<std::string>>& ans) {fui.ReveiveAllAnswers(ans); };
+		clientInteractor.onChatMessage = [this](const ChatMessage& ans) {fui.ChatMessageReceived(ans); };
+		clientInteractor.onGameState = [this](const STATE& ans) {fui.UpdateGameState(ans); };
+		clientInteractor.onReceivedID = [this](const int& ans) {fui.ReceiveID(ans); };
+		clientInteractor.onUpdateLobbySettings = [this](const LobbySettings& ans) {fui.UpdateLobby(ans); };
+		clientInteractor.onVoteChange = [this](const Index& ans) {fui.ReceiveVoteChange(ans); };
+		clientInteractor.onFinalScores = [this](const Scores& scores) {fui.ReceiveFinalScores(scores); };
 	}
 protected:
 	virtual void SetUp()
@@ -108,7 +110,7 @@ protected:
 	::testing::NiceMock<FakeClient> fakeServer{};
 	GameStatsSerializer serializer{};
 	MessageHandler msgHandler{};
-	ClientInteractorImpl gameInteractor;
+	ClientInteractorImpl clientInteractor;
 	::NiceMock<FakeUI> fui;
 };
 
@@ -116,10 +118,10 @@ TEST_F(TestClientInteractor, HostLobby_StartServer_CallStartServer)
 {
 	FakeUI fui{};
 	bool started = false;
-	gameInteractor.onSetLobbyCode = [&fui](const std::string& id) {fui.SetLobbyCode(id); };
-	gameInteractor.onStartServer = [&started]() { started = true; };
+	clientInteractor.onSetLobbyCode = [&fui](const std::string& id) {fui.SetLobbyCode(id); };
+	clientInteractor.onStartServer = [&started]() { started = true; };
 
-	gameInteractor.HostLobby("T-3000");
+	clientInteractor.HostLobby("T-3000");
 
 	EXPECT_TRUE(started);
 }
@@ -128,17 +130,17 @@ TEST_F(TestClientInteractor, JoinLobby_ConnectToServer_CallConnectToServer)
 {
 	EXPECT_CALL(fakeServer, ConnectToServer("CODE"));
 	FakeUI fui{};
-	gameInteractor.onSetLobbyCode = [&fui](const std::string& id) {fui.SetLobbyCode(id); };
-	gameInteractor.JoinLobby("CODE", "T-3000");
+	clientInteractor.onSetLobbyCode = [&fui](const std::string& id) {fui.SetLobbyCode(id); };
+	clientInteractor.JoinLobby("CODE", "T-3000");
 }
 
 //TEST_F(TestClientInteractor, JoinLobby_WriteToHost_CallConnectToServer)
 //{
 //	EXPECT_CALL(fakeServer, WriteToHost(ByteStream{ '\0', '\0', '\0', '\x1', '\0', '\0', '\0', '\f', '\0', 'T', '\0', '-','\0', '3','\0', '0','\0', '0','\0', '0'}));
 //	FakeUI fui{};
-//	gameInteractor.onSetLobbyCode = [&fui](const std::string& id) {fui.SetLobbyCode(id); };
+//	clientInteractor.onSetLobbyCode = [&fui](const std::string& id) {fui.SetLobbyCode(id); };
 //
-//	gameInteractor.JoinLobby("CODE", "T-3000");
+//	clientInteractor.JoinLobby("CODE", "T-3000");
 //}
 
 TEST_F(TestClientInteractor, OnMsgID_ID_CallReceiveID)
@@ -170,7 +172,7 @@ TEST_F(TestClientInteractor, OnMsgHandleGameSettings_HandleGameSettings_CallUpda
 //TEST_F(TestClientInteractor, OnMsgGameState_GameState_CallUpdateGameState)
 //{
 //	EXPECT_CALL(fui, UpdateGameState(STATE::INTERVENTION));	
-//	gameInteractor.m_customCategoryString = "Junge,Why" ;
+//	clientInteractor.m_customCategoryString = "Junge,Why" ;
 //
 //	GameState re{};
 //	re.state = STATE::INTERVENTION;
@@ -195,7 +197,7 @@ TEST_F(TestClientInteractor, LobbyChanged_ChangedCategories_CallWriteToHost)
 	auto ser = serializer.Serialize(gs);
 	EXPECT_CALL(fakeServer, WriteToHost(ser));
 
-	gameInteractor.LobbyChanged("NewCat", "NewTimeout", "NewRound");
+	clientInteractor.LobbyChanged("NewCat", "NewTimeout", "NewRound");
 }
 
 TEST_F(TestClientInteractor, ChatMessageReceived_ChatMessage_CallWriteToHost)
@@ -204,7 +206,7 @@ TEST_F(TestClientInteractor, ChatMessageReceived_ChatMessage_CallWriteToHost)
 	auto ser = serializer.Serialize(cm);
 	EXPECT_CALL(fakeServer, WriteToHost(ser));
 
-	gameInteractor.ChatMessageReceived("Mel", "1034 Cars long");
+	clientInteractor.ChatMessageReceived("Mel", "1034 Cars long");
 }
 
 TEST_F(TestClientInteractor, StateChangeTriggered_ChatMessage_CallWriteToHost)
@@ -213,7 +215,7 @@ TEST_F(TestClientInteractor, StateChangeTriggered_ChatMessage_CallWriteToHost)
 	auto ser = serializer.Serialize(cm);
 	EXPECT_CALL(fakeServer, WriteToHost(ser));
 
-	gameInteractor.StateChangeTriggered(STATE::LOBBY);
+	clientInteractor.StateChangeTriggered(STATE::LOBBY);
 }
 
 TEST_F(TestClientInteractor, AnswersReceived_Answers_CallWriteToHost)
@@ -224,28 +226,28 @@ TEST_F(TestClientInteractor, AnswersReceived_Answers_CallWriteToHost)
 	auto ser = serializer.Serialize(cm);
 	EXPECT_CALL(fakeServer, WriteToHost(ser));
 
-	gameInteractor.AnswersReceived({ "Yeah", "Boi" });
+	clientInteractor.AnswersReceived({ "Yeah", "Boi" });
 }
 
 TEST_F(TestClientInteractor, OnChatMessage_ChatMessage_CallOnChatMessage)
 {
-	gameInteractor.onChatMessage = [this](const ChatMessage& msg) {fui.ChatMessageReceived(msg); };
+	clientInteractor.onChatMessage = [this](const ChatMessage& msg) {fui.ChatMessageReceived(msg); };
 	ChatMessage msg{"Sender", "Text"};
 	EXPECT_CALL(fui, ChatMessageReceived(_));
 
-	gameInteractor.OnChatMessage({ "Sender", "Text" });
+	clientInteractor.OnChatMessage({ "Sender", "Text" });
 }
 
 TEST_F(TestClientInteractor, OnRoundSetup_RoundSetup_CallUpdateGameStateAndOnRoundSetup)
 {
-	gameInteractor.onRoundData = [this](const RoundData& msg) {fui.ReceiveRoundData(msg); };
-	gameInteractor.onGameState = [this](const STATE& msg) {fui.UpdateGameState(msg); };
+	clientInteractor.onRoundData = [this](const RoundData& msg) {fui.ReceiveRoundData(msg); };
+	clientInteractor.onGameState = [this](const STATE& msg) {fui.UpdateGameState(msg); };
 
 	RoundData data{ {"some", "cats"}, "C", "bis Stop", 0, 5, 20 };
 	EXPECT_CALL(fui, ReceiveRoundData(data));
 	EXPECT_CALL(fui, UpdateGameState(STATE::INGAME));
 
-	gameInteractor.OnRoundSetup({ { {"some", "cats"}, "C", "bis Stop", 0, 5, 20 } });
+	clientInteractor.OnRoundSetup({ { {"some", "cats"}, "C", "bis Stop", 0, 5, 20 } });
 }
 
 TEST_F(TestClientInteractor, ChangeVoteStateTriggered_VoteChanged_CallWriteToHost)
@@ -254,7 +256,7 @@ TEST_F(TestClientInteractor, ChangeVoteStateTriggered_VoteChanged_CallWriteToHos
 	auto ser = serializer.Serialize(cm);
 	EXPECT_CALL(fakeServer, WriteToHost(ser));
 
-	gameInteractor.ChangeVoteStateTriggered(1,1,1);
+	clientInteractor.ChangeVoteStateTriggered(1,1,1);
 }
 
 TEST_F(TestClientInteractor, OnAnswerIndex_AnswerIndex_CallonVoteChange)
@@ -262,5 +264,13 @@ TEST_F(TestClientInteractor, OnAnswerIndex_AnswerIndex_CallonVoteChange)
 	Index data{ 1,1,1 };
 	EXPECT_CALL(fui, ReceiveVoteChange(data));
 
-	gameInteractor.OnAnswerIndex(AnswerIndex{ data });
+	clientInteractor.OnAnswerIndex(AnswerIndex{ data });
+}
+
+TEST_F(TestClientInteractor, OnAnswerIndex_FinalScores_CallonFinalScores)
+{
+	Scores data{ {0,10} };
+	EXPECT_CALL(fui, ReceiveFinalScores(data));
+
+	clientInteractor.OnFinalScores(FinalScores{ data });
 }
