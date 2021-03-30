@@ -26,6 +26,7 @@ public:
 	Event<std::vector<std::vector<std::string>>> onAllAnswers;
 	Event<RoundData> onRoundData;
 	Event<Index> onVoteChange;
+	Event<Scores> onFinalScores;
 
 	//server events
 	Event<> onStartServer;

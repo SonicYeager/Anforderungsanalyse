@@ -38,6 +38,8 @@ class QmlAdapter : public QObject, public UI
     Q_PROPERTY(int playerId                READ getPlayerId              WRITE setPlayerId              NOTIFY playerIdChanged)
     //Q_PROPERTY(bool customChecked          READ getCustomChecked         WRITE setCustomChecked         NOTIFY customCheckedChanged)
     QPROPERTY_AUTO(bool, customChecked);
+    QPROPERTY_AUTO(std::vector<int>, finalScores_placements);
+    QPROPERTY_AUTO(std::vector<int>, finalScores_scores);
 
 
 public:
@@ -51,6 +53,7 @@ public:
     void ReveiveAllAnswers      (const StrVector2D &) override;
     void ReceiveRoundData       (const RoundData&) override;
     void ReceiveVoteChange      (const Index&) override;
+    void ReceiveFinalScores     (const Scores&) override;
 
     QString getLetter();
     QString getLobbyCode();
@@ -124,7 +127,9 @@ signals:
     void answersChanged();
     void categoryCountChanged();
     //void customCheckedChanged();
-    QPROPERTY_SIGNAL(bool, customChecked)
+    QPROPERTY_SIGNAL(bool, customChecked);
+    QPROPERTY_SIGNAL(std::vector<int>, finalScores_placements);
+    QPROPERTY_SIGNAL(std::vector<int>, finalScores_scores);
     void currentRoundChanged();
     void maxRoundsChanged();
     void pointsChanged();
@@ -166,6 +171,8 @@ private:
     int _playerCount            = 0;
     int _activeOverviewItem     = 0;
     int _playerId               = 0;
+    std::vector<int> _finalScores_placements = {};
+    std::vector<int> _finalScores_scores     = {};
     BoolVector3D _decisions     = {};
     bool _customChecked         = false;
 };

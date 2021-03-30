@@ -244,3 +244,23 @@ TEST(SerializerTest, SerializationAndDeserialization_AnswerIndex)
 
 	EXPECT_EQ(msg.index, result.index);
 }
+
+TEST(SerializerTest, SerializationAndDeserialization_FinalScores)
+{
+	GameStatsSerializer serializer;
+	MessageHandler msgHandler;
+
+	Message resultingMsg;
+	FinalScores result;
+	FinalScores msg;
+
+	msg.scores = { {0, 120}, {1, 60} };
+
+	ByteStream data = serializer.Serialize(msg);
+	resultingMsg = serializer.Deserialize(data);
+
+	msgHandler.onFinalScores = [&result](const FinalScores& anp) {result = anp; };
+	msgHandler.handleMessage(resultingMsg);
+
+	EXPECT_EQ(msg.scores, result.scores);
+}

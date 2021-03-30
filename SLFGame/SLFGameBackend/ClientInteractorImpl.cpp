@@ -19,6 +19,7 @@ ClientInteractorImpl::ClientInteractorImpl(
 	m_pMsgHandler->onAllAnswers = [this](const AllAnswers& aans) { OnAllAnswers(aans); };
 	m_pMsgHandler->onRoundSetup = [this](const RoundSetup& msg) { OnRoundSetup(msg); };
 	m_pMsgHandler->onAnswerIndex = [this](const AnswerIndex& idx) { OnAnswerIndex(idx); };
+	m_pMsgHandler->onFinalScores = [this](const FinalScores& msg) { OnFinalScores(msg); };
 }
 
 void ClientInteractorImpl::HostLobby(const std::string& playerName)
@@ -127,4 +128,10 @@ void ClientInteractorImpl::OnRoundSetup(const RoundSetup& msg)
 void ClientInteractorImpl::OnAnswerIndex(const AnswerIndex& msg)
 {
 	onVoteChange(Index{msg.index});
+}
+
+void ClientInteractorImpl::OnFinalScores(const FinalScores& msg)
+{
+	onFinalScores(msg.scores);
+	onGameState(STATE::FINALSCORES);
 }

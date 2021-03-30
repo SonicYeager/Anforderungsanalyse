@@ -217,3 +217,18 @@ void GameStatsSerializer::Deserialize_impl(AnswerIndex& msg, QDataStream& data)
 	data >> msg.index.answerIDX;
 	data >> msg.index.voterIDX;
 }
+
+void GameStatsSerializer::Serialize_impl(const FinalScores& msg, QDataStream& data)
+{
+	QVector<QPair<int, int>> scores;
+	std::for_each(std::begin(msg.scores), std::end(msg.scores), [&scores](const std::pair<int, int>& pair) {scores.push_back(pair); });
+	data << scores;
+}
+
+void GameStatsSerializer::Deserialize_impl(FinalScores& msg, QDataStream& data)
+{
+	QVector<QPair<int, int>> scores;
+	data >> scores;
+	for (const QPair<int, int>& score : scores)
+		msg.scores.push_back(score);
+}

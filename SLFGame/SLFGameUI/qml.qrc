@@ -26,5 +26,6 @@
         <file>Resources/cross.png</file>
         <file>Resources/tick.png</file>
         <file>ListViews/VoteList.qml</file>
+        <file>ListViews/ScoreList.qml</file>
     </qresource>
 </RCC>

@@ -40,6 +40,11 @@ void MessageHandler::on(const AnswerIndex& msg)
 	onAnswerIndex(msg);
 }
 
+void MessageHandler::on(const FinalScores& msg)
+{
+	onFinalScores(msg);
+}
+
 void MessageHandler::on(const Playername& msg)
 {
 	onPlayername(msg);

@@ -17,6 +17,7 @@ public:
 	int AllAnswersCalled(const AllAnswers& hgs) { return 8; }
 	int RoundSetupCalled(const RoundSetup& hgs) { return 9; }
 	int AnswerIndexCalled(const AnswerIndex& hgs) { return 10; }
+	int FinalScoresCalled(const FinalScores& fs) { return 11; }
 };
 
 //TEST(MessageHandlerTest, RightEventCalled_onHandleGameStats)
@@ -45,18 +46,6 @@ TEST(MessageHandlerTest, handleMessage_onPlayername)
 	EXPECT_EQ(2, result);
 }
 
-//TEST(MessageHandlerTest, RightEventCalled_onPlayername)
-//{
-//	MessageHandler msgHandler;
-//	FakeClass fc{};
-//	Message hgs = Playername();
-//	int result = 0;
-//
-//	msgHandler.onPlayername = [&fc, &result](const Playername& msg) {result = fc.PlayernameCalled(msg); };
-//	msgHandler.handleMessage(hgs);
-//
-//	EXPECT_EQ(2, result);
-//}
 
 TEST(MessageHandlerTest, handleMessage_onPlayerID)
 {
@@ -160,4 +149,17 @@ TEST(MessageHandlerTest, handleMessage_onAnswerIndex)
 	msgHandler.handleMessage(hgs);
 
 	EXPECT_EQ(10, result);
+}
+
+TEST(MessageHandlerTest, RightEventCalled_onFinalScores)
+{
+	MessageHandler msgHandler;
+	FakeClass fc{};
+	Message hgs = FinalScores();
+	int result = 0;
+
+	msgHandler.onFinalScores = [&fc, &result](const FinalScores& msg) {result = fc.FinalScoresCalled(msg); };
+	msgHandler.handleMessage(hgs);
+
+	EXPECT_EQ(11, result);
 }

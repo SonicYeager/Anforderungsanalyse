@@ -13,4 +13,5 @@ public:
 	void on(const AllAnswers&) override;
 	void on(const RoundSetup&) override;
 	void on(const AnswerIndex&) override;
+	void on(const FinalScores&) override;
 };

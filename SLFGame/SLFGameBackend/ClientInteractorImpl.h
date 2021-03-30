@@ -27,6 +27,7 @@ public:
 	void OnAllAnswers(const AllAnswers&);
 	void OnRoundSetup(const RoundSetup&);
 	void OnAnswerIndex(const AnswerIndex&);
+	void OnFinalScores(const FinalScores&);
 
 	std::string m_customCategoryString;
 

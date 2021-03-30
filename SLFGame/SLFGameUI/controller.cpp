@@ -62,6 +62,8 @@ Controller::Controller(UI* u, GameInteractor* gi,
 
     m_pClientInter->onVoteChange            = [this](const Index idx)
                                                 {m_pUi->ReceiveVoteChange(idx);};
+    m_pClientInter->onFinalScores           = [this](const Scores scores)
+                                                {m_pUi->ReceiveFinalScores(scores);};
 }
 
 int Controller::Run(int argc, char *argv[], QObject& obj)

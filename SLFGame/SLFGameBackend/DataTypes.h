@@ -27,6 +27,7 @@ enum class STATE : int
 using Letter = char;
 using Letters = std::vector<Letter>;
 using Categories = std::vector<std::string>;
+using Scores = std::vector<std::pair<int, int>>;
 
 struct PlayerStats
 {

@@ -36,4 +36,7 @@ public:
 
 	void Serialize_impl(const AnswerIndex& msg, QDataStream& data);
 	void Deserialize_impl(AnswerIndex& msg, QDataStream& data);
+
+	void Serialize_impl(const FinalScores& msg, QDataStream& data);
+	void Deserialize_impl(FinalScores& msg, QDataStream& data);
 };

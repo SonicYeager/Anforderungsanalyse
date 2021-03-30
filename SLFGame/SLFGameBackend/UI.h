@@ -15,6 +15,7 @@ public:
     virtual void ReveiveAllAnswers(const std::vector<std::vector<std::string>> &) = 0;
     virtual void ReceiveRoundData(const RoundData&) = 0;
     virtual void ReceiveVoteChange(const Index&) = 0;
+    virtual void ReceiveFinalScores(const Scores&) = 0;
 	virtual ~UI() = default;
 
 	Event<const std::string&> onHostLobby;

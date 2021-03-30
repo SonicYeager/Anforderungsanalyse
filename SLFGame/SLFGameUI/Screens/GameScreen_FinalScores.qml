@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
 import "../Modules"
 import "../Components"
+import "../ListViews"
 
 Rectangle{
     id: finalscores_window
@@ -44,31 +45,41 @@ Rectangle{
         Rectangle{
             id: content
             Layout.fillHeight: true
-            Layout.preferredWidth: parent.width * 0.5 - content.Layout.margins * 2
+            Layout.preferredWidth: parent.width - content.Layout.margins * 2
             Layout.alignment: Qt.AlignHCenter
             color: Qt.rgba(0,0,0,0)
             Layout.margins: 10
-            RowLayout{
+            ColumnLayout{
                 spacing: 0
                 anchors.fill: parent
-                Rectangle
-                {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: parent.height
-                    color: Qt.rgba(0,0,0,0)
+                ScoreList{
+                    id: firstPlace
+                    Layout.preferredWidth: 200
+                    Layout.minimumHeight: 100
+                    Component.onCompleted: {
+                        listModel.append({"playername":qmlAdapter.players(qmlAdapter.finalScores_placements(0)).second,
+                                         "score":qmlAdapter.finalScores_scores(0),
+                                         "color":"#b08613"})
+                    }
                 }
-                InfoBox{
-                    Layout.preferredWidth: parent.width
-                    Layout.preferredHeight: parent.height
-                    descriptionText: "Points"
-                    outputText: qmlAdapter.points
-                    color: Qt.rgba(0,0,0,0)
+                ScoreList{
+                    id: secondPlace_and_thirdPlace
+                    Layout.preferredWidth: 200
+                    Layout.minimumHeight: 100
+                    Component.onCompleted: {
+                        for (var i = 1; i < qmlAdapter.finalScores_placements.length && i < 3; i++)
+                        listModel.append({"playername":qmlAdapter.players(qmlAdapter.finalScores_placements(0)).second,
+                                          "score":qmlAdapter.finalScores_scores(0),
+                                          "color": (i === 1) ? "#abadb0" : "#b07230"})
+                    }
                 }
-                Rectangle
-                {
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: parent.height
-                    color: Qt.rgba(0,0,0,0)
+                ScoreList{
+                    id: otherPlaces
+                    Layout.preferredWidth: 200
+                    Layout.minimumHeight: 100
+                    Component.onCompleted: {
+                        listModel.append({"playername":qmlAdapter.players(qmlAdapter.finalScores_placements(0)).second})
+                    }
                 }
             }
         }

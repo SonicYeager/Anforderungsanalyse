@@ -63,6 +63,11 @@ void QmlAdapter::ReceiveVoteChange(const Index & index)
     setDecision(index.categoryIDX, index.answerIDX, index.voterIDX);
 }
 
+void QmlAdapter::ReceiveFinalScores(const Scores & scores)
+{
+    set_finalScores(scores);
+}
+
 // ------------------------------------------ getter ------------------------------------------
 #define getterFunctions {
 

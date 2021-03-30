@@ -15,6 +15,7 @@ public:
 	virtual void on(const AllAnswers&) = 0;
 	virtual void on(const RoundSetup&) = 0;
 	virtual void on(const AnswerIndex&) = 0;
+	virtual void on(const FinalScores&) = 0;
 
 	Event<Playername> onPlayername;
 	Event<PlayerID> onPlayerID;
@@ -25,4 +26,5 @@ public:
 	Event<AllAnswers> onAllAnswers;
 	Event<RoundSetup> onRoundSetup;
 	Event<AnswerIndex> onAnswerIndex;
+	Event<FinalScores> onFinalScores;
 };
