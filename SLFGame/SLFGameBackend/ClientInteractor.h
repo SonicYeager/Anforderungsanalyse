@@ -16,6 +16,7 @@ public:
 	virtual void AnswersReceived(const std::vector<std::string>&) = 0;
 	virtual void ChangeVoteStateTriggered(int, int, int) = 0;
 	virtual void Disconnect() = 0;
+	virtual void DisconnectedFromServer() = 0;
 	virtual ~ClientInteractor() = default;
 
 	//ui events
@@ -29,6 +30,7 @@ public:
 	Event<Index> onVoteChange;
 	Event<Scores> onFinalScores;
 	Event<int> onPlayerLeft;
+	Event<> onDisconnectedFromServer;
 
 	//server events
 	Event<> onStartServer;

@@ -17,6 +17,7 @@ public:
 	void AnswersReceived(const std::vector<std::string>&) override;
 	void ChangeVoteStateTriggered(int, int, int) override;
 	void Disconnect() override;
+	void DisconnectedFromServer() override;
 	// delete > void EndRound(const std::vector<DECISION>&) override;
 	//			GameStats m_GameStats;
 

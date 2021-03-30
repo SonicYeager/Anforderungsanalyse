@@ -177,4 +177,11 @@ Rectangle{
             }
         }
     }
+    Connections {
+        target: qmlAdapter
+        function onDisconnectedFromServer()
+        {
+            ErrorWindow.show()
+        }
+    }
 }

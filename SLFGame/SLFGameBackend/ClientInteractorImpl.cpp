@@ -11,6 +11,7 @@ ClientInteractorImpl::ClientInteractorImpl(
 	m_pMsgHandler(n)
 {
 	m_pClient->onData = [this](const ByteStream& stream) {OnDataReceived(stream); };
+	m_pClient->onDisconnect = [this]() { DisconnectedFromServer(); };
 	
 	m_pMsgHandler->onPlayerID = [this](const PlayerID& id) { OnMsgID(id); };
 	m_pMsgHandler->onHandleGameSettings = [this](const HandleGameSettings& gs) { OnMsgHandleGameSettings(gs); };
@@ -90,6 +91,11 @@ void ClientInteractorImpl::ChangeVoteStateTriggered(int categoryIDX, int answerI
 void ClientInteractorImpl::Disconnect()
 {
 	m_pClient->DisconnectFromServer();
+}
+
+void ClientInteractorImpl::DisconnectedFromServer()
+{
+	onDisconnectedFromServer();
 }
 
 void ClientInteractorImpl::OnMsgID(const PlayerID& id)

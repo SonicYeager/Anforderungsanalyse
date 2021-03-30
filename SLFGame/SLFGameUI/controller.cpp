@@ -40,6 +40,7 @@ Controller::Controller(UI* u, GameInteractor* gi,
 
     m_pUi->onDisconnect                 = [this]() {m_pClientInter->Disconnect();};
 
+
     //CLIENT EVENTS
 
     m_pClientInter->onReceivedID            = [this](int id)
@@ -70,6 +71,8 @@ Controller::Controller(UI* u, GameInteractor* gi,
                                                 {m_pUi->ReceiveFinalScores(scores);};
     m_pClientInter->onPlayerLeft            = [this](int id)
                                                 {m_pUi->PlayerLeft(id);};
+
+    m_pClientInter->onDisconnectedFromServer = [this]() {m_pUi->Disconnected();};
 }
 
 int Controller::Run(int argc, char *argv[], QObject& obj)

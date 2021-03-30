@@ -54,6 +54,7 @@ public:
     void ReceiveRoundData       (const RoundData&) override;
     void ReceiveVoteChange      (const Index&) override;
     void ReceiveFinalScores     (const Scores&) override;
+    void Disconnected           () override;
     void PlayerLeft             (int) override;
 
     QString getLetter();
@@ -148,6 +149,7 @@ signals:
     void roundTimeChanged();
     void chatLogChanged();
     void answersRequest();
+    void disconnectedFromServer();
 
 private:
 

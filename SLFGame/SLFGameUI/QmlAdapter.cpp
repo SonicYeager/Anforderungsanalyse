@@ -69,6 +69,12 @@ void QmlAdapter::ReceiveFinalScores(const Scores & scores)
     setView(GetViewFromState(STATE::FINALSCORES));
 }
 
+void QmlAdapter::Disconnected()
+{
+    setView(GetViewFromState(STATE::MAINMENU));
+    emit disconnectedFromServer();
+}
+
 void QmlAdapter::PlayerLeft(int id)
 {
     QString msg = _players[id].c_str();

@@ -27,5 +27,6 @@
         <file>Resources/tick.png</file>
         <file>ListViews/VoteList.qml</file>
         <file>ListViews/ScoreList.qml</file>
+        <file>Screens/ErrorWindow.qml</file>
     </qresource>
 </RCC>
