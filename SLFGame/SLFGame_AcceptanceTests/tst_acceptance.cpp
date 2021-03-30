@@ -44,6 +44,7 @@ private slots:
     void chatMsg_Message_ChatLogHoldsOneMessage();
     void onePlayerAnswer_playerAnswer_playerAnswersSavedOnGameStats();
     void stateChanged_stateLobby_stateChangedInGameStats();
+    void finalScores_finalScoresSortedByScores_todo();
     void secondInstance_comm_todo();
 
 private:
@@ -69,6 +70,7 @@ private:
     std::vector<std::vector<std::string>> resultanswers{};
     RoundData resultRD{};
     Index resultIndex{};
+    Scores resultScores{};
 };
 
 class Second : public QObject
@@ -99,6 +101,7 @@ public:
     std::vector<std::vector<std::string>> resultanswers{};
     RoundData resultRD{};
     Index resultIndex{};
+    Scores resultScores{};
 };
 
 
@@ -129,6 +132,9 @@ Acceptance::Acceptance()
     clientInteractor.onVoteChange            = [this](const Index idx)
                                                 {resultIndex = idx;};
 
+    clientInteractor.onFinalScores            = [this](const Scores& score)
+                                                    {this->resultScores = score;};
+
     clientInteractor.onStartServer = [this] {	serverInteractor.StartServer(); };
 }
 
@@ -144,7 +150,7 @@ Acceptance::~Acceptance()
 void Acceptance::hostLobby_Jerk_ConnectionEstablishedGameStatsSet()
 {
     clientInteractor.HostLobby("Jerk");
-    QTest::qWait(50);
+    QTest::qWait(100);
 
     QCOMPARE(resutltID, 0);
 
@@ -174,7 +180,7 @@ void Acceptance::lobbySettingsChanged_ChangedTimeLeft_SettingsWithStandardCatAnd
 void Acceptance::chatMsg_Message_ChatLogHoldsOneMessage()
 {
     clientInteractor.JoinLobby("192.168.0.80", "Mark");
-    QTest::qWait(50);
+    QTest::qWait(100);
     clientInteractor.ChatMessageReceived("Sender", "Message");
     QTest::qWait(100);
 
@@ -188,7 +194,7 @@ void Acceptance::chatMsg_Message_ChatLogHoldsOneMessage()
 void Acceptance::onePlayerAnswer_playerAnswer_playerAnswersSavedOnGameStats()
 {
     clientInteractor.JoinLobby("192.168.0.80", "Murk");
-    QTest::qWait(50);
+    QTest::qWait(100);
     clientInteractor.AnswersReceived({"Le","Mans","66", "Le","Mans","66"});
     QTest::qWait(100);
 
@@ -201,7 +207,7 @@ void Acceptance::onePlayerAnswer_playerAnswer_playerAnswersSavedOnGameStats()
 void Acceptance::stateChanged_stateLobby_stateChangedInGameStats()
 {
     clientInteractor.JoinLobby("192.168.0.80", "Klark1");
-    QTest::qWait(50);
+    QTest::qWait(100);
     clientInteractor.StateChangeTriggered(STATE::LOBBY);
     QTest::qWait(100);
 
@@ -212,6 +218,25 @@ void Acceptance::stateChanged_stateLobby_stateChangedInGameStats()
     Cleanup();
 }
 
+//void Acceptance::finalScores_finalScoresSortedByScores_todo()
+//{
+//    clientInteractor.JoinLobby("192.168.0.80", "ScoreMaster");
+//    QTest::qWait(100);
+//    clientInteractor.AnswersReceived({"Meins", "Hammer"});
+//    QTest::qWait(100);
+//    gameInteractor.ChangeGameState(STATE::FINALSCORES);
+//    QTest::qWait(100);
+//
+//    auto actual = resultState;
+//    auto expected = STATE::FINALSCORES;
+//    QVERIFY(actual == expected);
+//    auto actualS = resultScores;
+//    auto expectedS = Scores{{0, 100}};
+//    QCOMPARE(actualS, expectedS);
+//
+//    Cleanup();
+//}
+
 void Acceptance::secondInstance_comm_todo()
 {
     Second sec{};
@@ -219,8 +244,8 @@ void Acceptance::secondInstance_comm_todo()
     sec.clientInteractor.JoinLobby("192.168.0.80", "Klark2");
     QTest::qWait(100);
 
-    QCOMPARE(sec.resutltID, 5);
-    QCOMPARE(sec.resutltLS.playerNames.size(), 1);
+    QCOMPARE(sec.resutltID, 6);
+    QCOMPARE(sec.resutltLS.playerNames.size(), 2);
 
 
     Cleanup();
@@ -237,6 +262,7 @@ void Acceptance::Cleanup()
     resultanswers = {};
     resultRD = {};
     resultIndex = {};
+    game.m_GameStats = GameStats();
 }
 
 
