@@ -26,7 +26,8 @@ GameInteractorImpl::GameInteractorImpl(
 void GameInteractorImpl::RemovePlayer(const int& id)
 {
 	m_pGame->RemovePlayer(id);
-	SendUpdatedLobbySettings();
+	//SendUpdatedLobbySettings();
+	m_pServer->Broadcast(PlayerDisc{id});
 }
 
 void GameInteractorImpl::AddAnswers(int id, const std::vector<std::string>& answers)
