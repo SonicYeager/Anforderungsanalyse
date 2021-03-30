@@ -58,8 +58,8 @@ Rectangle{
                     Layout.minimumHeight: 100
                     Layout.alignment: Qt.AlignHCenter
                     Component.onCompleted: {
-                        listModel.append({"playername":qmlAdapter.players(qmlAdapter.finalScores_placements(0)).second,
-                                         "score":qmlAdapter.finalScores_scores(0),
+                        listModel.append({"playername":qmlAdapter.players[qmlAdapter.finalScores_placements[0]].name,
+                                         "score":qmlAdapter.finalScores_scores[0],
                                          "color":"#b08613"})
                     }
                 }
@@ -70,8 +70,8 @@ Rectangle{
                     Layout.alignment: Qt.AlignHCenter
                     Component.onCompleted: {
                         for (var i = 1; i < qmlAdapter.finalScores_placements.length && i < 3; i++)
-                        listModel.append({"playername":qmlAdapter.players(qmlAdapter.finalScores_placements(i)).second,
-                                          "score":qmlAdapter.finalScores_scores(i),
+                        listModel.append({"playername":qmlAdapter.players[qmlAdapter.finalScores_placements[i]].name,
+                                          "score":qmlAdapter.finalScores_scores[i],
                                           "color": (i === 1) ? "#abadb0" : "#b05930"})
                     }
                 }
@@ -82,8 +82,8 @@ Rectangle{
                     Layout.alignment: Qt.AlignHCenter
                     Component.onCompleted: {
                         for (var i = 3; i < qmlAdapter.finalScores_placements.length; i++)
-                        listModel.append({"playername":qmlAdapter.players(qmlAdapter.finalScores_placements(i)).second,
-                                          "score":qmlAdapter.finalScores_scores(i),
+                        listModel.append({"playername":qmlAdapter.players[qmlAdapter.finalScores_placements[i]].name,
+                                          "score":qmlAdapter.finalScores_scores[i],
                                           "color": "#c4c3c2"})
                     }
                 }

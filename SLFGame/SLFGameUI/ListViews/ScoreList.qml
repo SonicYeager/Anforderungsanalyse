@@ -17,15 +17,15 @@ ListView {
             spacing: 0
             anchors.fill:parent
             TextBox {
-                Layout.width: 200
-                Layout.height: 50
+                Layout.preferredWidth: 200
+                Layout.preferredHeight: 50
                 color: model.color
                 text: model.playername
                 textColor: "black"
             }
             TextBox {
-                Layout.width: 200
-                Layout.height: 50
+                Layout.preferredWidth: 200
+                Layout.preferredHeight: 50
                 text: model.score
                 color: "white"
                 textColor: "black"

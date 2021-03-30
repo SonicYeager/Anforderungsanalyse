@@ -133,5 +133,4 @@ void ClientInteractorImpl::OnAnswerIndex(const AnswerIndex& msg)
 void ClientInteractorImpl::OnFinalScores(const FinalScores& msg)
 {
 	onFinalScores(msg.scores);
-	onGameState(STATE::FINALSCORES);
 }

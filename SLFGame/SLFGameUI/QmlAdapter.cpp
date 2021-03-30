@@ -66,6 +66,7 @@ void QmlAdapter::ReceiveVoteChange(const Index & index)
 void QmlAdapter::ReceiveFinalScores(const Scores & scores)
 {
     setScores(scores);
+    setView(GetViewFromState(STATE::FINALSCORES));
 }
 
 // ------------------------------------------ getter ------------------------------------------
