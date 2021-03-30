@@ -119,6 +119,7 @@ public slots:
     void triggerStateRelatedSignal(STATE);
     void changeVoteState(int);
     void clearChat();
+    void setScores(Scores scores);
 
 signals:
     void letterChanged();

@@ -65,7 +65,7 @@ void QmlAdapter::ReceiveVoteChange(const Index & index)
 
 void QmlAdapter::ReceiveFinalScores(const Scores & scores)
 {
-    set_finalScores(scores);
+    setScores(scores);
 }
 
 // ------------------------------------------ getter ------------------------------------------
@@ -441,6 +441,15 @@ void QmlAdapter::changeVoteState(int answerIDX)
 void QmlAdapter::clearChat()
 {
     _chatLog.clear();
+}
+
+void QmlAdapter::setScores(Scores scores)
+{
+    for (auto& score : scores)
+    {
+        _finalScores_placements.push_back(score.first);
+        _finalScores_scores.push_back(score.second);
+    }
 }
 
 void QmlAdapter::sendAnswers()
