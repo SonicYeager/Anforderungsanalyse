@@ -100,3 +100,22 @@ TEST(TestGame, HandleGameStats_FINALSCORES_CallOnFinalScores)
 
 	EXPECT_TRUE(actual);
 }
+
+TEST(TestGame, HandleGameStats_ROUNDOVER_AnswersClearedPointsCalced)
+{
+	Game game{};
+	auto onSetupRound = [](const std::string&, const Letters&) {};
+	auto onStandart = [](GameState) {};
+	auto onFinalRound = [](const std::map<int, PlayerStats>&) { };
+	game.m_GameStats.categories = {"Verb", "Substantiv"};
+	game.m_GameStats.players.emplace(1, PlayerStats{ "Dredd", 0, {"Some", "Traitors"} });
+	game.m_GameStats.players.emplace(2, PlayerStats{ "Cassandra", 0, {"Some", "Fools"} });
+	game.m_GameStats.votes = { {{true}, {true}}, { {true}, {true}} };
+
+	game.HandleGameState(STATE::ROUNDOVER, onSetupRound, onFinalRound, onStandart);
+
+	EXPECT_EQ(game.m_GameStats.players[1].points, 15);
+	EXPECT_EQ(game.m_GameStats.players[2].points, 15);
+	EXPECT_EQ(game.m_GameStats.players[2].answers, Categories{});
+	EXPECT_EQ(game.m_GameStats.players[2].answers, Categories{});
+}

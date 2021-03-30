@@ -91,7 +91,12 @@ void GameInteractorImpl::HandleGameState(const STATE& state)
 	};
 
 	auto onbroadcast = [this](GameState state) {m_pServer->Broadcast(state); };
-	auto onFinalScores = [this](const std::map<int, PlayerStats>& players) { auto sorted = m_pDataOperation->SortPlayerByPoints(players); /*m_pServer->Broadcast(sorted);*/ };
+
+	auto onFinalScores = [this](const std::map<int, PlayerStats>& players) 
+	{ 
+		auto sorted = m_pDataOperation->SortPlayerByPoints(players);
+		m_pServer->Broadcast(FinalScores{sorted}); 
+	};
 
 	m_pGame->HandleGameState(state, onsetupround, onFinalScores, onbroadcast);
 }

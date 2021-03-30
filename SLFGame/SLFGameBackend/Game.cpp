@@ -174,25 +174,31 @@ void Game::HandOutPointsForCategory(int categoryIDX, int validAnswers, std::vect
 					{
 						if (i != j)
 						{
-							if (m_GameStats.players[i].answers[categoryIDX] == m_GameStats.players[j].answers[categoryIDX])
+							auto playerI = std::next(std::begin(m_GameStats.players), i);
+							auto playerJ = std::next(std::begin(m_GameStats.players), j);
+							if (playerI->second.answers[categoryIDX] == playerJ->second.answers[categoryIDX])
 							{
 								sameAnswer = true;
 								break;
 							}
 						}
 					}
+					auto playerI = std::next(std::begin(m_GameStats.players), i);
 					if (sameAnswer == true)
-						m_GameStats.players[i].points += 5;
+						playerI->second.points += 5;
 					else
-						m_GameStats.players[i].points += 10;
+						playerI->second.points += 10;
 				}
 			}
 		}
 		else
 		{
 			for (int i = 0; i < m_GameStats.players.size(); i++)
+			{
+				auto playerI = std::next(std::begin(m_GameStats.players), i);
 				if (answersValid[i] == true)
-					m_GameStats.players[i].points += 20;
+					playerI->second.points += 20;
+			}
 		}
 	}
 }

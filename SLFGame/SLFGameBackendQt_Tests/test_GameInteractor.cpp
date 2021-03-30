@@ -51,6 +51,7 @@ public:
 	MOCK_METHOD(void, ReveiveAllAnswers, (const std::vector<std::vector<std::string>>&), (override));
 	MOCK_METHOD(void, ReceiveRoundData, (const RoundData&), (override));
 	MOCK_METHOD(void, ReceiveVoteChange, (const Index&), (override));
+	MOCK_METHOD(void, ReceiveFinalScores, (const Scores&), (override));
 };
 
 class FakeRandomLetterGenerator : public RandomGenRessource
@@ -242,23 +243,15 @@ TEST_F(TestGameInteractor, HandleGameState_SetupRound_CallWriteTo)
 	gameInteractor.ChangeGameState(STATE::SETUPROUND);
 }
 
-TEST_F(TestGameInteractor, HandleGameState_onEndRound_CallWriteTo)
+TEST_F(TestGameInteractor, HandleGameState_FinalScores_CallWriteTo)
 {
-	//game.m_GameStats.customCategoryString = "Stadt";
-	//game.m_GameStats.currentRound = 0;
-	//game.m_GameStats.maxRounds = 1;
-	//game.m_GameStats.players.emplace(0, PlayerStats{ "Disgust", 10, {} });
-	//game.m_GameStats.timeout = "bis Stop";
+	game.m_GameStats.players.emplace(0, PlayerStats{ "Deon", 100, {} });
+	game.m_GameStats.players.emplace(3, PlayerStats{ "Chappie", 200, {} });
+	game.m_GameStats.players.emplace(5, PlayerStats{ "Tetravaal", 10, {} });
 
-	//RoundSetup msg;
-	//msg.data.categories = { "Stadt" };
-	//msg.data.currentRound = 1;
-	//msg.data.letter = "C";
-	//msg.data.maxRounds = 1;
-	//msg.data.points = 10;
-	//msg.data.roundTime = "bis Stop";
-	//auto expected = serializers.Serialize(msg);
-	//EXPECT_CALL(fakeServer, WriteTo(expected, 0));
+	FinalScores msg{ {{3, 200}, {0, 100}, {5, 10} } };
+	auto expected = serializers.Serialize(msg);
+	EXPECT_CALL(fakeServer, Broadcast(expected));
 
 	gameInteractor.ChangeGameState(STATE::FINALSCORES);
 }

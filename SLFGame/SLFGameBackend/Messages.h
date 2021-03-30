@@ -19,9 +19,9 @@ namespace Messages
 	};
 
 	struct HandleGameSettings	{ LobbySettings ls; };
-	struct Playername			{ std::string playername; int id; }; //id
+	struct Playername			{ std::string playername; int id; }; 
 	struct PlayerID				{ int id; };
-	struct PlayerAnswers		{ std::vector<std::string> answers; int id; }; //id
+	struct PlayerAnswers		{ std::vector<std::string> answers; int id; }; 
 	struct GameState			{ STATE state; };
 	struct ChatMessage			{ std::string sender; std::string text; }; 
 	struct AllAnswers			{ std::vector<std::vector<std::string>> ans{}; };
