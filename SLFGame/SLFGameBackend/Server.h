@@ -9,10 +9,11 @@ public:
 	Server();
 	virtual ~Server();
 
-	std::string GenerateLobbyCode();
-	LobbyCode StartServer();
-	void WriteTo(const ByteStream&, int);
-	void Broadcast(const ByteStream&);
+	std::string GenerateLobbyCode() override;
+	LobbyCode StartServer() override;
+	void WriteTo(const ByteStream&, int) override;
+	void Broadcast(const ByteStream&) override;
+	void Reset() override;
 
 private slots:
 

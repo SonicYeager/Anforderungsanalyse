@@ -58,6 +58,16 @@ void Server::Broadcast(const ByteStream& data)
 	//onLog("Data has been Broadcasted!");
 }
 
+void Server::Reset()
+{
+	m_server.close();
+	for (auto& socket : m_sockets)
+	{ 
+		socket.second->close();
+	}
+	m_sockets.clear();
+}
+
 void Server::OnNewConnection()
 {
 	auto conn = m_server.nextPendingConnection();

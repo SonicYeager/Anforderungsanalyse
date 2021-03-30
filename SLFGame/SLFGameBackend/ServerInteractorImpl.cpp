@@ -67,6 +67,8 @@ void ServerInteractorImpl::OnLog(const std::string& text)
 
 void ServerInteractorImpl::OnDisconnect(int id)
 {
+	if (id == 0)
+		m_pServer->Reset();
 	onRemovePlayer(id);
 }
 

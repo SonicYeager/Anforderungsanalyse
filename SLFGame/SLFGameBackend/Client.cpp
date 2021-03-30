@@ -92,6 +92,7 @@ void Client::OnSelfConnected()
 void Client::OnSelfDisconnect()
 {
 	//onLog("Client has Disconnected from Host!");
+	onDisconnect();
 }
 
 void Client::OnSelfClientConnectError(const QAbstractSocket::SocketError& err)
