@@ -12,7 +12,6 @@ Server::Server()
 
 Server::~Server()
 {
-	serverThread.exit();
 	serverThread.quit();
 	serverThread.wait();
 }
@@ -60,11 +59,9 @@ void Server::Broadcast(const ByteStream& data)
 
 void Server::Reset()
 {
-	std::vector<int> ids;
 	for (auto& socket : m_sockets)
 	{ 
 		socket.second->close();
-		ids.push_back(socket.first);
 	}
 }
 
@@ -81,6 +78,10 @@ void Server::OnNewConnection()
 	QObject::connect(m_sockets[id].get(), &QTcpSocket::bytesWritten, [this, id](int written) {OnClientBytesWritten(written, id); });
 	QObject::connect(m_sockets[id].get(), &QTcpSocket::hostFound, [this, id]() {OnClientHostFound(id); });
 	QObject::connect(m_sockets[id].get(), &QTcpSocket::stateChanged, [this, id](const QAbstractSocket::SocketState& state) {OnClientStateChanged(state, id); });
+
+	m_sthreads.emplace(id, std::make_unique<QThread>());
+	m_sockets[id]->moveToThread(m_sthreads[id].get());
+	m_sthreads[id]->start();
 
 	//onLog("New Connection of Client: " + std::to_string(id));
 	onNewConnection(id);
@@ -121,6 +122,10 @@ void Server::OnClientConnected(int id)
 void Server::OnClientDisconnect(int id)
 {
 	//onLog("Client: " + std::to_string(id) + " has disconnected from Host!");
+
+	m_sthreads[id]->quit();
+	m_sthreads[id]->wait();
+	m_sthreads.erase(id);
 
 	m_sockets.erase(id);
 	onClientDisconnect(id);

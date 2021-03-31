@@ -11,12 +11,18 @@ Client::Client()
 	QObject::connect(&m_socket, &QTcpSocket::bytesWritten, this, &Client::OnSelfBytesWritten);
 	QObject::connect(&m_socket, &QTcpSocket::hostFound, this, &Client::OnSelfHostFound);
 	QObject::connect(&m_socket, &QTcpSocket::stateChanged, this, &Client::OnSelfStateChanged);
+
+	m_socket.moveToThread(&clientThread);
+	clientThread.start();
 }
 
 Client::~Client()
 {
 	m_socket.disconnectFromHost();
 	m_socket.close();
+
+	clientThread.quit();
+	clientThread.wait();
 }
 
 std::string Client::GenerateLobbyCode()

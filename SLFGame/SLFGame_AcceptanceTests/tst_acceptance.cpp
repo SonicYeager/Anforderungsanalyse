@@ -249,7 +249,7 @@ void Acceptance::secondInstance_comm_todo()
     QCOMPARE(sec.resutltID, 5);
     QCOMPARE(sec.resutltLS.playerNames.size(), 1);
 
-    Cleanup();
+    //sec.Cleanup();
 }
 
 void Acceptance::Cleanup()

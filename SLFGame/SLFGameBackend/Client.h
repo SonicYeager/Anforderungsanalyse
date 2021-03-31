@@ -26,4 +26,5 @@ private slots:
 
 private:
 	QTcpSocket m_socket;
+	QThread clientThread;
 };
