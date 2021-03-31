@@ -27,6 +27,7 @@ private:
 
 	int m_answerGatheredCounter{};
 
+	void ResetGame();
 	void CheckAllAnswersRecived(Event<GameStats> onTrue);
 	void HandOutPointsForCategory(int, int, std::vector<bool>);
 };

@@ -49,6 +49,17 @@ void Game::ClearPlayerAnswers()
 		player.second.answers = {};
 }
 
+void Game::ResetGame()
+{
+	for (auto& player : m_GameStats.players)
+	{
+		player.second.points = 0;
+		player.second.answers = {};
+	}
+	m_GameStats.currentRound = 0;
+	m_GameStats.lettersUsed = {};
+}
+
 void Game::CheckAllAnswersRecived(Event<GameStats> onTrue)
 {
 	++m_answerGatheredCounter;
@@ -74,6 +85,10 @@ void Game::HandleGameState(const STATE& state, Event<const std::string&, const L
 		break;
 	case STATE::FINALSCORES:
 		onFinalScores(m_GameStats.players);
+		break;
+	case STATE::NEWGAME:
+		ResetGame();
+		onStandart(GameState{ STATE::LOBBY });
 		break;
 	default:
 		onStandart(GameState{ state });

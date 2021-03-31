@@ -380,7 +380,8 @@ QString QmlAdapter::getAnswer(int playerID, int categoryIDX)
 
 QString QmlAdapter::getPlayer(int idx)
 {
-    return QString::fromUtf8(_players[idx].c_str());
+    auto player = std::next(std::begin(_players), idx);
+    return QString::fromUtf8(player->second.c_str());
 }
 
 bool QmlAdapter::getDecision(int categoryIDX, int answerIDX, int voterIDX)
@@ -442,6 +443,7 @@ void QmlAdapter::triggerStateChange(int state)
         case 5:  { onState(STATE::OVERVIEW          ); break; }
         case 6:  { onState(STATE::ROUNDOVER         ); break; }
         case 7:  { onState(STATE::FINALSCORES       ); break; }
+        case 8:  { onState(STATE::NEWGAME           ); break; }
     }
 }
 
@@ -457,6 +459,7 @@ void QmlAdapter::triggerStateRelatedSignal(STATE state)
     case STATE::OVERVIEW     : break;
     case STATE::ROUNDOVER    : break;
     case STATE::FINALSCORES  : break;
+    case STATE::NEWGAME      : break;
     }
 }
 
@@ -497,6 +500,7 @@ QString QmlAdapter::GetViewFromState(STATE view)
         case STATE::OVERVIEW :      return "Overview";
         case STATE::ROUNDOVER :     return (getPlayerId() == 0) ? "Intervention" : "Waiting";
         case STATE::FINALSCORES :   return "FinalScores";
+        case STATE::NEWGAME :       return "Lobby";
     }
     return "MainMenu";
 }

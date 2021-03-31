@@ -21,7 +21,8 @@ enum class STATE : int
 	ANSWERREQUEST = 4,
 	OVERVIEW = 5,
 	ROUNDOVER = 6,
-	FINALSCORES = 7
+	FINALSCORES = 7,
+	NEWGAME = 8
 };
 
 using Letter = char;

@@ -77,7 +77,6 @@ void GameInteractorImpl::ToggleVote(const Index& index)
 
 void GameInteractorImpl::HandleGameState(const STATE& state)
 {
-
 	auto onsetupround = [this](const std::string& customcats, const Letters& usedLetters) 
 	{
 		m_pServer->StopListening();
@@ -97,7 +96,7 @@ void GameInteractorImpl::HandleGameState(const STATE& state)
 	auto onFinalScores = [this](const std::map<int, PlayerStats>& players) 
 	{ 
 		auto sorted = m_pDataOperation->SortPlayerByPoints(players);
-		m_pServer->Broadcast(FinalScores{sorted}); 
+		m_pServer->Broadcast(FinalScores{sorted});
 	};
 
 	m_pGame->HandleGameState(state, onsetupround, onFinalScores, onbroadcast);
