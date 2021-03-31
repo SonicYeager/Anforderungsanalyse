@@ -9,6 +9,8 @@ Server::Server()
 	QObject::connect(&m_server, &QTcpServer::acceptError, this, &Server::OnHostConnectError);
 
 	serverThread.start(QThread::Priority::TimeCriticalPriority);
+
+	m_server.setMaxPendingConnections(m_maxConnections);
 }
 
 Server::~Server()
@@ -79,20 +81,27 @@ void Server::Reset()
 
 void Server::OnNewConnection()
 {
-	auto conn = m_server.nextPendingConnection();
-	int id = m_counter.fetch_add(1);
-	m_sockets.emplace(id, std::shared_ptr<QTcpSocket>(conn, [](QTcpSocket* sock) { sock->deleteLater(); }));
+	if (m_sockets.size() < m_maxConnections)
+	{
+		int id = m_counter.fetch_add(1);
+		auto conn = m_server.nextPendingConnection();
+		m_sockets.emplace(id, std::shared_ptr<QTcpSocket>(conn, [](QTcpSocket* sock) { sock->deleteLater(); }));
 
-	QObject::connect(m_sockets[id].get(), &QTcpSocket::connected, [this, id]() {OnClientConnected(id); });
-	QObject::connect(m_sockets[id].get(), &QTcpSocket::disconnected, [this, id]() {OnClientDisconnect(id); });
-	QObject::connect(m_sockets[id].get(), &QIODevice::readyRead, [this, id]() {OnClientReceivedData(id); });
-	QObject::connect(m_sockets[id].get(), &QTcpSocket::errorOccurred, [this, id](const QAbstractSocket::SocketError& err) {OnClientClientConnectError(err, id); });
-	QObject::connect(m_sockets[id].get(), &QTcpSocket::bytesWritten, [this, id](int written) {OnClientBytesWritten(written, id); });
-	QObject::connect(m_sockets[id].get(), &QTcpSocket::hostFound, [this, id]() {OnClientHostFound(id); });
-	QObject::connect(m_sockets[id].get(), &QTcpSocket::stateChanged, [this, id](const QAbstractSocket::SocketState& state) {OnClientStateChanged(state, id); });
+		QObject::connect(m_sockets[id].get(), &QTcpSocket::connected, [this, id]() {OnClientConnected(id); });
+		QObject::connect(m_sockets[id].get(), &QTcpSocket::disconnected, [this, id]() {OnClientDisconnect(id); });
+		QObject::connect(m_sockets[id].get(), &QIODevice::readyRead, [this, id]() {OnClientReceivedData(id); });
+		QObject::connect(m_sockets[id].get(), &QTcpSocket::errorOccurred, [this, id](const QAbstractSocket::SocketError& err) {OnClientClientConnectError(err, id); });
+		QObject::connect(m_sockets[id].get(), &QTcpSocket::bytesWritten, [this, id](int written) {OnClientBytesWritten(written, id); });
+		QObject::connect(m_sockets[id].get(), &QTcpSocket::hostFound, [this, id]() {OnClientHostFound(id); });
+		QObject::connect(m_sockets[id].get(), &QTcpSocket::stateChanged, [this, id](const QAbstractSocket::SocketState& state) {OnClientStateChanged(state, id); });
+		//onLog("New Connection of Client: " + std::to_string(id));
+		onNewConnection(id);
+	}
+	else
+	{
+		m_server.close();
+	}
 
-	//onLog("New Connection of Client: " + std::to_string(id));
-	onNewConnection(id);
 }
 
 void Server::OnClientClientConnectError(const QAbstractSocket::SocketError& err, int id)
@@ -133,6 +142,8 @@ void Server::OnClientDisconnect(int id)
 
 	m_sockets.erase(id);
 	onClientDisconnect(id);
+	if(m_sockets.size() < m_maxConnections)
+		m_server.listen();
 }
 
 void Server::OnClientHostFound(int id)

@@ -14,6 +14,9 @@ public:
 	virtual void Broadcast(const ByteStream&) = 0;
 	virtual void Reset() = 0;
 
+	//conf
+	int m_maxConnections = 10;
+
 	//Event<std::string> onLog;
 	Event<int> onNewConnection;
 	Event<ByteStream, int> onClientData;
