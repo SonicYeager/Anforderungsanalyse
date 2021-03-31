@@ -209,7 +209,8 @@ void Game::SetVotesFalseForEmptyAnswers()
 	{
 		for (int j = 0; j < m_GameStats.players.size(); j++)
 		{
-			if (m_GameStats.players[j].answers[i] == "")
+			auto playerJ = std::next(std::begin(m_GameStats.players), j);
+			if (playerJ->second.answers[i] == "")
 			{
 				for (int k = 0; k < m_GameStats.players.size(); k++)
 				{
