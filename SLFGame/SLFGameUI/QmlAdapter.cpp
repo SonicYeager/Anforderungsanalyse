@@ -72,7 +72,11 @@ void QmlAdapter::ReceiveFinalScores(const Scores & scores)
 void QmlAdapter::Disconnected()
 {
     setView(GetViewFromState(STATE::MAINMENU));
-    emit disconnectedFromServer();
+    if (!_disconnectedByClient)
+    {
+        _disconnectedByClient = !_disconnectedByClient;
+        emit disconnectedFromServer();
+    }
 }
 
 void QmlAdapter::PlayerLeft(int id)
@@ -417,8 +421,8 @@ void QmlAdapter::lobbySettingsChanged()
 
 void QmlAdapter::disconnect()
 {
+    _disconnectedByClient = true;
     onDisconnect();
-    setView(GetViewFromState(STATE::MAINMENU));
 }
 
 void QmlAdapter::sendChatMessage(QString str)

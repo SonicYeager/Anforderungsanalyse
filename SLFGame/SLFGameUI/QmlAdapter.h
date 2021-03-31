@@ -180,4 +180,5 @@ private:
     std::vector<int> _finalScores_scores     = {};
     BoolVector3D _decisions     = {};
     bool _customChecked         = false;
+    bool _disconnectedByClient  = false;
 };

@@ -90,6 +90,7 @@ Rectangle{
                     id: cb_roundTime
                     Layout.preferredWidth: 100
                     Layout.preferredHeight: 50
+                    visible: (qmlAdapter.playerId === 0) ? true : false
                     model: [ "bis Stop", "60", "80", "100", "120", "150", "180", "210" ]
                     onCurrentTextChanged: {
                         qmlAdapter.roundTime = cb_roundTime.currentText

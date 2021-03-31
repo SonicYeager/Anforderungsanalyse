@@ -91,7 +91,6 @@ Rectangle{
                             anchors.fill: parent
                             onClicked: {
                                 qmlAdapter.hostLobby();
-                                qmlAdapter.view = "Lobby";
                             }
                         }
                     }
@@ -118,7 +117,6 @@ Rectangle{
                             anchors.fill: parent
                             onClicked: {
                                 qmlAdapter.joinLobby();
-                                qmlAdapter.view = "Lobby";
                             }
                         }
                     }
