@@ -19,11 +19,10 @@ Client::Client()
 
 Client::~Client()
 {
-	m_socket.disconnectFromHost();
-	m_socket.close();
-
 	clientThread.quit(); 
 	clientThread.wait(); 
+
+	m_socket.close();
 }
 
 std::string Client::GenerateLobbyCode()

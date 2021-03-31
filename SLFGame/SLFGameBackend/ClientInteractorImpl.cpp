@@ -95,7 +95,8 @@ void ClientInteractorImpl::Disconnect()
 
 void ClientInteractorImpl::DisconnectedFromServer()
 {
-	onDisconnectedFromServer();
+	if(onDisconnectedFromServer)
+		onDisconnectedFromServer();
 }
 
 void ClientInteractorImpl::OnMsgID(const PlayerID& id)

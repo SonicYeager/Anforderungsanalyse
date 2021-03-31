@@ -1,1 +1,2 @@
-.\windeployqt.exe --qmldir I:\Repositories\Anforderungsanalyse\SLFGame\SLFGameUI I:\Repositories\Anforderungsanalyse\SLFGame\build-SLFGameUI-Desktop_Qt_6_0_1_MSVC2019_64bit-Release\release\SLFGameUI.exe
+.\windeployqt.exe --qmldir I:\Repositories\Anforderungsanalyse\SLFGame\SLFGameUI I:\Repositories\Anforderungsanalyse\SLFGame\build-SLFGameUI-Desktop_Qt_6_0_1_MSVC2019_64bit-Release\release\SLFGameUI.exe --release
+.\windeployqt.exe --qmldir I:\Repositories\Anforderungsanalyse\SLFGame\SLFGameUI I:\Repositories\Anforderungsanalyse\SLFGame\build-SLFGameUI-Desktop_Qt_6_0_1_MSVC2019_64bit-Debug\debug\SLFGameUI.exe --debug
