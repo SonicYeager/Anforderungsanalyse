@@ -181,7 +181,14 @@ Rectangle{
         target: qmlAdapter
         function onDisconnectedFromServer()
         {
-            ErrorWindow.show()
+            errordlg.active = true
         }
+    }
+    Loader {
+            id: errordlg
+            active: false
+            sourceComponent: ErrorWindow {
+                onClosing: winld.active = false
+            }
     }
 }
