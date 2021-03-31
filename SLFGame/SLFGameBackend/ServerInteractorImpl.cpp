@@ -31,6 +31,11 @@ void ServerInteractorImpl::StartServer()
 	onSetLobbyCode(lobbyCode);
 }
 
+void ServerInteractorImpl::StopListening()
+{
+	m_pServer->StopListening();
+}
+
 void ServerInteractorImpl::Broadcast(const Message& msg)
 {
 	auto ser = m_pSerializer->Serialize(msg);

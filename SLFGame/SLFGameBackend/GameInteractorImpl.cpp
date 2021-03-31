@@ -80,6 +80,7 @@ void GameInteractorImpl::HandleGameState(const STATE& state)
 
 	auto onsetupround = [this](const std::string& customcats, const Letters& usedLetters) 
 	{
+		m_pServer->StopListening();
 		auto broadcast = [this](RoundSetup roundsetup, const GameStats& gameStats)
 		{
 			for (const auto& player : gameStats.players)

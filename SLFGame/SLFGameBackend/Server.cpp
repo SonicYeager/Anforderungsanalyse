@@ -3,10 +3,11 @@
 
 Server::Server()
 {
+	m_server.moveToThread(&serverThread);
+
 	QObject::connect(&m_server, &QTcpServer::newConnection, this, &Server::OnNewConnection);
 	QObject::connect(&m_server, &QTcpServer::acceptError, this, &Server::OnHostConnectError);
 
-	m_server.moveToThread(&serverThread);
 	serverThread.start(QThread::Priority::TimeCriticalPriority);
 }
 
@@ -34,6 +35,11 @@ LobbyCode Server::StartServer()
 	//onLog("Server Listen: " + b);
 	auto lobbyCode = GenerateLobbyCode();
 	return lobbyCode;
+}
+
+void Server::StopListening()
+{
+	m_server.close();
 }
 
 void Server::WriteTo(const ByteStream& data, int id)
@@ -71,9 +77,6 @@ void Server::OnNewConnection()
 	int id = m_counter.fetch_add(1);
 	m_sockets.emplace(id, std::shared_ptr<QTcpSocket>(conn, [](QTcpSocket* sock) { sock->deleteLater(); }));
 
-	m_sthreads.emplace(id, std::make_unique<QThread>()); //new
-	m_sockets[id]->moveToThread(m_sthreads[id].get());	//new
-
 	QObject::connect(m_sockets[id].get(), &QTcpSocket::connected, [this, id]() {OnClientConnected(id); });
 	QObject::connect(m_sockets[id].get(), &QTcpSocket::disconnected, [this, id]() {OnClientDisconnect(id); });
 	QObject::connect(m_sockets[id].get(), &QIODevice::readyRead, [this, id]() {OnClientReceivedData(id); });
@@ -81,8 +84,6 @@ void Server::OnNewConnection()
 	QObject::connect(m_sockets[id].get(), &QTcpSocket::bytesWritten, [this, id](int written) {OnClientBytesWritten(written, id); });
 	QObject::connect(m_sockets[id].get(), &QTcpSocket::hostFound, [this, id]() {OnClientHostFound(id); });
 	QObject::connect(m_sockets[id].get(), &QTcpSocket::stateChanged, [this, id](const QAbstractSocket::SocketState& state) {OnClientStateChanged(state, id); });
-
-	m_sthreads[id]->start(QThread::Priority::TimeCriticalPriority);   //new
 
 	//onLog("New Connection of Client: " + std::to_string(id));
 	onNewConnection(id);
@@ -123,10 +124,6 @@ void Server::OnClientConnected(int id)
 void Server::OnClientDisconnect(int id)
 {
 	//onLog("Client: " + std::to_string(id) + " has disconnected from Host!");
-
-	m_sthreads[id]->quit();	  //new
-	m_sthreads[id]->wait();	  //new
-	m_sthreads.erase(id);	  //new
 
 	m_sockets.erase(id);
 	onClientDisconnect(id);

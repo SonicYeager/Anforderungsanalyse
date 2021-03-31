@@ -11,6 +11,7 @@ public:
 
 	std::string GenerateLobbyCode() override;
 	LobbyCode StartServer() override;
+	void StopListening() override;
 	void WriteTo(const ByteStream&, int) override;
 	void Broadcast(const ByteStream&) override;
 	void Reset() override;
