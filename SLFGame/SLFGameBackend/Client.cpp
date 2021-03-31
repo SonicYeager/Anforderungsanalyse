@@ -19,6 +19,7 @@ Client::Client()
 
 Client::~Client()
 {
+	clientThread.exit();
 	clientThread.quit(); 
 	clientThread.wait(); 
 

@@ -13,6 +13,7 @@ Server::Server()
 
 Server::~Server()
 {
+	serverThread.exit();
 	serverThread.quit();
 	serverThread.wait();
 }

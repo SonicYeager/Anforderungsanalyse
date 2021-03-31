@@ -15,10 +15,10 @@ public:
     ServerInteractor* );
     int Run(int argc, char *argv[], QObject& obj);
 private:
+    UI* m_pUi;
     GameInteractor* m_pGameInter;
     ClientInteractor* m_pClientInter;
     ServerInteractor* m_pServerInter;
-    UI* m_pUi;
 };
 
 #endif // CONTROLLER_H
