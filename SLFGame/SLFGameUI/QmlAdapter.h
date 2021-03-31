@@ -123,6 +123,7 @@ public slots:
     void changeVoteState(int);
     void clearChat();
     void setScores(Scores scores);
+    void clearPlacements();
 
 signals:
     void letterChanged();

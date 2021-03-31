@@ -35,7 +35,7 @@ Rectangle{
                     Layout.preferredHeight: 50
                     text: qmlAdapter.customCategories
                     Layout.rightMargin: 10
-                    state: "inactive"
+                    state: (qmlAdapter.playerId === 0)? "active" : "inactive"
                     onTextChanged: {
                         qmlAdapter.customCategories = text
                     }
@@ -46,26 +46,51 @@ Rectangle{
                             eb_customCats.text = qmlAdapter.customCategories
                         }
                     }
-
-                    Connections {
-                        target: chb_custom
-                        function onStateChanged()
-                        {
-                            eb_customCats.state = (chb_custom.state === "true") ? "active" : "inactive"
-                        }
-                    }
-                }
-                CheckBox {
-                    id: chb_custom
-                    text: "<font color=\"white\">custom</font>"
-                    visible: (qmlAdapter.playerId === 0) ? true: false
-                    state: qmlAdapter.customChecked
-                    onClicked: qmlAdapter.customChecked = checked
                 }
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 50
                     color: Qt.rgba(0,0,0,0)
+                }
+            }
+        }
+
+        Rectangle{
+            Layout.preferredWidth: 320
+            Layout.preferredHeight: 50
+            color: Qt.rgba(0,0,0,0)
+            Layout.margins: 20
+            Layout.bottomMargin: 5
+            Layout.topMargin: 5
+            RowLayout {
+                anchors.fill: parent
+                spacing: 0
+                TextBox{
+                    Layout.preferredWidth: 200
+                    Layout.preferredHeight: 50
+                    state: "desc"
+                    text: "Rundenanzahl"
+                    Layout.rightMargin: 20
+                }
+                SLFComboBox{
+                    id: cb_maxRounds
+                    visible: (qmlAdapter.playerId === 0) ? true : false
+                    Layout.preferredWidth: 100
+                    Layout.preferredHeight: 50
+                    model: [ "5","6","7","8","9","10" ]
+                    Component.onCompleted: cb_maxRounds.currentIndex = parseInt(qmlAdapter.maxRounds) - 5
+                    onCurrentTextChanged: {
+                        qmlAdapter.maxRounds = cb_maxRounds.currentText
+                    }
+                }
+                EntryBox {
+                    id: eb_maxRounds
+                    visible: (qmlAdapter.playerId === 0)? false : true
+                    Layout.preferredWidth: 100
+                    Layout.preferredHeight: 50
+                    Layout.rightMargin: 20
+                    text: qmlAdapter.maxRounds
+                    state: "inactive"
                 }
             }
         }
@@ -90,57 +115,19 @@ Rectangle{
                     id: cb_roundTime
                     Layout.preferredWidth: 100
                     Layout.preferredHeight: 50
-                    visible: (qmlAdapter.playerId === 0) ? true : false
-                    model: [ "bis Stop", "60", "80", "100", "120", "150", "180", "210" ]
+                    visible: false// (qmlAdapter.playerId === 0) ? true : false
+                    model: [ "bis Stop" ]
                     onCurrentTextChanged: {
                         qmlAdapter.roundTime = cb_roundTime.currentText
                     }
                 }
                 EntryBox {
                     id: eb_roundTime
-                    visible: (qmlAdapter.playerId === 0)? false : true
+                    visible: true//(qmlAdapter.playerId === 0)? false : true
                     Layout.preferredWidth: 100
                     Layout.preferredHeight: 50
                     Layout.rightMargin: 20
                     text: qmlAdapter.roundTime
-                    state: "inactive"
-                }
-            }
-        }
-        Rectangle{
-            Layout.preferredWidth: 320
-            Layout.preferredHeight: 50
-            color: Qt.rgba(0,0,0,0)
-            Layout.margins: 20
-            Layout.bottomMargin: 10
-            Layout.topMargin: 5
-            RowLayout {
-                anchors.fill: parent
-                spacing: 0
-                TextBox{
-                    Layout.preferredWidth: 200
-                    Layout.preferredHeight: 50
-                    state: "desc"
-                    text: "Rundenanzahl"
-                    Layout.rightMargin: 20
-                }
-                SLFComboBox{
-                    id: cb_maxRounds
-                    visible: (qmlAdapter.playerId === 0) ? true : false
-                    Layout.preferredWidth: 100
-                    Layout.preferredHeight: 50
-                    model: [ "5","6","7","8","9","10" ]
-                    onCurrentTextChanged: {
-                        qmlAdapter.maxRounds = cb_maxRounds.currentText
-                    }
-                }
-                EntryBox {
-                    id: eb_maxRounds
-                    visible: (qmlAdapter.playerId === 0)? false : true
-                    Layout.preferredWidth: 100
-                    Layout.preferredHeight: 50
-                    Layout.rightMargin: 20
-                    text: qmlAdapter.maxRounds
                     state: "inactive"
                 }
             }
@@ -207,9 +194,9 @@ Rectangle{
         function onPlayerIdChanged()
         {
             eb_maxRounds.visible = true
-            eb_roundTime.visible = true
+            //eb_roundTime.visible = true
             cb_maxRounds.visible = false
-            cb_roundTime.visible = false
+            //cb_roundTime.visible = false
         }
     }
 }

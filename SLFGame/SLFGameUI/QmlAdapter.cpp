@@ -13,9 +13,12 @@ void QmlAdapter::ReceiveID(int id)
 
 void QmlAdapter::UpdateLobby(const LobbySettings & ls)
 {
-    _customCategories = ls.categories.c_str();
-    _maxRounds = ls.rounds.c_str();
-    _roundTime = ls.timeout.c_str();
+    if (_playerId != 0)
+    {
+        _customCategories = ls.categories.c_str();
+        _maxRounds = ls.rounds.c_str();
+        _roundTime = ls.timeout.c_str();
+    }
     _players.clear();
     _players = ls.playerNames;
     setPlayerCount(static_cast<int>(_players.size()));
@@ -459,7 +462,7 @@ void QmlAdapter::triggerStateRelatedSignal(STATE state)
     case STATE::OVERVIEW     : break;
     case STATE::ROUNDOVER    : break;
     case STATE::FINALSCORES  : break;
-    case STATE::NEWGAME      : break;
+    case STATE::NEWGAME      : clearPlacements(); break;
     }
 }
 
@@ -480,6 +483,12 @@ void QmlAdapter::setScores(Scores scores)
         _finalScores_placements.push_back(score.first);
         _finalScores_scores.push_back(score.second);
     }
+}
+
+void QmlAdapter::clearPlacements()
+{
+    _finalScores_placements.clear();
+    _finalScores_scores.clear();
 }
 
 void QmlAdapter::sendAnswers()
