@@ -19,7 +19,7 @@ CXXFLAGS      = -nologo -Zc:wchar_t -FS -Zc:rvalueCast -Zc:inline -Zc:strictStri
 INCPATH       = -I..\SLFGameUI -I. -I..\SLFGameBackend -IG:\Software\Qt\6.0.1\msvc2019_64\include -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtQuick -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtOpenGL -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtGui -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtQmlModels -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtQml -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtNetwork -IG:\Software\Qt\6.0.1\msvc2019_64\include\QtCore -Idebug -I/include -IG:\Software\Qt\6.0.1\msvc2019_64\mkspecs\win32-msvc 
 LINKER        = link
 LFLAGS        = /NOLOGO /DYNAMICBASE /NXCOMPAT /DEBUG /SUBSYSTEM:WINDOWS "/MANIFESTDEPENDENCY:type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' publicKeyToken='6595b64144ccf1df' language='*' processorArchitecture='*'"
-LIBS          = /LIBPATH:I:\Repositories\Anforderungsanalyse\SLFGame\SLFGameBackend\x64\Debug SLFGameBackend.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Quickd.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6OpenGLd.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Guid.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6QmlModelsd.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Qmld.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Networkd.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Cored.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPointd.lib shell32.lib  
+LIBS          = /LIBPATH:I:\Repositories\Anforderungsanalyse\SLFGame\SLFGameBackend\x64\Debug I:\Repositories\Anforderungsanalyse\SLFGame\SLFGameBackend\x64\Debug\SLFGameBackend.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Quickd.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6OpenGLd.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Guid.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6QmlModelsd.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Qmld.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Networkd.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6Cored.lib G:\Software\Qt\6.0.1\msvc2019_64\lib\Qt6EntryPointd.lib shell32.lib  
 QMAKE         = G:\Software\Qt\6.0.1\msvc2019_64\bin\qmake.exe
 DEL_FILE      = del
 CHK_DIR_EXISTS= if not exist
@@ -189,6 +189,7 @@ debug\qrc_qml.cpp: ..\SLFGameUI\qml.qrc \
 		..\SLFGameUI\Modules\Category.qml \
 		..\SLFGameUI\Modules\Banner.qml \
 		..\SLFGameUI\Screens\GameScreen_Input.qml \
+		..\SLFGameUI\Screens\ErrorWindow.qml \
 		..\SLFGameUI\Screens\GameScreen_MainMenu.qml \
 		..\SLFGameUI\Screens\GameScreen_FinalScores.qml \
 		..\SLFGameUI\Screens\GameScreen_Lobby.qml \
@@ -199,6 +200,7 @@ debug\qrc_qml.cpp: ..\SLFGameUI\qml.qrc \
 		..\SLFGameUI\Resources\tick.png \
 		..\SLFGameUI\ListViews\AnswerBlock.qml \
 		..\SLFGameUI\ListViews\CategoryOverview.qml \
+		..\SLFGameUI\ListViews\ScoreList.qml \
 		..\SLFGameUI\ListViews\AnswerBlockList.qml \
 		..\SLFGameUI\ListViews\Categories.qml \
 		..\SLFGameUI\ListViews\PlayerOverview.qml \
@@ -311,6 +313,7 @@ debug\moc_QmlAdapter.cpp: ..\SLFGameUI\QmlAdapter.h \
 		..\SLFGameBackend\UI.h \
 		..\SLFGameBackend\DataTypes.h \
 		..\SLFGameBackend\Messages.h \
+		..\SLFGameBackend\HelpfulMacros.h \
 		debug\moc_predefs.h \
 		G:\Software\Qt\6.0.1\msvc2019_64\bin\moc.exe
 	G:\Software\Qt\6.0.1\msvc2019_64\bin\moc.exe $(DEFINES) --compiler-flavor=msvc --include I:/Repositories/Anforderungsanalyse/SLFGame/build-SLFGameUI-Desktop_Qt_6_0_1_MSVC2019_64bit-Debug/debug/moc_predefs.h -IG:/Software/Qt/6.0.1/msvc2019_64/mkspecs/win32-msvc -II:/Repositories/Anforderungsanalyse/SLFGame/SLFGameUI -II:/Repositories/Anforderungsanalyse/SLFGame/SLFGameBackend -IG:/Software/Qt/6.0.1/msvc2019_64/include -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtQuick -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtOpenGL -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtGui -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtQmlModels -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtQml -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtNetwork -IG:/Software/Qt/6.0.1/msvc2019_64/include/QtCore -I. -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\ATLMFC\include" -I"C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.28.29910\include" -I"C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt" -I"C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\cppwinrt" ..\SLFGameUI\QmlAdapter.h -o debug\moc_QmlAdapter.cpp
@@ -416,7 +419,8 @@ debug\QmlAdapter.obj: ..\SLFGameUI\QmlAdapter.cpp ..\SLFGameUI\QmlAdapter.h \
 		G:\Software\Qt\6.0.1\msvc2019_64\include\QtCore\qsharedpointer_impl.h \
 		..\SLFGameBackend\UI.h \
 		..\SLFGameBackend\DataTypes.h \
-		..\SLFGameBackend\Messages.h
+		..\SLFGameBackend\Messages.h \
+		..\SLFGameBackend\HelpfulMacros.h
 
 debug\controller.obj: ..\SLFGameUI\controller.cpp ..\SLFGameUI\controller.h \
 		..\SLFGameBackend\UI.h \
@@ -618,6 +622,7 @@ debug\main.obj: ..\SLFGameUI\main.cpp G:\Software\Qt\6.0.1\msvc2019_64\include\Q
 		..\SLFGameBackend\UI.h \
 		..\SLFGameBackend\DataTypes.h \
 		..\SLFGameBackend\Messages.h \
+		..\SLFGameBackend\HelpfulMacros.h \
 		..\SLFGameUI\controller.h \
 		..\SLFGameBackend\GameInteractor.h \
 		..\SLFGameBackend\ClientInteractor.h \

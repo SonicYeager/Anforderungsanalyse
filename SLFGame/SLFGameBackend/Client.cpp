@@ -4,6 +4,8 @@
 
 Client::Client()
 {
+	m_socket.moveToThread(&clientThread); //new
+
 	QObject::connect(&m_socket, &QTcpSocket::connected, this, &Client::OnSelfConnected);
 	QObject::connect(&m_socket, &QAbstractSocket::disconnected, this, &Client::OnSelfDisconnect);
 	QObject::connect(&m_socket, &QIODevice::readyRead, this, &Client::OnSelfReceivedData);
@@ -12,8 +14,7 @@ Client::Client()
 	QObject::connect(&m_socket, &QTcpSocket::hostFound, this, &Client::OnSelfHostFound);
 	QObject::connect(&m_socket, &QTcpSocket::stateChanged, this, &Client::OnSelfStateChanged);
 
-	m_socket.moveToThread(&clientThread);
-	clientThread.start();
+	clientThread.start(QThread::Priority::TimeCriticalPriority); //new
 }
 
 Client::~Client()
@@ -21,8 +22,8 @@ Client::~Client()
 	m_socket.disconnectFromHost();
 	m_socket.close();
 
-	clientThread.quit();
-	clientThread.wait();
+	clientThread.quit(); //new
+	clientThread.wait(); //new
 }
 
 std::string Client::GenerateLobbyCode()

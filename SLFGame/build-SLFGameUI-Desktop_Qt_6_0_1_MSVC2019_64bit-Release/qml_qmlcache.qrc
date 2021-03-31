@@ -27,5 +27,7 @@
         <file alias="Resources/cross.png">../SLFGameUI/Resources/cross.png</file>
         <file alias="Resources/tick.png">../SLFGameUI/Resources/tick.png</file>
         <file alias="ListViews/VoteList.qml">../SLFGameUI/ListViews/VoteList.qml</file>
+        <file alias="ListViews/ScoreList.qml">../SLFGameUI/ListViews/ScoreList.qml</file>
+        <file alias="Screens/ErrorWindow.qml">../SLFGameUI/Screens/ErrorWindow.qml</file>
     </qresource>
 </RCC>
