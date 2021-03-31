@@ -15,6 +15,7 @@ public:
 	virtual ~ServerInteractorImpl();
 		
 	void StartServer() override;
+	void StartListening() override;
 	void StopListening() override;
 	void Broadcast(const Message&) override;
 	void WriteTo(int, const Message&) override;

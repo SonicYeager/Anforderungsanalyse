@@ -71,7 +71,7 @@ void Game::CheckAllAnswersRecived(Event<GameStats> onTrue)
 	}
 }
 
-void Game::HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<const std::map<int, PlayerStats>&> onFinalScores, Event<GameState> onStandart)
+void Game::HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<const std::map<int, PlayerStats>&> onFinalScores, Event<> onNewGame, Event<GameState> onStandart)
 {
 	switch (state)
 	{
@@ -88,6 +88,7 @@ void Game::HandleGameState(const STATE& state, Event<const std::string&, const L
 		break;
 	case STATE::NEWGAME:
 		ResetGame();
+		onNewGame();
 		onStandart(GameState{ STATE::LOBBY });
 		break;
 	default:

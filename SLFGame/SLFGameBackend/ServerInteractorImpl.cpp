@@ -31,6 +31,11 @@ void ServerInteractorImpl::StartServer()
 	onSetLobbyCode(lobbyCode);
 }
 
+void ServerInteractorImpl::StartListening()
+{
+	m_pServer->StartListening();
+}
+
 void ServerInteractorImpl::StopListening()
 {
 	m_pServer->StopListening();

@@ -99,7 +99,9 @@ void GameInteractorImpl::HandleGameState(const STATE& state)
 		m_pServer->Broadcast(FinalScores{sorted});
 	};
 
-	m_pGame->HandleGameState(state, onsetupround, onFinalScores, onbroadcast);
+	auto onNewGame = [this]() { m_pServer->StartListening(); };
+
+	m_pGame->HandleGameState(state, onsetupround, onFinalScores, onNewGame, onbroadcast);
 }
 
 void GameInteractorImpl::SendUpdatedLobbySettings()

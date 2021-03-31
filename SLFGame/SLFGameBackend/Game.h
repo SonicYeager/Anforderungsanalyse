@@ -6,7 +6,7 @@ class Game : public GameLogic
 public:
 	void	CalculatePoints		(const DDDVector&)	override;
 	void	CheckGameFinished	(Event<const std::string&, const Letters&> onNextRound, Event<const std::map<int, PlayerStats>&> onFinalScores)		override;
-	void    HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<const std::map<int, PlayerStats>&> onFinalScores, Event<GameState> onStandart) override;
+	void    HandleGameState(const STATE& state, Event<const std::string&, const Letters&> onSetupRound, Event<const std::map<int, PlayerStats>&> onFinalScores, Event<> onNewGame, Event<GameState> onStandart) override;
 	HandleGameSettings CreateHandleGameSettings() override;
 
 	GameStats& GetGameStats() override;

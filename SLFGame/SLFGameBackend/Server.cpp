@@ -38,6 +38,11 @@ LobbyCode Server::StartServer()
 	return lobbyCode;
 }
 
+void Server::StartListening()
+{
+	m_server.listen(QHostAddress::Any, PORT);
+}
+
 void Server::StopListening()
 {
 	m_server.close();

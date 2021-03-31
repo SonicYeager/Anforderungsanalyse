@@ -10,6 +10,7 @@ public:
 	virtual ~ServerInteractor() = default;
 
 	virtual void StartServer() = 0; 
+	virtual void StartListening() = 0;
 	virtual void StopListening() = 0;
 	virtual void Broadcast(const Message&) = 0;
 	virtual void WriteTo(int, const Message&) = 0;
