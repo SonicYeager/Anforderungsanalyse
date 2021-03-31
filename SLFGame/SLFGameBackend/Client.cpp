@@ -72,7 +72,7 @@ void Client::OnSelfReceivedData()
 		auto qdata = m_socket.read(size);
 		std::vector<char> data{ std::begin(qdata), std::end(qdata) };
 		//onLog("Data Received!");
-´´		onData(data);
+		onData(data);
 	}
 }
 

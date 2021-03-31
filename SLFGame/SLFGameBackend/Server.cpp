@@ -73,6 +73,7 @@ void Server::Broadcast(const ByteStream& data)
 
 void Server::Reset()
 {
+	m_server.close();
 	for (auto& socket : m_sockets)
 	{ 
 		socket.second->close();
@@ -141,9 +142,9 @@ void Server::OnClientDisconnect(int id)
 	//onLog("Client: " + std::to_string(id) + " has disconnected from Host!");
 
 	m_sockets.erase(id);
-	onClientDisconnect(id);
 	if(m_sockets.size() < m_maxConnections)
 		m_server.listen();
+	onClientDisconnect(id);
 }
 
 void Server::OnClientHostFound(int id)
