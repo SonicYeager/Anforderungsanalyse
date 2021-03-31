@@ -23,7 +23,7 @@ Window{
             Layout.alignment: Qt.AlignHCenter
             Layout.bottomMargin: 20
             state: "desc"
-            text: "Verbindung zum Host verloren."
+            text: "Verbindung zum Host fehlgeschlagen."
         }
         GameButton{
             Layout.preferredWidth: 100

@@ -456,7 +456,7 @@ void QmlAdapter::triggerStateRelatedSignal(STATE state)
     {
     case STATE::ANSWERREQUEST: {emit answersRequest(); break;}
     case STATE::MAINMENU     : break;
-    case STATE::LOBBY        : break;
+    case STATE::LOBBY        : clearPlacements(); break;
     case STATE::SETUPROUND   : break;
     case STATE::INGAME       : break;
     case STATE::OVERVIEW     : break;
