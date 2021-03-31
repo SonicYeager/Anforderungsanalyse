@@ -60,18 +60,18 @@ void Server::Broadcast(const ByteStream& data)
 
 void Server::Reset()
 {
-	m_server.close();
+	std::vector<int> ids;
 	for (auto& socket : m_sockets)
 	{ 
 		socket.second->close();
+		ids.push_back(socket.first);
 	}
-	m_sockets.clear();
 }
 
 void Server::OnNewConnection()
 {
 	auto conn = m_server.nextPendingConnection();
-	auto id = m_counter.fetch_add(1);
+	int id = m_counter.fetch_add(1);
 	m_sockets.emplace(id, std::shared_ptr<QTcpSocket>(conn, [](QTcpSocket* sock) { sock->deleteLater(); }));
 
 	QObject::connect(m_sockets[id].get(), &QTcpSocket::connected, [this, id]() {OnClientConnected(id); });
