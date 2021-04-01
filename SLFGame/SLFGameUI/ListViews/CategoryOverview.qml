@@ -7,7 +7,7 @@ ListView {
     id: list
     property alias count: list_model.count
     property alias listModel: list_model
-    property var headerHeight: 55
+    property var headerHeight: 60
     interactive: false
     onCurrentIndexChanged: qmlAdapter.activeOverviewItem = currentIndex
     header: headerComponent
@@ -18,7 +18,7 @@ ListView {
         width : 200
         height: 50
         property bool active: list.currentIndex === index
-        state: active?"active": "desc"//model.state
+        state: active?"active": "semiwhite"//model.state
         MouseArea{
             anchors.fill: parent
             hoverEnabled: true
@@ -44,9 +44,8 @@ ListView {
                 TextBox {
                     id: headerTB
                     Layout.minimumWidth: 200
-                    Layout.minimumHeight: 50
-                    color: "white"
-                    textColor: "black"
+                    Layout.minimumHeight: 55
+                    state: "desc"
                     text: "Kategorien"
                     Layout.alignment: Qt.AlignTop
                 }

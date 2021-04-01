@@ -27,22 +27,37 @@ Rectangle {
             PropertyChanges {
                 target: textBox
                 color: "black"
+                border.width: 0.5
             }
             PropertyChanges {
                 target: text_name
                 color: "white"
             }
-    },
+        },
         State{
             name: "active"
             PropertyChanges {
                 target: textBox
-                color: "#669999"
+                color: "#9cba8d"
+                border.color:"#383838"
+            }
+            PropertyChanges {
+                target: text_name
+                color: "black"
+            }
+       },
+        State{
+            name: "semiwhite"
+            PropertyChanges {
+                target: textBox
+                color: "#cfcfcf"
+                border.color:"#383838"
             }
             PropertyChanges {
                 target: text_name
                 color: "black"
             }
        }
+
     ]
 }

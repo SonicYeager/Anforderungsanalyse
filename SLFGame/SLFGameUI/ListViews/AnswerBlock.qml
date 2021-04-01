@@ -19,22 +19,22 @@ Rectangle {
             text: "Player 1"
             Layout.preferredWidth: 200
             Layout.preferredHeight: 30
-            state: "desc"
+            state: "semiwhite"
         }
         TextBox {
             id: answerTB
             Layout.preferredWidth: 200
             Layout.preferredHeight: 30
             text: "ph"
-            color: "black"
-            textColor: "white"
+            state: "semiwhite"
         }
         Rectangle {
             Layout.preferredWidth: 300
             Layout.preferredHeight: 30
             border.color:"#CCCCCC"
             border.width: 0.5
-            color: Qt.rgba(0,0,0,0)
+            color: "#303640"
+            radius: 5
             RowLayout {
                 anchors.fill: parent
                 spacing: 0

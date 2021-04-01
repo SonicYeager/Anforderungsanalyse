@@ -7,7 +7,7 @@ ListView {
     id: list
     property alias count: list_model.count
     property alias listModel: list_model
-    property var headerHeight : 55
+    property var headerHeight : 60
     interactive: false
     header: headerComponent
     spacing: 5
@@ -36,10 +36,10 @@ ListView {
                 TextBox {
                     Layout.preferredWidth: parent.width
                     Layout.preferredHeight: 25
-                    color: "white"
-                    textColor: "black"
+                    state: "desc"
                     text: qmlAdapter.getCategoryName(qmlAdapter.activeOverviewItem)
                     Layout.alignment: Qt.AlignTop
+                    Layout.bottomMargin: 5
                 }
                 Rectangle {
                     Layout.preferredWidth: parent.width
@@ -52,29 +52,25 @@ ListView {
                         TextBox {
                             Layout.preferredWidth: 200
                             Layout.preferredHeight: 25
-                            color: "white"
-                            textColor: "black"
+                            state: "desc"
                             text: "Spieler"
                         }
                         TextBox {
                             Layout.preferredWidth: 200
                             Layout.preferredHeight: 25
-                            color: "white"
-                            textColor: "black"
+                            state: "desc"
                             text: "Antwort"
                         }
                         TextBox {
                             Layout.preferredWidth: 300
                             Layout.preferredHeight: 25
-                            color: "white"
-                            textColor: "black"
+                            state: "desc"
                             text: "Votes"
                         }
                         TextBox {
                             Layout.preferredWidth: 100
                             Layout.preferredHeight: 25
-                            color: "white"
-                            textColor: "black"
+                            state: "desc"
                             text: ""
                         }
                     }

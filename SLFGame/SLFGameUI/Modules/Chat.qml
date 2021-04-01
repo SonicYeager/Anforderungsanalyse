@@ -75,6 +75,8 @@ Rectangle {
                             {
                                 qmlAdapter.sendChatMessage(entryBox.text);
                                 entryBox.text = "";
+                                onPressed: voteBtn.color = "#8c8b8b"
+                                onReleased: voteBtn.color = "#d6d6d6"
                             }
                         }
                     }
