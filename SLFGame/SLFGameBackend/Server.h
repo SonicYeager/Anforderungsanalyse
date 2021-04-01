@@ -37,4 +37,5 @@ private:
 	QThread serverThread;
 	QTcpServer m_server;
 	std::map<int, std::shared_ptr<QTcpSocket>> m_sockets;
+	int m_connectionCount;
 };

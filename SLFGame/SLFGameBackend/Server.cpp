@@ -82,7 +82,7 @@ void Server::Reset()
 
 void Server::OnNewConnection()
 {
-	if (m_sockets.size() < m_maxConnections)
+	if (m_connectionCount < m_maxConnections)
 	{
 		int id = m_counter.fetch_add(1);
 		auto conn = m_server.nextPendingConnection();
@@ -96,6 +96,7 @@ void Server::OnNewConnection()
 		QObject::connect(m_sockets[id].get(), &QTcpSocket::hostFound, [this, id]() {OnClientHostFound(id); });
 		QObject::connect(m_sockets[id].get(), &QTcpSocket::stateChanged, [this, id](const QAbstractSocket::SocketState& state) {OnClientStateChanged(state, id); });
 		//onLog("New Connection of Client: " + std::to_string(id));
+		++m_connectionCount;
 		onNewConnection(id);
 	}
 	else
@@ -142,7 +143,8 @@ void Server::OnClientDisconnect(int id)
 	//onLog("Client: " + std::to_string(id) + " has disconnected from Host!");
 
 	m_sockets.erase(id);
-	if(m_sockets.size() < m_maxConnections)
+	--m_connectionCount;
+	if(m_connectionCount < m_maxConnections)
 		m_server.listen();
 	onClientDisconnect(id);
 }
